@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tools.replay.ui &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/tools/replay/ui.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tools.replay.ui</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tools.replay.ui</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pygame</span>
+
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.numpy_fast</span> <span class="kn">import</span> <span class="n">clip</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.basedir</span> <span class="kn">import</span> <span class="n">BASEDIR</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.replay.lib.ui_helpers</span> <span class="kn">import</span> <span class="p">(</span><span class="n">_BB_TO_FULL_FRAME</span><span class="p">,</span> <span class="n">UP</span><span class="p">,</span>
+                                         <span class="n">_INTRINSICS</span><span class="p">,</span> <span class="n">BLACK</span><span class="p">,</span> <span class="n">GREEN</span><span class="p">,</span>
+                                         <span class="n">YELLOW</span><span class="p">,</span> <span class="n">Calibration</span><span class="p">,</span>
+                                         <span class="n">get_blank_lid_overlay</span><span class="p">,</span> <span class="n">init_plots</span><span class="p">,</span>
+                                         <span class="n">maybe_update_radar_points</span><span class="p">,</span> <span class="n">plot_lead</span><span class="p">,</span>
+                                         <span class="n">plot_model</span><span class="p">,</span>
+                                         <span class="n">pygame_modules_have_loaded</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">cereal.visionipc</span> <span class="kn">import</span> <span class="n">VisionIpcClient</span><span class="p">,</span> <span class="n">VisionStreamType</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;BASEDIR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BASEDIR</span>
+
+<span class="n">ANGLE_SCALE</span> <span class="o">=</span> <span class="mf">5.0</span>
+
+<div class="viewcode-block" id="ui_thread">
+<a class="viewcode-back" href="../../../tools.replay.html#tools.replay.ui.ui_thread">[docs]</a>
+<span class="k">def</span> <span class="nf">ui_thread</span><span class="p">(</span><span class="n">addr</span><span class="p">):</span>
+  <span class="n">cv2</span><span class="o">.</span><span class="n">setNumThreads</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+  <span class="n">pygame</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+  <span class="k">assert</span> <span class="n">pygame_modules_have_loaded</span><span class="p">()</span>
+
+  <span class="n">disp_info</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">Info</span><span class="p">()</span>
+  <span class="n">max_height</span> <span class="o">=</span> <span class="n">disp_info</span><span class="o">.</span><span class="n">current_h</span>
+
+  <span class="n">hor_mode</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;HORIZONTAL&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+  <span class="n">hor_mode</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">max_height</span> <span class="o">&lt;</span> <span class="mi">960</span><span class="o">+</span><span class="mi">300</span> <span class="k">else</span> <span class="n">hor_mode</span>
+
+  <span class="k">if</span> <span class="n">hor_mode</span><span class="p">:</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">640</span><span class="o">+</span><span class="mi">384</span><span class="o">+</span><span class="mi">640</span><span class="p">,</span> <span class="mi">960</span><span class="p">)</span>
+    <span class="n">write_x</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">write_y</span> <span class="o">=</span> <span class="mi">680</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">640</span><span class="o">+</span><span class="mi">384</span><span class="p">,</span> <span class="mi">960</span><span class="o">+</span><span class="mi">300</span><span class="p">)</span>
+    <span class="n">write_x</span> <span class="o">=</span> <span class="mi">645</span>
+    <span class="n">write_y</span> <span class="o">=</span> <span class="mi">970</span>
+
+  <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s2">&quot;openpilot debug UI&quot;</span><span class="p">)</span>
+  <span class="n">screen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">pygame</span><span class="o">.</span><span class="n">DOUBLEBUF</span><span class="p">)</span>
+
+  <span class="n">alert1_font</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">SysFont</span><span class="p">(</span><span class="s2">&quot;arial&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+  <span class="n">alert2_font</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">SysFont</span><span class="p">(</span><span class="s2">&quot;arial&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+  <span class="n">info_font</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">SysFont</span><span class="p">(</span><span class="s2">&quot;arial&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+
+  <span class="n">camera_surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">surface</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+  <span class="n">top_down_surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">surface</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="n">UP</span><span class="o">.</span><span class="n">lidar_x</span><span class="p">,</span> <span class="n">UP</span><span class="o">.</span><span class="n">lidar_y</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+  <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="s1">&#39;carState&#39;</span><span class="p">,</span> <span class="s1">&#39;longitudinalPlan&#39;</span><span class="p">,</span> <span class="s1">&#39;carControl&#39;</span><span class="p">,</span> <span class="s1">&#39;radarState&#39;</span><span class="p">,</span> <span class="s1">&#39;liveCalibration&#39;</span><span class="p">,</span> <span class="s1">&#39;controlsState&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;liveTracks&#39;</span><span class="p">,</span> <span class="s1">&#39;modelV2&#39;</span><span class="p">,</span> <span class="s1">&#39;liveParameters&#39;</span><span class="p">,</span> <span class="s1">&#39;lateralPlan&#39;</span><span class="p">],</span> <span class="n">addr</span><span class="o">=</span><span class="n">addr</span><span class="p">)</span>
+
+  <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+  <span class="n">imgff</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">num_px</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">calibration</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="n">lid_overlay_blank</span> <span class="o">=</span> <span class="n">get_blank_lid_overlay</span><span class="p">(</span><span class="n">UP</span><span class="p">)</span>
+
+  <span class="c1"># plots</span>
+  <span class="n">name_to_arr_idx</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;gas&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                      <span class="s2">&quot;computer_gas&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                      <span class="s2">&quot;user_brake&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                      <span class="s2">&quot;computer_brake&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                      <span class="s2">&quot;v_ego&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                      <span class="s2">&quot;v_pid&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                      <span class="s2">&quot;angle_steers_des&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+                      <span class="s2">&quot;angle_steers&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+                      <span class="s2">&quot;angle_steers_k&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+                      <span class="s2">&quot;steer_torque&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+                      <span class="s2">&quot;v_override&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                      <span class="s2">&quot;v_cruise&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+                      <span class="s2">&quot;a_ego&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+                      <span class="s2">&quot;a_target&quot;</span><span class="p">:</span> <span class="mi">13</span><span class="p">}</span>
+
+  <span class="n">plot_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">name_to_arr_idx</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+
+  <span class="n">plot_xlims</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="n">plot_arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">plot_arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">plot_arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">plot_arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+  <span class="n">plot_ylims</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="n">ANGLE_SCALE</span><span class="p">,</span> <span class="n">ANGLE_SCALE</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">75.</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)]</span>
+  <span class="n">plot_names</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;computer_gas&quot;</span><span class="p">,</span> <span class="s2">&quot;user_brake&quot;</span><span class="p">,</span> <span class="s2">&quot;computer_brake&quot;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">&quot;angle_steers&quot;</span><span class="p">,</span> <span class="s2">&quot;angle_steers_des&quot;</span><span class="p">,</span> <span class="s2">&quot;angle_steers_k&quot;</span><span class="p">,</span> <span class="s2">&quot;steer_torque&quot;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">&quot;v_ego&quot;</span><span class="p">,</span> <span class="s2">&quot;v_override&quot;</span><span class="p">,</span> <span class="s2">&quot;v_pid&quot;</span><span class="p">,</span> <span class="s2">&quot;v_cruise&quot;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">&quot;a_ego&quot;</span><span class="p">,</span> <span class="s2">&quot;a_target&quot;</span><span class="p">]]</span>
+  <span class="n">plot_colors</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">],</span>
+                 <span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">],</span>
+                 <span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">],</span>
+                 <span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">]]</span>
+  <span class="n">plot_styles</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">],</span>
+                 <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">],</span>
+                 <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">],</span>
+                 <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">]]</span>
+
+  <span class="n">draw_plots</span> <span class="o">=</span> <span class="n">init_plots</span><span class="p">(</span><span class="n">plot_arr</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">,</span> <span class="n">plot_xlims</span><span class="p">,</span> <span class="n">plot_ylims</span><span class="p">,</span> <span class="n">plot_names</span><span class="p">,</span> <span class="n">plot_colors</span><span class="p">,</span> <span class="n">plot_styles</span><span class="p">)</span>
+
+  <span class="n">vipc_client</span> <span class="o">=</span> <span class="n">VisionIpcClient</span><span class="p">(</span><span class="s2">&quot;camerad&quot;</span><span class="p">,</span> <span class="n">VisionStreamType</span><span class="o">.</span><span class="n">VISION_STREAM_ROAD</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+  <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="nb">list</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+    <span class="n">screen</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">))</span>
+    <span class="n">lid_overlay</span> <span class="o">=</span> <span class="n">lid_overlay_blank</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">top_down</span> <span class="o">=</span> <span class="n">top_down_surface</span><span class="p">,</span> <span class="n">lid_overlay</span>
+
+    <span class="c1"># ***** frame *****</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">vipc_client</span><span class="o">.</span><span class="n">is_connected</span><span class="p">():</span>
+      <span class="n">vipc_client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">yuv_img_raw</span> <span class="o">=</span> <span class="n">vipc_client</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">yuv_img_raw</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">yuv_img_raw</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+      <span class="k">continue</span>
+
+    <span class="n">imgff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">yuv_img_raw</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">yuv_img_raw</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">//</span> <span class="n">vipc_client</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span> <span class="n">vipc_client</span><span class="o">.</span><span class="n">stride</span><span class="p">))</span>
+    <span class="n">num_px</span> <span class="o">=</span> <span class="n">vipc_client</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="n">vipc_client</span><span class="o">.</span><span class="n">height</span>
+    <span class="n">rgb</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">imgff</span><span class="p">[:</span><span class="n">vipc_client</span><span class="o">.</span><span class="n">height</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="p">:</span><span class="n">vipc_client</span><span class="o">.</span><span class="n">width</span><span class="p">],</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_YUV2RGB_NV12</span><span class="p">)</span>
+
+    <span class="n">zoom_matrix</span> <span class="o">=</span> <span class="n">_BB_TO_FULL_FRAME</span><span class="p">[</span><span class="n">num_px</span><span class="p">]</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">warpAffine</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="n">zoom_matrix</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">dst</span><span class="o">=</span><span class="n">img</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">WARP_INVERSE_MAP</span><span class="p">)</span>
+
+    <span class="n">intrinsic_matrix</span> <span class="o">=</span> <span class="n">_INTRINSICS</span><span class="p">[</span><span class="n">num_px</span><span class="p">]</span>
+
+    <span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;controlsState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lateralControlState</span><span class="o">.</span><span class="n">which</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">w</span> <span class="o">==</span> <span class="s1">&#39;lqrStateDEPRECATED&#39;</span><span class="p">:</span>
+      <span class="n">angle_steers_k</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;controlsState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lateralControlState</span><span class="o">.</span><span class="n">lqrStateDEPRECATED</span><span class="o">.</span><span class="n">steeringAngleDeg</span>
+    <span class="k">elif</span> <span class="n">w</span> <span class="o">==</span> <span class="s1">&#39;indiState&#39;</span><span class="p">:</span>
+      <span class="n">angle_steers_k</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;controlsState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lateralControlState</span><span class="o">.</span><span class="n">indiState</span><span class="o">.</span><span class="n">steeringAngleDeg</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">angle_steers_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+    <span class="n">plot_arr</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">plot_arr</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">plot_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">[</span><span class="s1">&#39;angle_steers&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;carState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">steeringAngleDeg</span>
+    <span class="n">plot_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">[</span><span class="s1">&#39;angle_steers_des&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;carControl&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">actuators</span><span class="o">.</span><span class="n">steeringAngleDeg</span>
+    <span class="n">plot_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">[</span><span class="s1">&#39;angle_steers_k&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">angle_steers_k</span>
+    <span class="n">plot_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">[</span><span class="s1">&#39;gas&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;carState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">gas</span>
+    <span class="c1"># TODO gas is deprecated</span>
+    <span class="n">plot_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">[</span><span class="s1">&#39;computer_gas&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;carControl&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">actuators</span><span class="o">.</span><span class="n">accel</span><span class="o">/</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">plot_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">[</span><span class="s1">&#39;user_brake&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;carState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">brake</span>
+    <span class="n">plot_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">[</span><span class="s1">&#39;steer_torque&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;carControl&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">actuators</span><span class="o">.</span><span class="n">steer</span> <span class="o">*</span> <span class="n">ANGLE_SCALE</span>
+    <span class="c1"># TODO brake is deprecated</span>
+    <span class="n">plot_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">[</span><span class="s1">&#39;computer_brake&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="o">-</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;carControl&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">actuators</span><span class="o">.</span><span class="n">accel</span><span class="o">/</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">plot_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">[</span><span class="s1">&#39;v_ego&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;carState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">vEgo</span>
+    <span class="n">plot_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">[</span><span class="s1">&#39;v_pid&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;controlsState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">vPid</span>
+    <span class="n">plot_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">[</span><span class="s1">&#39;v_cruise&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;carState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speed</span>
+    <span class="n">plot_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">[</span><span class="s1">&#39;a_ego&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;carState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">aEgo</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;longitudinalPlan&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">accels</span><span class="p">):</span>
+      <span class="n">plot_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name_to_arr_idx</span><span class="p">[</span><span class="s1">&#39;a_target&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;longitudinalPlan&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">accels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">rcv_frame</span><span class="p">[</span><span class="s1">&#39;modelV2&#39;</span><span class="p">]:</span>
+      <span class="n">plot_model</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;modelV2&#39;</span><span class="p">],</span> <span class="n">img</span><span class="p">,</span> <span class="n">calibration</span><span class="p">,</span> <span class="n">top_down</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">rcv_frame</span><span class="p">[</span><span class="s1">&#39;radarState&#39;</span><span class="p">]:</span>
+      <span class="n">plot_lead</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;radarState&#39;</span><span class="p">],</span> <span class="n">top_down</span><span class="p">)</span>
+
+    <span class="c1"># draw all radar points</span>
+    <span class="n">maybe_update_radar_points</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveTracks&#39;</span><span class="p">],</span> <span class="n">top_down</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="p">[</span><span class="s1">&#39;liveCalibration&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">num_px</span><span class="p">:</span>
+      <span class="n">rpyCalib</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveCalibration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rpyCalib</span><span class="p">)</span>
+      <span class="n">calibration</span> <span class="o">=</span> <span class="n">Calibration</span><span class="p">(</span><span class="n">num_px</span><span class="p">,</span> <span class="n">rpyCalib</span><span class="p">,</span> <span class="n">intrinsic_matrix</span><span class="p">)</span>
+
+    <span class="c1"># *** blits ***</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">surfarray</span><span class="o">.</span><span class="n">blit_array</span><span class="p">(</span><span class="n">camera_surface</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">camera_surface</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="c1"># display alerts</span>
+    <span class="n">alert_line1</span> <span class="o">=</span> <span class="n">alert1_font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;controlsState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">alertText1</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">alert_line2</span> <span class="o">=</span> <span class="n">alert2_font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;controlsState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">alertText2</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">alert_line1</span><span class="p">,</span> <span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
+    <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">alert_line2</span><span class="p">,</span> <span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">190</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">hor_mode</span><span class="p">:</span>
+      <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">draw_plots</span><span class="p">(</span><span class="n">plot_arr</span><span class="p">),</span> <span class="p">(</span><span class="mi">640</span><span class="o">+</span><span class="mi">384</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">draw_plots</span><span class="p">(</span><span class="n">plot_arr</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">600</span><span class="p">))</span>
+
+    <span class="n">pygame</span><span class="o">.</span><span class="n">surfarray</span><span class="o">.</span><span class="n">blit_array</span><span class="p">(</span><span class="o">*</span><span class="n">top_down</span><span class="p">)</span>
+    <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">top_down</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="mi">640</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="n">SPACING</span> <span class="o">=</span> <span class="mi">25</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">info_font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;ENABLED&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">GREEN</span> <span class="k">if</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;controlsState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">enabled</span> <span class="k">else</span> <span class="n">BLACK</span><span class="p">),</span>
+      <span class="n">info_font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;SPEED: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;carState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; m/s&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">YELLOW</span><span class="p">),</span>
+      <span class="n">info_font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;LONG CONTROL STATE: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;controlsState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">longControlState</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="n">YELLOW</span><span class="p">),</span>
+      <span class="n">info_font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;LONG MPC SOURCE: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;longitudinalPlan&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">longitudinalPlanSource</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="n">YELLOW</span><span class="p">),</span>
+      <span class="kc">None</span><span class="p">,</span>
+      <span class="n">info_font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;ANGLE OFFSET (AVG): &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveParameters&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">angleOffsetAverageDeg</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; deg&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">YELLOW</span><span class="p">),</span>
+      <span class="n">info_font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;ANGLE OFFSET (INSTANT): &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveParameters&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">angleOffsetDeg</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; deg&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">YELLOW</span><span class="p">),</span>
+      <span class="n">info_font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;STIFFNESS: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveParameters&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">stiffnessFactor</span> <span class="o">*</span> <span class="mf">100.</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; %&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">YELLOW</span><span class="p">),</span>
+      <span class="n">info_font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;STEER RATIO: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveParameters&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">steerRatio</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span> <span class="kc">True</span><span class="p">,</span> <span class="n">YELLOW</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">line</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="p">(</span><span class="n">write_x</span><span class="p">,</span> <span class="n">write_y</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">SPACING</span><span class="p">))</span>
+
+    <span class="c1"># this takes time...vsync or something</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="get_arg_parser">
+<a class="viewcode-back" href="../../../tools.replay.html#tools.replay.ui.get_arg_parser">[docs]</a>
+<span class="k">def</span> <span class="nf">get_arg_parser</span><span class="p">():</span>
+  <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Show replay data in a UI.&quot;</span><span class="p">,</span>
+    <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">)</span>
+
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;ip_address&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The ip address on which to receive zmq messages.&quot;</span><span class="p">)</span>
+
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--frame-address&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The frame address (fully qualified ZMQ endpoint for frames) on which to receive zmq messages.&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">parser</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">args</span> <span class="o">=</span> <span class="n">get_arg_parser</span><span class="p">()</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+  <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">ip_address</span> <span class="o">!=</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ZMQ&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+    <span class="n">messaging</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>
+
+  <span class="n">ui_thread</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">ip_address</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

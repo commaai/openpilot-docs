@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.controls.tests.test_lateral_mpc &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/controls/tests/test_lateral_mpc.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.controls.tests.test_lateral_mpc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.controls.tests.test_lateral_mpc</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.lateral_mpc_lib.lat_mpc</span> <span class="kn">import</span> <span class="n">LateralMpc</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.drive_helpers</span> <span class="kn">import</span> <span class="n">CAR_ROTATION_RADIUS</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.lateral_mpc_lib.lat_mpc</span> <span class="kn">import</span> <span class="n">N</span> <span class="k">as</span> <span class="n">LAT_MPC_N</span>
+
+
+<div class="viewcode-block" id="run_mpc">
+<a class="viewcode-back" href="../../../../selfdrive.controls.tests.html#selfdrive.controls.tests.test_lateral_mpc.run_mpc">[docs]</a>
+<span class="k">def</span> <span class="nf">run_mpc</span><span class="p">(</span><span class="n">lat_mpc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">v_ref</span><span class="o">=</span><span class="mf">30.</span><span class="p">,</span> <span class="n">x_init</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">y_init</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">psi_init</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">curvature_init</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+            <span class="n">lane_width</span><span class="o">=</span><span class="mf">3.6</span><span class="p">,</span> <span class="n">poly_shift</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
+
+  <span class="k">if</span> <span class="n">lat_mpc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">lat_mpc</span> <span class="o">=</span> <span class="n">LateralMpc</span><span class="p">()</span>
+  <span class="n">lat_mpc</span><span class="o">.</span><span class="n">set_weights</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">.05</span><span class="p">,</span> <span class="mi">800</span><span class="p">)</span>
+
+  <span class="n">y_pts</span> <span class="o">=</span> <span class="n">poly_shift</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">LAT_MPC_N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="n">heading_pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">LAT_MPC_N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="n">curv_rate_pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">LAT_MPC_N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+  <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x_init</span><span class="p">,</span> <span class="n">y_init</span><span class="p">,</span> <span class="n">psi_init</span><span class="p">,</span> <span class="n">curvature_init</span><span class="p">])</span>
+  <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">v_ref</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">LAT_MPC_N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+                      <span class="n">CAR_ROTATION_RADIUS</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">LAT_MPC_N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span>
+
+  <span class="c1"># converge in no more than 10 iterations</span>
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">lat_mpc</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span>
+                <span class="n">y_pts</span><span class="p">,</span> <span class="n">heading_pts</span><span class="p">,</span> <span class="n">curv_rate_pts</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">lat_mpc</span><span class="o">.</span><span class="n">x_sol</span></div>
+
+
+
+<div class="viewcode-block" id="TestLateralMpc">
+<a class="viewcode-back" href="../../../../selfdrive.controls.tests.html#selfdrive.controls.tests.test_lateral_mpc.TestLateralMpc">[docs]</a>
+<span class="k">class</span> <span class="nc">TestLateralMpc</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+  <span class="k">def</span> <span class="nf">_assert_null</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">curvature</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sol</span><span class="p">)):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">sol</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="n">curvature</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">sol</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="n">curvature</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">sol</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="n">curvature</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_assert_simmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">curvature</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sol</span><span class="p">)):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">sol</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">sol</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">delta</span><span class="o">=</span><span class="n">curvature</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">sol</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="n">sol</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">delta</span><span class="o">=</span><span class="n">curvature</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">sol</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="o">-</span><span class="n">sol</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">delta</span><span class="o">=</span><span class="n">curvature</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">sol</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">sol</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">delta</span><span class="o">=</span><span class="n">curvature</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TestLateralMpc.test_straight">
+<a class="viewcode-back" href="../../../../selfdrive.controls.tests.html#selfdrive.controls.tests.test_lateral_mpc.TestLateralMpc.test_straight">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_straight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">run_mpc</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_assert_null</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">sol</span><span class="p">]))</span></div>
+
+
+<div class="viewcode-block" id="TestLateralMpc.test_y_symmetry">
+<a class="viewcode-back" href="../../../../selfdrive.controls.tests.html#selfdrive.controls.tests.test_lateral_mpc.TestLateralMpc.test_y_symmetry">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_y_symmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">y_init</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]:</span>
+      <span class="n">sol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">run_mpc</span><span class="p">(</span><span class="n">y_init</span><span class="o">=</span><span class="n">y_init</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_assert_simmetry</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sol</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestLateralMpc.test_poly_symmetry">
+<a class="viewcode-back" href="../../../../selfdrive.controls.tests.html#selfdrive.controls.tests.test_lateral_mpc.TestLateralMpc.test_poly_symmetry">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_poly_symmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">poly_shift</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]:</span>
+      <span class="n">sol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">run_mpc</span><span class="p">(</span><span class="n">poly_shift</span><span class="o">=</span><span class="n">poly_shift</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_assert_simmetry</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sol</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestLateralMpc.test_curvature_symmetry">
+<a class="viewcode-back" href="../../../../selfdrive.controls.tests.html#selfdrive.controls.tests.test_lateral_mpc.TestLateralMpc.test_curvature_symmetry">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_curvature_symmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">curvature_init</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]:</span>
+      <span class="n">sol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">run_mpc</span><span class="p">(</span><span class="n">curvature_init</span><span class="o">=</span><span class="n">curvature_init</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_assert_simmetry</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sol</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestLateralMpc.test_psi_symmetry">
+<a class="viewcode-back" href="../../../../selfdrive.controls.tests.html#selfdrive.controls.tests.test_lateral_mpc.TestLateralMpc.test_psi_symmetry">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_psi_symmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">psi_init</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]:</span>
+      <span class="n">sol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">run_mpc</span><span class="p">(</span><span class="n">psi_init</span><span class="o">=</span><span class="n">psi_init</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_assert_simmetry</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sol</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestLateralMpc.test_no_overshoot">
+<a class="viewcode-back" href="../../../../selfdrive.controls.tests.html#selfdrive.controls.tests.test_lateral_mpc.TestLateralMpc.test_no_overshoot">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_no_overshoot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">y_init</span> <span class="o">=</span> <span class="mf">1.</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">run_mpc</span><span class="p">(</span><span class="n">y_init</span><span class="o">=</span><span class="n">y_init</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">sol</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertGreaterEqual</span><span class="p">(</span><span class="n">y_init</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestLateralMpc.test_switch_convergence">
+<a class="viewcode-back" href="../../../../selfdrive.controls.tests.html#selfdrive.controls.tests.test_lateral_mpc.TestLateralMpc.test_switch_convergence">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_switch_convergence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">lat_mpc</span> <span class="o">=</span> <span class="n">LateralMpc</span><span class="p">()</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">run_mpc</span><span class="p">(</span><span class="n">lat_mpc</span><span class="o">=</span><span class="n">lat_mpc</span><span class="p">,</span> <span class="n">poly_shift</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">v_ref</span><span class="o">=</span><span class="mf">7.0</span><span class="p">)</span>
+    <span class="n">right_psi_deg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">sol</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">run_mpc</span><span class="p">(</span><span class="n">lat_mpc</span><span class="o">=</span><span class="n">lat_mpc</span><span class="p">,</span> <span class="n">poly_shift</span><span class="o">=-</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">v_ref</span><span class="o">=</span><span class="mf">7.0</span><span class="p">)</span>
+    <span class="n">left_psi_deg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">sol</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">right_psi_deg</span><span class="p">,</span> <span class="o">-</span><span class="n">left_psi_deg</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

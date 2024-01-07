@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.boardd.pandad &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/boardd/pandad.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.boardd.pandad</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.boardd.pandad</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># simple boardd wrapper that updates the panda first</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">usb1</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">NoReturn</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cmp_to_key</span>
+
+<span class="kn">from</span> <span class="nn">panda</span> <span class="kn">import</span> <span class="n">Panda</span><span class="p">,</span> <span class="n">PandaDFU</span><span class="p">,</span> <span class="n">PandaProtocolMismatch</span><span class="p">,</span> <span class="n">FW_PATH</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.basedir</span> <span class="kn">import</span> <span class="n">BASEDIR</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.boardd.set_time</span> <span class="kn">import</span> <span class="n">set_time</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware</span> <span class="kn">import</span> <span class="n">HARDWARE</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+
+
+<div class="viewcode-block" id="get_expected_signature">
+<a class="viewcode-back" href="../../../selfdrive.boardd.html#selfdrive.boardd.pandad.get_expected_signature">[docs]</a>
+<span class="k">def</span> <span class="nf">get_expected_signature</span><span class="p">(</span><span class="n">panda</span><span class="p">:</span> <span class="n">Panda</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FW_PATH</span><span class="p">,</span> <span class="n">panda</span><span class="o">.</span><span class="n">get_mcu_type</span><span class="p">()</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">app_fn</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Panda</span><span class="o">.</span><span class="n">get_signature_from_firmware</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+  <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Error computing expected signature&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="flash_panda">
+<a class="viewcode-back" href="../../../selfdrive.boardd.html#selfdrive.boardd.pandad.flash_panda">[docs]</a>
+<span class="k">def</span> <span class="nf">flash_panda</span><span class="p">(</span><span class="n">panda_serial</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Panda</span><span class="p">:</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">panda</span> <span class="o">=</span> <span class="n">Panda</span><span class="p">(</span><span class="n">panda_serial</span><span class="p">)</span>
+  <span class="k">except</span> <span class="n">PandaProtocolMismatch</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;detected protocol mismatch, reflashing panda&quot;</span><span class="p">)</span>
+    <span class="n">HARDWARE</span><span class="o">.</span><span class="n">recover_internal_panda</span><span class="p">()</span>
+    <span class="k">raise</span>
+
+  <span class="n">fw_signature</span> <span class="o">=</span> <span class="n">get_expected_signature</span><span class="p">(</span><span class="n">panda</span><span class="p">)</span>
+  <span class="n">internal_panda</span> <span class="o">=</span> <span class="n">panda</span><span class="o">.</span><span class="n">is_internal</span><span class="p">()</span>
+
+  <span class="n">panda_version</span> <span class="o">=</span> <span class="s2">&quot;bootstub&quot;</span> <span class="k">if</span> <span class="n">panda</span><span class="o">.</span><span class="n">bootstub</span> <span class="k">else</span> <span class="n">panda</span><span class="o">.</span><span class="n">get_version</span><span class="p">()</span>
+  <span class="n">panda_signature</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">panda</span><span class="o">.</span><span class="n">bootstub</span> <span class="k">else</span> <span class="n">panda</span><span class="o">.</span><span class="n">get_signature</span><span class="p">()</span>
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Panda </span><span class="si">{</span><span class="n">panda_serial</span><span class="si">}</span><span class="s2"> connected, version: </span><span class="si">{</span><span class="n">panda_version</span><span class="si">}</span><span class="s2">, signature </span><span class="si">{</span><span class="n">panda_signature</span><span class="o">.</span><span class="n">hex</span><span class="p">()[:</span><span class="mi">16</span><span class="p">]</span><span class="si">}</span><span class="s2">, expected </span><span class="si">{</span><span class="n">fw_signature</span><span class="o">.</span><span class="n">hex</span><span class="p">()[:</span><span class="mi">16</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">panda</span><span class="o">.</span><span class="n">bootstub</span> <span class="ow">or</span> <span class="n">panda_signature</span> <span class="o">!=</span> <span class="n">fw_signature</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Panda firmware out of date, update required&quot;</span><span class="p">)</span>
+    <span class="n">panda</span><span class="o">.</span><span class="n">flash</span><span class="p">()</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done flashing&quot;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">panda</span><span class="o">.</span><span class="n">bootstub</span><span class="p">:</span>
+    <span class="n">bootstub_version</span> <span class="o">=</span> <span class="n">panda</span><span class="o">.</span><span class="n">get_version</span><span class="p">()</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Flashed firmware not booting, flashing development bootloader. </span><span class="si">{</span><span class="n">bootstub_version</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">internal_panda</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">internal_panda</span><span class="p">:</span>
+      <span class="n">HARDWARE</span><span class="o">.</span><span class="n">recover_internal_panda</span><span class="p">()</span>
+    <span class="n">panda</span><span class="o">.</span><span class="n">recover</span><span class="p">(</span><span class="n">reset</span><span class="o">=</span><span class="p">(</span><span class="ow">not</span> <span class="n">internal_panda</span><span class="p">))</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done flashing bootstub&quot;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">panda</span><span class="o">.</span><span class="n">bootstub</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Panda still not booting, exiting&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">AssertionError</span>
+
+  <span class="n">panda_signature</span> <span class="o">=</span> <span class="n">panda</span><span class="o">.</span><span class="n">get_signature</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">panda_signature</span> <span class="o">!=</span> <span class="n">fw_signature</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Version mismatch after flashing, exiting&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">AssertionError</span>
+
+  <span class="k">return</span> <span class="n">panda</span></div>
+
+
+
+<div class="viewcode-block" id="panda_sort_cmp">
+<a class="viewcode-back" href="../../../selfdrive.boardd.html#selfdrive.boardd.pandad.panda_sort_cmp">[docs]</a>
+<span class="k">def</span> <span class="nf">panda_sort_cmp</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Panda</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Panda</span><span class="p">):</span>
+  <span class="n">a_type</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span>
+  <span class="n">b_type</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span>
+
+  <span class="c1"># make sure the internal one is always first</span>
+  <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">is_internal</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">b</span><span class="o">.</span><span class="n">is_internal</span><span class="p">():</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">a</span><span class="o">.</span><span class="n">is_internal</span><span class="p">()</span> <span class="ow">and</span> <span class="n">b</span><span class="o">.</span><span class="n">is_internal</span><span class="p">():</span>
+    <span class="k">return</span> <span class="mi">1</span>
+
+  <span class="c1"># sort by hardware type</span>
+  <span class="k">if</span> <span class="n">a_type</span> <span class="o">!=</span> <span class="n">b_type</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">a_type</span> <span class="o">&lt;</span> <span class="n">b_type</span>
+
+  <span class="c1"># last resort: sort by serial number</span>
+  <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">get_usb_serial</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">b</span><span class="o">.</span><span class="n">get_usb_serial</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../selfdrive.boardd.html#selfdrive.boardd.pandad.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">NoReturn</span><span class="p">:</span>
+  <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">first_run</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+  <span class="n">no_internal_panda_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;pandad.flash_and_connect&quot;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+      <span class="n">params</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;PandaSignatures&quot;</span><span class="p">)</span>
+
+      <span class="c1"># Handle missing internal panda</span>
+      <span class="k">if</span> <span class="n">no_internal_panda_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">no_internal_panda_count</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No pandas found, putting internal panda into DFU&quot;</span><span class="p">)</span>
+          <span class="n">HARDWARE</span><span class="o">.</span><span class="n">recover_internal_panda</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No pandas found, resetting internal panda&quot;</span><span class="p">)</span>
+          <span class="n">HARDWARE</span><span class="o">.</span><span class="n">reset_internal_panda</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># wait to come back up</span>
+
+      <span class="c1"># Flash all Pandas in DFU mode</span>
+      <span class="n">dfu_serials</span> <span class="o">=</span> <span class="n">PandaDFU</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfu_serials</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">serial</span> <span class="ow">in</span> <span class="n">dfu_serials</span><span class="p">:</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Panda in DFU mode found, flashing recovery </span><span class="si">{</span><span class="n">serial</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+          <span class="n">PandaDFU</span><span class="p">(</span><span class="n">serial</span><span class="p">)</span><span class="o">.</span><span class="n">recover</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+      <span class="n">panda_serials</span> <span class="o">=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">panda_serials</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">no_internal_panda_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">continue</span>
+
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">panda_serials</span><span class="p">)</span><span class="si">}</span><span class="s2"> panda(s) found, connecting - </span><span class="si">{</span><span class="n">panda_serials</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+      <span class="c1"># Flash pandas</span>
+      <span class="n">pandas</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Panda</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">for</span> <span class="n">serial</span> <span class="ow">in</span> <span class="n">panda_serials</span><span class="p">:</span>
+        <span class="n">pandas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flash_panda</span><span class="p">(</span><span class="n">serial</span><span class="p">))</span>
+
+      <span class="c1"># Ensure internal panda is present if expected</span>
+      <span class="n">internal_pandas</span> <span class="o">=</span> <span class="p">[</span><span class="n">panda</span> <span class="k">for</span> <span class="n">panda</span> <span class="ow">in</span> <span class="n">pandas</span> <span class="k">if</span> <span class="n">panda</span><span class="o">.</span><span class="n">is_internal</span><span class="p">()]</span>
+      <span class="k">if</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">has_internal_panda</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">internal_pandas</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Internal panda is missing, trying again&quot;</span><span class="p">)</span>
+        <span class="n">no_internal_panda_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">continue</span>
+      <span class="n">no_internal_panda_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+      <span class="c1"># sort pandas to have deterministic order</span>
+      <span class="n">pandas</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="n">panda_sort_cmp</span><span class="p">))</span>
+      <span class="n">panda_serials</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">get_usb_serial</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pandas</span><span class="p">]</span>
+
+      <span class="c1"># log panda fw versions</span>
+      <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;PandaSignatures&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_signature</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pandas</span><span class="p">))</span>
+
+      <span class="k">for</span> <span class="n">panda</span> <span class="ow">in</span> <span class="n">pandas</span><span class="p">:</span>
+        <span class="c1"># check health for lost heartbeat</span>
+        <span class="n">health</span> <span class="o">=</span> <span class="n">panda</span><span class="o">.</span><span class="n">health</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">health</span><span class="p">[</span><span class="s2">&quot;heartbeat_lost&quot;</span><span class="p">]:</span>
+          <span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;PandaHeartbeatLost&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;heartbeat lost&quot;</span><span class="p">,</span> <span class="n">deviceState</span><span class="o">=</span><span class="n">health</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="n">panda</span><span class="o">.</span><span class="n">get_usb_serial</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">health</span><span class="p">[</span><span class="s2">&quot;som_reset_triggered&quot;</span><span class="p">]:</span>
+          <span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;PandaSomResetTriggered&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;panda.som_reset_triggered&quot;</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="n">health</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="n">panda</span><span class="o">.</span><span class="n">get_usb_serial</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">first_run</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">panda</span><span class="o">.</span><span class="n">is_internal</span><span class="p">():</span>
+            <span class="c1"># update time from RTC</span>
+            <span class="n">set_time</span><span class="p">(</span><span class="n">cloudlog</span><span class="p">)</span>
+
+          <span class="c1"># reset panda to ensure we&#39;re in a good state</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Resetting panda </span><span class="si">{</span><span class="n">panda</span><span class="o">.</span><span class="n">get_usb_serial</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+          <span class="k">if</span> <span class="n">panda</span><span class="o">.</span><span class="n">is_internal</span><span class="p">():</span>
+            <span class="n">HARDWARE</span><span class="o">.</span><span class="n">reset_internal_panda</span><span class="p">()</span>
+          <span class="k">else</span><span class="p">:</span>
+            <span class="n">panda</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">reconnect</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+      <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pandas</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="c1"># TODO: wrap all panda exceptions in a base panda exception</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">usb1</span><span class="o">.</span><span class="n">USBErrorNoDevice</span><span class="p">,</span> <span class="n">usb1</span><span class="o">.</span><span class="n">USBErrorPipe</span><span class="p">):</span>
+      <span class="c1"># a panda was disconnected while setting everything up. let&#39;s try again</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Panda USB exception while setting up&quot;</span><span class="p">)</span>
+      <span class="k">continue</span>
+    <span class="k">except</span> <span class="n">PandaProtocolMismatch</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;pandad.protocol_mismatch&quot;</span><span class="p">)</span>
+      <span class="k">continue</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;pandad.uncaught_exception&quot;</span><span class="p">)</span>
+      <span class="k">continue</span>
+
+    <span class="n">first_run</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># run boardd with all connected serials as arguments</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;MANAGER_DAEMON&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;boardd&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="s2">&quot;selfdrive/boardd&quot;</span><span class="p">))</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;./boardd&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">panda_serials</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

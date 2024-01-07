@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.hyundai.hyundaican &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/hyundai/hyundaican.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.hyundai.hyundaican</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.hyundai.hyundaican</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">crcmod</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.hyundai.values</span> <span class="kn">import</span> <span class="n">CAR</span><span class="p">,</span> <span class="n">CHECKSUM</span><span class="p">,</span> <span class="n">CAMERA_SCC_CAR</span>
+
+<span class="n">hyundai_checksum</span> <span class="o">=</span> <span class="n">crcmod</span><span class="o">.</span><span class="n">mkCrcFun</span><span class="p">(</span><span class="mh">0x11D</span><span class="p">,</span> <span class="n">initCrc</span><span class="o">=</span><span class="mh">0xFD</span><span class="p">,</span> <span class="n">rev</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">xorOut</span><span class="o">=</span><span class="mh">0xdf</span><span class="p">)</span>
+
+<div class="viewcode-block" id="create_lkas11">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.hyundaican.create_lkas11">[docs]</a>
+<span class="k">def</span> <span class="nf">create_lkas11</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">car_fingerprint</span><span class="p">,</span> <span class="n">apply_steer</span><span class="p">,</span> <span class="n">steer_req</span><span class="p">,</span>
+                  <span class="n">torque_fault</span><span class="p">,</span> <span class="n">lkas11</span><span class="p">,</span> <span class="n">sys_warning</span><span class="p">,</span> <span class="n">sys_state</span><span class="p">,</span> <span class="n">enabled</span><span class="p">,</span>
+                  <span class="n">left_lane</span><span class="p">,</span> <span class="n">right_lane</span><span class="p">,</span>
+                  <span class="n">left_lane_depart</span><span class="p">,</span> <span class="n">right_lane_depart</span><span class="p">):</span>
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">lkas11</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="s2">&quot;CF_Lkas_LdwsActivemode&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_LdwsSysState&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_SysWarning&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_LdwsLHWarning&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_LdwsRHWarning&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_HbaLamp&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_FcwBasReq&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_HbaSysState&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_FcwOpt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_HbaOpt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_FcwSysState&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_FcwCollisionWarning&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_FusionState&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_FcwOpt_USM&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Lkas_LdwsOpt_USM&quot;</span><span class="p">,</span>
+  <span class="p">]}</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_LdwsSysState&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sys_state</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_SysWarning&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span> <span class="k">if</span> <span class="n">sys_warning</span> <span class="k">else</span> <span class="mi">0</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_LdwsLHWarning&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">left_lane_depart</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_LdwsRHWarning&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">right_lane_depart</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CR_Lkas_StrToqReq&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_steer</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_ActToi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">steer_req</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_ToiFlt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torque_fault</span>  <span class="c1"># seems to allow actuation on CR_Lkas_StrToqReq</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_MsgCount&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame</span> <span class="o">%</span> <span class="mh">0x10</span>
+
+  <span class="k">if</span> <span class="n">car_fingerprint</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">SONATA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PALISADE</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_EV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_HEV_2021</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE</span><span class="p">,</span>
+                         <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_EV_2020</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_PHEV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SELTOS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_2021</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G70_2020</span><span class="p">,</span>
+                         <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_HEV_2021</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA_HYBRID</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_HEV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2022</span><span class="p">,</span>
+                         <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K5_2021</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_HEV_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_HEV_2022</span><span class="p">,</span>
+                         <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_PHEV_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_STINGER_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K5_HEV_2020</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_CEED</span><span class="p">,</span>
+                         <span class="n">CAR</span><span class="o">.</span><span class="n">AZERA_6TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AZERA_HEV_6TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CUSTIN_1ST_GEN</span><span class="p">):</span>
+    <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_LdwsActivemode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">left_lane</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">right_lane</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_LdwsOpt_USM&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="c1"># FcwOpt_USM 5 = Orange blinking car + lanes</span>
+    <span class="c1"># FcwOpt_USM 4 = Orange car + lanes</span>
+    <span class="c1"># FcwOpt_USM 3 = Green blinking car + lanes</span>
+    <span class="c1"># FcwOpt_USM 2 = Green car + lanes</span>
+    <span class="c1"># FcwOpt_USM 1 = White car + lanes</span>
+    <span class="c1"># FcwOpt_USM 0 = No car + lanes</span>
+    <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_FcwOpt_USM&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">enabled</span> <span class="k">else</span> <span class="mi">1</span>
+
+    <span class="c1"># SysWarning 4 = keep hands on wheel</span>
+    <span class="c1"># SysWarning 5 = keep hands on wheel (red)</span>
+    <span class="c1"># SysWarning 6 = keep hands on wheel (red) + beep</span>
+    <span class="c1"># Note: the warning is hidden while the blinkers are on</span>
+    <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_SysWarning&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span> <span class="k">if</span> <span class="n">sys_warning</span> <span class="k">else</span> <span class="mi">0</span>
+
+  <span class="c1"># Likely cars lacking the ability to show individual lane lines in the dash</span>
+  <span class="k">elif</span> <span class="n">car_fingerprint</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4_FL</span><span class="p">):</span>
+    <span class="c1"># SysWarning 4 = keep hands on wheel + beep</span>
+    <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_SysWarning&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span> <span class="k">if</span> <span class="n">sys_warning</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="c1"># SysState 0 = no icons</span>
+    <span class="c1"># SysState 1-2 = white car + lanes</span>
+    <span class="c1"># SysState 3 = green car + lanes, green steering wheel</span>
+    <span class="c1"># SysState 4 = green car + lanes</span>
+    <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_LdwsSysState&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span> <span class="k">if</span> <span class="n">enabled</span> <span class="k">else</span> <span class="mi">1</span>
+    <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_LdwsOpt_USM&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># non-2 changes above SysState definition</span>
+
+    <span class="c1"># these have no effect</span>
+    <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_LdwsActivemode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_FcwOpt_USM&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="k">elif</span> <span class="n">car_fingerprint</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HYUNDAI_GENESIS</span><span class="p">:</span>
+    <span class="c1"># This field is actually LdwsActivemode</span>
+    <span class="c1"># Genesis and Optima fault when forwarding while engaged</span>
+    <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_LdwsActivemode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+
+  <span class="n">dat</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;LKAS11&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+
+  <span class="k">if</span> <span class="n">car_fingerprint</span> <span class="ow">in</span> <span class="n">CHECKSUM</span><span class="p">[</span><span class="s2">&quot;crc8&quot;</span><span class="p">]:</span>
+    <span class="c1"># CRC Checksum as seen on 2019 Hyundai Santa Fe</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span> <span class="o">+</span> <span class="n">dat</span><span class="p">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span>
+    <span class="n">checksum</span> <span class="o">=</span> <span class="n">hyundai_checksum</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">car_fingerprint</span> <span class="ow">in</span> <span class="n">CHECKSUM</span><span class="p">[</span><span class="s2">&quot;6B&quot;</span><span class="p">]:</span>
+    <span class="c1"># Checksum of first 6 Bytes, as seen on 2018 Kia Sorento</span>
+    <span class="n">checksum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">dat</span><span class="p">[:</span><span class="mi">6</span><span class="p">])</span> <span class="o">%</span> <span class="mi">256</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Checksum of first 6 Bytes and last Byte as seen on 2018 Kia Stinger</span>
+    <span class="n">checksum</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">dat</span><span class="p">[:</span><span class="mi">6</span><span class="p">])</span> <span class="o">+</span> <span class="n">dat</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span> <span class="o">%</span> <span class="mi">256</span>
+
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Lkas_Chksum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">checksum</span>
+
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;LKAS11&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_clu11">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.hyundaican.create_clu11">[docs]</a>
+<span class="k">def</span> <span class="nf">create_clu11</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">clu11</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">car_fingerprint</span><span class="p">):</span>
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">clu11</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="s2">&quot;CF_Clu_CruiseSwState&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Clu_CruiseSwMain&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Clu_SldMainSW&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Clu_ParityBit1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Clu_VanzDecimal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Clu_Vanz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Clu_SPEED_UNIT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Clu_DetentOut&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Clu_RheostatLevel&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Clu_CluInfo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Clu_AmpInfo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CF_Clu_AliveCnt1&quot;</span><span class="p">,</span>
+  <span class="p">]}</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Clu_CruiseSwState&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">button</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;CF_Clu_AliveCnt1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame</span> <span class="o">%</span> <span class="mh">0x10</span>
+  <span class="c1"># send buttons to camera on camera-scc based cars</span>
+  <span class="n">bus</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">car_fingerprint</span> <span class="ow">in</span> <span class="n">CAMERA_SCC_CAR</span> <span class="k">else</span> <span class="mi">0</span>
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;CLU11&quot;</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_lfahda_mfc">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.hyundaican.create_lfahda_mfc">[docs]</a>
+<span class="k">def</span> <span class="nf">create_lfahda_mfc</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">enabled</span><span class="p">,</span> <span class="n">hda_set_speed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;LFA_Icon_State&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">enabled</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;HDA_Active&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">hda_set_speed</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;HDA_Icon_State&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">hda_set_speed</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;HDA_VSetReq&quot;</span><span class="p">:</span> <span class="n">hda_set_speed</span><span class="p">,</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;LFAHDA_MFC&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_acc_commands">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.hyundaican.create_acc_commands">[docs]</a>
+<span class="k">def</span> <span class="nf">create_acc_commands</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">enabled</span><span class="p">,</span> <span class="n">accel</span><span class="p">,</span> <span class="n">upper_jerk</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">lead_visible</span><span class="p">,</span> <span class="n">set_speed</span><span class="p">,</span> <span class="n">stopping</span><span class="p">,</span> <span class="n">long_override</span><span class="p">,</span> <span class="n">use_fca</span><span class="p">):</span>
+  <span class="n">commands</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="n">scc11_values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;MainMode_ACC&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;TauGapSet&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;VSetDis&quot;</span><span class="p">:</span> <span class="n">set_speed</span> <span class="k">if</span> <span class="n">enabled</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;AliveCounterACC&quot;</span><span class="p">:</span> <span class="n">idx</span> <span class="o">%</span> <span class="mh">0x10</span><span class="p">,</span>
+    <span class="s2">&quot;ObjValid&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="c1"># close lead makes controls tighter</span>
+    <span class="s2">&quot;ACC_ObjStatus&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="c1"># close lead makes controls tighter</span>
+    <span class="s2">&quot;ACC_ObjLatPos&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;ACC_ObjRelSpd&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;ACC_ObjDist&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="c1"># close lead makes controls tighter</span>
+    <span class="p">}</span>
+  <span class="n">commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;SCC11&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">scc11_values</span><span class="p">))</span>
+
+  <span class="n">scc12_values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ACCMode&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">enabled</span> <span class="ow">and</span> <span class="n">long_override</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">enabled</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;StopReq&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">stopping</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;aReqRaw&quot;</span><span class="p">:</span> <span class="n">accel</span><span class="p">,</span>
+    <span class="s2">&quot;aReqValue&quot;</span><span class="p">:</span> <span class="n">accel</span><span class="p">,</span>  <span class="c1"># stock ramps up and down respecting jerk limit until it reaches aReqRaw</span>
+    <span class="s2">&quot;CR_VSM_Alive&quot;</span><span class="p">:</span> <span class="n">idx</span> <span class="o">%</span> <span class="mh">0xF</span><span class="p">,</span>
+  <span class="p">}</span>
+
+  <span class="c1"># show AEB disabled indicator on dash with SCC12 if not sending FCA messages.</span>
+  <span class="c1"># these signals also prevent a TCS fault on non-FCA cars with alpha longitudinal</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">use_fca</span><span class="p">:</span>
+    <span class="n">scc12_values</span><span class="p">[</span><span class="s2">&quot;CF_VSM_ConfMode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">scc12_values</span><span class="p">[</span><span class="s2">&quot;AEB_Status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># AEB disabled</span>
+
+  <span class="n">scc12_dat</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;SCC12&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">scc12_values</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+  <span class="n">scc12_values</span><span class="p">[</span><span class="s2">&quot;CR_VSM_ChkSum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0x10</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">divmod</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">scc12_dat</span><span class="p">)</span> <span class="o">%</span> <span class="mh">0x10</span>
+
+  <span class="n">commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;SCC12&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">scc12_values</span><span class="p">))</span>
+
+  <span class="n">scc14_values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ComfortBandUpper&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="c1"># stock usually is 0 but sometimes uses higher values</span>
+    <span class="s2">&quot;ComfortBandLower&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="c1"># stock usually is 0 but sometimes uses higher values</span>
+    <span class="s2">&quot;JerkUpperLimit&quot;</span><span class="p">:</span> <span class="n">upper_jerk</span><span class="p">,</span> <span class="c1"># stock usually is 1.0 but sometimes uses higher values</span>
+    <span class="s2">&quot;JerkLowerLimit&quot;</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span> <span class="c1"># stock usually is 0.5 but sometimes uses higher values</span>
+    <span class="s2">&quot;ACCMode&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">enabled</span> <span class="ow">and</span> <span class="n">long_override</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">enabled</span> <span class="k">else</span> <span class="mi">4</span><span class="p">,</span> <span class="c1"># stock will always be 4 instead of 0 after first disengage</span>
+    <span class="s2">&quot;ObjGap&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">lead_visible</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span> <span class="c1"># 5: &gt;30, m, 4: 25-30 m, 3: 20-25 m, 2: &lt; 20 m, 0: no lead</span>
+  <span class="p">}</span>
+  <span class="n">commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;SCC14&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">scc14_values</span><span class="p">))</span>
+
+  <span class="c1"># Only send FCA11 on cars where it exists on the bus</span>
+  <span class="k">if</span> <span class="n">use_fca</span><span class="p">:</span>
+    <span class="c1"># note that some vehicles most likely have an alternate checksum/counter definition</span>
+    <span class="c1"># https://github.com/commaai/opendbc/commit/9ddcdb22c4929baf310295e832668e6e7fcfa602</span>
+    <span class="n">fca11_values</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s2">&quot;CR_FCA_Alive&quot;</span><span class="p">:</span> <span class="n">idx</span> <span class="o">%</span> <span class="mh">0xF</span><span class="p">,</span>
+      <span class="s2">&quot;PAINT1_Status&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;FCA_DrvSetStatus&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;FCA_Status&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  <span class="c1"># AEB disabled</span>
+    <span class="p">}</span>
+    <span class="n">fca11_dat</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;FCA11&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">fca11_values</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">fca11_values</span><span class="p">[</span><span class="s2">&quot;CR_FCA_ChkSum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hyundai_checksum</span><span class="p">(</span><span class="n">fca11_dat</span><span class="p">[:</span><span class="mi">7</span><span class="p">])</span>
+    <span class="n">commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;FCA11&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">fca11_values</span><span class="p">))</span>
+
+  <span class="k">return</span> <span class="n">commands</span></div>
+
+
+<div class="viewcode-block" id="create_acc_opt">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.hyundaican.create_acc_opt">[docs]</a>
+<span class="k">def</span> <span class="nf">create_acc_opt</span><span class="p">(</span><span class="n">packer</span><span class="p">):</span>
+  <span class="n">commands</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="n">scc13_values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;SCCDrvModeRValue&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;SCC_Equip&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;Lead_Veh_Dep_Alert_USM&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="p">}</span>
+  <span class="n">commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;SCC13&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">scc13_values</span><span class="p">))</span>
+
+  <span class="c1"># TODO: this needs to be detected and conditionally sent on unsupported long cars</span>
+  <span class="n">fca12_values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;FCA_DrvSetState&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;FCA_USM&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="c1"># AEB disabled</span>
+  <span class="p">}</span>
+  <span class="n">commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;FCA12&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">fca12_values</span><span class="p">))</span>
+
+  <span class="k">return</span> <span class="n">commands</span></div>
+
+
+<div class="viewcode-block" id="create_frt_radar_opt">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.hyundaican.create_frt_radar_opt">[docs]</a>
+<span class="k">def</span> <span class="nf">create_frt_radar_opt</span><span class="p">(</span><span class="n">packer</span><span class="p">):</span>
+  <span class="n">frt_radar11_values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;CF_FCA_Equip_Front_Radar&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;FRT_RADAR11&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">frt_radar11_values</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

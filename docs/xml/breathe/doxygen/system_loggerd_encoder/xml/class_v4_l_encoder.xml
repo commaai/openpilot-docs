@@ -1,0 +1,280 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="class_v4_l_encoder" kind="class" language="C++" prot="public">
+    <compoundname>V4LEncoder</compoundname>
+    <basecompoundref refid="class_video_encoder" prot="public" virt="non-virtual">VideoEncoder</basecompoundref>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_v4_l_encoder_1a7bc5564e49df0ccfc39a2146f309ec8e" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int V4LEncoder::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="17" column="7" bodyfile="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_v4_l_encoder_1a4260cf88553458c7061770bfa5c73654" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool V4LEncoder::is_open</definition>
+        <argsstring></argsstring>
+        <name>is_open</name>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="19" column="8" bodyfile="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_v4_l_encoder_1a7b53fd412b2b15b80cb7b85567888bdb" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int V4LEncoder::segment_num</definition>
+        <argsstring></argsstring>
+        <name>segment_num</name>
+        <initializer>= -1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="20" column="7" bodyfile="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_v4_l_encoder_1a21891d575230403d933ccb40b58967f1" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int V4LEncoder::counter</definition>
+        <argsstring></argsstring>
+        <name>counter</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="21" column="7" bodyfile="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_v4_l_encoder_1a1188ed8e9a29b62dc2ce40cd60b6591a" prot="private" static="no" mutable="no">
+        <type>SafeQueue&lt; VisionIpcBufExtra &gt;</type>
+        <definition>SafeQueue&lt;VisionIpcBufExtra&gt; V4LEncoder::extras</definition>
+        <argsstring></argsstring>
+        <name>extras</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="23" column="13" bodyfile="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_v4_l_encoder_1a9052036dc41769e1bdd98a972e6b9265" prot="private" static="no" mutable="no">
+        <type>std::thread</type>
+        <definition>std::thread V4LEncoder::dequeue_handler_thread</definition>
+        <argsstring></argsstring>
+        <name>dequeue_handler_thread</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="26" column="15" bodyfile="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_v4_l_encoder_1a8da5817abc4b92963e28be8b5cbce1ac" prot="private" static="no" mutable="no">
+        <type>VisionBuf</type>
+        <definition>VisionBuf V4LEncoder::buf_out[BUF_OUT_COUNT]</definition>
+        <argsstring>[BUF_OUT_COUNT]</argsstring>
+        <name>buf_out</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="28" column="13" bodyfile="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_v4_l_encoder_1a210e9219f0d6d9697410fe9148295173" prot="private" static="no" mutable="no">
+        <type>SafeQueue&lt; unsigned int &gt;</type>
+        <definition>SafeQueue&lt;unsigned int&gt; V4LEncoder::free_buf_in</definition>
+        <argsstring></argsstring>
+        <name>free_buf_in</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="29" column="13" bodyfile="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_v4_l_encoder_1a11165e3e8b5a096f5f7513da1cba201c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>V4LEncoder::V4LEncoder</definition>
+        <argsstring>(const EncoderInfo &amp;encoder_info, int in_width, int in_height)</argsstring>
+        <name>V4LEncoder</name>
+        <param>
+          <type>const EncoderInfo &amp;</type>
+          <declname>encoder_info</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>in_width</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>in_height</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="11" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_v4_l_encoder_1ac56e948b2f53b71acebc426aa3c8a44c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>V4LEncoder::~V4LEncoder</definition>
+        <argsstring>()</argsstring>
+        <name>~V4LEncoder</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="12" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_v4_l_encoder_1ac7045e393d7f8159765fb15d44c7bb40" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>int</type>
+        <definition>int V4LEncoder::encode_frame</definition>
+        <argsstring>(VisionBuf *buf, VisionIpcBufExtra *extra)</argsstring>
+        <name>encode_frame</name>
+        <reimplements refid="class_video_encoder_1a7e98940bae4faeea77a53eee7a4729b2">encode_frame</reimplements>
+        <param>
+          <type>VisionBuf *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>VisionIpcBufExtra *</type>
+          <declname>extra</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="13" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="class_v4_l_encoder_1ad0dacd27f016e6873e0ab88f6ad9a377" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void V4LEncoder::encoder_open</definition>
+        <argsstring>(const char *path)</argsstring>
+        <name>encoder_open</name>
+        <reimplements refid="class_video_encoder_1abd94ac3ffdcfe680da3a285655458f8a">encoder_open</reimplements>
+        <param>
+          <type>const char *</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="14" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_v4_l_encoder_1a73144ec7e0f5ced4ef4f234766cf8c35" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void V4LEncoder::encoder_close</definition>
+        <argsstring>()</argsstring>
+        <name>encoder_close</name>
+        <reimplements refid="class_video_encoder_1a867bd58ae8a14f8b1a2d895137ec9114">encoder_close</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="15" column="8"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-func">
+      <memberdef kind="function" id="class_v4_l_encoder_1a75a3646766eee5f36ff3a23f02026ba6" prot="private" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void V4LEncoder::dequeue_handler</definition>
+        <argsstring>(V4LEncoder *e)</argsstring>
+        <name>dequeue_handler</name>
+        <param>
+          <type><ref refid="class_v4_l_encoder" kindref="compound">V4LEncoder</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="25" column="15"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>VideoEncoder</label>
+        <link refid="class_video_encoder"/>
+      </node>
+      <node id="1">
+        <label>V4LEncoder</label>
+        <link refid="class_v4_l_encoder"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>VideoEncoder</label>
+        <link refid="class_video_encoder"/>
+      </node>
+      <node id="1">
+        <label>V4LEncoder</label>
+        <link refid="class_v4_l_encoder"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" line="9" column="37" bodyfile="/tmp/openpilot/system/loggerd/encoder/v4l_encoder.h" bodystart="9" bodyend="30"/>
+    <listofallmembers>
+      <member refid="class_v4_l_encoder_1a8da5817abc4b92963e28be8b5cbce1ac" prot="private" virt="non-virtual"><scope>V4LEncoder</scope><name>buf_out</name></member>
+      <member refid="class_v4_l_encoder_1a21891d575230403d933ccb40b58967f1" prot="private" virt="non-virtual"><scope>V4LEncoder</scope><name>counter</name></member>
+      <member refid="class_v4_l_encoder_1a75a3646766eee5f36ff3a23f02026ba6" prot="private" virt="non-virtual"><scope>V4LEncoder</scope><name>dequeue_handler</name></member>
+      <member refid="class_v4_l_encoder_1a9052036dc41769e1bdd98a972e6b9265" prot="private" virt="non-virtual"><scope>V4LEncoder</scope><name>dequeue_handler_thread</name></member>
+      <member refid="class_v4_l_encoder_1ac7045e393d7f8159765fb15d44c7bb40" prot="public" virt="virtual"><scope>V4LEncoder</scope><name>encode_frame</name></member>
+      <member refid="class_v4_l_encoder_1a73144ec7e0f5ced4ef4f234766cf8c35" prot="public" virt="virtual"><scope>V4LEncoder</scope><name>encoder_close</name></member>
+      <member refid="class_video_encoder_1ab95a7555808c5c5c087cfdeba3917c78" prot="protected" virt="non-virtual"><scope>V4LEncoder</scope><name>encoder_info</name></member>
+      <member refid="class_v4_l_encoder_1ad0dacd27f016e6873e0ab88f6ad9a377" prot="public" virt="virtual"><scope>V4LEncoder</scope><name>encoder_open</name></member>
+      <member refid="class_v4_l_encoder_1a1188ed8e9a29b62dc2ce40cd60b6591a" prot="private" virt="non-virtual"><scope>V4LEncoder</scope><name>extras</name></member>
+      <member refid="class_v4_l_encoder_1a7bc5564e49df0ccfc39a2146f309ec8e" prot="private" virt="non-virtual"><scope>V4LEncoder</scope><name>fd</name></member>
+      <member refid="class_v4_l_encoder_1a210e9219f0d6d9697410fe9148295173" prot="private" virt="non-virtual"><scope>V4LEncoder</scope><name>free_buf_in</name></member>
+      <member refid="class_video_encoder_1a9bd4d8cfca88434dbd276a6bfacfe027" prot="protected" virt="non-virtual"><scope>V4LEncoder</scope><name>in_height</name></member>
+      <member refid="class_video_encoder_1a580791874e935338868c45c242b1b4e0" prot="protected" virt="non-virtual"><scope>V4LEncoder</scope><name>in_width</name></member>
+      <member refid="class_v4_l_encoder_1a4260cf88553458c7061770bfa5c73654" prot="private" virt="non-virtual"><scope>V4LEncoder</scope><name>is_open</name></member>
+      <member refid="class_video_encoder_1aee488b5b3c6855b84d8b39257ba1dc0d" prot="public" virt="non-virtual"><scope>V4LEncoder</scope><name>publisher_publish</name></member>
+      <member refid="class_v4_l_encoder_1a7b53fd412b2b15b80cb7b85567888bdb" prot="private" virt="non-virtual"><scope>V4LEncoder</scope><name>segment_num</name></member>
+      <member refid="class_v4_l_encoder_1a11165e3e8b5a096f5f7513da1cba201c" prot="public" virt="non-virtual"><scope>V4LEncoder</scope><name>V4LEncoder</name></member>
+      <member refid="class_video_encoder_1ac42740adf0c6776523116d4453126ced" prot="public" virt="non-virtual"><scope>V4LEncoder</scope><name>VideoEncoder</name></member>
+      <member refid="class_v4_l_encoder_1ac56e948b2f53b71acebc426aa3c8a44c" prot="public" virt="non-virtual"><scope>V4LEncoder</scope><name>~V4LEncoder</name></member>
+      <member refid="class_video_encoder_1adc5f7db2760b8095e86d6e55b9cab3e9" prot="public" virt="virtual"><scope>V4LEncoder</scope><name>~VideoEncoder</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

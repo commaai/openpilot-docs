@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.fw_versions &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/fw_versions.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.fw_versions</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.fw_versions</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">DefaultDict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">capnp</span>
+
+<span class="kn">import</span> <span class="nn">panda.python.uds</span> <span class="k">as</span> <span class="nn">uds</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.ecu_addrs</span> <span class="kn">import</span> <span class="n">get_ecu_addrs</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.fw_query_definitions</span> <span class="kn">import</span> <span class="n">AddrType</span><span class="p">,</span> <span class="n">EcuAddrBusType</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.interfaces</span> <span class="kn">import</span> <span class="n">get_interface_attr</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.fingerprints</span> <span class="kn">import</span> <span class="n">FW_VERSIONS</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.isotp_parallel_query</span> <span class="kn">import</span> <span class="n">IsoTpParallelQuery</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+
+<span class="n">Ecu</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">Ecu</span>
+<span class="n">ESSENTIAL_ECUS</span> <span class="o">=</span> <span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">abs</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">fwdRadar</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">vsa</span><span class="p">]</span>
+<span class="n">FUZZY_EXCLUDE_ECUS</span> <span class="o">=</span> <span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">fwdRadar</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">debug</span><span class="p">]</span>
+
+<span class="n">FW_QUERY_CONFIGS</span> <span class="o">=</span> <span class="n">get_interface_attr</span><span class="p">(</span><span class="s1">&#39;FW_QUERY_CONFIG&#39;</span><span class="p">,</span> <span class="n">ignore_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">VERSIONS</span> <span class="o">=</span> <span class="n">get_interface_attr</span><span class="p">(</span><span class="s1">&#39;FW_VERSIONS&#39;</span><span class="p">,</span> <span class="n">ignore_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">MODEL_TO_BRAND</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="n">b</span> <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">e</span><span class="p">}</span>
+<span class="n">REQUESTS</span> <span class="o">=</span> <span class="p">[(</span><span class="n">brand</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">FW_QUERY_CONFIGS</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">requests</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="chunks">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fw_versions.chunks">[docs]</a>
+<span class="k">def</span> <span class="nf">chunks</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">),</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">yield</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">n</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="is_brand">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fw_versions.is_brand">[docs]</a>
+<span class="k">def</span> <span class="nf">is_brand</span><span class="p">(</span><span class="n">brand</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filter_brand</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns if brand matches filter_brand or no brand filter is specified&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">filter_brand</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">brand</span> <span class="o">==</span> <span class="n">filter_brand</span></div>
+
+
+
+<div class="viewcode-block" id="build_fw_dict">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fw_versions.build_fw_dict">[docs]</a>
+<span class="k">def</span> <span class="nf">build_fw_dict</span><span class="p">(</span><span class="n">fw_versions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">capnp</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructBuilder</span><span class="p">],</span>
+                  <span class="n">filter_brand</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">AddrType</span><span class="p">,</span> <span class="n">Set</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]:</span>
+  <span class="n">fw_versions_dict</span><span class="p">:</span> <span class="n">DefaultDict</span><span class="p">[</span><span class="n">AddrType</span><span class="p">,</span> <span class="n">Set</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">fw_versions</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">is_brand</span><span class="p">(</span><span class="n">fw</span><span class="o">.</span><span class="n">brand</span><span class="p">,</span> <span class="n">filter_brand</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">fw</span><span class="o">.</span><span class="n">logging</span><span class="p">:</span>
+      <span class="n">sub_addr</span> <span class="o">=</span> <span class="n">fw</span><span class="o">.</span><span class="n">subAddress</span> <span class="k">if</span> <span class="n">fw</span><span class="o">.</span><span class="n">subAddress</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+      <span class="n">fw_versions_dict</span><span class="p">[(</span><span class="n">fw</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">)]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">fw</span><span class="o">.</span><span class="n">fwVersion</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">fw_versions_dict</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_brand_addrs">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fw_versions.get_brand_addrs">[docs]</a>
+<span class="k">def</span> <span class="nf">get_brand_addrs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Set</span><span class="p">[</span><span class="n">AddrType</span><span class="p">]]:</span>
+  <span class="n">brand_addrs</span><span class="p">:</span> <span class="n">DefaultDict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Set</span><span class="p">[</span><span class="n">AddrType</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">cars</span> <span class="ow">in</span> <span class="n">VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="c1"># Add ecus in database + extra ecus to match against</span>
+    <span class="n">brand_addrs</span><span class="p">[</span><span class="n">brand</span><span class="p">]</span> <span class="o">|=</span> <span class="p">{(</span><span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span> <span class="ow">in</span> <span class="n">FW_QUERY_CONFIGS</span><span class="p">[</span><span class="n">brand</span><span class="p">]</span><span class="o">.</span><span class="n">extra_ecus</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">cars</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+      <span class="n">brand_addrs</span><span class="p">[</span><span class="n">brand</span><span class="p">]</span> <span class="o">|=</span> <span class="p">{(</span><span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span> <span class="ow">in</span> <span class="n">fw</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+  <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">brand_addrs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="match_fw_to_car_fuzzy">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fw_versions.match_fw_to_car_fuzzy">[docs]</a>
+<span class="k">def</span> <span class="nf">match_fw_to_car_fuzzy</span><span class="p">(</span><span class="n">live_fw_versions</span><span class="p">,</span> <span class="n">match_brand</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Do a fuzzy FW match. This function will return a match, and the number of firmware version</span>
+<span class="sd">  that were matched uniquely to that specific car. If multiple ECUs uniquely match to different cars</span>
+<span class="sd">  the match is rejected.&quot;&quot;&quot;</span>
+
+  <span class="c1"># Build lookup table from (addr, sub_addr, fw) to list of candidate cars</span>
+  <span class="n">all_fw_versions</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">fw_by_addr</span> <span class="ow">in</span> <span class="n">FW_VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_brand</span><span class="p">(</span><span class="n">MODEL_TO_BRAND</span><span class="p">[</span><span class="n">candidate</span><span class="p">],</span> <span class="n">match_brand</span><span class="p">):</span>
+      <span class="k">continue</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">exclude</span><span class="p">:</span>
+      <span class="k">continue</span>
+
+    <span class="k">for</span> <span class="n">addr</span><span class="p">,</span> <span class="n">fws</span> <span class="ow">in</span> <span class="n">fw_by_addr</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="c1"># These ECUs are known to be shared between models (EPS only between hybrid/ICE version)</span>
+      <span class="c1"># Getting this exactly right isn&#39;t crucial, but excluding camera and radar makes it almost</span>
+      <span class="c1"># impossible to get 3 matching versions, even if two models with shared parts are released at the same</span>
+      <span class="c1"># time and only one is in our database.</span>
+      <span class="k">if</span> <span class="n">addr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">FUZZY_EXCLUDE_ECUS</span><span class="p">:</span>
+        <span class="k">continue</span>
+      <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fws</span><span class="p">:</span>
+        <span class="n">all_fw_versions</span><span class="p">[(</span><span class="n">addr</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">addr</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">f</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+
+  <span class="n">matched_ecus</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+  <span class="n">candidate</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="k">for</span> <span class="n">addr</span><span class="p">,</span> <span class="n">versions</span> <span class="ow">in</span> <span class="n">live_fw_versions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">ecu_key</span> <span class="o">=</span> <span class="p">(</span><span class="n">addr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">addr</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">versions</span><span class="p">:</span>
+      <span class="c1"># All cars that have this FW response on the specified address</span>
+      <span class="n">candidates</span> <span class="o">=</span> <span class="n">all_fw_versions</span><span class="p">[(</span><span class="o">*</span><span class="n">ecu_key</span><span class="p">,</span> <span class="n">version</span><span class="p">)]</span>
+
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">matched_ecus</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ecu_key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">candidate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+          <span class="n">candidate</span> <span class="o">=</span> <span class="n">candidates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># We uniquely matched two different cars. No fuzzy match possible</span>
+        <span class="k">elif</span> <span class="n">candidate</span> <span class="o">!=</span> <span class="n">candidates</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+          <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
+
+  <span class="c1"># Note that it is possible to match to a candidate without all its ECUs being present</span>
+  <span class="c1"># if there are enough matches. FIXME: parameterize this or require all ECUs to exist like exact matching</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matched_ecus</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">log</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fingerprinted </span><span class="si">{</span><span class="n">candidate</span><span class="si">}</span><span class="s2"> using fuzzy match. </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">matched_ecus</span><span class="p">)</span><span class="si">}</span><span class="s2"> matching ECUs&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">candidate</span><span class="p">}</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="match_fw_to_car_exact">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fw_versions.match_fw_to_car_exact">[docs]</a>
+<span class="k">def</span> <span class="nf">match_fw_to_car_exact</span><span class="p">(</span><span class="n">live_fw_versions</span><span class="p">,</span> <span class="n">match_brand</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Do an exact FW match. Returns all cars that match the given</span>
+<span class="sd">  FW versions for a list of &quot;essential&quot; ECUs. If an ECU is not considered</span>
+<span class="sd">  essential the FW version can be missing to get a fingerprint, but if it&#39;s present it</span>
+<span class="sd">  needs to match the database.&quot;&quot;&quot;</span>
+  <span class="n">invalid</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+  <span class="n">candidates</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="n">f</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">FW_VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span>
+                <span class="n">is_brand</span><span class="p">(</span><span class="n">MODEL_TO_BRAND</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">match_brand</span><span class="p">)}</span>
+
+  <span class="k">for</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">fws</span> <span class="ow">in</span> <span class="n">candidates</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">FW_QUERY_CONFIGS</span><span class="p">[</span><span class="n">MODEL_TO_BRAND</span><span class="p">[</span><span class="n">candidate</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">ecu</span><span class="p">,</span> <span class="n">expected_versions</span> <span class="ow">in</span> <span class="n">fws</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">ecu_type</span> <span class="o">=</span> <span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="n">addr</span> <span class="o">=</span> <span class="n">ecu</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+      <span class="n">found_versions</span> <span class="o">=</span> <span class="n">live_fw_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_versions</span><span class="p">):</span>
+        <span class="c1"># Some models can sometimes miss an ecu, or show on two different addresses</span>
+        <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">non_essential_ecus</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ecu_type</span><span class="p">,</span> <span class="p">[]):</span>
+          <span class="k">continue</span>
+
+        <span class="c1"># Ignore non essential ecus</span>
+        <span class="k">if</span> <span class="n">ecu_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ESSENTIAL_ECUS</span><span class="p">:</span>
+          <span class="k">continue</span>
+
+      <span class="c1"># Virtual debug ecu doesn&#39;t need to match the database</span>
+      <span class="k">if</span> <span class="n">ecu_type</span> <span class="o">==</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+      <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">found_version</span> <span class="ow">in</span> <span class="n">expected_versions</span> <span class="k">for</span> <span class="n">found_version</span> <span class="ow">in</span> <span class="n">found_versions</span><span class="p">):</span>
+        <span class="n">invalid</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+        <span class="k">break</span>
+
+  <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">candidates</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="n">invalid</span></div>
+
+
+
+<div class="viewcode-block" id="match_fw_to_car">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fw_versions.match_fw_to_car">[docs]</a>
+<span class="k">def</span> <span class="nf">match_fw_to_car</span><span class="p">(</span><span class="n">fw_versions</span><span class="p">,</span> <span class="n">allow_exact</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">allow_fuzzy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+  <span class="c1"># Try exact matching first</span>
+  <span class="n">exact_matches</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">if</span> <span class="n">allow_exact</span><span class="p">:</span>
+    <span class="n">exact_matches</span> <span class="o">=</span> <span class="p">[(</span><span class="kc">True</span><span class="p">,</span> <span class="n">match_fw_to_car_exact</span><span class="p">)]</span>
+  <span class="k">if</span> <span class="n">allow_fuzzy</span><span class="p">:</span>
+    <span class="n">exact_matches</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="kc">False</span><span class="p">,</span> <span class="n">match_fw_to_car_fuzzy</span><span class="p">))</span>
+
+  <span class="k">for</span> <span class="n">exact_match</span><span class="p">,</span> <span class="n">match_func</span> <span class="ow">in</span> <span class="n">exact_matches</span><span class="p">:</span>
+    <span class="c1"># For each brand, attempt to fingerprint using all FW returned from its queries</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">brand</span> <span class="ow">in</span> <span class="n">VERSIONS</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+      <span class="n">fw_versions_dict</span> <span class="o">=</span> <span class="n">build_fw_dict</span><span class="p">(</span><span class="n">fw_versions</span><span class="p">,</span> <span class="n">filter_brand</span><span class="o">=</span><span class="n">brand</span><span class="p">)</span>
+      <span class="n">matches</span> <span class="o">|=</span> <span class="n">match_func</span><span class="p">(</span><span class="n">fw_versions_dict</span><span class="p">,</span> <span class="n">match_brand</span><span class="o">=</span><span class="n">brand</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">)</span>
+
+      <span class="c1"># If specified and no matches so far, fall back to brand&#39;s fuzzy fingerprinting function</span>
+      <span class="n">config</span> <span class="o">=</span> <span class="n">FW_QUERY_CONFIGS</span><span class="p">[</span><span class="n">brand</span><span class="p">]</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">exact_match</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">match_fw_to_car_fuzzy</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">matches</span> <span class="o">|=</span> <span class="n">config</span><span class="o">.</span><span class="n">match_fw_to_car_fuzzy</span><span class="p">(</span><span class="n">fw_versions_dict</span><span class="p">,</span> <span class="n">VERSIONS</span><span class="p">[</span><span class="n">brand</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">exact_match</span><span class="p">,</span> <span class="n">matches</span>
+
+  <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="nb">set</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="get_present_ecus">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fw_versions.get_present_ecus">[docs]</a>
+<span class="k">def</span> <span class="nf">get_present_ecus</span><span class="p">(</span><span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">,</span> <span class="n">num_pandas</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">EcuAddrBusType</span><span class="p">]:</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+  <span class="c1"># queries are split by OBD multiplexing mode</span>
+  <span class="n">queries</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">EcuAddrBusType</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{</span><span class="kc">True</span><span class="p">:</span> <span class="p">[],</span> <span class="kc">False</span><span class="p">:</span> <span class="p">[]}</span>
+  <span class="n">parallel_queries</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">EcuAddrBusType</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span><span class="kc">True</span><span class="p">:</span> <span class="p">[],</span> <span class="kc">False</span><span class="p">:</span> <span class="p">[]}</span>
+  <span class="n">responses</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+  <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">REQUESTS</span><span class="p">:</span>
+    <span class="c1"># Skip query if no panda available</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">bus</span> <span class="o">&gt;</span> <span class="n">num_pandas</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">continue</span>
+
+    <span class="k">for</span> <span class="n">brand_versions</span> <span class="ow">in</span> <span class="n">VERSIONS</span><span class="p">[</span><span class="n">brand</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+      <span class="k">for</span> <span class="n">ecu_type</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">brand_versions</span><span class="p">)</span> <span class="o">+</span> <span class="n">config</span><span class="o">.</span><span class="n">extra_ecus</span><span class="p">:</span>
+        <span class="c1"># Only query ecus in whitelist if whitelist is not empty</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">whitelist_ecus</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">ecu_type</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">whitelist_ecus</span><span class="p">:</span>
+          <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">bus</span><span class="p">)</span>
+          <span class="c1"># Build set of queries</span>
+          <span class="k">if</span> <span class="n">sub_addr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parallel_queries</span><span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">obd_multiplexing</span><span class="p">]:</span>
+              <span class="n">parallel_queries</span><span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">obd_multiplexing</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+          <span class="k">else</span><span class="p">:</span>  <span class="c1"># subaddresses must be queried one by one</span>
+            <span class="k">if</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">queries</span><span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">obd_multiplexing</span><span class="p">]:</span>
+              <span class="n">queries</span><span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">obd_multiplexing</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">a</span><span class="p">])</span>
+
+          <span class="c1"># Build set of expected responses to filter</span>
+          <span class="n">response_addr</span> <span class="o">=</span> <span class="n">uds</span><span class="o">.</span><span class="n">get_rx_addr_for_tx_addr</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">rx_offset</span><span class="p">)</span>
+          <span class="n">responses</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">response_addr</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">bus</span><span class="p">))</span>
+
+  <span class="k">for</span> <span class="n">obd_multiplexing</span> <span class="ow">in</span> <span class="n">queries</span><span class="p">:</span>
+    <span class="n">queries</span><span class="p">[</span><span class="n">obd_multiplexing</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">parallel_queries</span><span class="p">[</span><span class="n">obd_multiplexing</span><span class="p">])</span>
+
+  <span class="n">ecu_responses</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+  <span class="k">for</span> <span class="n">obd_multiplexing</span> <span class="ow">in</span> <span class="n">queries</span><span class="p">:</span>
+    <span class="n">set_obd_multiplexing</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">obd_multiplexing</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">queries</span><span class="p">[</span><span class="n">obd_multiplexing</span><span class="p">]:</span>
+      <span class="n">ecu_responses</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">get_ecu_addrs</span><span class="p">(</span><span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">,</span> <span class="nb">set</span><span class="p">(</span><span class="n">query</span><span class="p">),</span> <span class="n">responses</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">ecu_responses</span></div>
+
+
+
+<div class="viewcode-block" id="get_brand_ecu_matches">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fw_versions.get_brand_ecu_matches">[docs]</a>
+<span class="k">def</span> <span class="nf">get_brand_ecu_matches</span><span class="p">(</span><span class="n">ecu_rx_addrs</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns dictionary of brands and matches with ECUs in their FW versions&quot;&quot;&quot;</span>
+
+  <span class="n">brand_addrs</span> <span class="o">=</span> <span class="n">get_brand_addrs</span><span class="p">()</span>
+  <span class="n">brand_matches</span> <span class="o">=</span> <span class="p">{</span><span class="n">brand</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">REQUESTS</span><span class="p">}</span>
+
+  <span class="n">brand_rx_offsets</span> <span class="o">=</span> <span class="p">{(</span><span class="n">brand</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">rx_offset</span><span class="p">)</span> <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">REQUESTS</span><span class="p">}</span>
+  <span class="k">for</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">ecu_rx_addrs</span><span class="p">:</span>
+    <span class="c1"># Since we can&#39;t know what request an ecu responded to, add matches for all possible rx offsets</span>
+    <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">rx_offset</span> <span class="ow">in</span> <span class="n">brand_rx_offsets</span><span class="p">:</span>
+      <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">uds</span><span class="o">.</span><span class="n">get_rx_addr_for_tx_addr</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="o">-</span><span class="n">rx_offset</span><span class="p">),</span> <span class="n">sub_addr</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">brand_addrs</span><span class="p">[</span><span class="n">brand</span><span class="p">]:</span>
+        <span class="n">brand_matches</span><span class="p">[</span><span class="n">brand</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">brand_matches</span></div>
+
+
+
+<div class="viewcode-block" id="set_obd_multiplexing">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fw_versions.set_obd_multiplexing">[docs]</a>
+<span class="k">def</span> <span class="nf">set_obd_multiplexing</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="n">Params</span><span class="p">,</span> <span class="n">obd_multiplexing</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;ObdMultiplexingEnabled&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">obd_multiplexing</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting OBD multiplexing to </span><span class="si">{</span><span class="n">obd_multiplexing</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;ObdMultiplexingChanged&quot;</span><span class="p">)</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;ObdMultiplexingEnabled&quot;</span><span class="p">,</span> <span class="n">obd_multiplexing</span><span class="p">)</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;ObdMultiplexingChanged&quot;</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;OBD multiplexing set successfully&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_fw_versions_ordered">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fw_versions.get_fw_versions_ordered">[docs]</a>
+<span class="k">def</span> <span class="nf">get_fw_versions_ordered</span><span class="p">(</span><span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">,</span> <span class="n">ecu_rx_addrs</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">num_pandas</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> \
+  <span class="n">List</span><span class="p">[</span><span class="n">capnp</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructBuilder</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Queries for FW versions ordering brands by likelihood, breaks when exact match is found&quot;&quot;&quot;</span>
+
+  <span class="n">all_car_fw</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">brand_matches</span> <span class="o">=</span> <span class="n">get_brand_ecu_matches</span><span class="p">(</span><span class="n">ecu_rx_addrs</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">brand</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">brand_matches</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">b</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">brand_matches</span><span class="p">[</span><span class="n">b</span><span class="p">]),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="c1"># Skip this brand if there are no matching present ECUs</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">brand_matches</span><span class="p">[</span><span class="n">brand</span><span class="p">]):</span>
+      <span class="k">continue</span>
+
+    <span class="n">car_fw</span> <span class="o">=</span> <span class="n">get_fw_versions</span><span class="p">(</span><span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">,</span> <span class="n">query_brand</span><span class="o">=</span><span class="n">brand</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">num_pandas</span><span class="o">=</span><span class="n">num_pandas</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">)</span>
+    <span class="n">all_car_fw</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">car_fw</span><span class="p">)</span>
+
+    <span class="c1"># If there is a match using this brand&#39;s FW alone, finish querying early</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">matches</span> <span class="o">=</span> <span class="n">match_fw_to_car</span><span class="p">(</span><span class="n">car_fw</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">break</span>
+
+  <span class="k">return</span> <span class="n">all_car_fw</span></div>
+
+
+
+<div class="viewcode-block" id="get_fw_versions">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fw_versions.get_fw_versions">[docs]</a>
+<span class="k">def</span> <span class="nf">get_fw_versions</span><span class="p">(</span><span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">,</span> <span class="n">query_brand</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">num_pandas</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> \
+  <span class="n">List</span><span class="p">[</span><span class="n">capnp</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructBuilder</span><span class="p">]:</span>
+  <span class="n">versions</span> <span class="o">=</span> <span class="n">VERSIONS</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+
+  <span class="k">if</span> <span class="n">query_brand</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">versions</span> <span class="o">=</span> <span class="p">{</span><span class="n">query_brand</span><span class="p">:</span> <span class="n">versions</span><span class="p">[</span><span class="n">query_brand</span><span class="p">]}</span>
+
+  <span class="k">if</span> <span class="n">extra</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">versions</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
+
+  <span class="c1"># Extract ECU addresses to query from fingerprints</span>
+  <span class="c1"># ECUs using a subaddress need be queried one by one, the rest can be done in parallel</span>
+  <span class="n">addrs</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">parallel_addrs</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">ecu_types</span> <span class="o">=</span> <span class="p">{}</span>
+
+  <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">brand_versions</span> <span class="ow">in</span> <span class="n">versions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">FW_QUERY_CONFIGS</span><span class="p">[</span><span class="n">brand</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">ecu</span> <span class="ow">in</span> <span class="n">brand_versions</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+      <span class="c1"># Each brand can define extra ECUs to query for data collection</span>
+      <span class="k">for</span> <span class="n">ecu_type</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">ecu</span><span class="p">)</span> <span class="o">+</span> <span class="n">config</span><span class="o">.</span><span class="n">extra_ecus</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">brand</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">a</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ecu_types</span><span class="p">:</span>
+          <span class="n">ecu_types</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">ecu_type</span>
+
+        <span class="k">if</span> <span class="n">sub_addr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">a</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parallel_addrs</span><span class="p">:</span>
+            <span class="n">parallel_addrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="k">if</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">addrs</span><span class="p">:</span>
+            <span class="n">addrs</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">a</span><span class="p">])</span>
+
+  <span class="n">addrs</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">parallel_addrs</span><span class="p">)</span>
+
+  <span class="c1"># Get versions and build capnp list to put into CarParams</span>
+  <span class="n">car_fw</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">requests</span> <span class="o">=</span> <span class="p">[(</span><span class="n">brand</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">REQUESTS</span> <span class="k">if</span> <span class="n">is_brand</span><span class="p">(</span><span class="n">brand</span><span class="p">,</span> <span class="n">query_brand</span><span class="p">)]</span>
+  <span class="k">for</span> <span class="n">addr</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">addrs</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="n">progress</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">addr_chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">(</span><span class="n">addr</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">requests</span><span class="p">:</span>
+        <span class="c1"># Skip query if no panda available</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">bus</span> <span class="o">&gt;</span> <span class="n">num_pandas</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+          <span class="k">continue</span>
+
+        <span class="c1"># Toggle OBD multiplexing for each request</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">bus</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+          <span class="n">set_obd_multiplexing</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">obd_multiplexing</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+          <span class="n">query_addrs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="n">addr_chunk</span> <span class="k">if</span> <span class="n">b</span> <span class="ow">in</span> <span class="p">(</span><span class="n">brand</span><span class="p">,</span> <span class="s1">&#39;any&#39;</span><span class="p">)</span> <span class="ow">and</span>
+                         <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">whitelist_ecus</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">ecu_types</span><span class="p">[(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">)]</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">whitelist_ecus</span><span class="p">)]</span>
+
+          <span class="k">if</span> <span class="n">query_addrs</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">IsoTpParallelQuery</span><span class="p">(</span><span class="n">sendcan</span><span class="p">,</span> <span class="n">logcan</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">bus</span><span class="p">,</span> <span class="n">query_addrs</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">request</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">response</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">rx_offset</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">)</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">tx_addr</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">),</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">query</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+              <span class="n">f</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">CarFw</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+
+              <span class="n">f</span><span class="o">.</span><span class="n">ecu</span> <span class="o">=</span> <span class="n">ecu_types</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">brand</span><span class="p">,</span> <span class="n">tx_addr</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">),</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">unknown</span><span class="p">)</span>
+              <span class="n">f</span><span class="o">.</span><span class="n">fwVersion</span> <span class="o">=</span> <span class="n">version</span>
+              <span class="n">f</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">tx_addr</span>
+              <span class="n">f</span><span class="o">.</span><span class="n">responseAddress</span> <span class="o">=</span> <span class="n">uds</span><span class="o">.</span><span class="n">get_rx_addr_for_tx_addr</span><span class="p">(</span><span class="n">tx_addr</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">rx_offset</span><span class="p">)</span>
+              <span class="n">f</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">request</span>
+              <span class="n">f</span><span class="o">.</span><span class="n">brand</span> <span class="o">=</span> <span class="n">brand</span>
+              <span class="n">f</span><span class="o">.</span><span class="n">bus</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">bus</span>
+              <span class="n">f</span><span class="o">.</span><span class="n">logging</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">logging</span> <span class="ow">or</span> <span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">ecu</span><span class="p">,</span> <span class="n">tx_addr</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">)</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">extra_ecus</span>
+              <span class="n">f</span><span class="o">.</span><span class="n">obdMultiplexing</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">obd_multiplexing</span>
+
+              <span class="k">if</span> <span class="n">sub_addr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">subAddress</span> <span class="o">=</span> <span class="n">sub_addr</span>
+
+              <span class="n">car_fw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;FW query exception&quot;</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">car_fw</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">time</span>
+  <span class="kn">import</span> <span class="nn">argparse</span>
+  <span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+  <span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.vin</span> <span class="kn">import</span> <span class="n">get_vin</span>
+
+  <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Get firmware version of ECUs&#39;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--scan&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--debug&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--brand&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Only query addresses/with requests for this brand&#39;</span><span class="p">)</span>
+  <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+  <span class="n">logcan</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">sub_sock</span><span class="p">(</span><span class="s1">&#39;can&#39;</span><span class="p">)</span>
+  <span class="n">pandaStates_sock</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">sub_sock</span><span class="p">(</span><span class="s1">&#39;pandaStates&#39;</span><span class="p">)</span>
+  <span class="n">sendcan</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">pub_sock</span><span class="p">(</span><span class="s1">&#39;sendcan&#39;</span><span class="p">)</span>
+
+  <span class="n">extra</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">scan</span><span class="p">:</span>
+    <span class="n">extra</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># Honda</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">):</span>
+      <span class="n">extra</span><span class="p">[(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">unknown</span><span class="p">,</span> <span class="mh">0x18da00f1</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">),</span> <span class="kc">None</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="n">extra</span><span class="p">[(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">unknown</span><span class="p">,</span> <span class="mh">0x700</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="kc">None</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="n">extra</span><span class="p">[(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">unknown</span><span class="p">,</span> <span class="mh">0x750</span><span class="p">,</span> <span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">extra</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;any&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;debug&quot;</span><span class="p">:</span> <span class="n">extra</span><span class="p">}}</span>
+
+  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span>
+  <span class="n">num_pandas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">recv_one_retry</span><span class="p">(</span><span class="n">pandaStates_sock</span><span class="p">)</span><span class="o">.</span><span class="n">pandaStates</span><span class="p">)</span>
+
+  <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Getting vin...&quot;</span><span class="p">)</span>
+  <span class="n">vin_rx_addr</span><span class="p">,</span> <span class="n">vin</span> <span class="o">=</span> <span class="n">get_vin</span><span class="p">(</span><span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">retry</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;RX: </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">vin_rx_addr</span><span class="p">)</span><span class="si">}</span><span class="s1">, VIN: </span><span class="si">{</span><span class="n">vin</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Getting VIN took </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">()</span>
+
+  <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+  <span class="n">fw_vers</span> <span class="o">=</span> <span class="n">get_fw_versions</span><span class="p">(</span><span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">,</span> <span class="n">query_brand</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">brand</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="n">extra</span><span class="p">,</span> <span class="n">num_pandas</span><span class="o">=</span><span class="n">num_pandas</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">_</span><span class="p">,</span> <span class="n">candidates</span> <span class="o">=</span> <span class="n">match_fw_to_car</span><span class="p">(</span><span class="n">fw_vers</span><span class="p">)</span>
+
+  <span class="nb">print</span><span class="p">()</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Found FW versions&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">)</span>
+  <span class="n">padding</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">fw</span><span class="o">.</span><span class="n">brand</span><span class="p">)</span> <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">fw_vers</span><span class="p">]</span> <span class="ow">or</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">fw_vers</span><span class="p">:</span>
+    <span class="n">subaddr</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">version</span><span class="o">.</span><span class="n">subAddress</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="nb">hex</span><span class="p">(</span><span class="n">version</span><span class="o">.</span><span class="n">subAddress</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Brand: </span><span class="si">{</span><span class="n">version</span><span class="o">.</span><span class="n">brand</span><span class="si">:{</span><span class="n">padding</span><span class="si">}}</span><span class="s2">, bus: </span><span class="si">{</span><span class="n">version</span><span class="o">.</span><span class="n">bus</span><span class="si">}</span><span class="s2"> - (Ecu.</span><span class="si">{</span><span class="n">version</span><span class="o">.</span><span class="n">ecu</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">version</span><span class="o">.</span><span class="n">address</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">subaddr</span><span class="si">}</span><span class="s2">): [</span><span class="si">{</span><span class="n">version</span><span class="o">.</span><span class="n">fwVersion</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;}&quot;</span><span class="p">)</span>
+
+  <span class="nb">print</span><span class="p">()</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Possible matches:&quot;</span><span class="p">,</span> <span class="n">candidates</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Getting fw took </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

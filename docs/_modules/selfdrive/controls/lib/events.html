@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.controls.lib.events &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/controls/lib/events.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.controls.lib.events</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.controls.lib.events</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">car</span>
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">DT_CTRL</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.locationd.calibrationd</span> <span class="kn">import</span> <span class="n">MIN_SPEED_FILTER</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.version</span> <span class="kn">import</span> <span class="n">get_short_branch</span>
+
+<span class="n">AlertSize</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">ControlsState</span><span class="o">.</span><span class="n">AlertSize</span>
+<span class="n">AlertStatus</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">ControlsState</span><span class="o">.</span><span class="n">AlertStatus</span>
+<span class="n">VisualAlert</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">HUDControl</span><span class="o">.</span><span class="n">VisualAlert</span>
+<span class="n">AudibleAlert</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">HUDControl</span><span class="o">.</span><span class="n">AudibleAlert</span>
+<span class="n">EventName</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">EventName</span>
+
+
+<span class="c1"># Alert priorities</span>
+<div class="viewcode-block" id="Priority">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.Priority">[docs]</a>
+<span class="k">class</span> <span class="nc">Priority</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">LOWEST</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">LOWER</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">LOW</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">MID</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">HIGH</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">HIGHEST</span> <span class="o">=</span> <span class="mi">5</span></div>
+
+
+
+<span class="c1"># Event types</span>
+<div class="viewcode-block" id="ET">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.ET">[docs]</a>
+<span class="k">class</span> <span class="nc">ET</span><span class="p">:</span>
+  <span class="n">ENABLE</span> <span class="o">=</span> <span class="s1">&#39;enable&#39;</span>
+  <span class="n">PRE_ENABLE</span> <span class="o">=</span> <span class="s1">&#39;preEnable&#39;</span>
+  <span class="n">OVERRIDE_LATERAL</span> <span class="o">=</span> <span class="s1">&#39;overrideLateral&#39;</span>
+  <span class="n">OVERRIDE_LONGITUDINAL</span> <span class="o">=</span> <span class="s1">&#39;overrideLongitudinal&#39;</span>
+  <span class="n">NO_ENTRY</span> <span class="o">=</span> <span class="s1">&#39;noEntry&#39;</span>
+  <span class="n">WARNING</span> <span class="o">=</span> <span class="s1">&#39;warning&#39;</span>
+  <span class="n">USER_DISABLE</span> <span class="o">=</span> <span class="s1">&#39;userDisable&#39;</span>
+  <span class="n">SOFT_DISABLE</span> <span class="o">=</span> <span class="s1">&#39;softDisable&#39;</span>
+  <span class="n">IMMEDIATE_DISABLE</span> <span class="o">=</span> <span class="s1">&#39;immediateDisable&#39;</span>
+  <span class="n">PERMANENT</span> <span class="o">=</span> <span class="s1">&#39;permanent&#39;</span></div>
+
+
+
+<span class="c1"># get event name from enum</span>
+<span class="n">EVENT_NAME</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">EventName</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">enumerants</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+
+<div class="viewcode-block" id="Events">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.Events">[docs]</a>
+<span class="k">class</span> <span class="nc">Events</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">static_events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">events_prev</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">EVENTS</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span>
+
+  <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Events.add">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.Events.add">[docs]</a>
+  <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_name</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">static</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">static</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">static_events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event_name</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event_name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Events.clear">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.Events.clear">[docs]</a>
+  <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">events_prev</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="p">(</span><span class="n">v</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">events_prev</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_events</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Events.contains">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.Events.contains">[docs]</a>
+  <span class="k">def</span> <span class="nf">contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">event_type</span> <span class="ow">in</span> <span class="n">EVENTS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">{})</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Events.create_alerts">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.Events.create_alerts">[docs]</a>
+  <span class="k">def</span> <span class="nf">create_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_types</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">callback_args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">callback_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">callback_args</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">:</span>
+      <span class="n">types</span> <span class="o">=</span> <span class="n">EVENTS</span><span class="p">[</span><span class="n">e</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+      <span class="k">for</span> <span class="n">et</span> <span class="ow">in</span> <span class="n">event_types</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">et</span> <span class="ow">in</span> <span class="n">types</span><span class="p">:</span>
+          <span class="n">alert</span> <span class="o">=</span> <span class="n">EVENTS</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">et</span><span class="p">]</span>
+          <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">alert</span><span class="p">,</span> <span class="n">Alert</span><span class="p">):</span>
+            <span class="n">alert</span> <span class="o">=</span> <span class="n">alert</span><span class="p">(</span><span class="o">*</span><span class="n">callback_args</span><span class="p">)</span>
+
+          <span class="k">if</span> <span class="n">DT_CTRL</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events_prev</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">alert</span><span class="o">.</span><span class="n">creation_delay</span><span class="p">:</span>
+            <span class="n">alert</span><span class="o">.</span><span class="n">alert_type</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">EVENT_NAME</span><span class="p">[</span><span class="n">e</span><span class="p">]</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">et</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">alert</span><span class="o">.</span><span class="n">event_type</span> <span class="o">=</span> <span class="n">et</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alert</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="Events.add_from_msg">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.Events.add_from_msg">[docs]</a>
+  <span class="k">def</span> <span class="nf">add_from_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">raw</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Events.to_msg">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.Events.to_msg">[docs]</a>
+  <span class="k">def</span> <span class="nf">to_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">event_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">:</span>
+      <span class="n">event</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+      <span class="n">event</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">event_name</span>
+      <span class="k">for</span> <span class="n">event_type</span> <span class="ow">in</span> <span class="n">EVENTS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event_name</span><span class="p">,</span> <span class="p">{}):</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.Alert">[docs]</a>
+<span class="k">class</span> <span class="nc">Alert</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+               <span class="n">alert_text_1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+               <span class="n">alert_text_2</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+               <span class="n">alert_status</span><span class="p">:</span> <span class="n">log</span><span class="o">.</span><span class="n">ControlsState</span><span class="o">.</span><span class="n">AlertStatus</span><span class="p">,</span>
+               <span class="n">alert_size</span><span class="p">:</span> <span class="n">log</span><span class="o">.</span><span class="n">ControlsState</span><span class="o">.</span><span class="n">AlertSize</span><span class="p">,</span>
+               <span class="n">priority</span><span class="p">:</span> <span class="n">Priority</span><span class="p">,</span>
+               <span class="n">visual_alert</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">HUDControl</span><span class="o">.</span><span class="n">VisualAlert</span><span class="p">,</span>
+               <span class="n">audible_alert</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">HUDControl</span><span class="o">.</span><span class="n">AudibleAlert</span><span class="p">,</span>
+               <span class="n">duration</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+               <span class="n">alert_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span>
+               <span class="n">creation_delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">alert_text_1</span> <span class="o">=</span> <span class="n">alert_text_1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">alert_text_2</span> <span class="o">=</span> <span class="n">alert_text_2</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">alert_status</span> <span class="o">=</span> <span class="n">alert_status</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">alert_size</span> <span class="o">=</span> <span class="n">alert_size</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">priority</span> <span class="o">=</span> <span class="n">priority</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">visual_alert</span> <span class="o">=</span> <span class="n">visual_alert</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">audible_alert</span> <span class="o">=</span> <span class="n">audible_alert</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration</span> <span class="o">/</span> <span class="n">DT_CTRL</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">alert_rate</span> <span class="o">=</span> <span class="n">alert_rate</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">creation_delay</span> <span class="o">=</span> <span class="n">creation_delay</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">alert_type</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">event_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">alert_text_1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">alert_text_2</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">priority</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">visual_alert</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">audible_alert</span><span class="si">}</span><span class="s2">&quot;</span>
+
+  <span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alert2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">alert2</span><span class="p">,</span> <span class="n">Alert</span><span class="p">):</span>
+      <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">priority</span> <span class="o">&gt;</span> <span class="n">alert2</span><span class="o">.</span><span class="n">priority</span></div>
+
+
+
+<div class="viewcode-block" id="NoEntryAlert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.NoEntryAlert">[docs]</a>
+<span class="k">class</span> <span class="nc">NoEntryAlert</span><span class="p">(</span><span class="n">Alert</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alert_text_2</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+               <span class="n">alert_text_1</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;openpilot Unavailable&quot;</span><span class="p">,</span>
+               <span class="n">visual_alert</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">HUDControl</span><span class="o">.</span><span class="n">VisualAlert</span><span class="o">=</span><span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">alert_text_1</span><span class="p">,</span> <span class="n">alert_text_2</span><span class="p">,</span> <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span>
+                     <span class="n">AlertSize</span><span class="o">.</span><span class="n">mid</span><span class="p">,</span> <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">visual_alert</span><span class="p">,</span>
+                     <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">refuse</span><span class="p">,</span> <span class="mf">3.</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SoftDisableAlert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.SoftDisableAlert">[docs]</a>
+<span class="k">class</span> <span class="nc">SoftDisableAlert</span><span class="p">(</span><span class="n">Alert</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alert_text_2</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;TAKE CONTROL IMMEDIATELY&quot;</span><span class="p">,</span> <span class="n">alert_text_2</span><span class="p">,</span>
+                     <span class="n">AlertStatus</span><span class="o">.</span><span class="n">userPrompt</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">full</span><span class="p">,</span>
+                     <span class="n">Priority</span><span class="o">.</span><span class="n">MID</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">steerRequired</span><span class="p">,</span>
+                     <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">warningSoft</span><span class="p">,</span> <span class="mf">2.</span><span class="p">),</span></div>
+
+
+
+<span class="c1"># less harsh version of SoftDisable, where the condition is user-triggered</span>
+<div class="viewcode-block" id="UserSoftDisableAlert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.UserSoftDisableAlert">[docs]</a>
+<span class="k">class</span> <span class="nc">UserSoftDisableAlert</span><span class="p">(</span><span class="n">SoftDisableAlert</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alert_text_2</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">alert_text_2</span><span class="p">),</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">alert_text_1</span> <span class="o">=</span> <span class="s2">&quot;openpilot will disengage&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="ImmediateDisableAlert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.ImmediateDisableAlert">[docs]</a>
+<span class="k">class</span> <span class="nc">ImmediateDisableAlert</span><span class="p">(</span><span class="n">Alert</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alert_text_2</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;TAKE CONTROL IMMEDIATELY&quot;</span><span class="p">,</span> <span class="n">alert_text_2</span><span class="p">,</span>
+                     <span class="n">AlertStatus</span><span class="o">.</span><span class="n">critical</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">full</span><span class="p">,</span>
+                     <span class="n">Priority</span><span class="o">.</span><span class="n">HIGHEST</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">steerRequired</span><span class="p">,</span>
+                     <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">warningImmediate</span><span class="p">,</span> <span class="mf">4.</span><span class="p">),</span></div>
+
+
+
+<div class="viewcode-block" id="EngagementAlert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.EngagementAlert">[docs]</a>
+<span class="k">class</span> <span class="nc">EngagementAlert</span><span class="p">(</span><span class="n">Alert</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audible_alert</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">HUDControl</span><span class="o">.</span><span class="n">AudibleAlert</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                     <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">none</span><span class="p">,</span>
+                     <span class="n">Priority</span><span class="o">.</span><span class="n">MID</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span>
+                     <span class="n">audible_alert</span><span class="p">,</span> <span class="mf">.2</span><span class="p">),</span></div>
+
+
+
+<div class="viewcode-block" id="NormalPermanentAlert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.NormalPermanentAlert">[docs]</a>
+<span class="k">class</span> <span class="nc">NormalPermanentAlert</span><span class="p">(</span><span class="n">Alert</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alert_text_1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alert_text_2</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">priority</span><span class="p">:</span> <span class="n">Priority</span> <span class="o">=</span> <span class="n">Priority</span><span class="o">.</span><span class="n">LOWER</span><span class="p">,</span> <span class="n">creation_delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">alert_text_1</span><span class="p">,</span> <span class="n">alert_text_2</span><span class="p">,</span>
+                     <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">mid</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">alert_text_2</span><span class="p">)</span> <span class="k">else</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+                     <span class="n">priority</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">creation_delay</span><span class="o">=</span><span class="n">creation_delay</span><span class="p">),</span></div>
+
+
+
+<div class="viewcode-block" id="StartupAlert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.StartupAlert">[docs]</a>
+<span class="k">class</span> <span class="nc">StartupAlert</span><span class="p">(</span><span class="n">Alert</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alert_text_1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alert_text_2</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Always keep hands on wheel and eyes on road&quot;</span><span class="p">,</span> <span class="n">alert_status</span><span class="o">=</span><span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">alert_text_1</span><span class="p">,</span> <span class="n">alert_text_2</span><span class="p">,</span>
+                     <span class="n">alert_status</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">mid</span><span class="p">,</span>
+                     <span class="n">Priority</span><span class="o">.</span><span class="n">LOWER</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">5.</span><span class="p">),</span></div>
+
+
+
+<span class="c1"># ********** helper functions **********</span>
+<div class="viewcode-block" id="get_display_speed">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.get_display_speed">[docs]</a>
+<span class="k">def</span> <span class="nf">get_display_speed</span><span class="p">(</span><span class="n">speed_ms</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="n">speed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">speed_ms</span> <span class="o">*</span> <span class="p">(</span><span class="n">CV</span><span class="o">.</span><span class="n">MS_TO_KPH</span> <span class="k">if</span> <span class="n">metric</span> <span class="k">else</span> <span class="n">CV</span><span class="o">.</span><span class="n">MS_TO_MPH</span><span class="p">)))</span>
+  <span class="n">unit</span> <span class="o">=</span> <span class="s1">&#39;km/h&#39;</span> <span class="k">if</span> <span class="n">metric</span> <span class="k">else</span> <span class="s1">&#39;mph&#39;</span>
+  <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">speed</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+
+<span class="c1"># ********** alert callback functions **********</span>
+
+<span class="n">AlertCallbackType</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Alert</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="soft_disable_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.soft_disable_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">soft_disable_alert</span><span class="p">(</span><span class="n">alert_text_2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AlertCallbackType</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">soft_disable_time</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">/</span> <span class="n">DT_CTRL</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="n">alert_text_2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">SoftDisableAlert</span><span class="p">(</span><span class="n">alert_text_2</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">func</span></div>
+
+
+<div class="viewcode-block" id="user_soft_disable_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.user_soft_disable_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">user_soft_disable_alert</span><span class="p">(</span><span class="n">alert_text_2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AlertCallbackType</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">soft_disable_time</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">/</span> <span class="n">DT_CTRL</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="n">alert_text_2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">UserSoftDisableAlert</span><span class="p">(</span><span class="n">alert_text_2</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">func</span></div>
+
+
+<div class="viewcode-block" id="startup_master_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.startup_master_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">startup_master_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="n">branch</span> <span class="o">=</span> <span class="n">get_short_branch</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>  <span class="c1"># Ensure get_short_branch is cached to avoid lags on startup</span>
+  <span class="k">if</span> <span class="s2">&quot;REPLAY&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="n">branch</span> <span class="o">=</span> <span class="s2">&quot;replay&quot;</span>
+
+  <span class="k">return</span> <span class="n">StartupAlert</span><span class="p">(</span><span class="s2">&quot;WARNING: This branch is not tested&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">,</span> <span class="n">alert_status</span><span class="o">=</span><span class="n">AlertStatus</span><span class="o">.</span><span class="n">userPrompt</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="below_engage_speed_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.below_engage_speed_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">below_engage_speed_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Drive above </span><span class="si">{</span><span class="n">get_display_speed</span><span class="p">(</span><span class="n">CP</span><span class="o">.</span><span class="n">minEnableSpeed</span><span class="p">,</span><span class="w"> </span><span class="n">metric</span><span class="p">)</span><span class="si">}</span><span class="s2"> to engage&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="below_steer_speed_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.below_steer_speed_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">below_steer_speed_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">Alert</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Steer Unavailable Below </span><span class="si">{</span><span class="n">get_display_speed</span><span class="p">(</span><span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span><span class="p">,</span><span class="w"> </span><span class="n">metric</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">AlertStatus</span><span class="o">.</span><span class="n">userPrompt</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+    <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">steerRequired</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">prompt</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="calibration_incomplete_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.calibration_incomplete_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">calibration_incomplete_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="n">first_word</span> <span class="o">=</span> <span class="s1">&#39;Recalibration&#39;</span> <span class="k">if</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveCalibration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">calStatus</span> <span class="o">==</span> <span class="n">log</span><span class="o">.</span><span class="n">LiveCalibrationData</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">recalibrating</span> <span class="k">else</span> <span class="s1">&#39;Calibration&#39;</span>
+  <span class="k">return</span> <span class="n">Alert</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">first_word</span><span class="si">}</span><span class="s2"> in Progress: </span><span class="si">{</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveCalibration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">calPerc</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;Drive Above </span><span class="si">{</span><span class="n">get_display_speed</span><span class="p">(</span><span class="n">MIN_SPEED_FILTER</span><span class="p">,</span><span class="w"> </span><span class="n">metric</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">mid</span><span class="p">,</span>
+    <span class="n">Priority</span><span class="o">.</span><span class="n">LOWEST</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.2</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="no_gps_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.no_gps_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">no_gps_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">Alert</span><span class="p">(</span>
+    <span class="s2">&quot;Poor GPS reception&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Hardware malfunctioning if sky is visible&quot;</span><span class="p">,</span>
+    <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">mid</span><span class="p">,</span>
+    <span class="n">Priority</span><span class="o">.</span><span class="n">LOWER</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="n">creation_delay</span><span class="o">=</span><span class="mf">300.</span><span class="p">)</span></div>
+
+
+<span class="c1"># *** debug alerts ***</span>
+
+<div class="viewcode-block" id="out_of_space_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.out_of_space_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">out_of_space_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="n">full_perc</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">100.</span> <span class="o">-</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">freeSpacePercent</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Out of Storage&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">full_perc</span><span class="si">}</span><span class="s2">% full&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="posenet_invalid_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.posenet_invalid_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">posenet_invalid_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="n">mdl</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;modelV2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;modelV2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="k">else</span> <span class="n">math</span><span class="o">.</span><span class="n">nan</span>
+  <span class="n">err</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">-</span> <span class="n">mdl</span>
+  <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Speed Error: </span><span class="si">{</span><span class="n">err</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s&quot;</span>
+  <span class="k">return</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">alert_text_1</span><span class="o">=</span><span class="s2">&quot;Posenet Speed Invalid&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="process_not_running_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.process_not_running_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">process_not_running_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="n">not_running</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;managerState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">processes</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">running</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">shouldBeRunning</span><span class="p">]</span>
+  <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">not_running</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">alert_text_1</span><span class="o">=</span><span class="s2">&quot;Process Not Running&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="comm_issue_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.comm_issue_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">comm_issue_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="n">bs</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sm</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">sm</span><span class="o">.</span><span class="n">all_checks</span><span class="p">([</span><span class="n">s</span><span class="p">,</span> <span class="p">])]</span>
+  <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bs</span><span class="p">[:</span><span class="mi">4</span><span class="p">])</span>  <span class="c1"># can&#39;t fit too many on one line</span>
+  <span class="k">return</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">alert_text_1</span><span class="o">=</span><span class="s2">&quot;Communication Issue Between Processes&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="camera_malfunction_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.camera_malfunction_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">camera_malfunction_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="n">all_cams</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;roadCameraState&#39;</span><span class="p">,</span> <span class="s1">&#39;driverCameraState&#39;</span><span class="p">,</span> <span class="s1">&#39;wideRoadCameraState&#39;</span><span class="p">)</span>
+  <span class="n">bad_cams</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;State&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">all_cams</span> <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sm</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">sm</span><span class="o">.</span><span class="n">all_checks</span><span class="p">([</span><span class="n">s</span><span class="p">,</span> <span class="p">])]</span>
+  <span class="k">return</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Camera Malfunction&quot;</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bad_cams</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="calibration_invalid_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.calibration_invalid_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">calibration_invalid_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="n">rpy</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveCalibration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rpyCalib</span>
+  <span class="n">yaw</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">rpy</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rpy</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="n">math</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+  <span class="n">pitch</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">rpy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rpy</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="n">math</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+  <span class="n">angles</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Remount Device (Pitch: </span><span class="si">{</span><span class="n">pitch</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°, Yaw: </span><span class="si">{</span><span class="n">yaw</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°)&quot;</span>
+  <span class="k">return</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Calibration Invalid&quot;</span><span class="p">,</span> <span class="n">angles</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="overheat_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.overheat_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">overheat_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="n">cpu</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cpuTempC</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
+  <span class="n">gpu</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">gpuTempC</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
+  <span class="n">temp</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">cpu</span><span class="p">,</span> <span class="n">gpu</span><span class="p">,</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">memoryTempC</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;System Overheated&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">temp</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="low_memory_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.low_memory_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">low_memory_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Low Memory&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">memoryUsagePercent</span><span class="si">}</span><span class="s2">% used&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="high_cpu_usage_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.high_cpu_usage_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">high_cpu_usage_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cpuUsagePercent</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;High CPU Usage&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">% used&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="modeld_lagging_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.modeld_lagging_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">modeld_lagging_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Driving Model Lagging&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;modelV2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">frameDropPerc</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% frames dropped&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="wrong_car_mode_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.wrong_car_mode_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">wrong_car_mode_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Enable Adaptive Cruise to Engage&quot;</span>
+  <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carName</span> <span class="o">==</span> <span class="s2">&quot;honda&quot;</span><span class="p">:</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Enable Main Switch to Engage&quot;</span>
+  <span class="k">return</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="joystick_alert">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.events.joystick_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">joystick_alert</span><span class="p">(</span><span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">CS</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">soft_disable_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alert</span><span class="p">:</span>
+  <span class="n">axes</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;testJoystick&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">axes</span>
+  <span class="n">gb</span><span class="p">,</span> <span class="n">steer</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">axes</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>
+  <span class="n">vals</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Gas: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">gb</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">100.</span><span class="p">)</span><span class="si">}</span><span class="s2">%, Steer: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">steer</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">100.</span><span class="p">)</span><span class="si">}</span><span class="s2">%&quot;</span>
+  <span class="k">return</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Joystick Mode&quot;</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span></div>
+
+
+
+
+<span class="n">EVENTS</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">Alert</span><span class="p">,</span> <span class="n">AlertCallbackType</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="c1"># ********** events with no alerts **********</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">stockFcw</span><span class="p">:</span> <span class="p">{},</span>
+
+  <span class="c1"># ********** events only containing alerts displayed in all states **********</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">joystickDebug</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">joystick_alert</span><span class="p">,</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Joystick Mode&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">controlsInitializing</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;System Initializing&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">startup</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">StartupAlert</span><span class="p">(</span><span class="s2">&quot;Be ready to take over at any time&quot;</span><span class="p">)</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">startupMaster</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">startup_master_alert</span><span class="p">,</span>
+  <span class="p">},</span>
+
+  <span class="c1"># Car is recognized, but marked as dashcam only</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">startupNoControl</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">StartupAlert</span><span class="p">(</span><span class="s2">&quot;Dashcam mode&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Dashcam mode&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># Car is not recognized</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">startupNoCar</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">StartupAlert</span><span class="p">(</span><span class="s2">&quot;Dashcam mode for unsupported car&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">startupNoFw</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">StartupAlert</span><span class="p">(</span><span class="s2">&quot;Car Unrecognized&quot;</span><span class="p">,</span>
+                               <span class="s2">&quot;Check comma power connections&quot;</span><span class="p">,</span>
+                               <span class="n">alert_status</span><span class="o">=</span><span class="n">AlertStatus</span><span class="o">.</span><span class="n">userPrompt</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">dashcamMode</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Dashcam Mode&quot;</span><span class="p">,</span>
+                                       <span class="n">priority</span><span class="o">=</span><span class="n">Priority</span><span class="o">.</span><span class="n">LOWEST</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">invalidLkasSetting</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Stock LKAS is on&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;Turn off stock LKAS to engage&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">cruiseMismatch</span><span class="p">:</span> <span class="p">{</span>
+    <span class="c1">#ET.PERMANENT: ImmediateDisableAlert(&quot;openpilot failed to cancel cruise&quot;),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># openpilot doesn&#39;t recognize the car. This switches openpilot into a</span>
+  <span class="c1"># read-only mode. This can be solved by adding your fingerprint.</span>
+  <span class="c1"># See https://github.com/commaai/openpilot/wiki/Fingerprinting for more information</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">carUnrecognized</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Dashcam Mode&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;Car Unrecognized&quot;</span><span class="p">,</span>
+                                       <span class="n">priority</span><span class="o">=</span><span class="n">Priority</span><span class="o">.</span><span class="n">LOWEST</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">stockAeb</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;BRAKE!&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Stock AEB: Risk of Collision&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">critical</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">full</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">HIGHEST</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">fcw</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">2.</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Stock AEB: Risk of Collision&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">fcw</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;BRAKE!&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Risk of Collision&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">critical</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">full</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">HIGHEST</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">fcw</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">warningSoft</span><span class="p">,</span> <span class="mf">2.</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">ldw</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Lane Departure Detected&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">userPrompt</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">ldw</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">prompt</span><span class="p">,</span> <span class="mf">3.</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># ********** events only containing alerts that display while engaged **********</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">steerTempUnavailableSilent</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Steering Temporarily Unavailable&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">userPrompt</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">steerRequired</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">prompt</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">preDriverDistracted</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Pay Attention&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.1</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">promptDriverDistracted</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Pay Attention&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Driver Distracted&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">userPrompt</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">mid</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">MID</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">steerRequired</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">promptDistracted</span><span class="p">,</span> <span class="mf">.1</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">driverDistracted</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;DISENGAGE IMMEDIATELY&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Driver Distracted&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">critical</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">full</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">HIGH</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">steerRequired</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">warningImmediate</span><span class="p">,</span> <span class="mf">.1</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">preDriverUnresponsive</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Touch Steering Wheel: No Face Detected&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">steerRequired</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">alert_rate</span><span class="o">=</span><span class="mf">0.75</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">promptDriverUnresponsive</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Touch Steering Wheel&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Driver Unresponsive&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">userPrompt</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">mid</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">MID</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">steerRequired</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">promptDistracted</span><span class="p">,</span> <span class="mf">.1</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">driverUnresponsive</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;DISENGAGE IMMEDIATELY&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Driver Unresponsive&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">critical</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">full</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">HIGH</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">steerRequired</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">warningImmediate</span><span class="p">,</span> <span class="mf">.1</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">manualRestart</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;TAKE CONTROL&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Resume Driving Manually&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">userPrompt</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">mid</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.2</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">resumeRequired</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Press Resume to Exit Standstill&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">userPrompt</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">MID</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.2</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">belowSteerSpeed</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">below_steer_speed_alert</span><span class="p">,</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">preLaneChangeLeft</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Steer Left to Start Lane Change Once Safe&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">alert_rate</span><span class="o">=</span><span class="mf">0.75</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">preLaneChangeRight</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Steer Right to Start Lane Change Once Safe&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">alert_rate</span><span class="o">=</span><span class="mf">0.75</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">laneChangeBlocked</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Car Detected in Blindspot&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">userPrompt</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">prompt</span><span class="p">,</span> <span class="mf">.1</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">laneChange</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Changing Lanes&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.1</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">steerSaturated</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Take Control&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Turn Exceeds Steering Limit&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">userPrompt</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">mid</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">steerRequired</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">promptRepeat</span><span class="p">,</span> <span class="mf">2.</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># Thrown when the fan is driven at &gt;50% but is not rotating</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">fanMalfunction</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Fan Malfunction&quot;</span><span class="p">,</span> <span class="s2">&quot;Likely Hardware Issue&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># Camera is not outputting frames</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">cameraMalfunction</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">camera_malfunction_alert</span><span class="p">,</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Camera Malfunction&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Camera Malfunction: Reboot Your Device&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+  <span class="c1"># Camera framerate too low</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">cameraFrameRate</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Camera Frame Rate Low&quot;</span><span class="p">,</span> <span class="s2">&quot;Reboot your Device&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Camera Frame Rate Low&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Camera Frame Rate Low: Reboot Your Device&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># Unused</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">gpsMalfunction</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;GPS Malfunction&quot;</span><span class="p">,</span> <span class="s2">&quot;Likely Hardware Issue&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">locationdTemporaryError</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;locationd Temporary Error&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;locationd Temporary Error&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">locationdPermanentError</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;locationd Permanent Error&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">:</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="s2">&quot;locationd Permanent Error&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;locationd Permanent Error&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># openpilot tries to learn certain parameters about your car by observing</span>
+  <span class="c1"># how the car behaves to steering inputs from both human and openpilot driving.</span>
+  <span class="c1"># This includes:</span>
+  <span class="c1"># - steer ratio: gear ratio of the steering rack. Steering angle divided by tire angle</span>
+  <span class="c1"># - tire stiffness: how much grip your tires have</span>
+  <span class="c1"># - angle offset: most steering angle sensors are offset and measure a non zero angle when driving straight</span>
+  <span class="c1"># This alert is thrown when any of these values exceed a sanity check. This can be caused by</span>
+  <span class="c1"># bad alignment or bad sensor data. If this happens consistently consider creating an issue on GitHub</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">paramsdTemporaryError</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;paramsd Temporary Error&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;paramsd Temporary Error&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">paramsdPermanentError</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;paramsd Permanent Error&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">:</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="s2">&quot;paramsd Permanent Error&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;paramsd Permanent Error&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># ********** events that affect controls state transitions **********</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">pcmEnable</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">ENABLE</span><span class="p">:</span> <span class="n">EngagementAlert</span><span class="p">(</span><span class="n">AudibleAlert</span><span class="o">.</span><span class="n">engage</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">buttonEnable</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">ENABLE</span><span class="p">:</span> <span class="n">EngagementAlert</span><span class="p">(</span><span class="n">AudibleAlert</span><span class="o">.</span><span class="n">engage</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">pcmDisable</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">USER_DISABLE</span><span class="p">:</span> <span class="n">EngagementAlert</span><span class="p">(</span><span class="n">AudibleAlert</span><span class="o">.</span><span class="n">disengage</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">buttonCancel</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">USER_DISABLE</span><span class="p">:</span> <span class="n">EngagementAlert</span><span class="p">(</span><span class="n">AudibleAlert</span><span class="o">.</span><span class="n">disengage</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Cancel Pressed&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">brakeHold</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">USER_DISABLE</span><span class="p">:</span> <span class="n">EngagementAlert</span><span class="p">(</span><span class="n">AudibleAlert</span><span class="o">.</span><span class="n">disengage</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Brake Hold Active&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">parkBrake</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">USER_DISABLE</span><span class="p">:</span> <span class="n">EngagementAlert</span><span class="p">(</span><span class="n">AudibleAlert</span><span class="o">.</span><span class="n">disengage</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Parking Brake Engaged&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">pedalPressed</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">USER_DISABLE</span><span class="p">:</span> <span class="n">EngagementAlert</span><span class="p">(</span><span class="n">AudibleAlert</span><span class="o">.</span><span class="n">disengage</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Pedal Pressed&quot;</span><span class="p">,</span>
+                              <span class="n">visual_alert</span><span class="o">=</span><span class="n">VisualAlert</span><span class="o">.</span><span class="n">brakePressed</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">preEnableStandstill</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PRE_ENABLE</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Release Brake to Engage&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOWEST</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">creation_delay</span><span class="o">=</span><span class="mf">1.</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">gasPressedOverride</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">OVERRIDE_LONGITUDINAL</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">none</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOWEST</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.1</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">steerOverride</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">OVERRIDE_LATERAL</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">none</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOWEST</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.1</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">wrongCarMode</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">USER_DISABLE</span><span class="p">:</span> <span class="n">EngagementAlert</span><span class="p">(</span><span class="n">AudibleAlert</span><span class="o">.</span><span class="n">disengage</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">wrong_car_mode_alert</span><span class="p">,</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">resumeBlocked</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Press Set to Engage&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">wrongCruiseMode</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">USER_DISABLE</span><span class="p">:</span> <span class="n">EngagementAlert</span><span class="p">(</span><span class="n">AudibleAlert</span><span class="o">.</span><span class="n">disengage</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Adaptive Cruise Disabled&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">steerTempUnavailable</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Steering Temporarily Unavailable&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Steering Temporarily Unavailable&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">steerTimeLimit</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Vehicle Steering Time Limit&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Vehicle Steering Time Limit&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">outOfSpace</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">out_of_space_alert</span><span class="p">,</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Out of Storage&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">belowEngageSpeed</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">below_engage_speed_alert</span><span class="p">,</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">sensorDataInvalid</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Sensor Data Invalid&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Possible Hardware Issue&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">mid</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOWER</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="n">creation_delay</span><span class="o">=</span><span class="mf">1.</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Sensor Data Invalid&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Sensor Data Invalid&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">noGps</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">no_gps_alert</span><span class="p">,</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">soundsUnavailable</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Speaker not found&quot;</span><span class="p">,</span> <span class="s2">&quot;Reboot your Device&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Speaker not found&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">tooDistracted</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Distraction Level Too High&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">overheat</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">overheat_alert</span><span class="p">,</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;System Overheated&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;System Overheated&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">wrongGear</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">user_soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Gear not D&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Gear not D&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># This alert is thrown when the calibration angles are outside of the acceptable range.</span>
+  <span class="c1"># For example if the device is pointed too much to the left or the right.</span>
+  <span class="c1"># Usually this can only be solved by removing the mount from the windshield completely,</span>
+  <span class="c1"># and attaching while making sure the device is pointed straight forward and is level.</span>
+  <span class="c1"># See https://comma.ai/setup for more information</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">calibrationInvalid</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">calibration_invalid_alert</span><span class="p">,</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Calibration Invalid: Remount Device &amp; Recalibrate&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Calibration Invalid: Remount Device &amp; Recalibrate&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">calibrationIncomplete</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">calibration_incomplete_alert</span><span class="p">,</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Calibration Incomplete&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Calibration in Progress&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">calibrationRecalibrating</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">calibration_incomplete_alert</span><span class="p">,</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Device Remount Detected: Recalibrating&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Remount Detected: Recalibrating&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">doorOpen</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">user_soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Door Open&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Door Open&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">seatbeltNotLatched</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">user_soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Seatbelt Unlatched&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Seatbelt Unlatched&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">espDisabled</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Electronic Stability Control Disabled&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Electronic Stability Control Disabled&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">lowBattery</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Low Battery&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Low Battery&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># Different openpilot services communicate between each other at a certain</span>
+  <span class="c1"># interval. If communication does not follow the regular schedule this alert</span>
+  <span class="c1"># is thrown. This can mean a service crashed, did not broadcast a message for</span>
+  <span class="c1"># ten times the regular interval, or the average interval is more than 10% too high.</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">commIssue</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Communication Issue between Processes&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">comm_issue_alert</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">commIssueAvgFreq</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Low Communication Rate between Processes&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Low Communication Rate between Processes&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">controlsdLagging</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Controls Lagging&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Controls Process Lagging: Reboot Your Device&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># Thrown when manager detects a service exited unexpectedly while driving</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">processNotRunning</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">process_not_running_alert</span><span class="p">,</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Process Not Running&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">radarFault</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Radar Error: Restart the Car&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Radar Error: Restart the Car&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># Every frame from the camera should be processed by the model. If modeld</span>
+  <span class="c1"># is not processing frames fast enough they have to be dropped. This alert is</span>
+  <span class="c1"># thrown when over 20% of frames are dropped.</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">modeldLagging</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Driving Model Lagging&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Driving Model Lagging&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">modeld_lagging_alert</span><span class="p">,</span>
+  <span class="p">},</span>
+
+  <span class="c1"># Besides predicting the path, lane lines and lead car data the model also</span>
+  <span class="c1"># predicts the current velocity and rotation speed of the car. If the model is</span>
+  <span class="c1"># very uncertain about the current velocity while the car is moving, this</span>
+  <span class="c1"># usually means the model has trouble understanding the scene. This is used</span>
+  <span class="c1"># as a heuristic to warn the driver.</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">posenetInvalid</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Posenet Speed Invalid&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">posenet_invalid_alert</span><span class="p">,</span>
+  <span class="p">},</span>
+
+  <span class="c1"># When the localizer detects an acceleration of more than 40 m/s^2 (~4G) we</span>
+  <span class="c1"># alert the driver the device might have fallen from the windshield.</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">deviceFalling</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Device Fell Off Mount&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Device Fell Off Mount&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">lowMemory</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;Low Memory: Reboot Your Device&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">low_memory_alert</span><span class="p">,</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Low Memory: Reboot Your Device&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">highCpuUsage</span><span class="p">:</span> <span class="p">{</span>
+    <span class="c1">#ET.SOFT_DISABLE: soft_disable_alert(&quot;System Malfunction: Reboot Your Device&quot;),</span>
+    <span class="c1">#ET.PERMANENT: NormalPermanentAlert(&quot;System Malfunction&quot;, &quot;Reboot your Device&quot;),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">high_cpu_usage_alert</span><span class="p">,</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">accFaulted</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">:</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="s2">&quot;Cruise Fault: Restart the Car&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Cruise Fault: Restart the car to engage&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Cruise Fault: Restart the Car&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">controlsMismatch</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">:</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="s2">&quot;Controls Mismatch&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Controls Mismatch&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">roadCameraError</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Camera CRC Error - Road&quot;</span><span class="p">,</span>
+                                       <span class="n">duration</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+                                       <span class="n">creation_delay</span><span class="o">=</span><span class="mf">30.</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">wideRoadCameraError</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Camera CRC Error - Road Fisheye&quot;</span><span class="p">,</span>
+                                       <span class="n">duration</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+                                       <span class="n">creation_delay</span><span class="o">=</span><span class="mf">30.</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">driverCameraError</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Camera CRC Error - Driver&quot;</span><span class="p">,</span>
+                                       <span class="n">duration</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+                                       <span class="n">creation_delay</span><span class="o">=</span><span class="mf">30.</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># Sometimes the USB stack on the device can get into a bad state</span>
+  <span class="c1"># causing the connection to the panda to be lost</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">usbError</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">:</span> <span class="n">soft_disable_alert</span><span class="p">(</span><span class="s2">&quot;USB Error: Reboot Your Device&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;USB Error: Reboot Your Device&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;USB Error: Reboot Your Device&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># This alert can be thrown for the following reasons:</span>
+  <span class="c1"># - No CAN data received at all</span>
+  <span class="c1"># - CAN data is received, but some message are not received at the right frequency</span>
+  <span class="c1"># If you&#39;re not writing a new car port, this is usually cause by faulty wiring</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">canError</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">:</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="s2">&quot;CAN Error&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;CAN Error: Check Connections&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">creation_delay</span><span class="o">=</span><span class="mf">1.</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;CAN Error: Check Connections&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">canBusMissing</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">:</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="s2">&quot;CAN Bus Disconnected&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;CAN Bus Disconnected: Likely Faulty Cable&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">small</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">creation_delay</span><span class="o">=</span><span class="mf">1.</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;CAN Bus Disconnected: Check Connections&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">steerUnavailable</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">:</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="s2">&quot;LKAS Fault: Restart the Car&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;LKAS Fault: Restart the car to engage&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;LKAS Fault: Restart the Car&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">reverseGear</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Reverse</span><span class="se">\n</span><span class="s2">Gear&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">full</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">LOWEST</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="n">creation_delay</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">USER_DISABLE</span><span class="p">:</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="s2">&quot;Reverse Gear&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Reverse Gear&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># On cars that use stock ACC the car can decide to cancel ACC for various reasons.</span>
+  <span class="c1"># When this happens we can no long control the car so the user needs to be warned immediately.</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">cruiseDisabled</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">:</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="s2">&quot;Cruise Is Off&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># For planning the trajectory Model Predictive Control (MPC) is used. This is</span>
+  <span class="c1"># an optimization algorithm that is not guaranteed to find a feasible solution.</span>
+  <span class="c1"># If no solution is found or the solution has a very high cost this alert is thrown.</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">plannerError</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">:</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="s2">&quot;Planner Solution Error&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Planner Solution Error&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># When the relay in the harness box opens the CAN bus between the LKAS camera</span>
+  <span class="c1"># and the rest of the car is separated. When messages from the LKAS camera</span>
+  <span class="c1"># are received on the car side this usually means the relay hasn&#39;t opened correctly</span>
+  <span class="c1"># and this alert is thrown.</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">relayMalfunction</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">:</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="s2">&quot;Harness Relay Malfunction&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Harness Relay Malfunction&quot;</span><span class="p">,</span> <span class="s2">&quot;Check Hardware&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Harness Relay Malfunction&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">speedTooLow</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;openpilot Canceled&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Speed too low&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">mid</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">HIGH</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">disengage</span><span class="p">,</span> <span class="mf">3.</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="c1"># When the car is driving faster than most cars in the training data, the model outputs can be unpredictable.</span>
+  <span class="n">EventName</span><span class="o">.</span><span class="n">speedTooHigh</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Alert</span><span class="p">(</span>
+      <span class="s2">&quot;Speed Too High&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Model uncertain at this speed&quot;</span><span class="p">,</span>
+      <span class="n">AlertStatus</span><span class="o">.</span><span class="n">userPrompt</span><span class="p">,</span> <span class="n">AlertSize</span><span class="o">.</span><span class="n">mid</span><span class="p">,</span>
+      <span class="n">Priority</span><span class="o">.</span><span class="n">HIGH</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">steerRequired</span><span class="p">,</span> <span class="n">AudibleAlert</span><span class="o">.</span><span class="n">promptRepeat</span><span class="p">,</span> <span class="mf">4.</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Slow down to engage&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">lowSpeedLockout</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Cruise Fault: Restart the car to engage&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Cruise Fault: Restart the Car&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">lkasDisabled</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;LKAS Disabled: Enable LKAS to engage&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;LKAS Disabled&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+  <span class="n">EventName</span><span class="o">.</span><span class="n">vehicleSensorsInvalid</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">:</span> <span class="n">ImmediateDisableAlert</span><span class="p">(</span><span class="s2">&quot;Vehicle Sensors Invalid&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">:</span> <span class="n">NormalPermanentAlert</span><span class="p">(</span><span class="s2">&quot;Vehicle Sensors Calibrating&quot;</span><span class="p">,</span> <span class="s2">&quot;Drive to Calibrate&quot;</span><span class="p">),</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">:</span> <span class="n">NoEntryAlert</span><span class="p">(</span><span class="s2">&quot;Vehicle Sensors Calibrating&quot;</span><span class="p">),</span>
+  <span class="p">},</span>
+
+<span class="p">}</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+  <span class="c1"># print all alerts by type and priority</span>
+  <span class="kn">from</span> <span class="nn">cereal.services</span> <span class="kn">import</span> <span class="n">SERVICE_LIST</span>
+  <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+  <span class="n">event_names</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">EventName</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">enumerants</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+  <span class="n">alerts_by_type</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Priority</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">))</span>
+
+  <span class="n">CP</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+  <span class="n">CS</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+  <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">SERVICE_LIST</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+  <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">alerts</span> <span class="ow">in</span> <span class="n">EVENTS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">et</span><span class="p">,</span> <span class="n">alert</span> <span class="ow">in</span> <span class="n">alerts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">alert</span><span class="p">):</span>
+        <span class="n">alert</span> <span class="o">=</span> <span class="n">alert</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="n">sm</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="n">alerts_by_type</span><span class="p">[</span><span class="n">et</span><span class="p">][</span><span class="n">alert</span><span class="o">.</span><span class="n">priority</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event_names</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+  <span class="n">all_alerts</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Priority</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]]</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">for</span> <span class="n">et</span><span class="p">,</span> <span class="n">priority_alerts</span> <span class="ow">in</span> <span class="n">alerts_by_type</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">all_alerts</span><span class="p">[</span><span class="n">et</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">priority_alerts</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">status</span><span class="p">,</span> <span class="n">evs</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">all_alerts</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;**** </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2"> ****&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">alert_list</span> <span class="ow">in</span> <span class="n">evs</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   &quot;</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">alert_list</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

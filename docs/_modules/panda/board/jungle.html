@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>panda.board.jungle &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/panda/board/jungle.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">panda.board.jungle</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for panda.board.jungle</h1><div class="highlight"><pre>
+<span></span><span class="c1"># python library to interface with panda</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">panda</span> <span class="kn">import</span> <span class="n">Panda</span><span class="p">,</span> <span class="n">PandaDFU</span>
+<span class="kn">from</span> <span class="nn">panda.python.constants</span> <span class="kn">import</span> <span class="n">McuType</span>
+
+<span class="n">BASEDIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="n">FW_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="s2">&quot;obj/&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ensure_jungle_health_packet_version">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.ensure_jungle_health_packet_version">[docs]</a>
+<span class="k">def</span> <span class="nf">ensure_jungle_health_packet_version</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+  <span class="nd">@wraps</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">health_version</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HEALTH_PACKET_VERSION</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jungle firmware (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">health_version</span><span class="si">}</span><span class="s2">) doesn&#39;t match the </span><span class="se">\</span>
+<span class="s2">                           library&#39;s health packet version (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">HEALTH_PACKET_VERSION</span><span class="si">}</span><span class="s2">). </span><span class="se">\</span>
+<span class="s2">                           Reflash jungle.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+
+<div class="viewcode-block" id="PandaJungleDFU">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungleDFU">[docs]</a>
+<span class="k">class</span> <span class="nc">PandaJungleDFU</span><span class="p">(</span><span class="n">PandaDFU</span><span class="p">):</span>
+<div class="viewcode-block" id="PandaJungleDFU.recover">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungleDFU.recover">[docs]</a>
+  <span class="k">def</span> <span class="nf">recover</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FW_PATH</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mcu_type</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">bootstub_fn</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;panda&quot;</span><span class="p">,</span> <span class="s2">&quot;panda_jungle&quot;</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">code</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">program_bootstub</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="PandaJungle">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle">[docs]</a>
+<span class="k">class</span> <span class="nc">PandaJungle</span><span class="p">(</span><span class="n">Panda</span><span class="p">):</span>
+  <span class="n">USB_PIDS</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0xddef</span><span class="p">,</span> <span class="mh">0xddcf</span><span class="p">)</span>
+
+  <span class="n">HW_TYPE_UNKNOWN</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span>
+  <span class="n">HW_TYPE_V1</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x01</span><span class="s1">&#39;</span>
+  <span class="n">HW_TYPE_V2</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x02</span><span class="s1">&#39;</span>
+
+  <span class="n">F4_DEVICES</span> <span class="o">=</span> <span class="p">[</span><span class="n">HW_TYPE_V1</span><span class="p">,</span> <span class="p">]</span>
+  <span class="n">H7_DEVICES</span> <span class="o">=</span> <span class="p">[</span><span class="n">HW_TYPE_V2</span><span class="p">,</span> <span class="p">]</span>
+
+  <span class="n">HEALTH_PACKET_VERSION</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">HEALTH_STRUCT</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="s2">&quot;&lt;IffffffHHHHHHHHHHHH&quot;</span><span class="p">)</span>
+
+  <span class="n">HARNESS_ORIENTATION_NONE</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">HARNESS_ORIENTATION_1</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">HARNESS_ORIENTATION_2</span> <span class="o">=</span> <span class="mi">2</span>
+
+<div class="viewcode-block" id="PandaJungle.spi_connect">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.spi_connect">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">spi_connect</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">serial</span><span class="p">,</span> <span class="n">ignore_version</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="PandaJungle.flash">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.flash">[docs]</a>
+  <span class="k">def</span> <span class="nf">flash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reconnect</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">fn</span><span class="p">:</span>
+      <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FW_PATH</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mcu_type</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">app_fn</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;panda&quot;</span><span class="p">,</span> <span class="s2">&quot;panda_jungle&quot;</span><span class="p">))</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">flash</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">reconnect</span><span class="o">=</span><span class="n">reconnect</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PandaJungle.recover">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.recover">[docs]</a>
+  <span class="k">def</span> <span class="nf">recover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span> <span class="n">reset</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">dfu_serial</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dfu_serial</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">reset</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">enter_bootstub</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">enter_bootloader</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_dfu</span><span class="p">(</span><span class="n">dfu_serial</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">):</span>
+      <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">dfu</span> <span class="o">=</span> <span class="n">PandaJungleDFU</span><span class="p">(</span><span class="n">dfu_serial</span><span class="p">)</span>
+    <span class="n">dfu</span><span class="o">.</span><span class="n">recover</span><span class="p">()</span>
+
+    <span class="c1"># reflash after recover</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">flash</span><span class="p">()</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="PandaJungle.get_mcu_type">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.get_mcu_type">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_mcu_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">McuType</span><span class="p">:</span>
+    <span class="n">hw_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">hw_type</span> <span class="ow">in</span> <span class="n">PandaJungle</span><span class="o">.</span><span class="n">F4_DEVICES</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">McuType</span><span class="o">.</span><span class="n">F4</span>
+    <span class="k">elif</span> <span class="n">hw_type</span> <span class="ow">in</span> <span class="n">PandaJungle</span><span class="o">.</span><span class="n">H7_DEVICES</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">McuType</span><span class="o">.</span><span class="n">H7</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown HW type: </span><span class="si">{</span><span class="n">hw_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PandaJungle.up_to_date">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.up_to_date">[docs]</a>
+  <span class="k">def</span> <span class="nf">up_to_date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FW_PATH</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mcu_type</span><span class="p">()</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">app_fn</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;panda&quot;</span><span class="p">,</span> <span class="s2">&quot;panda_jungle&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">up_to_date</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">)</span></div>
+
+
+  <span class="c1"># ******************* health *******************</span>
+
+<div class="viewcode-block" id="PandaJungle.health">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.health">[docs]</a>
+  <span class="nd">@ensure_jungle_health_packet_version</span>
+  <span class="k">def</span> <span class="nf">health</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">PandaJungle</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xd2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HEALTH_STRUCT</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HEALTH_STRUCT</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="s2">&quot;uptime&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+      <span class="s2">&quot;ch1_power&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+      <span class="s2">&quot;ch2_power&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+      <span class="s2">&quot;ch3_power&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+      <span class="s2">&quot;ch4_power&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+      <span class="s2">&quot;ch5_power&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+      <span class="s2">&quot;ch6_power&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span>
+      <span class="s2">&quot;ch1_sbu1_voltage&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span>
+      <span class="s2">&quot;ch1_sbu2_voltage&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span>
+      <span class="s2">&quot;ch2_sbu1_voltage&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span>
+      <span class="s2">&quot;ch2_sbu2_voltage&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span>
+      <span class="s2">&quot;ch3_sbu1_voltage&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span>
+      <span class="s2">&quot;ch3_sbu2_voltage&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span>
+      <span class="s2">&quot;ch4_sbu1_voltage&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span>
+      <span class="s2">&quot;ch4_sbu2_voltage&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span>
+      <span class="s2">&quot;ch5_sbu1_voltage&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span>
+      <span class="s2">&quot;ch5_sbu2_voltage&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span>
+      <span class="s2">&quot;ch6_sbu1_voltage&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">17</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span>
+      <span class="s2">&quot;ch6_sbu2_voltage&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">18</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+  <span class="c1"># ******************* control *******************</span>
+
+  <span class="c1"># Returns tuple with health packet version and CAN packet/USB packet version</span>
+<div class="viewcode-block" id="PandaJungle.get_packets_versions">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.get_packets_versions">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_packets_versions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">PandaJungle</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xdd</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dat</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+      <span class="n">a</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;BBB&quot;</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
+      <span class="k">return</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+  <span class="c1"># ******************* jungle stuff *******************</span>
+
+<div class="viewcode-block" id="PandaJungle.set_panda_power">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.set_panda_power">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_panda_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">PandaJungle</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xa0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">enabled</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PandaJungle.set_panda_individual_power">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.set_panda_individual_power">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_panda_individual_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">PandaJungle</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xa3</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">enabled</span><span class="p">),</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PandaJungle.set_harness_orientation">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.set_harness_orientation">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_harness_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">PandaJungle</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xa1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">mode</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PandaJungle.set_ignition">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.set_ignition">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_ignition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">PandaJungle</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xa2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">enabled</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PandaJungle.set_can_silent">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.set_can_silent">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_can_silent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">silent</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">PandaJungle</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xf5</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">silent</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+  <span class="c1"># ******************* serial *******************</span>
+
+<div class="viewcode-block" id="PandaJungle.debug_read">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.debug_read">[docs]</a>
+  <span class="k">def</span> <span class="nf">debug_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="n">lret</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">PandaJungle</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xe0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">))</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lret</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">break</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lret</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span></div>
+
+
+  <span class="c1"># ******************* header pins *******************</span>
+
+<div class="viewcode-block" id="PandaJungle.set_header_pin">
+<a class="viewcode-back" href="../../../panda.board.jungle.html#panda.board.jungle.PandaJungle.set_header_pin">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_header_pin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pin_num</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xf7</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">pin_num</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">enabled</span><span class="p">),</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.toyota.interface &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/toyota/interface.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.toyota.interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.toyota.interface</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">panda</span> <span class="kn">import</span> <span class="n">Panda</span>
+<span class="kn">from</span> <span class="nn">panda.python</span> <span class="kn">import</span> <span class="n">uds</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.toyota.values</span> <span class="kn">import</span> <span class="n">Ecu</span><span class="p">,</span> <span class="n">CAR</span><span class="p">,</span> <span class="n">DBC</span><span class="p">,</span> <span class="n">ToyotaFlags</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="p">,</span> <span class="n">TSS2_CAR</span><span class="p">,</span> <span class="n">RADAR_ACC_CAR</span><span class="p">,</span> <span class="n">NO_DSU_CAR</span><span class="p">,</span> \
+                                        <span class="n">MIN_ACC_SPEED</span><span class="p">,</span> <span class="n">EPS_SCALE</span><span class="p">,</span> <span class="n">UNSUPPORTED_DSU_CAR</span><span class="p">,</span> <span class="n">NO_STOP_TIMER_CAR</span><span class="p">,</span> <span class="n">ANGLE_CONTROL_CAR</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">get_safety_config</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.disable_ecu</span> <span class="kn">import</span> <span class="n">disable_ecu</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.interfaces</span> <span class="kn">import</span> <span class="n">CarInterfaceBase</span>
+
+<span class="n">EventName</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">EventName</span>
+<span class="n">SteerControlType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SteerControlType</span>
+
+
+<div class="viewcode-block" id="CarInterface">
+<a class="viewcode-back" href="../../../../selfdrive.car.toyota.html#selfdrive.car.toyota.interface.CarInterface">[docs]</a>
+<span class="k">class</span> <span class="nc">CarInterface</span><span class="p">(</span><span class="n">CarInterfaceBase</span><span class="p">):</span>
+<div class="viewcode-block" id="CarInterface.get_pid_accel_limits">
+<a class="viewcode-back" href="../../../../selfdrive.car.toyota.html#selfdrive.car.toyota.interface.CarInterface.get_pid_accel_limits">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_pid_accel_limits</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">current_speed</span><span class="p">,</span> <span class="n">cruise_speed</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">ACCEL_MIN</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">ACCEL_MAX</span></div>
+
+
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">_get_params</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">,</span> <span class="n">car_fw</span><span class="p">,</span> <span class="n">experimental_long</span><span class="p">,</span> <span class="n">docs</span><span class="p">):</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">carName</span> <span class="o">=</span> <span class="s2">&quot;toyota&quot;</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_safety_config</span><span class="p">(</span><span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SafetyModel</span><span class="o">.</span><span class="n">toyota</span><span class="p">)]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">=</span> <span class="n">EPS_SCALE</span><span class="p">[</span><span class="n">candidate</span><span class="p">]</span>
+
+    <span class="c1"># BRAKE_MODULE is on a different address for these cars</span>
+    <span class="k">if</span> <span class="n">DBC</span><span class="p">[</span><span class="n">candidate</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;toyota_new_mc_pt_generated&quot;</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_TOYOTA_ALT_BRAKE</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">ANGLE_CONTROL_CAR</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerControlType</span> <span class="o">=</span> <span class="n">SteerControlType</span><span class="o">.</span><span class="n">angle</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_TOYOTA_LTA</span>
+
+      <span class="c1"># LTA control can be more delayed and winds up more often</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.18</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerLimitTimer</span> <span class="o">=</span> <span class="mf">0.8</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">)</span>
+
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.12</span>  <span class="c1"># Default delay, Prius has larger delay</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerLimitTimer</span> <span class="o">=</span> <span class="mf">0.4</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">stoppingControl</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Toyota starts braking more when it thinks you want to stop</span>
+
+    <span class="n">stop_and_go</span> <span class="o">=</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">TSS2_CAR</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">:</span>
+      <span class="n">stop_and_go</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.70</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">15.74</span>   <span class="c1"># unknown end-to-end spec</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.6371</span>   <span class="c1"># hand-tune</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3045.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+      <span class="c1"># Only give steer angle deadzone to for bad angle sensor prius</span>
+      <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">car_fw</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">fw</span><span class="o">.</span><span class="n">ecu</span> <span class="o">==</span> <span class="s2">&quot;eps&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">fw</span><span class="o">.</span><span class="n">fwVersion</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;8965B47060</span><span class="se">\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">:</span>
+          <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.25</span>
+          <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">,</span> <span class="n">steering_angle_deadzone_deg</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">:</span>
+      <span class="n">stop_and_go</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.78</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">17.4</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.5533</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3340.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">RAV4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">):</span>
+      <span class="n">stop_and_go</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="p">(</span><span class="n">candidate</span> <span class="ow">in</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.65</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">16.88</span>   <span class="c1"># 14.5 is spec end-to-end</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.5533</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3650.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>  <span class="c1"># mean between normal and hybrid</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.70</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">18.27</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.444</span>  <span class="c1"># not optimized yet</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">2860.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>  <span class="c1"># mean between normal and hybrid</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX_TSS2</span><span class="p">):</span>
+      <span class="n">stop_and_go</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.79</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">16.</span>  <span class="c1"># 14.8 is spec end-to-end</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeedFactor</span> <span class="o">=</span> <span class="mf">1.035</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.5533</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">4481.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>  <span class="c1"># mean between min and max</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">CHR</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHR_TSS2</span><span class="p">):</span>
+      <span class="n">stop_and_go</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.63906</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.6</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.7933</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3300.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">CAMRY</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CAMRY_TSS2</span><span class="p">):</span>
+      <span class="n">stop_and_go</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.82448</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.7</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.7933</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3400.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>  <span class="c1"># mean between normal and hybrid</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER_TSS2</span><span class="p">):</span>
+      <span class="n">stop_and_go</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.8194</span>  <span class="c1"># average of 109.8 and 112.2 in</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">16.0</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.8</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">4516.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>  <span class="c1"># mean between normal and hybrid</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">AVALON</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON_2019</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON_TSS2</span><span class="p">):</span>
+      <span class="c1"># starting from 2019, all Avalon variants have stop and go</span>
+      <span class="c1"># https://engage.toyota.com/static/images/toyota_safety_sense/TSS_Applicability_Chart.pdf</span>
+      <span class="n">stop_and_go</span> <span class="o">=</span> <span class="n">candidate</span> <span class="o">!=</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.82</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.8</span>  <span class="c1"># Found at https://pressroom.toyota.com/releases/2016+avalon+product+specs.download</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.7983</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3505.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>  <span class="c1"># mean between normal and hybrid</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2_2023</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.68986</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.3</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.7933</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3585.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>  <span class="c1"># Average between ICE and Hybrid</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s1">&#39;pid&#39;</span><span class="p">)</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="mf">0.00007818594</span>
+
+      <span class="c1"># 2019+ RAV4 TSS2 uses two different steering racks and specific tuning seems to be necessary.</span>
+      <span class="c1"># See https://github.com/commaai/openpilot/pull/21429#issuecomment-873652891</span>
+      <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">car_fw</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">fw</span><span class="o">.</span><span class="n">ecu</span> <span class="o">==</span> <span class="s2">&quot;eps&quot;</span> <span class="ow">and</span> <span class="p">(</span><span class="n">fw</span><span class="o">.</span><span class="n">fwVersion</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x02</span><span class="s1">&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">fw</span><span class="o">.</span><span class="n">fwVersion</span> <span class="ow">in</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;8965B42181</span><span class="se">\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">]):</span>
+          <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.15</span><span class="p">]</span>
+          <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">]</span>
+          <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="mf">0.00004</span>
+          <span class="k">break</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA_TSS2</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.67</span>  <span class="c1"># Average between 2.70 for sedan and 2.64 for hatchback</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.9</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.444</span>  <span class="c1"># not optimized yet</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3060.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES_TSS2</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">candidate</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,):</span>  <span class="c1"># TODO: LEXUS_ES may have sng</span>
+        <span class="n">stop_and_go</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.8702</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">16.0</span>  <span class="c1"># not optimized</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.444</span>  <span class="c1"># not optimized yet</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3677.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>  <span class="c1"># mean between min and max</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">:</span>
+      <span class="n">stop_and_go</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">3.03</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">15.5</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.444</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">4590.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_IS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_IS_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RC</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.79908</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.3</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.444</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3736.8</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_GS_F</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.84988</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.3</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.444</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">4034.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">:</span>
+      <span class="n">stop_and_go</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.60</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">18.6</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.517</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mi">3108</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>  <span class="c1"># mean between min and max</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX_TSS2</span><span class="p">):</span>
+      <span class="n">stop_and_go</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.66</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.7</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.444</span>  <span class="c1"># not optimized yet</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mi">4070</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_TSS2</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.70002</span>  <span class="c1"># from toyota online sepc.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.4</span>   <span class="c1"># True steerRatio from older prius</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.6371</span>   <span class="c1"># hand-tune</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3115.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">MIRAI</span><span class="p">:</span>
+      <span class="n">stop_and_go</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.91</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.8</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.8</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">4300.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ALPHARD_TSS2</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">3.00</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.2</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.444</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">4305.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">centerToFront</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">*</span> <span class="mf">0.44</span>
+
+    <span class="c1"># TODO: Some TSS-P platforms have BSM, but are flipped based on region or driving direction.</span>
+    <span class="c1"># Detect flipped signals and enable for C-HR and others</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">enableBsm</span> <span class="o">=</span> <span class="mh">0x3F6</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">TSS2_CAR</span>
+
+    <span class="c1"># Detect smartDSU, which intercepts ACC_CMD from the DSU (or radar) allowing openpilot to send it</span>
+    <span class="c1"># 0x2AA is sent by a similar device which intercepts the radar instead of DSU on NO_DSU_CARs</span>
+    <span class="k">if</span> <span class="mh">0x2FF</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="p">(</span><span class="mh">0x2AA</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">NO_DSU_CAR</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">ToyotaFlags</span><span class="o">.</span><span class="n">SMART_DSU</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="c1"># No radar dbc for cars without DSU which are not TSS 2.0</span>
+    <span class="c1"># TODO: make an adas dbc file for dsu-less models</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">radarUnavailable</span> <span class="o">=</span> <span class="n">DBC</span><span class="p">[</span><span class="n">candidate</span><span class="p">][</span><span class="s1">&#39;radar&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">NO_DSU_CAR</span> <span class="o">-</span> <span class="n">TSS2_CAR</span><span class="p">)</span>
+
+    <span class="c1"># In TSS2 cars, the camera does long control</span>
+    <span class="n">found_ecus</span> <span class="o">=</span> <span class="p">[</span><span class="n">fw</span><span class="o">.</span><span class="n">ecu</span> <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">car_fw</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">enableDsu</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_ecus</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">dsu</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">found_ecus</span> <span class="ow">and</span> <span class="n">candidate</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">NO_DSU_CAR</span> <span class="o">|</span> <span class="n">UNSUPPORTED_DSU_CAR</span><span class="p">)</span> \
+                                        <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">ToyotaFlags</span><span class="o">.</span><span class="n">SMART_DSU</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">enableGasInterceptor</span> <span class="o">=</span> <span class="mh">0x201</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">enableGasInterceptor</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_TOYOTA_GAS_INTERCEPTOR</span>
+
+    <span class="c1"># if the smartDSU is detected, openpilot can send ACC_CONTROL and the smartDSU will block it from the DSU or radar.</span>
+    <span class="c1"># since we don&#39;t yet parse radar on TSS2/TSS-P radar-based ACC cars, gate longitudinal behind experimental toggle</span>
+    <span class="n">use_sdsu</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">ToyotaFlags</span><span class="o">.</span><span class="n">SMART_DSU</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">RADAR_ACC_CAR</span> <span class="o">|</span> <span class="n">NO_DSU_CAR</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">experimentalLongitudinalAvailable</span> <span class="o">=</span> <span class="n">use_sdsu</span>
+
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">use_sdsu</span><span class="p">:</span>
+        <span class="c1"># Disabling radar is only supported on TSS2 radar-ACC cars</span>
+        <span class="k">if</span> <span class="n">experimental_long</span> <span class="ow">and</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">RADAR_ACC_CAR</span> <span class="ow">and</span> <span class="kc">False</span><span class="p">:</span>  <span class="c1"># TODO: disabling radar isn&#39;t supported yet</span>
+          <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">ToyotaFlags</span><span class="o">.</span><span class="n">DISABLE_RADAR</span><span class="o">.</span><span class="n">value</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">use_sdsu</span> <span class="o">=</span> <span class="n">use_sdsu</span> <span class="ow">and</span> <span class="n">experimental_long</span>
+
+    <span class="c1"># openpilot longitudinal enabled by default:</span>
+    <span class="c1">#  - non-(TSS2 radar ACC cars) w/ smartDSU installed</span>
+    <span class="c1">#  - cars w/ DSU disconnected</span>
+    <span class="c1">#  - TSS2 cars with camera sending ACC_CONTROL where we can block it</span>
+    <span class="c1"># openpilot longitudinal behind experimental long toggle:</span>
+    <span class="c1">#  - TSS2 radar ACC cars w/ smartDSU installed</span>
+    <span class="c1">#  - TSS2 radar ACC cars w/o smartDSU installed (disables radar)</span>
+    <span class="c1">#  - TSS-P DSU-less cars w/ CAN filter installed (no radar parser yet)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="o">=</span> <span class="n">use_sdsu</span> <span class="ow">or</span> <span class="n">ret</span><span class="o">.</span><span class="n">enableDsu</span> <span class="ow">or</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TSS2_CAR</span> <span class="o">-</span> <span class="n">RADAR_ACC_CAR</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">ToyotaFlags</span><span class="o">.</span><span class="n">DISABLE_RADAR</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">autoResumeSng</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="ow">and</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">NO_STOP_TIMER_CAR</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_TOYOTA_STOCK_LONGITUDINAL</span>
+
+    <span class="c1"># min speed to enable ACC. if car can do stop and go, then set enabling speed</span>
+    <span class="c1"># to a negative value, so it won&#39;t matter.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span> <span class="k">if</span> <span class="p">(</span><span class="n">stop_and_go</span> <span class="ow">or</span> <span class="n">ret</span><span class="o">.</span><span class="n">enableGasInterceptor</span><span class="p">)</span> <span class="k">else</span> <span class="n">MIN_ACC_SPEED</span>
+
+    <span class="n">tune</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span>
+    <span class="n">tune</span><span class="o">.</span><span class="n">deadzoneBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">9.</span><span class="p">]</span>
+    <span class="n">tune</span><span class="o">.</span><span class="n">deadzoneV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">.0</span><span class="p">,</span> <span class="mf">.15</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">TSS2_CAR</span> <span class="ow">or</span> <span class="n">ret</span><span class="o">.</span><span class="n">enableGasInterceptor</span><span class="p">:</span>
+      <span class="n">tune</span><span class="o">.</span><span class="n">kpBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">]</span>
+      <span class="n">tune</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">]</span>
+      <span class="n">tune</span><span class="o">.</span><span class="n">kiBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">12.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mf">27.</span><span class="p">]</span>
+      <span class="n">tune</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">.35</span><span class="p">,</span> <span class="mf">.23</span><span class="p">,</span> <span class="mf">.20</span><span class="p">,</span> <span class="mf">.17</span><span class="p">,</span> <span class="mf">.1</span><span class="p">]</span>
+      <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">TSS2_CAR</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">vEgoStopping</span> <span class="o">=</span> <span class="mf">0.25</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">vEgoStarting</span> <span class="o">=</span> <span class="mf">0.25</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">stoppingDecelRate</span> <span class="o">=</span> <span class="mf">0.3</span>  <span class="c1"># reach stopping target smoothly</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">tune</span><span class="o">.</span><span class="n">kpBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">35.</span><span class="p">]</span>
+      <span class="n">tune</span><span class="o">.</span><span class="n">kiBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">35.</span><span class="p">]</span>
+      <span class="n">tune</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">3.6</span><span class="p">,</span> <span class="mf">2.4</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]</span>
+      <span class="n">tune</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.54</span><span class="p">,</span> <span class="mf">0.36</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">ret</span>
+
+<div class="viewcode-block" id="CarInterface.init">
+<a class="viewcode-back" href="../../../../selfdrive.car.toyota.html#selfdrive.car.toyota.interface.CarInterface.init">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">):</span>
+    <span class="c1"># disable radar if alpha longitudinal toggled on radar-ACC car without CAN filter/smartDSU</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">ToyotaFlags</span><span class="o">.</span><span class="n">DISABLE_RADAR</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+      <span class="n">communication_control</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">uds</span><span class="o">.</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">COMMUNICATION_CONTROL</span><span class="p">,</span> <span class="n">uds</span><span class="o">.</span><span class="n">CONTROL_TYPE</span><span class="o">.</span><span class="n">ENABLE_RX_DISABLE_TX</span><span class="p">,</span> <span class="n">uds</span><span class="o">.</span><span class="n">MESSAGE_TYPE</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">])</span>
+      <span class="n">disable_ecu</span><span class="p">(</span><span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">,</span> <span class="n">bus</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">addr</span><span class="o">=</span><span class="mh">0x750</span><span class="p">,</span> <span class="n">sub_addr</span><span class="o">=</span><span class="mh">0xf</span><span class="p">,</span> <span class="n">com_cont_req</span><span class="o">=</span><span class="n">communication_control</span><span class="p">)</span></div>
+
+
+  <span class="c1"># returns a car.CarState</span>
+  <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_cam</span><span class="p">)</span>
+
+    <span class="c1"># events</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_common_events</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+
+    <span class="c1"># Lane Tracing Assist control is unavailable (EPS_STATUS-&gt;LTA_STATE=0) until</span>
+    <span class="c1"># the more accurate angle sensor signal is initialized</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">steerControlType</span> <span class="o">==</span> <span class="n">SteerControlType</span><span class="o">.</span><span class="n">angle</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">accurate_steer_angle_seen</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">vehicleSensorsInvalid</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">standstill</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ret</span><span class="o">.</span><span class="n">brakePressed</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">enableGasInterceptor</span><span class="p">:</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">resumeRequired</span><span class="p">)</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">low_speed_lockout</span><span class="p">:</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">lowSpeedLockout</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minEnableSpeed</span><span class="p">:</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">belowEngageSpeed</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">actuators</span><span class="o">.</span><span class="n">accel</span> <span class="o">&gt;</span> <span class="mf">0.3</span><span class="p">:</span>
+          <span class="c1"># some margin on the actuator to not false trigger cancellation while stopping</span>
+          <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">speedTooLow</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&lt;</span> <span class="mf">0.001</span><span class="p">:</span>
+          <span class="c1"># while in standstill, send a user alert</span>
+          <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">manualRestart</span><span class="p">)</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">to_msg</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">ret</span>
+
+  <span class="c1"># pass in a car.CarControl</span>
+  <span class="c1"># to be called @ 100hz</span>
+<div class="viewcode-block" id="CarInterface.apply">
+<a class="viewcode-back" href="../../../../selfdrive.car.toyota.html#selfdrive.car.toyota.interface.CarInterface.apply">[docs]</a>
+  <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">now_nanos</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">CC</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">now_nanos</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

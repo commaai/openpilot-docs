@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.test.profiling.profiler &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/test/profiling/profiler.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.test.profiling.profiler</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.test.profiling.profiler</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">cProfile</span>
+<span class="kn">import</span> <span class="nn">pprofile</span>
+<span class="kn">import</span> <span class="nn">pyprof2calltree</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.logreader</span> <span class="kn">import</span> <span class="n">LogReader</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.profiling.lib</span> <span class="kn">import</span> <span class="n">SubMaster</span><span class="p">,</span> <span class="n">PubMaster</span><span class="p">,</span> <span class="n">SubSocket</span><span class="p">,</span> <span class="n">ReplayDone</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.process_replay.process_replay</span> <span class="kn">import</span> <span class="n">CONFIGS</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.toyota.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">TOYOTA</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.honda.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">HONDA</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.volkswagen.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">VW</span>
+
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://commadataci.blob.core.windows.net/openpilotci/&quot;</span>
+
+<span class="n">CARS</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;toyota&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;0982d79ebb0de295|2021-01-03--20-03-36/6&quot;</span><span class="p">,</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">RAV4</span><span class="p">),</span>
+  <span class="s1">&#39;honda&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;0982d79ebb0de295|2021-01-08--10-13-10/6&quot;</span><span class="p">,</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">CIVIC</span><span class="p">),</span>
+  <span class="s2">&quot;vw&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;ef895f46af5fd73f|2021-05-22--14-06-35/6&quot;</span><span class="p">,</span> <span class="n">VW</span><span class="o">.</span><span class="n">AUDI_A3_MK3</span><span class="p">),</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="get_inputs">
+<a class="viewcode-back" href="../../../../selfdrive.test.profiling.html#selfdrive.test.profiling.profiler.get_inputs">[docs]</a>
+<span class="k">def</span> <span class="nf">get_inputs</span><span class="p">(</span><span class="n">msgs</span><span class="p">,</span> <span class="n">process</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">CONFIGS</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">proc_name</span> <span class="o">==</span> <span class="n">process</span><span class="p">:</span>
+      <span class="n">sub_socks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">pubs</span><span class="p">)</span>
+      <span class="n">trigger</span> <span class="o">=</span> <span class="n">sub_socks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="k">break</span>
+
+  <span class="c1"># some procs block on CarParams</span>
+  <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">msgs</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;carParams&#39;</span><span class="p">:</span>
+      <span class="n">m</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span>
+      <span class="n">m</span><span class="o">.</span><span class="n">carParams</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="o">=</span> <span class="n">fingerprint</span>
+      <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;CarParams&quot;</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">carParams</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+      <span class="k">break</span>
+
+  <span class="n">sm</span> <span class="o">=</span> <span class="n">SubMaster</span><span class="p">(</span><span class="n">msgs</span><span class="p">,</span> <span class="n">trigger</span><span class="p">,</span> <span class="n">sub_socks</span><span class="p">)</span>
+  <span class="n">pm</span> <span class="o">=</span> <span class="n">PubMaster</span><span class="p">()</span>
+  <span class="k">if</span> <span class="s1">&#39;can&#39;</span> <span class="ow">in</span> <span class="n">sub_socks</span><span class="p">:</span>
+    <span class="n">can_sock</span> <span class="o">=</span> <span class="n">SubSocket</span><span class="p">(</span><span class="n">msgs</span><span class="p">,</span> <span class="s1">&#39;can&#39;</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">can_sock</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="k">return</span> <span class="n">sm</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">can_sock</span></div>
+
+
+
+<div class="viewcode-block" id="profile">
+<a class="viewcode-back" href="../../../../selfdrive.test.profiling.html#selfdrive.test.profiling.profiler.profile">[docs]</a>
+<span class="k">def</span> <span class="nf">profile</span><span class="p">(</span><span class="n">proc</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">car</span><span class="o">=</span><span class="s1">&#39;toyota&#39;</span><span class="p">):</span>
+  <span class="n">segment</span><span class="p">,</span> <span class="n">fingerprint</span> <span class="o">=</span> <span class="n">CARS</span><span class="p">[</span><span class="n">car</span><span class="p">]</span>
+  <span class="n">segment</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span>
+  <span class="n">rlog_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}{</span><span class="n">segment</span><span class="si">}</span><span class="s2">/rlog.bz2&quot;</span>
+  <span class="n">msgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">LogReader</span><span class="p">(</span><span class="n">rlog_url</span><span class="p">))</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;LOOP&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">))</span>
+
+  <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;FINGERPRINT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fingerprint</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SKIP_FW_QUERY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;REPLAY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+
+  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">can_sock</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">can_sock</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">func</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">can_sock</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">func</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="n">pm</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ReplayDone</span><span class="p">:</span>
+      <span class="k">pass</span>
+
+  <span class="c1"># Statistical</span>
+  <span class="n">sm</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">can_sock</span> <span class="o">=</span> <span class="n">get_inputs</span><span class="p">(</span><span class="n">msgs</span><span class="p">,</span> <span class="n">proc</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">)</span>
+  <span class="k">with</span> <span class="n">pprofile</span><span class="o">.</span><span class="n">StatisticalProfile</span><span class="p">()(</span><span class="n">period</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">)</span> <span class="k">as</span> <span class="n">pr</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">can_sock</span><span class="p">)</span>
+  <span class="n">pr</span><span class="o">.</span><span class="n">dump_stats</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cachegrind.out.</span><span class="si">{</span><span class="n">proc</span><span class="si">}</span><span class="s1">_statistical&#39;</span><span class="p">)</span>
+
+  <span class="c1"># Deterministic</span>
+  <span class="n">sm</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">can_sock</span> <span class="o">=</span> <span class="n">get_inputs</span><span class="p">(</span><span class="n">msgs</span><span class="p">,</span> <span class="n">proc</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">)</span>
+  <span class="k">with</span> <span class="n">cProfile</span><span class="o">.</span><span class="n">Profile</span><span class="p">()</span> <span class="k">as</span> <span class="n">pr</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">can_sock</span><span class="p">)</span>
+  <span class="n">pyprof2calltree</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">pr</span><span class="o">.</span><span class="n">getstats</span><span class="p">(),</span> <span class="sa">f</span><span class="s1">&#39;cachegrind.out.</span><span class="si">{</span><span class="n">proc</span><span class="si">}</span><span class="s1">_deterministic&#39;</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+  <span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.controlsd</span> <span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">controlsd_thread</span>
+  <span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.radard</span> <span class="kn">import</span> <span class="n">radard_thread</span>
+  <span class="kn">from</span> <span class="nn">openpilot.selfdrive.locationd.paramsd</span> <span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">paramsd_thread</span>
+  <span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.plannerd</span> <span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">plannerd_thread</span>
+
+  <span class="n">procs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;radard&#39;</span><span class="p">:</span> <span class="n">radard_thread</span><span class="p">,</span>
+    <span class="s1">&#39;controlsd&#39;</span><span class="p">:</span> <span class="n">controlsd_thread</span><span class="p">,</span>
+    <span class="s1">&#39;paramsd&#39;</span><span class="p">:</span> <span class="n">paramsd_thread</span><span class="p">,</span>
+    <span class="s1">&#39;plannerd&#39;</span><span class="p">:</span> <span class="n">plannerd_thread</span><span class="p">,</span>
+  <span class="p">}</span>
+
+  <span class="n">proc</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">proc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">procs</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">proc</span><span class="si">}</span><span class="s2"> not available&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">profile</span><span class="p">(</span><span class="n">proc</span><span class="p">,</span> <span class="n">procs</span><span class="p">[</span><span class="n">proc</span><span class="p">])</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

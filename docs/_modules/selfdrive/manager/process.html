@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.manager.process &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/manager/process.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.manager.process</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.manager.process</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">ValuesView</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
+
+<span class="kn">from</span> <span class="nn">setproctitle</span> <span class="kn">import</span> <span class="n">setproctitle</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span><span class="p">,</span> <span class="n">log</span>
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">import</span> <span class="nn">openpilot.selfdrive.sentry</span> <span class="k">as</span> <span class="nn">sentry</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.basedir</span> <span class="kn">import</span> <span class="n">BASEDIR</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+
+<span class="n">WATCHDOG_FN</span> <span class="o">=</span> <span class="s2">&quot;/dev/shm/wd_&quot;</span>
+<span class="n">ENABLE_WATCHDOG</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;NO_WATCHDOG&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="launcher">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.launcher">[docs]</a>
+<span class="k">def</span> <span class="nf">launcher</span><span class="p">(</span><span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="c1"># import the process</span>
+    <span class="n">mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">proc</span><span class="p">)</span>
+
+    <span class="c1"># rename the process</span>
+    <span class="n">setproctitle</span><span class="p">(</span><span class="n">proc</span><span class="p">)</span>
+
+    <span class="c1"># create new context since we forked</span>
+    <span class="n">messaging</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>
+
+    <span class="c1"># add daemon name tag to logs</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">daemon</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">sentry</span><span class="o">.</span><span class="n">set_tag</span><span class="p">(</span><span class="s2">&quot;daemon&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="c1"># exec the process</span>
+    <span class="n">mod</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+  <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;child </span><span class="si">{</span><span class="n">proc</span><span class="si">}</span><span class="s2"> got SIGINT&quot;</span><span class="p">)</span>
+  <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="c1"># can&#39;t install the crash handler because sys.excepthook doesn&#39;t play nice</span>
+    <span class="c1"># with threads, so catch it here.</span>
+    <span class="n">sentry</span><span class="o">.</span><span class="n">capture_exception</span><span class="p">()</span>
+    <span class="k">raise</span></div>
+
+
+
+<div class="viewcode-block" id="nativelauncher">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.nativelauncher">[docs]</a>
+<span class="k">def</span> <span class="nf">nativelauncher</span><span class="p">(</span><span class="n">pargs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;MANAGER_DAEMON&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+
+  <span class="c1"># exec the process</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">execvp</span><span class="p">(</span><span class="n">pargs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="join_process">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.join_process">[docs]</a>
+<span class="k">def</span> <span class="nf">join_process</span><span class="p">(</span><span class="n">process</span><span class="p">:</span> <span class="n">Process</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="c1"># Process().join(timeout) will hang due to a python 3 bug: https://bugs.python.org/issue28382</span>
+  <span class="c1"># We have to poll the exitcode instead</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+  <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">timeout</span> <span class="ow">and</span> <span class="n">process</span><span class="o">.</span><span class="n">exitcode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.001</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ManagerProcess">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.ManagerProcess">[docs]</a>
+<span class="k">class</span> <span class="nc">ManagerProcess</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+  <span class="n">daemon</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">sigkill</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">should_run</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Params</span><span class="p">,</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span>
+  <span class="n">proc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Process</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+  <span class="n">last_watchdog_time</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">watchdog_max_dt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">watchdog_seen</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">shutting_down</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="ManagerProcess.prepare">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.ManagerProcess.prepare">[docs]</a>
+  <span class="nd">@abstractmethod</span>
+  <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="ManagerProcess.start">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.ManagerProcess.start">[docs]</a>
+  <span class="nd">@abstractmethod</span>
+  <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="ManagerProcess.restart">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.ManagerProcess.restart">[docs]</a>
+  <span class="k">def</span> <span class="nf">restart</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">sig</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGKILL</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ManagerProcess.check_watchdog">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.ManagerProcess.check_watchdog">[docs]</a>
+  <span class="k">def</span> <span class="nf">check_watchdog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">started</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">watchdog_max_dt</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span>
+
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">fn</span> <span class="o">=</span> <span class="n">WATCHDOG_FN</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">pid</span><span class="p">)</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="c1"># TODO: why can&#39;t pylint find struct.unpack?</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_watchdog_time</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">pass</span>
+
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_watchdog_time</span> <span class="o">/</span> <span class="mf">1e9</span>
+
+    <span class="k">if</span> <span class="n">dt</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">watchdog_max_dt</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">watchdog_seen</span> <span class="ow">and</span> <span class="n">ENABLE_WATCHDOG</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Watchdog timeout for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (exitcode </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">exitcode</span><span class="si">}</span><span class="s2">) restarting (</span><span class="si">{</span><span class="n">started</span><span class="si">=}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">restart</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">watchdog_seen</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="ManagerProcess.stop">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.ManagerProcess.stop">[docs]</a>
+  <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">retry</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">signal</span><span class="o">.</span><span class="n">Signals</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">exitcode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">shutting_down</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;killing </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sig</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+          <span class="n">sig</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGKILL</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigkill</span> <span class="k">else</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shutting_down</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">block</span><span class="p">:</span>
+          <span class="k">return</span> <span class="kc">None</span>
+
+      <span class="n">join_process</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+      <span class="c1"># If process failed to die send SIGKILL</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">exitcode</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">retry</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;killing </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> with SIGKILL&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGKILL</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">exitcode</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> is dead with </span><span class="si">{</span><span class="n">ret</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">exitcode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">shutting_down</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">proc</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="ManagerProcess.signal">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.ManagerProcess.signal">[docs]</a>
+  <span class="k">def</span> <span class="nf">signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span>
+
+    <span class="c1"># Don&#39;t signal if already exited</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">exitcode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">pid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span>
+
+    <span class="c1"># Can&#39;t signal if we don&#39;t have a pid</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">pid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span>
+
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sending signal </span><span class="si">{</span><span class="n">sig</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="n">sig</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ManagerProcess.get_process_state_msg">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.ManagerProcess.get_process_state_msg">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_process_state_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">ManagerState</span><span class="o">.</span><span class="n">ProcessState</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="p">:</span>
+      <span class="n">state</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+      <span class="n">state</span><span class="o">.</span><span class="n">shouldBeRunning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">shutting_down</span>
+      <span class="n">state</span><span class="o">.</span><span class="n">pid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">pid</span> <span class="ow">or</span> <span class="mi">0</span>
+      <span class="n">state</span><span class="o">.</span><span class="n">exitCode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">exitcode</span> <span class="ow">or</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">state</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="NativeProcess">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.NativeProcess">[docs]</a>
+<span class="k">class</span> <span class="nc">NativeProcess</span><span class="p">(</span><span class="n">ManagerProcess</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">cwd</span><span class="p">,</span> <span class="n">cmdline</span><span class="p">,</span> <span class="n">should_run</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sigkill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">watchdog_max_dt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">=</span> <span class="n">cwd</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmdline</span> <span class="o">=</span> <span class="n">cmdline</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">should_run</span> <span class="o">=</span> <span class="n">should_run</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">enabled</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sigkill</span> <span class="o">=</span> <span class="n">sigkill</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">watchdog_max_dt</span> <span class="o">=</span> <span class="n">watchdog_max_dt</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">launcher</span> <span class="o">=</span> <span class="n">nativelauncher</span>
+
+<div class="viewcode-block" id="NativeProcess.prepare">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.NativeProcess.prepare">[docs]</a>
+  <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="NativeProcess.start">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.NativeProcess.start">[docs]</a>
+  <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># In case we only tried a non blocking stop we need to stop it before restarting</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shutting_down</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span>
+
+    <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span><span class="p">)</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;starting process </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">proc</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">launcher</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmdline</span><span class="p">,</span> <span class="n">cwd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">watchdog_seen</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">shutting_down</span> <span class="o">=</span> <span class="kc">False</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="PythonProcess">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.PythonProcess">[docs]</a>
+<span class="k">class</span> <span class="nc">PythonProcess</span><span class="p">(</span><span class="n">ManagerProcess</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">should_run</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sigkill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">watchdog_max_dt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">module</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">should_run</span> <span class="o">=</span> <span class="n">should_run</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">enabled</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sigkill</span> <span class="o">=</span> <span class="n">sigkill</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">watchdog_max_dt</span> <span class="o">=</span> <span class="n">watchdog_max_dt</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">launcher</span> <span class="o">=</span> <span class="n">launcher</span>
+
+<div class="viewcode-block" id="PythonProcess.prepare">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.PythonProcess.prepare">[docs]</a>
+  <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;preimporting </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PythonProcess.start">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.PythonProcess.start">[docs]</a>
+  <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># In case we only tried a non blocking stop we need to stop it before restarting</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shutting_down</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span>
+
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;starting python </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">proc</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">launcher</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">watchdog_seen</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">shutting_down</span> <span class="o">=</span> <span class="kc">False</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DaemonProcess">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.DaemonProcess">[docs]</a>
+<span class="k">class</span> <span class="nc">DaemonProcess</span><span class="p">(</span><span class="n">ManagerProcess</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Python process that has to stay running across manager restart.</span>
+<span class="sd">  This is used for athena so you don&#39;t lose SSH access when restarting manager.&quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">module</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">param_name</span> <span class="o">=</span> <span class="n">param_name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">enabled</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="DaemonProcess.should_run">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.DaemonProcess.should_run">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">should_run</span><span class="p">(</span><span class="n">started</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="DaemonProcess.prepare">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.DaemonProcess.prepare">[docs]</a>
+  <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="DaemonProcess.start">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.DaemonProcess.start">[docs]</a>
+  <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+
+    <span class="n">pid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">param_name</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">pid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">pid</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/proc/</span><span class="si">{</span><span class="n">pid</span><span class="si">}</span><span class="s1">/cmdline&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">():</span>
+            <span class="c1"># daemon is running</span>
+            <span class="k">return</span>
+      <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">):</span>
+        <span class="c1"># process is dead</span>
+        <span class="k">pass</span>
+
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;starting daemon </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="p">],</span>
+                               <span class="n">stdin</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/dev/null&#39;</span><span class="p">),</span>
+                               <span class="n">stdout</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/dev/null&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">),</span>
+                               <span class="n">stderr</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/dev/null&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">),</span>
+                               <span class="n">preexec_fn</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">setpgrp</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">param_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">proc</span><span class="o">.</span><span class="n">pid</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="DaemonProcess.stop">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.DaemonProcess.stop">[docs]</a>
+  <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">retry</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sig</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">pass</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ensure_running">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process.ensure_running">[docs]</a>
+<span class="k">def</span> <span class="nf">ensure_running</span><span class="p">(</span><span class="n">procs</span><span class="p">:</span> <span class="n">ValuesView</span><span class="p">[</span><span class="n">ManagerProcess</span><span class="p">],</span> <span class="n">started</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">not_run</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ManagerProcess</span><span class="p">]:</span>
+  <span class="k">if</span> <span class="n">not_run</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">not_run</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="n">running</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">procs</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">not_run</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">should_run</span><span class="p">(</span><span class="n">started</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+      <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+      <span class="n">running</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">p</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">p</span><span class="o">.</span><span class="n">check_watchdog</span><span class="p">(</span><span class="n">started</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">running</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

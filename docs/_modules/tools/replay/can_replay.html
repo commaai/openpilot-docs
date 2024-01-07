@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tools.replay.can_replay &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/tools/replay/can_replay.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tools.replay.can_replay</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tools.replay.can_replay</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;FILEREADER_CACHE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">config_realtime_process</span><span class="p">,</span> <span class="n">Ratekeeper</span><span class="p">,</span> <span class="n">DT_CTRL</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.boardd.boardd</span> <span class="kn">import</span> <span class="n">can_capnp_to_can_list</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.plotjuggler.juggle</span> <span class="kn">import</span> <span class="n">load_segment</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.logreader</span> <span class="kn">import</span> <span class="n">logreader_from_route_or_segment</span>
+<span class="kn">from</span> <span class="nn">panda</span> <span class="kn">import</span> <span class="n">Panda</span><span class="p">,</span> <span class="n">PandaJungle</span>
+
+<div class="viewcode-block" id="send_thread">
+<a class="viewcode-back" href="../../../tools.replay.html#tools.replay.can_replay.send_thread">[docs]</a>
+<span class="k">def</span> <span class="nf">send_thread</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">flock</span><span class="p">):</span>
+  <span class="k">if</span> <span class="s2">&quot;Jungle&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="s2">&quot;FLASH&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+      <span class="k">with</span> <span class="n">flock</span><span class="p">:</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">flash</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mh">0xFFFF</span><span class="p">]:</span>
+      <span class="n">s</span><span class="o">.</span><span class="n">can_clear</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+      <span class="n">s</span><span class="o">.</span><span class="n">set_can_speed_kbps</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+      <span class="n">s</span><span class="o">.</span><span class="n">set_can_data_speed_kbps</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">set_ignition</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">set_ignition</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">set_panda_power</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">set_safety_mode</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">SAFETY_ALLOUTPUT</span><span class="p">)</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">set_can_loopback</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+  <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">ign</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">rk</span> <span class="o">=</span> <span class="n">Ratekeeper</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">DT_CTRL</span><span class="p">,</span> <span class="n">print_delay_threshold</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+  <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># handle ignition cycling</span>
+    <span class="k">if</span> <span class="n">ENABLE_IGN</span><span class="p">:</span>
+      <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">rk</span><span class="o">.</span><span class="n">frame</span><span class="o">*</span><span class="n">DT_CTRL</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="n">IGN_ON</span> <span class="o">+</span> <span class="n">IGN_OFF</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">IGN_ON</span>
+      <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">ign</span><span class="p">:</span>
+        <span class="n">ign</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">set_ignition</span><span class="p">(</span><span class="n">ign</span><span class="p">)</span>
+
+    <span class="n">snd</span> <span class="o">=</span> <span class="n">CAN_MSGS</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">snd</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">snd</span><span class="p">))</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">can_send_many</span><span class="p">(</span><span class="n">snd</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">CAN_MSGS</span><span class="p">)</span>
+
+    <span class="c1"># Drain panda message buffer</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">can_recv</span><span class="p">()</span>
+    <span class="n">rk</span><span class="o">.</span><span class="n">keep_time</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="connect">
+<a class="viewcode-back" href="../../../tools.replay.html#tools.replay.can_replay.connect">[docs]</a>
+<span class="k">def</span> <span class="nf">connect</span><span class="p">():</span>
+  <span class="n">config_realtime_process</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">55</span><span class="p">)</span>
+
+  <span class="n">serials</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="n">flashing_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+  <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># look for new devices</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Panda</span><span class="p">,</span> <span class="n">PandaJungle</span><span class="p">]:</span>
+      <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+      <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">list</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">serials</span><span class="p">:</span>
+          <span class="k">with</span> <span class="n">p</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">as</span> <span class="n">pp</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pp</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">Panda</span><span class="o">.</span><span class="n">HW_TYPE_TRES</span><span class="p">:</span>
+              <span class="n">serials</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+              <span class="k">continue</span>
+
+          <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;starting send thread for&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+          <span class="n">serials</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">send_thread</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">p</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">flashing_lock</span><span class="p">))</span>
+          <span class="n">serials</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># try to join all send threads</span>
+    <span class="n">cur_serials</span> <span class="o">=</span> <span class="n">serials</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">cur_serials</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span>  <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">t</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+          <span class="k">del</span> <span class="n">serials</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Replay CAN messages from a route to all connected pandas and jungles in a loop.&quot;</span><span class="p">,</span>
+                                   <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;route_or_segment_name&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The route or segment name to replay. If not specified, a default public route will be used.&quot;</span><span class="p">)</span>
+  <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading log...&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">route_or_segment_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">ROUTE</span> <span class="o">=</span> <span class="s2">&quot;77611a1fac303767/2020-03-24--09-50-38&quot;</span>
+    <span class="n">REPLAY_SEGS</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>  <span class="c1"># route has 82 segments available</span>
+    <span class="n">CAN_MSGS</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">logs</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;https://commadataci.blob.core.windows.net/openpilotci/</span><span class="si">{</span><span class="n">ROUTE</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">/rlog.bz2&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">REPLAY_SEGS</span><span class="p">]</span>
+    <span class="k">with</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">lr</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">load_segment</span><span class="p">,</span> <span class="n">logs</span><span class="p">)):</span>
+        <span class="n">CAN_MSGS</span> <span class="o">+=</span> <span class="p">[</span><span class="n">can_capnp_to_can_list</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">can</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">lr</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;can&#39;</span><span class="p">]</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">lr</span> <span class="o">=</span> <span class="n">logreader_from_route_or_segment</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">route_or_segment_name</span><span class="p">)</span>
+    <span class="n">CAN_MSGS</span> <span class="o">=</span> <span class="p">[</span><span class="n">can_capnp_to_can_list</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">can</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">lr</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;can&#39;</span><span class="p">]</span>
+
+  <span class="c1"># set both to cycle ignition</span>
+  <span class="n">IGN_ON</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ON&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">))</span>
+  <span class="n">IGN_OFF</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OFF&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">))</span>
+  <span class="n">ENABLE_IGN</span> <span class="o">=</span> <span class="n">IGN_ON</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">IGN_OFF</span> <span class="o">&gt;</span> <span class="mi">0</span>
+  <span class="k">if</span> <span class="n">ENABLE_IGN</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cycling ignition: on for </span><span class="si">{</span><span class="n">IGN_ON</span><span class="si">}</span><span class="s2">s, off for </span><span class="si">{</span><span class="n">IGN_OFF</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+
+  <span class="n">connect</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

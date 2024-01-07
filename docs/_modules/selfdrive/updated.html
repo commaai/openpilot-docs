@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.updated &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/updated.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.updated</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.updated</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">psutil</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">fcntl</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">markdown_it</span> <span class="kn">import</span> <span class="n">MarkdownIt</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.common.basedir</span> <span class="kn">import</span> <span class="n">BASEDIR</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.time</span> <span class="kn">import</span> <span class="n">system_time_valid</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware</span> <span class="kn">import</span> <span class="n">AGNOS</span><span class="p">,</span> <span class="n">HARDWARE</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.alertmanager</span> <span class="kn">import</span> <span class="n">set_offroad_alert</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.version</span> <span class="kn">import</span> <span class="n">is_tested_branch</span>
+
+<span class="n">LOCK_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;UPDATER_LOCK_FILE&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/safe_staging_overlay.lock&quot;</span><span class="p">)</span>
+<span class="n">STAGING_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;UPDATER_STAGING_ROOT&quot;</span><span class="p">,</span> <span class="s2">&quot;/data/safe_staging&quot;</span><span class="p">)</span>
+
+<span class="n">OVERLAY_UPPER</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">STAGING_ROOT</span><span class="p">,</span> <span class="s2">&quot;upper&quot;</span><span class="p">)</span>
+<span class="n">OVERLAY_METADATA</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">STAGING_ROOT</span><span class="p">,</span> <span class="s2">&quot;metadata&quot;</span><span class="p">)</span>
+<span class="n">OVERLAY_MERGED</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">STAGING_ROOT</span><span class="p">,</span> <span class="s2">&quot;merged&quot;</span><span class="p">)</span>
+<span class="n">FINALIZED</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">STAGING_ROOT</span><span class="p">,</span> <span class="s2">&quot;finalized&quot;</span><span class="p">)</span>
+
+<span class="n">OVERLAY_INIT</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="s2">&quot;.overlay_init&quot;</span><span class="p">))</span>
+
+<span class="n">DAYS_NO_CONNECTIVITY_MAX</span> <span class="o">=</span> <span class="mi">14</span>     <span class="c1"># do not allow to engage after this many days</span>
+<span class="n">DAYS_NO_CONNECTIVITY_PROMPT</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># send an offroad prompt after this many days</span>
+
+<div class="viewcode-block" id="WaitTimeHelper">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.WaitTimeHelper">[docs]</a>
+<span class="k">class</span> <span class="nc">WaitTimeHelper</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ready_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">only_check_for_update</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGHUP</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_now</span><span class="p">)</span>
+    <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGUSR1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_now</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WaitTimeHelper.update_now">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.WaitTimeHelper.update_now">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_now</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signum</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;caught SIGHUP, attempting to downloading update&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">only_check_for_update</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ready_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="WaitTimeHelper.check_now">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.WaitTimeHelper.check_now">[docs]</a>
+  <span class="k">def</span> <span class="nf">check_now</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signum</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;caught SIGUSR1, checking for updates&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">only_check_for_update</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ready_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="WaitTimeHelper.sleep">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.WaitTimeHelper.sleep">[docs]</a>
+  <span class="k">def</span> <span class="nf">sleep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ready_event</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">t</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="run">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.run">[docs]</a>
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="set_consistent_flag">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.set_consistent_flag">[docs]</a>
+<span class="k">def</span> <span class="nf">set_consistent_flag</span><span class="p">(</span><span class="n">consistent</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>
+  <span class="n">consistent_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FINALIZED</span><span class="p">,</span> <span class="s2">&quot;.overlay_consistent&quot;</span><span class="p">))</span>
+  <span class="k">if</span> <span class="n">consistent</span><span class="p">:</span>
+    <span class="n">consistent_file</span><span class="o">.</span><span class="n">touch</span><span class="p">()</span>
+  <span class="k">elif</span> <span class="ow">not</span> <span class="n">consistent</span><span class="p">:</span>
+    <span class="n">consistent_file</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">missing_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="parse_release_notes">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.parse_release_notes">[docs]</a>
+<span class="k">def</span> <span class="nf">parse_release_notes</span><span class="p">(</span><span class="n">basedir</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="s2">&quot;RELEASES.md&quot;</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">r</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Slice latest release notes</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">MarkdownIt</span><span class="p">()</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">r</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+  <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="k">pass</span>
+  <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;failed to parse release notes&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="setup_git_options">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.setup_git_options">[docs]</a>
+<span class="k">def</span> <span class="nf">setup_git_options</span><span class="p">(</span><span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="c1"># We sync FS object atimes (which NEOS doesn&#39;t use) and mtimes, but ctimes</span>
+  <span class="c1"># are outside user control. Make sure Git is set up to ignore system ctimes,</span>
+  <span class="c1"># because they change when we make hard links during finalize. Otherwise,</span>
+  <span class="c1"># there is a lot of unnecessary churn. This appears to be a common need on</span>
+  <span class="c1"># OSX as well: https://www.git-tower.com/blog/make-git-rebase-safe-on-osx/</span>
+
+  <span class="c1"># We are using copytree to copy the directory, which also changes</span>
+  <span class="c1"># inode numbers. Ignore those changes too.</span>
+
+  <span class="c1"># Set protocol to the new version (default after git 2.26) to reduce data</span>
+  <span class="c1"># usage on git fetch --dry-run from about 400KB to 18KB.</span>
+  <span class="n">git_cfg</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;core.trustctime&quot;</span><span class="p">,</span> <span class="s2">&quot;false&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;core.checkStat&quot;</span><span class="p">,</span> <span class="s2">&quot;minimal&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;protocol.version&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;gc.auto&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;gc.autoDetach&quot;</span><span class="p">,</span> <span class="s2">&quot;false&quot;</span><span class="p">),</span>
+  <span class="p">]</span>
+  <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">git_cfg</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span><span class="p">],</span> <span class="n">cwd</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="dismount_overlay">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.dismount_overlay">[docs]</a>
+<span class="k">def</span> <span class="nf">dismount_overlay</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">ismount</span><span class="p">(</span><span class="n">OVERLAY_MERGED</span><span class="p">):</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;unmounting existing overlay&quot;</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">([</span><span class="s2">&quot;sudo&quot;</span><span class="p">,</span> <span class="s2">&quot;umount&quot;</span><span class="p">,</span> <span class="s2">&quot;-l&quot;</span><span class="p">,</span> <span class="n">OVERLAY_MERGED</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="init_overlay">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.init_overlay">[docs]</a>
+<span class="k">def</span> <span class="nf">init_overlay</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+  <span class="c1"># Re-create the overlay if BASEDIR/.git has changed since we created the overlay</span>
+  <span class="k">if</span> <span class="n">OVERLAY_INIT</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">ismount</span><span class="p">(</span><span class="n">OVERLAY_MERGED</span><span class="p">):</span>
+    <span class="n">git_dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="s2">&quot;.git&quot;</span><span class="p">)</span>
+    <span class="n">new_files</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;find&quot;</span><span class="p">,</span> <span class="n">git_dir_path</span><span class="p">,</span> <span class="s2">&quot;-newer&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">OVERLAY_INIT</span><span class="p">)])</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_files</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()):</span>
+      <span class="c1"># A valid overlay already exists</span>
+      <span class="k">return</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;.git directory changed, recreating overlay&quot;</span><span class="p">)</span>
+
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;preparing new safe staging area&quot;</span><span class="p">)</span>
+
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+  <span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;UpdateAvailable&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+  <span class="n">set_consistent_flag</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+  <span class="n">dismount_overlay</span><span class="p">()</span>
+  <span class="n">run</span><span class="p">([</span><span class="s2">&quot;sudo&quot;</span><span class="p">,</span> <span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-rf&quot;</span><span class="p">,</span> <span class="n">STAGING_ROOT</span><span class="p">])</span>
+  <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">STAGING_ROOT</span><span class="p">):</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">STAGING_ROOT</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">dirname</span> <span class="ow">in</span> <span class="p">[</span><span class="n">STAGING_ROOT</span><span class="p">,</span> <span class="n">OVERLAY_UPPER</span><span class="p">,</span> <span class="n">OVERLAY_METADATA</span><span class="p">,</span> <span class="n">OVERLAY_MERGED</span><span class="p">]:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="mo">0o755</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">lstat</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">)</span><span class="o">.</span><span class="n">st_dev</span> <span class="o">!=</span> <span class="n">os</span><span class="o">.</span><span class="n">lstat</span><span class="p">(</span><span class="n">OVERLAY_MERGED</span><span class="p">)</span><span class="o">.</span><span class="n">st_dev</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;base and overlay merge directories are on different filesystems; not valid for overlay FS!&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Leave a timestamped canary in BASEDIR to check at startup. The device clock</span>
+  <span class="c1"># should be correct by the time we get here. If the init file disappears, or</span>
+  <span class="c1"># critical mtimes in BASEDIR are newer than .overlay_init, continue.sh can</span>
+  <span class="c1"># assume that BASEDIR has used for local development or otherwise modified,</span>
+  <span class="c1"># and skips the update activation attempt.</span>
+  <span class="n">consistent_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="s2">&quot;.overlay_consistent&quot;</span><span class="p">))</span>
+  <span class="k">if</span> <span class="n">consistent_file</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+    <span class="n">consistent_file</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+  <span class="n">OVERLAY_INIT</span><span class="o">.</span><span class="n">touch</span><span class="p">()</span>
+
+  <span class="n">os</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>
+  <span class="n">overlay_opts</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;lowerdir=</span><span class="si">{</span><span class="n">BASEDIR</span><span class="si">}</span><span class="s2">,upperdir=</span><span class="si">{</span><span class="n">OVERLAY_UPPER</span><span class="si">}</span><span class="s2">,workdir=</span><span class="si">{</span><span class="n">OVERLAY_METADATA</span><span class="si">}</span><span class="s2">&quot;</span>
+
+  <span class="n">mount_cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mount&quot;</span><span class="p">,</span> <span class="s2">&quot;-t&quot;</span><span class="p">,</span> <span class="s2">&quot;overlay&quot;</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="n">overlay_opts</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">OVERLAY_MERGED</span><span class="p">]</span>
+  <span class="n">run</span><span class="p">([</span><span class="s2">&quot;sudo&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">mount_cmd</span><span class="p">)</span>
+  <span class="n">run</span><span class="p">([</span><span class="s2">&quot;sudo&quot;</span><span class="p">,</span> <span class="s2">&quot;chmod&quot;</span><span class="p">,</span> <span class="s2">&quot;755&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">OVERLAY_METADATA</span><span class="p">,</span> <span class="s2">&quot;work&quot;</span><span class="p">)])</span>
+
+  <span class="n">git_diff</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;diff&quot;</span><span class="p">],</span> <span class="n">OVERLAY_MERGED</span><span class="p">)</span>
+  <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;GitDiff&quot;</span><span class="p">,</span> <span class="n">git_diff</span><span class="p">)</span>
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;git diff output:</span><span class="se">\n</span><span class="si">{</span><span class="n">git_diff</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="finalize_update">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.finalize_update">[docs]</a>
+<span class="k">def</span> <span class="nf">finalize_update</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Take the current OverlayFS merged view and finalize a copy outside of</span>
+<span class="sd">  OverlayFS, ready to be swapped-in at BASEDIR. Copy using shutil.copytree&quot;&quot;&quot;</span>
+
+  <span class="c1"># Remove the update ready flag and any old updates</span>
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;creating finalized version of the overlay&quot;</span><span class="p">)</span>
+  <span class="n">set_consistent_flag</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+  <span class="c1"># Copy the merged overlay view and set the update ready flag</span>
+  <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FINALIZED</span><span class="p">):</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">FINALIZED</span><span class="p">)</span>
+  <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">OVERLAY_MERGED</span><span class="p">,</span> <span class="n">FINALIZED</span><span class="p">,</span> <span class="n">symlinks</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+  <span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="s2">&quot;--hard&quot;</span><span class="p">],</span> <span class="n">FINALIZED</span><span class="p">)</span>
+  <span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;submodule&quot;</span><span class="p">,</span> <span class="s2">&quot;foreach&quot;</span><span class="p">,</span> <span class="s2">&quot;--recursive&quot;</span><span class="p">,</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="s2">&quot;--hard&quot;</span><span class="p">],</span> <span class="n">FINALIZED</span><span class="p">)</span>
+
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting git cleanup in finalized update&quot;</span><span class="p">)</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;gc&quot;</span><span class="p">],</span> <span class="n">FINALIZED</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;lfs&quot;</span><span class="p">,</span> <span class="s2">&quot;prune&quot;</span><span class="p">],</span> <span class="n">FINALIZED</span><span class="p">)</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;Done git cleanup&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span>
+  <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed git cleanup, took </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+
+  <span class="n">set_consistent_flag</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;done finalizing overlay&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="handle_agnos_update">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.handle_agnos_update">[docs]</a>
+<span class="k">def</span> <span class="nf">handle_agnos_update</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="kn">from</span> <span class="nn">openpilot.system.hardware.tici.agnos</span> <span class="kn">import</span> <span class="n">flash_agnos_update</span><span class="p">,</span> <span class="n">get_target_slot_number</span>
+
+  <span class="n">cur_version</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_os_version</span><span class="p">()</span>
+  <span class="n">updated_version</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;bash&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;unset AGNOS_VERSION &amp;&amp; source launch_env.sh &amp;&amp; </span><span class="se">\</span>
+<span class="s2">                          echo -n $AGNOS_VERSION&quot;</span><span class="p">],</span> <span class="n">OVERLAY_MERGED</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AGNOS version check: </span><span class="si">{</span><span class="n">cur_version</span><span class="si">}</span><span class="s2"> vs </span><span class="si">{</span><span class="n">updated_version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">cur_version</span> <span class="o">==</span> <span class="n">updated_version</span><span class="p">:</span>
+    <span class="k">return</span>
+
+  <span class="c1"># prevent an openpilot getting swapped in with a mismatched or partially downloaded agnos</span>
+  <span class="n">set_consistent_flag</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Beginning background installation for AGNOS </span><span class="si">{</span><span class="n">updated_version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="n">set_offroad_alert</span><span class="p">(</span><span class="s2">&quot;Offroad_NeosUpdate&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+  <span class="n">manifest_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">OVERLAY_MERGED</span><span class="p">,</span> <span class="s2">&quot;system/hardware/tici/agnos.json&quot;</span><span class="p">)</span>
+  <span class="n">target_slot_number</span> <span class="o">=</span> <span class="n">get_target_slot_number</span><span class="p">()</span>
+  <span class="n">flash_agnos_update</span><span class="p">(</span><span class="n">manifest_path</span><span class="p">,</span> <span class="n">target_slot_number</span><span class="p">,</span> <span class="n">cloudlog</span><span class="p">)</span>
+  <span class="n">set_offroad_alert</span><span class="p">(</span><span class="s2">&quot;Offroad_NeosUpdate&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="Updater">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.Updater">[docs]</a>
+<span class="k">class</span> <span class="nc">Updater</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">branches</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_has_internet</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">has_internet</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_internet</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">target_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">b</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;UpdaterTargetBranch&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_branch</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;UpdaterTargetBranch&quot;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">b</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">update_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">consistent_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FINALIZED</span><span class="p">,</span> <span class="s2">&quot;.overlay_consistent&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">consistent_file</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+      <span class="n">hash_mismatch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_commit_hash</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target_branch</span><span class="p">]</span>
+      <span class="n">branch_mismatch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_branch</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_branch</span>
+      <span class="n">on_target_branch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_branch</span><span class="p">(</span><span class="n">FINALIZED</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_branch</span>
+      <span class="k">return</span> <span class="p">((</span><span class="n">hash_mismatch</span> <span class="ow">or</span> <span class="n">branch_mismatch</span><span class="p">)</span> <span class="ow">and</span> <span class="n">on_target_branch</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">update_available</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">OVERLAY_MERGED</span><span class="p">):</span>
+      <span class="n">hash_mismatch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_commit_hash</span><span class="p">(</span><span class="n">OVERLAY_MERGED</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target_branch</span><span class="p">]</span>
+      <span class="n">branch_mismatch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_branch</span><span class="p">(</span><span class="n">OVERLAY_MERGED</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_branch</span>
+      <span class="k">return</span> <span class="n">hash_mismatch</span> <span class="ow">or</span> <span class="n">branch_mismatch</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="Updater.get_branch">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.Updater.get_branch">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;rev-parse&quot;</span><span class="p">,</span> <span class="s2">&quot;--abbrev-ref&quot;</span><span class="p">,</span> <span class="s2">&quot;HEAD&quot;</span><span class="p">],</span> <span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Updater.get_commit_hash">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.Updater.get_commit_hash">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_commit_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">OVERLAY_MERGED</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;rev-parse&quot;</span><span class="p">,</span> <span class="s2">&quot;HEAD&quot;</span><span class="p">],</span> <span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Updater.set_params">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.Updater.set_params">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update_success</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">failed_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">exception</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;UpdateFailedCount&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">failed_count</span><span class="p">))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;UpdaterFetchAvailable&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_available</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;UpdaterAvailableBranches&quot;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">branches</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+    <span class="n">last_update</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">update_success</span><span class="p">:</span>
+      <span class="n">t</span> <span class="o">=</span> <span class="n">last_update</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;LastUpdateTime&quot;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;LastUpdateTime&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+        <span class="n">last_update</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+      <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">if</span> <span class="n">exception</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;LastUpdateException&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;LastUpdateException&quot;</span><span class="p">,</span> <span class="n">exception</span><span class="p">)</span>
+
+    <span class="c1"># Write out current and new version info</span>
+    <span class="k">def</span> <span class="nf">get_description</span><span class="p">(</span><span class="n">basedir</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">basedir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+      <span class="n">version</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+      <span class="n">branch</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+      <span class="n">commit</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+      <span class="n">commit_date</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">branch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_branch</span><span class="p">(</span><span class="n">basedir</span><span class="p">)</span>
+        <span class="n">commit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_commit_hash</span><span class="p">(</span><span class="n">basedir</span><span class="p">)[:</span><span class="mi">7</span><span class="p">]</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="s2">&quot;common&quot;</span><span class="p">,</span> <span class="s2">&quot;version.h&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+          <span class="n">version</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">commit_unix_ts</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;show&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;--format=</span><span class="si">%c</span><span class="s2">t&quot;</span><span class="p">,</span> <span class="s2">&quot;HEAD&quot;</span><span class="p">],</span> <span class="n">basedir</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">commit_unix_ts</span><span class="p">))</span>
+        <span class="n">commit_date</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;updater.get_description&quot;</span><span class="p">)</span>
+      <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">commit</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">commit_date</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;UpdaterCurrentDescription&quot;</span><span class="p">,</span> <span class="n">get_description</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;UpdaterCurrentReleaseNotes&quot;</span><span class="p">,</span> <span class="n">parse_release_notes</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;UpdaterNewDescription&quot;</span><span class="p">,</span> <span class="n">get_description</span><span class="p">(</span><span class="n">FINALIZED</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;UpdaterNewReleaseNotes&quot;</span><span class="p">,</span> <span class="n">parse_release_notes</span><span class="p">(</span><span class="n">FINALIZED</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;UpdateAvailable&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_ready</span><span class="p">)</span>
+
+    <span class="c1"># Handle user prompt</span>
+    <span class="k">for</span> <span class="n">alert</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;Offroad_UpdateFailed&quot;</span><span class="p">,</span> <span class="s2">&quot;Offroad_ConnectivityNeeded&quot;</span><span class="p">,</span> <span class="s2">&quot;Offroad_ConnectivityNeededPrompt&quot;</span><span class="p">):</span>
+      <span class="n">set_offroad_alert</span><span class="p">(</span><span class="n">alert</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="n">last_update</span>
+    <span class="k">if</span> <span class="n">failed_count</span> <span class="o">&gt;</span> <span class="mi">15</span> <span class="ow">and</span> <span class="n">exception</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_internet</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">is_tested_branch</span><span class="p">():</span>
+        <span class="n">extra_text</span> <span class="o">=</span> <span class="s2">&quot;Ensure the software is correctly installed. Uninstall and re-install if this error persists.&quot;</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">extra_text</span> <span class="o">=</span> <span class="n">exception</span>
+      <span class="n">set_offroad_alert</span><span class="p">(</span><span class="s2">&quot;Offroad_UpdateFailed&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">extra_text</span><span class="o">=</span><span class="n">extra_text</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">failed_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">dt</span><span class="o">.</span><span class="n">days</span> <span class="o">&gt;</span> <span class="n">DAYS_NO_CONNECTIVITY_MAX</span><span class="p">:</span>
+        <span class="n">set_offroad_alert</span><span class="p">(</span><span class="s2">&quot;Offroad_ConnectivityNeeded&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">dt</span><span class="o">.</span><span class="n">days</span> <span class="o">&gt;</span> <span class="n">DAYS_NO_CONNECTIVITY_PROMPT</span><span class="p">:</span>
+        <span class="n">remaining</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">DAYS_NO_CONNECTIVITY_MAX</span> <span class="o">-</span> <span class="n">dt</span><span class="o">.</span><span class="n">days</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">set_offroad_alert</span><span class="p">(</span><span class="s2">&quot;Offroad_ConnectivityNeededPrompt&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">extra_text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">remaining</span><span class="si">}</span><span class="s2"> day</span><span class="si">{</span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">remaining</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;s&#39;</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Updater.check_for_update">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.Updater.check_for_update">[docs]</a>
+  <span class="k">def</span> <span class="nf">check_for_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;checking for updates&quot;</span><span class="p">)</span>
+
+    <span class="n">excluded_branches</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;release2&#39;</span><span class="p">,</span> <span class="s1">&#39;release2-staging&#39;</span><span class="p">,</span> <span class="s1">&#39;dashcam&#39;</span><span class="p">,</span> <span class="s1">&#39;dashcam-staging&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;ls-remote&quot;</span><span class="p">,</span> <span class="s2">&quot;origin&quot;</span><span class="p">,</span> <span class="s2">&quot;HEAD&quot;</span><span class="p">],</span> <span class="n">OVERLAY_MERGED</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_has_internet</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_has_internet</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">setup_git_options</span><span class="p">(</span><span class="n">OVERLAY_MERGED</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;ls-remote&quot;</span><span class="p">,</span> <span class="s2">&quot;--heads&quot;</span><span class="p">],</span> <span class="n">OVERLAY_MERGED</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">branches</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+      <span class="n">ls_remotes_re</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(?P&lt;commit_sha&gt;\b[0-9a-f]{5,40}\b)(\s+)(refs\/heads\/)(?P&lt;branch_name&gt;.*$)&#39;</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">ls_remotes_re</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+      <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;branch_name&#39;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">excluded_branches</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;branch_name&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;commit_sha&#39;</span><span class="p">)</span>
+
+    <span class="n">cur_branch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_branch</span><span class="p">(</span><span class="n">OVERLAY_MERGED</span><span class="p">)</span>
+    <span class="n">cur_commit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_commit_hash</span><span class="p">(</span><span class="n">OVERLAY_MERGED</span><span class="p">)</span>
+    <span class="n">new_branch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_branch</span>
+    <span class="n">new_commit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="n">new_branch</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">cur_branch</span><span class="p">,</span> <span class="n">cur_commit</span><span class="p">)</span> <span class="o">!=</span> <span class="p">(</span><span class="n">new_branch</span><span class="p">,</span> <span class="n">new_commit</span><span class="p">):</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;update available, </span><span class="si">{</span><span class="n">cur_branch</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">cur_commit</span><span class="p">)[:</span><span class="mi">7</span><span class="p">]</span><span class="si">}</span><span class="s2">) -&gt; </span><span class="si">{</span><span class="n">new_branch</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">new_commit</span><span class="p">)[:</span><span class="mi">7</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;up to date on </span><span class="si">{</span><span class="n">cur_branch</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">cur_commit</span><span class="p">)[:</span><span class="mi">7</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Updater.fetch_update">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.Updater.fetch_update">[docs]</a>
+  <span class="k">def</span> <span class="nf">fetch_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;attempting git fetch inside staging overlay&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;UpdaterState&quot;</span><span class="p">,</span> <span class="s2">&quot;downloading...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># TODO: cleanly interrupt this and invalidate old update</span>
+    <span class="n">set_consistent_flag</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;UpdateAvailable&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">setup_git_options</span><span class="p">(</span><span class="n">OVERLAY_MERGED</span><span class="p">)</span>
+
+    <span class="n">branch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_branch</span>
+    <span class="n">git_fetch_output</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;fetch&quot;</span><span class="p">,</span> <span class="s2">&quot;origin&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">],</span> <span class="n">OVERLAY_MERGED</span><span class="p">)</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;git fetch success: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">git_fetch_output</span><span class="p">)</span>
+
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;git reset in progress&quot;</span><span class="p">)</span>
+    <span class="n">cmds</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;checkout&quot;</span><span class="p">,</span> <span class="s2">&quot;--force&quot;</span><span class="p">,</span> <span class="s2">&quot;--no-recurse-submodules&quot;</span><span class="p">,</span> <span class="s2">&quot;-B&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">,</span> <span class="s2">&quot;FETCH_HEAD&quot;</span><span class="p">],</span>
+      <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="s2">&quot;--hard&quot;</span><span class="p">],</span>
+      <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;clean&quot;</span><span class="p">,</span> <span class="s2">&quot;-xdff&quot;</span><span class="p">],</span>
+      <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;submodule&quot;</span><span class="p">,</span> <span class="s2">&quot;sync&quot;</span><span class="p">],</span>
+      <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;submodule&quot;</span><span class="p">,</span> <span class="s2">&quot;update&quot;</span><span class="p">,</span> <span class="s2">&quot;--init&quot;</span><span class="p">,</span> <span class="s2">&quot;--recursive&quot;</span><span class="p">],</span>
+      <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;submodule&quot;</span><span class="p">,</span> <span class="s2">&quot;foreach&quot;</span><span class="p">,</span> <span class="s2">&quot;--recursive&quot;</span><span class="p">,</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="s2">&quot;--hard&quot;</span><span class="p">],</span>
+    <span class="p">]</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">OVERLAY_MERGED</span><span class="p">)</span> <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">cmds</span><span class="p">]</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;git reset success: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
+
+    <span class="c1"># TODO: show agnos download progress</span>
+    <span class="k">if</span> <span class="n">AGNOS</span><span class="p">:</span>
+      <span class="n">handle_agnos_update</span><span class="p">()</span>
+
+    <span class="c1"># Create the finalized, ready-to-swap update</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;UpdaterState&quot;</span><span class="p">,</span> <span class="s2">&quot;finalizing update...&quot;</span><span class="p">)</span>
+    <span class="n">finalize_update</span><span class="p">()</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;finalize success!&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../selfdrive.html#selfdrive.updated.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+
+  <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;DisableUpdates&quot;</span><span class="p">):</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;updates are disabled by the DisableUpdates param&quot;</span><span class="p">)</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+  <span class="n">ov_lock_fd</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">LOCK_FILE</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">fcntl</span><span class="o">.</span><span class="n">flock</span><span class="p">(</span><span class="n">ov_lock_fd</span><span class="p">,</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">LOCK_EX</span> <span class="o">|</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">LOCK_NB</span><span class="p">)</span>
+  <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;couldn&#39;t get overlay lock; is another instance running?&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+  <span class="c1"># Set low io priority</span>
+  <span class="n">proc</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Process</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">psutil</span><span class="o">.</span><span class="n">LINUX</span><span class="p">:</span>
+    <span class="n">proc</span><span class="o">.</span><span class="n">ionice</span><span class="p">(</span><span class="n">psutil</span><span class="o">.</span><span class="n">IOPRIO_CLASS_BE</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+
+  <span class="c1"># Check if we just performed an update</span>
+  <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">STAGING_ROOT</span><span class="p">,</span> <span class="s2">&quot;old_openpilot&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;update installed&quot;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;InstallDate&quot;</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;InstallDate&quot;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+
+  <span class="n">updater</span> <span class="o">=</span> <span class="n">Updater</span><span class="p">()</span>
+  <span class="n">update_failed_count</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># TODO: Load from param?</span>
+
+  <span class="c1"># no fetch on the first time</span>
+  <span class="n">wait_helper</span> <span class="o">=</span> <span class="n">WaitTimeHelper</span><span class="p">()</span>
+  <span class="n">wait_helper</span><span class="o">.</span><span class="n">only_check_for_update</span> <span class="o">=</span> <span class="kc">True</span>
+
+  <span class="c1"># invalidate old finalized update</span>
+  <span class="n">set_consistent_flag</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+  <span class="c1"># wait a bit before first cycle</span>
+  <span class="n">wait_helper</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+
+  <span class="c1"># Run the update loop</span>
+  <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">wait_helper</span><span class="o">.</span><span class="n">ready_event</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="c1"># Attempt an update</span>
+    <span class="n">exception</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="c1"># TODO: reuse overlay from previous updated instance if it looks clean</span>
+      <span class="n">init_overlay</span><span class="p">()</span>
+
+      <span class="c1"># ensure we have some params written soon after startup</span>
+      <span class="n">updater</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">update_failed_count</span><span class="p">,</span> <span class="n">exception</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">system_time_valid</span><span class="p">():</span>
+        <span class="n">wait_helper</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+        <span class="k">continue</span>
+
+      <span class="n">update_failed_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+      <span class="c1"># check for update</span>
+      <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;UpdaterState&quot;</span><span class="p">,</span> <span class="s2">&quot;checking...&quot;</span><span class="p">)</span>
+      <span class="n">updater</span><span class="o">.</span><span class="n">check_for_update</span><span class="p">()</span>
+
+      <span class="c1"># download update</span>
+      <span class="k">if</span> <span class="n">wait_helper</span><span class="o">.</span><span class="n">only_check_for_update</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;skipping fetch this cycle&quot;</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">updater</span><span class="o">.</span><span class="n">fetch_update</span><span class="p">()</span>
+      <span class="n">update_failed_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span>
+        <span class="s2">&quot;update process failed&quot;</span><span class="p">,</span>
+        <span class="n">cmd</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">cmd</span><span class="p">,</span>
+        <span class="n">output</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">output</span><span class="p">,</span>
+        <span class="n">returncode</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">returncode</span>
+      <span class="p">)</span>
+      <span class="n">exception</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;command failed: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">cmd</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="n">OVERLAY_INIT</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">missing_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;uncaught updated exception, shouldn&#39;t happen&quot;</span><span class="p">)</span>
+      <span class="n">exception</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+      <span class="n">OVERLAY_INIT</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">missing_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;UpdaterState&quot;</span><span class="p">,</span> <span class="s2">&quot;idle&quot;</span><span class="p">)</span>
+      <span class="n">update_successful</span> <span class="o">=</span> <span class="p">(</span><span class="n">update_failed_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="n">updater</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">update_successful</span><span class="p">,</span> <span class="n">update_failed_count</span><span class="p">,</span> <span class="n">exception</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;uncaught updated exception while setting params, shouldn&#39;t happen&quot;</span><span class="p">)</span>
+
+    <span class="c1"># infrequent attempts if we successfully updated recently</span>
+    <span class="n">wait_helper</span><span class="o">.</span><span class="n">only_check_for_update</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">wait_helper</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="mi">60</span> <span class="k">if</span> <span class="n">update_failed_count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">1.5</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

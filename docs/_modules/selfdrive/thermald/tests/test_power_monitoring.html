@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.thermald.tests.test_power_monitoring &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/thermald/tests/test_power_monitoring.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.thermald.tests.test_power_monitoring</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.thermald.tests.test_power_monitoring</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">patch</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.thermald.power_monitoring</span> <span class="kn">import</span> <span class="n">PowerMonitoring</span><span class="p">,</span> <span class="n">CAR_BATTERY_CAPACITY_uWh</span><span class="p">,</span> \
+                                                <span class="n">CAR_CHARGING_RATE_W</span><span class="p">,</span> <span class="n">VBATT_PAUSE_CHARGING</span><span class="p">,</span> <span class="n">DELAY_SHUTDOWN_TIME_S</span>
+
+
+<span class="c1"># Create fake time</span>
+<span class="n">ssb</span> <span class="o">=</span> <span class="mf">0.</span>
+<div class="viewcode-block" id="mock_time_monotonic">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.mock_time_monotonic">[docs]</a>
+<span class="k">def</span> <span class="nf">mock_time_monotonic</span><span class="p">():</span>
+  <span class="k">global</span> <span class="n">ssb</span>
+  <span class="n">ssb</span> <span class="o">+=</span> <span class="mf">1.</span>
+  <span class="k">return</span> <span class="n">ssb</span></div>
+
+
+<span class="n">TEST_DURATION_S</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">GOOD_VOLTAGE</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="mf">1e3</span>
+<span class="n">VOLTAGE_BELOW_PAUSE_CHARGING</span> <span class="o">=</span> <span class="p">(</span><span class="n">VBATT_PAUSE_CHARGING</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e3</span>
+
+<div class="viewcode-block" id="pm_patch">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.pm_patch">[docs]</a>
+<span class="k">def</span> <span class="nf">pm_patch</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">constant</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">patch</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;openpilot.selfdrive.thermald.power_monitoring.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">patch</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;openpilot.selfdrive.thermald.power_monitoring.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">value</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TestPowerMonitoring">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring">[docs]</a>
+<span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;time.monotonic&quot;</span><span class="p">,</span> <span class="n">new</span><span class="o">=</span><span class="n">mock_time_monotonic</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">TestPowerMonitoring</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestPowerMonitoring.setUp">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.setUp">[docs]</a>
+  <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span></div>
+
+
+  <span class="c1"># Test to see that it doesn&#39;t do anything when pandaState is None</span>
+<div class="viewcode-block" id="TestPowerMonitoring.test_pandaState_present">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.test_pandaState_present">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_pandaState_present</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">pm</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">get_power_used</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">get_car_battery_capacity</span><span class="p">(),</span> <span class="p">(</span><span class="n">CAR_BATTERY_CAPACITY_uWh</span> <span class="o">/</span> <span class="mi">10</span><span class="p">))</span></div>
+
+
+  <span class="c1"># Test to see that it doesn&#39;t integrate offroad when ignition is True</span>
+<div class="viewcode-block" id="TestPowerMonitoring.test_offroad_ignition">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.test_offroad_ignition">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_offroad_ignition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">pm</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">GOOD_VOLTAGE</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">get_power_used</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+  <span class="c1"># Test to see that it integrates with discharging battery</span>
+<div class="viewcode-block" id="TestPowerMonitoring.test_offroad_integration_discharging">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.test_offroad_integration_discharging">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_offroad_integration_discharging</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">POWER_DRAW</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="k">with</span> <span class="n">pm_patch</span><span class="p">(</span><span class="s2">&quot;HARDWARE.get_current_power_draw&quot;</span><span class="p">,</span> <span class="n">POWER_DRAW</span><span class="p">):</span>
+      <span class="n">pm</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TEST_DURATION_S</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">GOOD_VOLTAGE</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+      <span class="n">expected_power_usage</span> <span class="o">=</span> <span class="p">((</span><span class="n">TEST_DURATION_S</span><span class="o">/</span><span class="mi">3600</span><span class="p">)</span> <span class="o">*</span> <span class="n">POWER_DRAW</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">get_power_used</span><span class="p">()</span> <span class="o">-</span> <span class="n">expected_power_usage</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span></div>
+
+
+  <span class="c1"># Test to check positive integration of car_battery_capacity</span>
+<div class="viewcode-block" id="TestPowerMonitoring.test_car_battery_integration_onroad">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.test_car_battery_integration_onroad">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_car_battery_integration_onroad</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">POWER_DRAW</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="k">with</span> <span class="n">pm_patch</span><span class="p">(</span><span class="s2">&quot;HARDWARE.get_current_power_draw&quot;</span><span class="p">,</span> <span class="n">POWER_DRAW</span><span class="p">):</span>
+      <span class="n">pm</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">car_battery_capacity_uWh</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TEST_DURATION_S</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">GOOD_VOLTAGE</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+      <span class="n">expected_capacity</span> <span class="o">=</span> <span class="p">((</span><span class="n">TEST_DURATION_S</span><span class="o">/</span><span class="mi">3600</span><span class="p">)</span> <span class="o">*</span> <span class="n">CAR_CHARGING_RATE_W</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">get_car_battery_capacity</span><span class="p">()</span> <span class="o">-</span> <span class="n">expected_capacity</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span></div>
+
+
+  <span class="c1"># Test to check positive integration upper limit</span>
+<div class="viewcode-block" id="TestPowerMonitoring.test_car_battery_integration_upper_limit">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.test_car_battery_integration_upper_limit">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_car_battery_integration_upper_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">POWER_DRAW</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="k">with</span> <span class="n">pm_patch</span><span class="p">(</span><span class="s2">&quot;HARDWARE.get_current_power_draw&quot;</span><span class="p">,</span> <span class="n">POWER_DRAW</span><span class="p">):</span>
+      <span class="n">pm</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">car_battery_capacity_uWh</span> <span class="o">=</span> <span class="n">CAR_BATTERY_CAPACITY_uWh</span> <span class="o">-</span> <span class="mi">1000</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TEST_DURATION_S</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">GOOD_VOLTAGE</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+      <span class="n">estimated_capacity</span> <span class="o">=</span> <span class="n">CAR_BATTERY_CAPACITY_uWh</span> <span class="o">+</span> <span class="p">(</span><span class="n">CAR_CHARGING_RATE_W</span> <span class="o">/</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">get_car_battery_capacity</span><span class="p">()</span> <span class="o">-</span> <span class="n">estimated_capacity</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span></div>
+
+
+  <span class="c1"># Test to check negative integration of car_battery_capacity</span>
+<div class="viewcode-block" id="TestPowerMonitoring.test_car_battery_integration_offroad">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.test_car_battery_integration_offroad">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_car_battery_integration_offroad</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">POWER_DRAW</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="k">with</span> <span class="n">pm_patch</span><span class="p">(</span><span class="s2">&quot;HARDWARE.get_current_power_draw&quot;</span><span class="p">,</span> <span class="n">POWER_DRAW</span><span class="p">):</span>
+      <span class="n">pm</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">car_battery_capacity_uWh</span> <span class="o">=</span> <span class="n">CAR_BATTERY_CAPACITY_uWh</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TEST_DURATION_S</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">GOOD_VOLTAGE</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+      <span class="n">expected_capacity</span> <span class="o">=</span> <span class="n">CAR_BATTERY_CAPACITY_uWh</span> <span class="o">-</span> <span class="p">((</span><span class="n">TEST_DURATION_S</span><span class="o">/</span><span class="mi">3600</span><span class="p">)</span> <span class="o">*</span> <span class="n">POWER_DRAW</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">get_car_battery_capacity</span><span class="p">()</span> <span class="o">-</span> <span class="n">expected_capacity</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span></div>
+
+
+  <span class="c1"># Test to check negative integration lower limit</span>
+<div class="viewcode-block" id="TestPowerMonitoring.test_car_battery_integration_lower_limit">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.test_car_battery_integration_lower_limit">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_car_battery_integration_lower_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">POWER_DRAW</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="k">with</span> <span class="n">pm_patch</span><span class="p">(</span><span class="s2">&quot;HARDWARE.get_current_power_draw&quot;</span><span class="p">,</span> <span class="n">POWER_DRAW</span><span class="p">):</span>
+      <span class="n">pm</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">car_battery_capacity_uWh</span> <span class="o">=</span> <span class="mi">1000</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TEST_DURATION_S</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">GOOD_VOLTAGE</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+      <span class="n">estimated_capacity</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">-</span> <span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="mi">3600</span><span class="p">)</span> <span class="o">*</span> <span class="n">POWER_DRAW</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">get_car_battery_capacity</span><span class="p">()</span> <span class="o">-</span> <span class="n">estimated_capacity</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span></div>
+
+
+  <span class="c1"># Test to check policy of stopping charging after MAX_TIME_OFFROAD_S</span>
+<div class="viewcode-block" id="TestPowerMonitoring.test_max_time_offroad">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.test_max_time_offroad">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_max_time_offroad</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">MOCKED_MAX_OFFROAD_TIME</span> <span class="o">=</span> <span class="mi">3600</span>
+    <span class="n">POWER_DRAW</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># To stop shutting down for other reasons</span>
+    <span class="k">with</span> <span class="n">pm_patch</span><span class="p">(</span><span class="s2">&quot;MAX_TIME_OFFROAD_S&quot;</span><span class="p">,</span> <span class="n">MOCKED_MAX_OFFROAD_TIME</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">pm_patch</span><span class="p">(</span><span class="s2">&quot;HARDWARE.get_current_power_draw&quot;</span><span class="p">,</span> <span class="n">POWER_DRAW</span><span class="p">):</span>
+      <span class="n">pm</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">car_battery_capacity_uWh</span> <span class="o">=</span> <span class="n">CAR_BATTERY_CAPACITY_uWh</span>
+      <span class="n">start_time</span> <span class="o">=</span> <span class="n">ssb</span>
+      <span class="n">ignition</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="k">while</span> <span class="n">ssb</span> <span class="o">&lt;=</span> <span class="n">start_time</span> <span class="o">+</span> <span class="n">MOCKED_MAX_OFFROAD_TIME</span><span class="p">:</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">GOOD_VOLTAGE</span><span class="p">,</span> <span class="n">ignition</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ssb</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">ssb</span> <span class="o">&lt;</span> <span class="n">start_time</span> <span class="o">+</span> <span class="n">MOCKED_MAX_OFFROAD_TIME</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">should_shutdown</span><span class="p">(</span><span class="n">ignition</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">should_shutdown</span><span class="p">(</span><span class="n">ignition</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestPowerMonitoring.test_car_voltage">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.test_car_voltage">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_car_voltage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">POWER_DRAW</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># To stop shutting down for other reasons</span>
+    <span class="n">TEST_TIME</span> <span class="o">=</span> <span class="mi">350</span>
+    <span class="n">VOLTAGE_SHUTDOWN_MIN_OFFROAD_TIME_S</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="k">with</span> <span class="n">pm_patch</span><span class="p">(</span><span class="s2">&quot;VOLTAGE_SHUTDOWN_MIN_OFFROAD_TIME_S&quot;</span><span class="p">,</span> <span class="n">VOLTAGE_SHUTDOWN_MIN_OFFROAD_TIME_S</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> \
+         <span class="n">pm_patch</span><span class="p">(</span><span class="s2">&quot;HARDWARE.get_current_power_draw&quot;</span><span class="p">,</span> <span class="n">POWER_DRAW</span><span class="p">):</span>
+      <span class="n">pm</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">car_battery_capacity_uWh</span> <span class="o">=</span> <span class="n">CAR_BATTERY_CAPACITY_uWh</span>
+      <span class="n">ignition</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="n">start_time</span> <span class="o">=</span> <span class="n">ssb</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TEST_TIME</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">VOLTAGE_BELOW_PAUSE_CHARGING</span><span class="p">,</span> <span class="n">ignition</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">should_shutdown</span><span class="p">(</span><span class="n">ignition</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+                           <span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">car_voltage_mV</span> <span class="o">&lt;</span> <span class="n">VBATT_PAUSE_CHARGING</span> <span class="o">*</span> <span class="mf">1e3</span> <span class="ow">and</span>
+                            <span class="p">(</span><span class="n">ssb</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">VOLTAGE_SHUTDOWN_MIN_OFFROAD_TIME_S</span> <span class="ow">and</span>
+                             <span class="p">(</span><span class="n">ssb</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">DELAY_SHUTDOWN_TIME_S</span><span class="p">))</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">should_shutdown</span><span class="p">(</span><span class="n">ignition</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span></div>
+
+
+  <span class="c1"># Test to check policy of not stopping charging when DisablePowerDown is set</span>
+<div class="viewcode-block" id="TestPowerMonitoring.test_disable_power_down">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.test_disable_power_down">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_disable_power_down</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">POWER_DRAW</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># To stop shutting down for other reasons</span>
+    <span class="n">TEST_TIME</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;DisablePowerDown&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">pm_patch</span><span class="p">(</span><span class="s2">&quot;HARDWARE.get_current_power_draw&quot;</span><span class="p">,</span> <span class="n">POWER_DRAW</span><span class="p">):</span>
+      <span class="n">pm</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">car_battery_capacity_uWh</span> <span class="o">=</span> <span class="n">CAR_BATTERY_CAPACITY_uWh</span>
+      <span class="n">ignition</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TEST_TIME</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">VOLTAGE_BELOW_PAUSE_CHARGING</span><span class="p">,</span> <span class="n">ignition</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">should_shutdown</span><span class="p">(</span><span class="n">ignition</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">ssb</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">should_shutdown</span><span class="p">(</span><span class="n">ignition</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">ssb</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span></div>
+
+
+  <span class="c1"># Test to check policy of not stopping charging when ignition</span>
+<div class="viewcode-block" id="TestPowerMonitoring.test_ignition">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.test_ignition">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_ignition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">POWER_DRAW</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># To stop shutting down for other reasons</span>
+    <span class="n">TEST_TIME</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="k">with</span> <span class="n">pm_patch</span><span class="p">(</span><span class="s2">&quot;HARDWARE.get_current_power_draw&quot;</span><span class="p">,</span> <span class="n">POWER_DRAW</span><span class="p">):</span>
+      <span class="n">pm</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">car_battery_capacity_uWh</span> <span class="o">=</span> <span class="n">CAR_BATTERY_CAPACITY_uWh</span>
+      <span class="n">ignition</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TEST_TIME</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">VOLTAGE_BELOW_PAUSE_CHARGING</span><span class="p">,</span> <span class="n">ignition</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">should_shutdown</span><span class="p">(</span><span class="n">ignition</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">ssb</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">should_shutdown</span><span class="p">(</span><span class="n">ignition</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">ssb</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span></div>
+
+
+  <span class="c1"># Test to check policy of not stopping charging when harness is not connected</span>
+<div class="viewcode-block" id="TestPowerMonitoring.test_harness_connection">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.test_harness_connection">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_harness_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">POWER_DRAW</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># To stop shutting down for other reasons</span>
+    <span class="n">TEST_TIME</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="k">with</span> <span class="n">pm_patch</span><span class="p">(</span><span class="s2">&quot;HARDWARE.get_current_power_draw&quot;</span><span class="p">,</span> <span class="n">POWER_DRAW</span><span class="p">):</span>
+      <span class="n">pm</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">car_battery_capacity_uWh</span> <span class="o">=</span> <span class="n">CAR_BATTERY_CAPACITY_uWh</span>
+
+      <span class="n">ignition</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TEST_TIME</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">VOLTAGE_BELOW_PAUSE_CHARGING</span><span class="p">,</span> <span class="n">ignition</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">should_shutdown</span><span class="p">(</span><span class="n">ignition</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">ssb</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">should_shutdown</span><span class="p">(</span><span class="n">ignition</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">ssb</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestPowerMonitoring.test_delay_shutdown_time">
+<a class="viewcode-back" href="../../../../selfdrive.thermald.tests.html#selfdrive.thermald.tests.test_power_monitoring.TestPowerMonitoring.test_delay_shutdown_time">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_delay_shutdown_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">pm</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">car_battery_capacity_uWh</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ignition</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">in_car</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">offroad_timestamp</span> <span class="o">=</span> <span class="n">ssb</span>
+    <span class="n">started_seen</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">VOLTAGE_BELOW_PAUSE_CHARGING</span><span class="p">,</span> <span class="n">ignition</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="n">ssb</span> <span class="o">&lt;</span> <span class="n">offroad_timestamp</span> <span class="o">+</span> <span class="n">DELAY_SHUTDOWN_TIME_S</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">should_shutdown</span><span class="p">(</span><span class="n">ignition</span><span class="p">,</span> <span class="n">in_car</span><span class="p">,</span>
+                                          <span class="n">offroad_timestamp</span><span class="p">,</span>
+                                          <span class="n">started_seen</span><span class="p">),</span>
+                       <span class="sa">f</span><span class="s2">&quot;Should not shutdown before </span><span class="si">{</span><span class="n">DELAY_SHUTDOWN_TIME_S</span><span class="si">}</span><span class="s2"> seconds offroad time&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">should_shutdown</span><span class="p">(</span><span class="n">ignition</span><span class="p">,</span> <span class="n">in_car</span><span class="p">,</span>
+                                       <span class="n">offroad_timestamp</span><span class="p">,</span>
+                                       <span class="n">started_seen</span><span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;Should shutdown after </span><span class="si">{</span><span class="n">DELAY_SHUTDOWN_TIME_S</span><span class="si">}</span><span class="s2"> seconds offroad time&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

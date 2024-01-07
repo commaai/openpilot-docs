@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/controls/lib/longitudinal_mpc_lib/long_mpc.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.numpy_fast</span> <span class="kn">import</span> <span class="n">clip</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+<span class="c1"># WARNING: imports outside of constants will not trigger a rebuild</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.modeld.constants</span> <span class="kn">import</span> <span class="n">index_function</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.interfaces</span> <span class="kn">import</span> <span class="n">ACCEL_MIN</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.radard</span> <span class="kn">import</span> <span class="n">_LEAD_ACCEL_TAU</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>  <span class="c1"># generating code</span>
+  <span class="kn">from</span> <span class="nn">openpilot.third_party.acados.acados_template</span> <span class="kn">import</span> <span class="n">AcadosModel</span><span class="p">,</span> <span class="n">AcadosOcp</span><span class="p">,</span> <span class="n">AcadosOcpSolver</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.longitudinal_mpc_lib.c_generated_code.acados_ocp_solver_pyx</span> <span class="kn">import</span> <span class="n">AcadosOcpSolverCython</span>
+
+<span class="kn">from</span> <span class="nn">casadi</span> <span class="kn">import</span> <span class="n">SX</span><span class="p">,</span> <span class="n">vertcat</span>
+
+<span class="n">MODEL_NAME</span> <span class="o">=</span> <span class="s1">&#39;long&#39;</span>
+<span class="n">LONG_MPC_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="n">EXPORT_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">LONG_MPC_DIR</span><span class="p">,</span> <span class="s2">&quot;c_generated_code&quot;</span><span class="p">)</span>
+<span class="n">JSON_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">LONG_MPC_DIR</span><span class="p">,</span> <span class="s2">&quot;acados_ocp_long.json&quot;</span><span class="p">)</span>
+
+<span class="n">SOURCES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;lead0&#39;</span><span class="p">,</span> <span class="s1">&#39;lead1&#39;</span><span class="p">,</span> <span class="s1">&#39;cruise&#39;</span><span class="p">,</span> <span class="s1">&#39;e2e&#39;</span><span class="p">]</span>
+
+<span class="n">X_DIM</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">U_DIM</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">PARAM_DIM</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">COST_E_DIM</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">COST_DIM</span> <span class="o">=</span> <span class="n">COST_E_DIM</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">CONSTR_DIM</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">X_EGO_OBSTACLE_COST</span> <span class="o">=</span> <span class="mf">3.</span>
+<span class="n">X_EGO_COST</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="n">V_EGO_COST</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="n">A_EGO_COST</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="n">J_EGO_COST</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="n">A_CHANGE_COST</span> <span class="o">=</span> <span class="mf">200.</span>
+<span class="n">DANGER_ZONE_COST</span> <span class="o">=</span> <span class="mf">100.</span>
+<span class="n">CRASH_DISTANCE</span> <span class="o">=</span> <span class="mf">.25</span>
+<span class="n">LEAD_DANGER_FACTOR</span> <span class="o">=</span> <span class="mf">0.75</span>
+<span class="n">LIMIT_COST</span> <span class="o">=</span> <span class="mf">1e6</span>
+<span class="n">ACADOS_SOLVER_TYPE</span> <span class="o">=</span> <span class="s1">&#39;SQP_RTI&#39;</span>
+
+
+<span class="c1"># Fewer timestamps don&#39;t hurt performance and lead to</span>
+<span class="c1"># much better convergence of the MPC with low iterations</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">MAX_T</span> <span class="o">=</span> <span class="mf">10.0</span>
+<span class="n">T_IDXS_LST</span> <span class="o">=</span> <span class="p">[</span><span class="n">index_function</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">max_val</span><span class="o">=</span><span class="n">MAX_T</span><span class="p">,</span> <span class="n">max_idx</span><span class="o">=</span><span class="n">N</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+
+<span class="n">T_IDXS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">T_IDXS_LST</span><span class="p">)</span>
+<span class="n">FCW_IDXS</span> <span class="o">=</span> <span class="n">T_IDXS</span> <span class="o">&lt;</span> <span class="mf">5.0</span>
+<span class="n">T_DIFFS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">T_IDXS</span><span class="p">,</span> <span class="n">prepend</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">])</span>
+<span class="n">COMFORT_BRAKE</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">STOP_DISTANCE</span> <span class="o">=</span> <span class="mf">6.0</span>
+
+<div class="viewcode-block" id="get_jerk_factor">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.get_jerk_factor">[docs]</a>
+<span class="k">def</span> <span class="nf">get_jerk_factor</span><span class="p">(</span><span class="n">personality</span><span class="o">=</span><span class="n">log</span><span class="o">.</span><span class="n">LongitudinalPersonality</span><span class="o">.</span><span class="n">standard</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">personality</span><span class="o">==</span><span class="n">log</span><span class="o">.</span><span class="n">LongitudinalPersonality</span><span class="o">.</span><span class="n">relaxed</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mf">1.0</span>
+  <span class="k">elif</span> <span class="n">personality</span><span class="o">==</span><span class="n">log</span><span class="o">.</span><span class="n">LongitudinalPersonality</span><span class="o">.</span><span class="n">standard</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mf">1.0</span>
+  <span class="k">elif</span> <span class="n">personality</span><span class="o">==</span><span class="n">log</span><span class="o">.</span><span class="n">LongitudinalPersonality</span><span class="o">.</span><span class="n">aggressive</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mf">0.5</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Longitudinal personality not supported&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_T_FOLLOW">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.get_T_FOLLOW">[docs]</a>
+<span class="k">def</span> <span class="nf">get_T_FOLLOW</span><span class="p">(</span><span class="n">personality</span><span class="o">=</span><span class="n">log</span><span class="o">.</span><span class="n">LongitudinalPersonality</span><span class="o">.</span><span class="n">standard</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">personality</span><span class="o">==</span><span class="n">log</span><span class="o">.</span><span class="n">LongitudinalPersonality</span><span class="o">.</span><span class="n">relaxed</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mf">1.75</span>
+  <span class="k">elif</span> <span class="n">personality</span><span class="o">==</span><span class="n">log</span><span class="o">.</span><span class="n">LongitudinalPersonality</span><span class="o">.</span><span class="n">standard</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mf">1.45</span>
+  <span class="k">elif</span> <span class="n">personality</span><span class="o">==</span><span class="n">log</span><span class="o">.</span><span class="n">LongitudinalPersonality</span><span class="o">.</span><span class="n">aggressive</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mf">1.25</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Longitudinal personality not supported&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_stopped_equivalence_factor">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.get_stopped_equivalence_factor">[docs]</a>
+<span class="k">def</span> <span class="nf">get_stopped_equivalence_factor</span><span class="p">(</span><span class="n">v_lead</span><span class="p">):</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">v_lead</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">COMFORT_BRAKE</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_safe_obstacle_distance">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.get_safe_obstacle_distance">[docs]</a>
+<span class="k">def</span> <span class="nf">get_safe_obstacle_distance</span><span class="p">(</span><span class="n">v_ego</span><span class="p">,</span> <span class="n">t_follow</span><span class="p">):</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">v_ego</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">COMFORT_BRAKE</span><span class="p">)</span> <span class="o">+</span> <span class="n">t_follow</span> <span class="o">*</span> <span class="n">v_ego</span> <span class="o">+</span> <span class="n">STOP_DISTANCE</span></div>
+
+
+<div class="viewcode-block" id="desired_follow_distance">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.desired_follow_distance">[docs]</a>
+<span class="k">def</span> <span class="nf">desired_follow_distance</span><span class="p">(</span><span class="n">v_ego</span><span class="p">,</span> <span class="n">v_lead</span><span class="p">,</span> <span class="n">t_follow</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">t_follow</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">t_follow</span> <span class="o">=</span> <span class="n">get_T_FOLLOW</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">get_safe_obstacle_distance</span><span class="p">(</span><span class="n">v_ego</span><span class="p">,</span> <span class="n">t_follow</span><span class="p">)</span> <span class="o">-</span> <span class="n">get_stopped_equivalence_factor</span><span class="p">(</span><span class="n">v_lead</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="gen_long_model">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.gen_long_model">[docs]</a>
+<span class="k">def</span> <span class="nf">gen_long_model</span><span class="p">():</span>
+  <span class="n">model</span> <span class="o">=</span> <span class="n">AcadosModel</span><span class="p">()</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">MODEL_NAME</span>
+
+  <span class="c1"># set up states &amp; controls</span>
+  <span class="n">x_ego</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;x_ego&#39;</span><span class="p">)</span>
+  <span class="n">v_ego</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;v_ego&#39;</span><span class="p">)</span>
+  <span class="n">a_ego</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;a_ego&#39;</span><span class="p">)</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="n">x_ego</span><span class="p">,</span> <span class="n">v_ego</span><span class="p">,</span> <span class="n">a_ego</span><span class="p">)</span>
+
+  <span class="c1"># controls</span>
+  <span class="n">j_ego</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;j_ego&#39;</span><span class="p">)</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="n">j_ego</span><span class="p">)</span>
+
+  <span class="c1"># xdot</span>
+  <span class="n">x_ego_dot</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;x_ego_dot&#39;</span><span class="p">)</span>
+  <span class="n">v_ego_dot</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;v_ego_dot&#39;</span><span class="p">)</span>
+  <span class="n">a_ego_dot</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;a_ego_dot&#39;</span><span class="p">)</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">xdot</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="n">x_ego_dot</span><span class="p">,</span> <span class="n">v_ego_dot</span><span class="p">,</span> <span class="n">a_ego_dot</span><span class="p">)</span>
+
+  <span class="c1"># live parameters</span>
+  <span class="n">a_min</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;a_min&#39;</span><span class="p">)</span>
+  <span class="n">a_max</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;a_max&#39;</span><span class="p">)</span>
+  <span class="n">x_obstacle</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;x_obstacle&#39;</span><span class="p">)</span>
+  <span class="n">prev_a</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;prev_a&#39;</span><span class="p">)</span>
+  <span class="n">lead_t_follow</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;lead_t_follow&#39;</span><span class="p">)</span>
+  <span class="n">lead_danger_factor</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;lead_danger_factor&#39;</span><span class="p">)</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="n">a_min</span><span class="p">,</span> <span class="n">a_max</span><span class="p">,</span> <span class="n">x_obstacle</span><span class="p">,</span> <span class="n">prev_a</span><span class="p">,</span> <span class="n">lead_t_follow</span><span class="p">,</span> <span class="n">lead_danger_factor</span><span class="p">)</span>
+
+  <span class="c1"># dynamics model</span>
+  <span class="n">f_expl</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="n">v_ego</span><span class="p">,</span> <span class="n">a_ego</span><span class="p">,</span> <span class="n">j_ego</span><span class="p">)</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">f_impl_expr</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">xdot</span> <span class="o">-</span> <span class="n">f_expl</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">f_expl_expr</span> <span class="o">=</span> <span class="n">f_expl</span>
+  <span class="k">return</span> <span class="n">model</span></div>
+
+
+
+<div class="viewcode-block" id="gen_long_ocp">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.gen_long_ocp">[docs]</a>
+<span class="k">def</span> <span class="nf">gen_long_ocp</span><span class="p">():</span>
+  <span class="n">ocp</span> <span class="o">=</span> <span class="n">AcadosOcp</span><span class="p">()</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">gen_long_model</span><span class="p">()</span>
+
+  <span class="n">Tf</span> <span class="o">=</span> <span class="n">T_IDXS</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+  <span class="c1"># set dimensions</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">dims</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="n">N</span>
+
+  <span class="c1"># set cost module</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">cost_type</span> <span class="o">=</span> <span class="s1">&#39;NONLINEAR_LS&#39;</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">cost_type_e</span> <span class="o">=</span> <span class="s1">&#39;NONLINEAR_LS&#39;</span>
+
+  <span class="n">QR</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">COST_DIM</span><span class="p">,</span> <span class="n">COST_DIM</span><span class="p">))</span>
+  <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">COST_E_DIM</span><span class="p">,</span> <span class="n">COST_E_DIM</span><span class="p">))</span>
+
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">QR</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">W_e</span> <span class="o">=</span> <span class="n">Q</span>
+
+  <span class="n">x_ego</span><span class="p">,</span> <span class="n">v_ego</span><span class="p">,</span> <span class="n">a_ego</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+  <span class="n">j_ego</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+  <span class="n">a_min</span><span class="p">,</span> <span class="n">a_max</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">x_obstacle</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+  <span class="n">prev_a</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+  <span class="n">lead_t_follow</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">p</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+  <span class="n">lead_danger_factor</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">yref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">COST_DIM</span><span class="p">,</span> <span class="p">))</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">yref_e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">COST_E_DIM</span><span class="p">,</span> <span class="p">))</span>
+
+  <span class="n">desired_dist_comfort</span> <span class="o">=</span> <span class="n">get_safe_obstacle_distance</span><span class="p">(</span><span class="n">v_ego</span><span class="p">,</span> <span class="n">lead_t_follow</span><span class="p">)</span>
+
+  <span class="c1"># The main cost in normal operation is how close you are to the &quot;desired&quot; distance</span>
+  <span class="c1"># from an obstacle at every timestep. This obstacle can be a lead car</span>
+  <span class="c1"># or other object. In e2e mode we can use x_position targets as a cost</span>
+  <span class="c1"># instead.</span>
+  <span class="n">costs</span> <span class="o">=</span> <span class="p">[((</span><span class="n">x_obstacle</span> <span class="o">-</span> <span class="n">x_ego</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">desired_dist_comfort</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">v_ego</span> <span class="o">+</span> <span class="mf">10.</span><span class="p">),</span>
+           <span class="n">x_ego</span><span class="p">,</span>
+           <span class="n">v_ego</span><span class="p">,</span>
+           <span class="n">a_ego</span><span class="p">,</span>
+           <span class="n">a_ego</span> <span class="o">-</span> <span class="n">prev_a</span><span class="p">,</span>
+           <span class="n">j_ego</span><span class="p">]</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cost_y_expr</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="o">*</span><span class="n">costs</span><span class="p">)</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cost_y_expr_e</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="o">*</span><span class="n">costs</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+  <span class="c1"># Constraints on speed, acceleration and desired distance to</span>
+  <span class="c1"># the obstacle, which is treated as a slack constraint so it</span>
+  <span class="c1"># behaves like an asymmetrical cost.</span>
+  <span class="n">constraints</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="n">v_ego</span><span class="p">,</span>
+                        <span class="p">(</span><span class="n">a_ego</span> <span class="o">-</span> <span class="n">a_min</span><span class="p">),</span>
+                        <span class="p">(</span><span class="n">a_max</span> <span class="o">-</span> <span class="n">a_ego</span><span class="p">),</span>
+                        <span class="p">((</span><span class="n">x_obstacle</span> <span class="o">-</span> <span class="n">x_ego</span><span class="p">)</span> <span class="o">-</span> <span class="n">lead_danger_factor</span> <span class="o">*</span> <span class="p">(</span><span class="n">desired_dist_comfort</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">v_ego</span> <span class="o">+</span> <span class="mf">10.</span><span class="p">))</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">con_h_expr</span> <span class="o">=</span> <span class="n">constraints</span>
+
+  <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X_DIM</span><span class="p">)</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">x0</span> <span class="o">=</span> <span class="n">x0</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">parameter_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">get_T_FOLLOW</span><span class="p">(),</span> <span class="n">LEAD_DANGER_FACTOR</span><span class="p">])</span>
+
+
+  <span class="c1"># We put all constraint cost weights to 0 and only set them at runtime</span>
+  <span class="n">cost_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">CONSTR_DIM</span><span class="p">)</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">zl</span> <span class="o">=</span> <span class="n">cost_weights</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">Zl</span> <span class="o">=</span> <span class="n">cost_weights</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">Zu</span> <span class="o">=</span> <span class="n">cost_weights</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">zu</span> <span class="o">=</span> <span class="n">cost_weights</span>
+
+  <span class="n">ocp</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">lh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">CONSTR_DIM</span><span class="p">)</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">uh</span> <span class="o">=</span> <span class="mf">1e4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">CONSTR_DIM</span><span class="p">)</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">idxsh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">CONSTR_DIM</span><span class="p">)</span>
+
+  <span class="c1"># The HPIPM solver can give decent solutions even when it is stopped early</span>
+  <span class="c1"># Which is critical for our purpose where compute time is strictly bounded</span>
+  <span class="c1"># We use HPIPM in the SPEED_ABS mode, which ensures fastest runtime. This</span>
+  <span class="c1"># does not cause issues since the problem is well bounded.</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">qp_solver</span> <span class="o">=</span> <span class="s1">&#39;PARTIAL_CONDENSING_HPIPM&#39;</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">hessian_approx</span> <span class="o">=</span> <span class="s1">&#39;GAUSS_NEWTON&#39;</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">integrator_type</span> <span class="o">=</span> <span class="s1">&#39;ERK&#39;</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">nlp_solver_type</span> <span class="o">=</span> <span class="n">ACADOS_SOLVER_TYPE</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">qp_solver_cond_N</span> <span class="o">=</span> <span class="mi">1</span>
+
+  <span class="c1"># More iterations take too much time and less lead to inaccurate convergence in</span>
+  <span class="c1"># some situations. Ideally we would run just 1 iteration to ensure fixed runtime.</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">qp_solver_iter_max</span> <span class="o">=</span> <span class="mi">10</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">qp_tol</span> <span class="o">=</span> <span class="mf">1e-3</span>
+
+  <span class="c1"># set prediction horizon</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">tf</span> <span class="o">=</span> <span class="n">Tf</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">shooting_nodes</span> <span class="o">=</span> <span class="n">T_IDXS</span>
+
+  <span class="n">ocp</span><span class="o">.</span><span class="n">code_export_directory</span> <span class="o">=</span> <span class="n">EXPORT_DIR</span>
+  <span class="k">return</span> <span class="n">ocp</span></div>
+
+
+
+<div class="viewcode-block" id="LongitudinalMpc">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.LongitudinalMpc">[docs]</a>
+<span class="k">class</span> <span class="nc">LongitudinalMpc</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;acc&#39;</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">AcadosOcpSolverCython</span><span class="p">(</span><span class="n">MODEL_NAME</span><span class="p">,</span> <span class="n">ACADOS_SOLVER_TYPE</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">SOURCES</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<div class="viewcode-block" id="LongitudinalMpc.reset">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.LongitudinalMpc.reset">[docs]</a>
+  <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># self.solver = AcadosOcpSolverCython(MODEL_NAME, ACADOS_SOLVER_TYPE, N)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="c1"># self.solver.options_set(&#39;print_level&#39;, 2)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">a_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">prev_a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a_solution</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">j_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">yref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">COST_DIM</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">cost_set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;yref&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">cost_set</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="s2">&quot;yref&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[</span><span class="n">N</span><span class="p">][:</span><span class="n">COST_E_DIM</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x_sol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">X_DIM</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">u_sol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">PARAM_DIM</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X_DIM</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_cloudlog_t</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">crash_cnt</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solution_status</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># timers</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solve_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">time_qp_solution</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">time_linearization</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">time_integrator</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X_DIM</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_weights</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="LongitudinalMpc.set_cost_weights">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.LongitudinalMpc.set_cost_weights">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_cost_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cost_weights</span><span class="p">,</span> <span class="n">constraint_cost_weights</span><span class="p">):</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">cost_weights</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+      <span class="c1"># TODO don&#39;t hardcode A_CHANGE_COST idx</span>
+      <span class="c1"># reduce the cost on (a-a_prev) later in the horizon.</span>
+      <span class="n">W</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">cost_weights</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">T_IDXS</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">cost_set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+    <span class="c1"># Setting the slice without the copy make the array not contiguous,</span>
+    <span class="c1"># causing issues with the C interface.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">cost_set</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">W</span><span class="p">[:</span><span class="n">COST_E_DIM</span><span class="p">,</span> <span class="p">:</span><span class="n">COST_E_DIM</span><span class="p">]))</span>
+
+    <span class="c1"># Set L2 slack cost on lower bound constraints</span>
+    <span class="n">Zl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">constraint_cost_weights</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">cost_set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Zl&#39;</span><span class="p">,</span> <span class="n">Zl</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LongitudinalMpc.set_weights">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.LongitudinalMpc.set_weights">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prev_accel_constraint</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">personality</span><span class="o">=</span><span class="n">log</span><span class="o">.</span><span class="n">LongitudinalPersonality</span><span class="o">.</span><span class="n">standard</span><span class="p">):</span>
+    <span class="n">jerk_factor</span> <span class="o">=</span> <span class="n">get_jerk_factor</span><span class="p">(</span><span class="n">personality</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;acc&#39;</span><span class="p">:</span>
+      <span class="n">a_change_cost</span> <span class="o">=</span> <span class="n">A_CHANGE_COST</span> <span class="k">if</span> <span class="n">prev_accel_constraint</span> <span class="k">else</span> <span class="mi">0</span>
+      <span class="n">cost_weights</span> <span class="o">=</span> <span class="p">[</span><span class="n">X_EGO_OBSTACLE_COST</span><span class="p">,</span> <span class="n">X_EGO_COST</span><span class="p">,</span> <span class="n">V_EGO_COST</span><span class="p">,</span> <span class="n">A_EGO_COST</span><span class="p">,</span> <span class="n">jerk_factor</span> <span class="o">*</span> <span class="n">a_change_cost</span><span class="p">,</span> <span class="n">jerk_factor</span> <span class="o">*</span> <span class="n">J_EGO_COST</span><span class="p">]</span>
+      <span class="n">constraint_cost_weights</span> <span class="o">=</span> <span class="p">[</span><span class="n">LIMIT_COST</span><span class="p">,</span> <span class="n">LIMIT_COST</span><span class="p">,</span> <span class="n">LIMIT_COST</span><span class="p">,</span> <span class="n">DANGER_ZONE_COST</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;blended&#39;</span><span class="p">:</span>
+      <span class="n">a_change_cost</span> <span class="o">=</span> <span class="mf">40.0</span> <span class="k">if</span> <span class="n">prev_accel_constraint</span> <span class="k">else</span> <span class="mi">0</span>
+      <span class="n">cost_weights</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="n">a_change_cost</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+      <span class="n">constraint_cost_weights</span> <span class="o">=</span> <span class="p">[</span><span class="n">LIMIT_COST</span><span class="p">,</span> <span class="n">LIMIT_COST</span><span class="p">,</span> <span class="n">LIMIT_COST</span><span class="p">,</span> <span class="mf">50.0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Planner mode </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="si">}</span><span class="s1"> not recognized in planner cost set&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_cost_weights</span><span class="p">(</span><span class="n">cost_weights</span><span class="p">,</span> <span class="n">constraint_cost_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LongitudinalMpc.set_cur_state">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.LongitudinalMpc.set_cur_state">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_cur_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+    <span class="n">v_prev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">v_prev</span> <span class="o">-</span> <span class="n">v</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.</span><span class="p">:</span>  <span class="c1"># probably only helps if v &lt; v_prev</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LongitudinalMpc.extrapolate_lead">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.LongitudinalMpc.extrapolate_lead">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">extrapolate_lead</span><span class="p">(</span><span class="n">x_lead</span><span class="p">,</span> <span class="n">v_lead</span><span class="p">,</span> <span class="n">a_lead</span><span class="p">,</span> <span class="n">a_lead_tau</span><span class="p">):</span>
+    <span class="n">a_lead_traj</span> <span class="o">=</span> <span class="n">a_lead</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">a_lead_tau</span> <span class="o">*</span> <span class="p">(</span><span class="n">T_IDXS</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span>
+    <span class="n">v_lead_traj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">v_lead</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">T_DIFFS</span> <span class="o">*</span> <span class="n">a_lead_traj</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1e8</span><span class="p">)</span>
+    <span class="n">x_lead_traj</span> <span class="o">=</span> <span class="n">x_lead</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">T_DIFFS</span> <span class="o">*</span> <span class="n">v_lead_traj</span><span class="p">)</span>
+    <span class="n">lead_xv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">x_lead_traj</span><span class="p">,</span> <span class="n">v_lead_traj</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">lead_xv</span></div>
+
+
+<div class="viewcode-block" id="LongitudinalMpc.process_lead">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.LongitudinalMpc.process_lead">[docs]</a>
+  <span class="k">def</span> <span class="nf">process_lead</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lead</span><span class="p">):</span>
+    <span class="n">v_ego</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">lead</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">lead</span><span class="o">.</span><span class="n">status</span><span class="p">:</span>
+      <span class="n">x_lead</span> <span class="o">=</span> <span class="n">lead</span><span class="o">.</span><span class="n">dRel</span>
+      <span class="n">v_lead</span> <span class="o">=</span> <span class="n">lead</span><span class="o">.</span><span class="n">vLead</span>
+      <span class="n">a_lead</span> <span class="o">=</span> <span class="n">lead</span><span class="o">.</span><span class="n">aLeadK</span>
+      <span class="n">a_lead_tau</span> <span class="o">=</span> <span class="n">lead</span><span class="o">.</span><span class="n">aLeadTau</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># Fake a fast lead car, so mpc can keep running in the same mode</span>
+      <span class="n">x_lead</span> <span class="o">=</span> <span class="mf">50.0</span>
+      <span class="n">v_lead</span> <span class="o">=</span> <span class="n">v_ego</span> <span class="o">+</span> <span class="mf">10.0</span>
+      <span class="n">a_lead</span> <span class="o">=</span> <span class="mf">0.0</span>
+      <span class="n">a_lead_tau</span> <span class="o">=</span> <span class="n">_LEAD_ACCEL_TAU</span>
+
+    <span class="c1"># MPC will not converge if immediate crash is expected</span>
+    <span class="c1"># Clip lead distance to what is still possible to brake for</span>
+    <span class="n">min_x_lead</span> <span class="o">=</span> <span class="p">((</span><span class="n">v_ego</span> <span class="o">+</span> <span class="n">v_lead</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">v_ego</span> <span class="o">-</span> <span class="n">v_lead</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="o">-</span><span class="n">ACCEL_MIN</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">x_lead</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">x_lead</span><span class="p">,</span> <span class="n">min_x_lead</span><span class="p">,</span> <span class="mf">1e8</span><span class="p">)</span>
+    <span class="n">v_lead</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">v_lead</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1e8</span><span class="p">)</span>
+    <span class="n">a_lead</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">a_lead</span><span class="p">,</span> <span class="o">-</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">)</span>
+    <span class="n">lead_xv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extrapolate_lead</span><span class="p">(</span><span class="n">x_lead</span><span class="p">,</span> <span class="n">v_lead</span><span class="p">,</span> <span class="n">a_lead</span><span class="p">,</span> <span class="n">a_lead_tau</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lead_xv</span></div>
+
+
+<div class="viewcode-block" id="LongitudinalMpc.set_accel_limits">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.LongitudinalMpc.set_accel_limits">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_accel_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_a</span><span class="p">,</span> <span class="n">max_a</span><span class="p">):</span>
+    <span class="c1"># TODO this sets a max accel limit, but the minimum limit is only for cruise decel</span>
+    <span class="c1"># needs refactor</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cruise_min_a</span> <span class="o">=</span> <span class="n">min_a</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">max_a</span> <span class="o">=</span> <span class="n">max_a</span></div>
+
+
+<div class="viewcode-block" id="LongitudinalMpc.update">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.LongitudinalMpc.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radarstate</span><span class="p">,</span> <span class="n">v_cruise</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">personality</span><span class="o">=</span><span class="n">log</span><span class="o">.</span><span class="n">LongitudinalPersonality</span><span class="o">.</span><span class="n">standard</span><span class="p">):</span>
+    <span class="n">t_follow</span> <span class="o">=</span> <span class="n">get_T_FOLLOW</span><span class="p">(</span><span class="n">personality</span><span class="p">)</span>
+    <span class="n">v_ego</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">radarstate</span><span class="o">.</span><span class="n">leadOne</span><span class="o">.</span><span class="n">status</span> <span class="ow">or</span> <span class="n">radarstate</span><span class="o">.</span><span class="n">leadTwo</span><span class="o">.</span><span class="n">status</span>
+
+    <span class="n">lead_xv_0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_lead</span><span class="p">(</span><span class="n">radarstate</span><span class="o">.</span><span class="n">leadOne</span><span class="p">)</span>
+    <span class="n">lead_xv_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_lead</span><span class="p">(</span><span class="n">radarstate</span><span class="o">.</span><span class="n">leadTwo</span><span class="p">)</span>
+
+    <span class="c1"># To estimate a safe distance from a moving lead, we calculate how much stopping</span>
+    <span class="c1"># distance that lead needs as a minimum. We can add that to the current distance</span>
+    <span class="c1"># and then treat that as a stopped car/obstacle at this new distance.</span>
+    <span class="n">lead_0_obstacle</span> <span class="o">=</span> <span class="n">lead_xv_0</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">get_stopped_equivalence_factor</span><span class="p">(</span><span class="n">lead_xv_0</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">lead_1_obstacle</span> <span class="o">=</span> <span class="n">lead_xv_1</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">get_stopped_equivalence_factor</span><span class="p">(</span><span class="n">lead_xv_1</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">ACCEL_MIN</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_a</span>
+
+    <span class="c1"># Update in ACC mode or ACC/e2e blend</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;acc&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">LEAD_DANGER_FACTOR</span>
+
+      <span class="c1"># Fake an obstacle for cruise, this ensures smooth acceleration to set speed</span>
+      <span class="c1"># when the leads are no factor.</span>
+      <span class="n">v_lower</span> <span class="o">=</span> <span class="n">v_ego</span> <span class="o">+</span> <span class="p">(</span><span class="n">T_IDXS</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cruise_min_a</span> <span class="o">*</span> <span class="mf">1.05</span><span class="p">)</span>
+      <span class="n">v_upper</span> <span class="o">=</span> <span class="n">v_ego</span> <span class="o">+</span> <span class="p">(</span><span class="n">T_IDXS</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_a</span> <span class="o">*</span> <span class="mf">1.05</span><span class="p">)</span>
+      <span class="n">v_cruise_clipped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">v_cruise</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span>
+                                 <span class="n">v_lower</span><span class="p">,</span>
+                                 <span class="n">v_upper</span><span class="p">)</span>
+      <span class="n">cruise_obstacle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">T_DIFFS</span> <span class="o">*</span> <span class="n">v_cruise_clipped</span><span class="p">)</span> <span class="o">+</span> <span class="n">get_safe_obstacle_distance</span><span class="p">(</span><span class="n">v_cruise_clipped</span><span class="p">,</span> <span class="n">t_follow</span><span class="p">)</span>
+      <span class="n">x_obstacles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">lead_0_obstacle</span><span class="p">,</span> <span class="n">lead_1_obstacle</span><span class="p">,</span> <span class="n">cruise_obstacle</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">SOURCES</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">x_obstacles</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+
+      <span class="c1"># These are not used in ACC mode</span>
+      <span class="n">x</span><span class="p">[:],</span> <span class="n">v</span><span class="p">[:],</span> <span class="n">a</span><span class="p">[:],</span> <span class="n">j</span><span class="p">[:]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;blended&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+      <span class="n">x_obstacles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">lead_0_obstacle</span><span class="p">,</span>
+                                     <span class="n">lead_1_obstacle</span><span class="p">])</span>
+      <span class="n">cruise_target</span> <span class="o">=</span> <span class="n">T_IDXS</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">v_cruise</span><span class="p">,</span> <span class="n">v_ego</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">)</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="n">xforward</span> <span class="o">=</span> <span class="p">((</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">v</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">T_IDXS</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">T_IDXS</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">xforward</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+      <span class="n">x_and_cruise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">cruise_target</span><span class="p">])</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x_and_cruise</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="s1">&#39;e2e&#39;</span> <span class="k">if</span> <span class="n">x_and_cruise</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">x_and_cruise</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="s1">&#39;cruise&#39;</span>
+
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Planner mode </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="si">}</span><span class="s1"> not recognized in planner update&#39;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;yref&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="s2">&quot;yref&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[</span><span class="n">N</span><span class="p">][:</span><span class="n">COST_E_DIM</span><span class="p">])</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x_obstacles</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prev_a</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[:,</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_follow</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">lead_xv_0</span><span class="p">[</span><span class="n">FCW_IDXS</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_sol</span><span class="p">[</span><span class="n">FCW_IDXS</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">CRASH_DISTANCE</span><span class="p">)</span> <span class="ow">and</span>
+            <span class="n">radarstate</span><span class="o">.</span><span class="n">leadOne</span><span class="o">.</span><span class="n">modelProb</span> <span class="o">&gt;</span> <span class="mf">0.9</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">crash_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">crash_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Check if it got within lead comfort range</span>
+    <span class="c1"># TODO This should be done cleaner</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;blended&#39;</span><span class="p">:</span>
+      <span class="k">if</span> <span class="nb">any</span><span class="p">((</span><span class="n">lead_0_obstacle</span> <span class="o">-</span> <span class="n">get_safe_obstacle_distance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_sol</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">t_follow</span><span class="p">))</span><span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_sol</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="s1">&#39;lead0&#39;</span>
+      <span class="k">if</span> <span class="nb">any</span><span class="p">((</span><span class="n">lead_1_obstacle</span> <span class="o">-</span> <span class="n">get_safe_obstacle_distance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_sol</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">t_follow</span><span class="p">))</span><span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_sol</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">and</span> \
+         <span class="p">(</span><span class="n">lead_1_obstacle</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">lead_0_obstacle</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="s1">&#39;lead1&#39;</span></div>
+
+
+<div class="viewcode-block" id="LongitudinalMpc.run">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.longitudinal_mpc_lib.html#selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc.LongitudinalMpc.run">[docs]</a>
+  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># t0 = time.monotonic()</span>
+    <span class="c1"># reset = 0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">constraints_set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;lbx&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">constraints_set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ubx&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">solution_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solve_time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">get_stats</span><span class="p">(</span><span class="s1">&#39;time_tot&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">time_qp_solution</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">get_stats</span><span class="p">(</span><span class="s1">&#39;time_qp&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">time_linearization</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">get_stats</span><span class="p">(</span><span class="s1">&#39;time_lin&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">time_integrator</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">get_stats</span><span class="p">(</span><span class="s1">&#39;time_sim&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># qp_iter = self.solver.get_stats(&#39;statistics&#39;)[-1][-1] # SQP_RTI specific</span>
+    <span class="c1"># print(f&quot;long_mpc timings: tot {self.solve_time:.2e}, qp {self.time_qp_solution:.2e}, lin {self.time_linearization:.2e}, \</span>
+    <span class="c1"># integrator {self.time_integrator:.2e}, qp_iter {qp_iter}&quot;)</span>
+    <span class="c1"># res = self.solver.get_residuals()</span>
+    <span class="c1"># print(f&quot;long_mpc residuals: {res[0]:.2e}, {res[1]:.2e}, {res[2]:.2e}, {res[3]:.2e}&quot;)</span>
+    <span class="c1"># self.solver.print_statistics()</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">x_sol</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">u_sol</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_sol</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">a_solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_sol</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">j_solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">u_sol</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">prev_a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">T_IDXS</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">T_IDXS</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a_solution</span><span class="p">)</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solution_status</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_cloudlog_t</span> <span class="o">+</span> <span class="mf">5.0</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_cloudlog_t</span> <span class="o">=</span> <span class="n">t</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Long mpc reset, solution_status: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">solution_status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+</div>
+
+      <span class="c1"># reset = 1</span>
+    <span class="c1"># print(f&quot;long_mpc timings: total internal {self.solve_time:.2e}, external: {(time.monotonic() - t0):.2e} qp {self.time_qp_solution:.2e}, \</span>
+    <span class="c1"># lin {self.time_linearization:.2e} qp_iter {qp_iter}, reset {reset}&quot;)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">ocp</span> <span class="o">=</span> <span class="n">gen_long_ocp</span><span class="p">()</span>
+  <span class="n">AcadosOcpSolver</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">ocp</span><span class="p">,</span> <span class="n">json_file</span><span class="o">=</span><span class="n">JSON_FILE</span><span class="p">)</span>
+  <span class="c1"># AcadosOcpSolver.build(ocp.code_export_directory, with_cython=True)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.athena.tests.test_athenad &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/athena/tests/test_athenad.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.athena.tests.test_athenad</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.athena.tests.test_athenad</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">queue</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">replace</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">parameterized</span> <span class="kn">import</span> <span class="n">parameterized</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">mock</span>
+<span class="kn">from</span> <span class="nn">websocket</span> <span class="kn">import</span> <span class="n">ABNF</span>
+<span class="kn">from</span> <span class="nn">websocket._exceptions</span> <span class="kn">import</span> <span class="n">WebSocketConnectionClosedException</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.athena</span> <span class="kn">import</span> <span class="n">athenad</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.athena.athenad</span> <span class="kn">import</span> <span class="n">MAX_RETRY_COUNT</span><span class="p">,</span> <span class="n">dispatcher</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.athena.tests.helpers</span> <span class="kn">import</span> <span class="n">MockWebsocket</span><span class="p">,</span> <span class="n">MockParams</span><span class="p">,</span> <span class="n">MockApi</span><span class="p">,</span> <span class="n">EchoSocket</span><span class="p">,</span> <span class="n">with_http_server</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">messaging</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware.hw</span> <span class="kn">import</span> <span class="n">Paths</span>
+
+
+<div class="viewcode-block" id="TestAthenadMethods">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods">[docs]</a>
+<span class="k">class</span> <span class="nc">TestAthenadMethods</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestAthenadMethods.setUpClass">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.setUpClass">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">setUpClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">SOCKET_PORT</span> <span class="o">=</span> <span class="mi">45454</span>
+    <span class="n">athenad</span><span class="o">.</span><span class="n">Params</span> <span class="o">=</span> <span class="n">MockParams</span>
+    <span class="n">athenad</span><span class="o">.</span><span class="n">Api</span> <span class="o">=</span> <span class="n">MockApi</span>
+    <span class="n">athenad</span><span class="o">.</span><span class="n">LOCAL_PORT_WHITELIST</span> <span class="o">=</span> <span class="p">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">SOCKET_PORT</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.setUp">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.setUp">[docs]</a>
+  <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">MockParams</span><span class="o">.</span><span class="n">restore_defaults</span><span class="p">()</span>
+    <span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+    <span class="n">athenad</span><span class="o">.</span><span class="n">cur_upload_items</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">athenad</span><span class="o">.</span><span class="n">cancelled_uploads</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">log_root</span><span class="p">()):</span>
+      <span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">log_root</span><span class="p">(),</span> <span class="n">i</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+
+
+  <span class="c1"># *** test helpers ***</span>
+
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">_wait_for_upload</span><span class="p">():</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">now</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">break</span>
+
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">_create_file</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">log_root</span><span class="p">()</span> <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">parent</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fn</span>
+
+
+  <span class="c1"># *** test cases ***</span>
+
+<div class="viewcode-block" id="TestAthenadMethods.test_echo">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_echo">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_echo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;echo&quot;</span><span class="p">](</span><span class="s2">&quot;bob&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;bob&quot;</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_getMessage">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_getMessage">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_getMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TimeoutError</span><span class="p">)</span> <span class="k">as</span> <span class="n">_</span><span class="p">:</span>
+      <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;getMessage&quot;</span><span class="p">](</span><span class="s2">&quot;controlsState&quot;</span><span class="p">)</span>
+
+    <span class="n">end_event</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+
+    <span class="n">pub_sock</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">pub_sock</span><span class="p">(</span><span class="s2">&quot;deviceState&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">send_deviceState</span><span class="p">():</span>
+      <span class="k">while</span> <span class="ow">not</span> <span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;deviceState&#39;</span><span class="p">)</span>
+        <span class="n">pub_sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">send_deviceState</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">deviceState</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;getMessage&quot;</span><span class="p">](</span><span class="s2">&quot;deviceState&quot;</span><span class="p">)</span>
+      <span class="k">assert</span> <span class="n">deviceState</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span>
+    <span class="k">finally</span><span class="p">:</span>
+      <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+      <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_listDataDirectory">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_listDataDirectory">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_listDataDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">route</span> <span class="o">=</span> <span class="s1">&#39;2021-03-29--13-32-47&#39;</span>
+    <span class="n">segments</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
+
+    <span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;qlog&#39;</span><span class="p">,</span> <span class="s1">&#39;qcamera.ts&#39;</span><span class="p">,</span> <span class="s1">&#39;rlog&#39;</span><span class="p">,</span> <span class="s1">&#39;fcamera.hevc&#39;</span><span class="p">,</span> <span class="s1">&#39;ecamera.hevc&#39;</span><span class="p">,</span> <span class="s1">&#39;dcamera.hevc&#39;</span><span class="p">]</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s1">--</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">segments</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_create_file</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;listDataDirectory&quot;</span><span class="p">]()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="s1">&#39;list empty!&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertCountEqual</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span>
+
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;listDataDirectory&quot;</span><span class="p">](</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s1">--123&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertCountEqual</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="n">prefix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">),</span> <span class="n">files</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;listDataDirectory&quot;</span><span class="p">](</span><span class="n">prefix</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="s1">&#39;list empty!&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertCountEqual</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+
+    <span class="n">prefix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s1">--1&#39;</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">),</span> <span class="n">files</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;listDataDirectory&quot;</span><span class="p">](</span><span class="n">prefix</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="s1">&#39;list empty!&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertCountEqual</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+
+    <span class="n">prefix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s1">--1/&#39;</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">),</span> <span class="n">files</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;listDataDirectory&quot;</span><span class="p">](</span><span class="n">prefix</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="s1">&#39;list empty!&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertCountEqual</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+
+    <span class="n">prefix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s1">--1/q&#39;</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">),</span> <span class="n">files</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;listDataDirectory&quot;</span><span class="p">](</span><span class="n">prefix</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="s1">&#39;list empty!&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertCountEqual</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_strip_bz2_extension">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_strip_bz2_extension">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_strip_bz2_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_file</span><span class="p">(</span><span class="s1">&#39;qlog.bz2&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">fn</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.bz2&#39;</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">strip_bz2_extension</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span> <span class="n">fn</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span></div>
+
+
+  <span class="nd">@parameterized</span><span class="o">.</span><span class="n">expand</span><span class="p">([(</span><span class="kc">True</span><span class="p">,),</span> <span class="p">(</span><span class="kc">False</span><span class="p">,)])</span>
+  <span class="nd">@with_http_server</span>
+  <span class="k">def</span> <span class="nf">test_do_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compress</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
+    <span class="c1"># random bytes to ensure rather large object post-compression</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_file</span><span class="p">(</span><span class="s1">&#39;qlog&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">10000</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">))</span>
+
+    <span class="n">upload_fn</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;.bz2&#39;</span> <span class="k">if</span> <span class="n">compress</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">UploadItem</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">upload_fn</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://localhost:1238&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{},</span> <span class="n">created_at</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">*</span><span class="mi">1000</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span><span class="p">):</span>
+      <span class="n">athenad</span><span class="o">.</span><span class="n">_do_upload</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="n">item</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">UploadItem</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">upload_fn</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">/qlog.bz2&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{},</span> <span class="n">created_at</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">*</span><span class="mi">1000</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">_do_upload</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TestAthenadMethods.test_uploadFileToUrl">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_uploadFileToUrl">[docs]</a>
+  <span class="nd">@with_http_server</span>
+  <span class="k">def</span> <span class="nf">test_uploadFileToUrl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_file</span><span class="p">(</span><span class="s1">&#39;qlog.bz2&#39;</span><span class="p">)</span>
+
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;uploadFileToUrl&quot;</span><span class="p">](</span><span class="s2">&quot;qlog.bz2&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">/qlog.bz2&quot;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp</span><span class="p">[</span><span class="s1">&#39;enqueued&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertNotIn</span><span class="p">(</span><span class="s1">&#39;failed&#39;</span><span class="p">,</span> <span class="n">resp</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertLessEqual</span><span class="p">({</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">fn</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">/qlog.bz2&quot;</span><span class="p">,</span> <span class="s2">&quot;headers&quot;</span><span class="p">:</span> <span class="p">{}}</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNotNone</span><span class="p">(</span><span class="n">resp</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_uploadFileToUrl_duplicate">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_uploadFileToUrl_duplicate">[docs]</a>
+  <span class="nd">@with_http_server</span>
+  <span class="k">def</span> <span class="nf">test_uploadFileToUrl_duplicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_create_file</span><span class="p">(</span><span class="s1">&#39;qlog.bz2&#39;</span><span class="p">)</span>
+
+    <span class="n">url1</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">/qlog.bz2?sig=sig1&quot;</span>
+    <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;uploadFileToUrl&quot;</span><span class="p">](</span><span class="s2">&quot;qlog.bz2&quot;</span><span class="p">,</span> <span class="n">url1</span><span class="p">,</span> <span class="p">{})</span>
+
+    <span class="c1"># Upload same file again, but with different signature</span>
+    <span class="n">url2</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">/qlog.bz2?sig=sig2&quot;</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;uploadFileToUrl&quot;</span><span class="p">](</span><span class="s2">&quot;qlog.bz2&quot;</span><span class="p">,</span> <span class="n">url2</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;enqueued&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">[]})</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_uploadFileToUrl_does_not_exist">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_uploadFileToUrl_does_not_exist">[docs]</a>
+  <span class="nd">@with_http_server</span>
+  <span class="k">def</span> <span class="nf">test_uploadFileToUrl_does_not_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
+    <span class="n">not_exists_resp</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;uploadFileToUrl&quot;</span><span class="p">](</span><span class="s2">&quot;does_not_exist.bz2&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:1238&quot;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">not_exists_resp</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;enqueued&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;failed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;does_not_exist.bz2&#39;</span><span class="p">]})</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_upload_handler">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_upload_handler">[docs]</a>
+  <span class="nd">@with_http_server</span>
+  <span class="k">def</span> <span class="nf">test_upload_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_file</span><span class="p">(</span><span class="s1">&#39;qlog.bz2&#39;</span><span class="p">)</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">UploadItem</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">/qlog.bz2&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{},</span> <span class="n">created_at</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">*</span><span class="mi">1000</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">allow_cellular</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">end_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_handler</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">end_event</span><span class="p">,))</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_upload</span><span class="p">()</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+      <span class="c1"># TODO: verify that upload actually succeeded</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+      <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_upload_handler_retry">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_upload_handler_retry">[docs]</a>
+  <span class="nd">@with_http_server</span>
+  <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;requests.put&#39;</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">test_upload_handler_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">mock_put</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">status</span><span class="p">,</span> <span class="n">retry</span> <span class="ow">in</span> <span class="p">((</span><span class="mi">500</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span> <span class="p">(</span><span class="mi">412</span><span class="p">,</span> <span class="kc">False</span><span class="p">)):</span>
+      <span class="n">mock_put</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">status</span>
+      <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_file</span><span class="p">(</span><span class="s1">&#39;qlog.bz2&#39;</span><span class="p">)</span>
+      <span class="n">item</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">UploadItem</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">/qlog.bz2&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{},</span> <span class="n">created_at</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">*</span><span class="mi">1000</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">allow_cellular</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+      <span class="n">end_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+      <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_handler</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">end_event</span><span class="p">,))</span>
+      <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+      <span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_upload</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">(),</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">retry</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="k">finally</span><span class="p">:</span>
+        <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+
+      <span class="k">if</span> <span class="n">retry</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">retry_count</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_upload_handler_timeout">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_upload_handler_timeout">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_upload_handler_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;When an upload times out or fails to connect it should be placed back in the queue&quot;&quot;&quot;</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_file</span><span class="p">(</span><span class="s1">&#39;qlog.bz2&#39;</span><span class="p">)</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">UploadItem</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://localhost:44444/qlog.bz2&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{},</span> <span class="n">created_at</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">*</span><span class="mi">1000</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">allow_cellular</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">item_no_retry</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">retry_count</span><span class="o">=</span><span class="n">MAX_RETRY_COUNT</span><span class="p">)</span>
+
+    <span class="n">end_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_handler</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">end_event</span><span class="p">,))</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">item_no_retry</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_upload</span><span class="p">()</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+      <span class="c1"># Check that upload with retry count exceeded is not put back</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+
+      <span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_upload</span><span class="p">()</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+      <span class="c1"># Check that upload item was put back in the queue with incremented retry count</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">retry_count</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+      <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_cancelUpload">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_cancelUpload">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_cancelUpload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">UploadItem</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;qlog.bz2&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://localhost:44444/qlog.bz2&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{},</span>
+                              <span class="n">created_at</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">*</span><span class="mi">1000</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">allow_cellular</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;cancelUpload&quot;</span><span class="p">](</span><span class="n">item</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">athenad</span><span class="o">.</span><span class="n">cancelled_uploads</span><span class="p">)</span>
+
+    <span class="n">end_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_handler</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">end_event</span><span class="p">,))</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_upload</span><span class="p">()</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">cancelled_uploads</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+      <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_cancelExpiry">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_cancelExpiry">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_cancelExpiry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">t_future</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t_future</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1000</span>
+
+    <span class="c1"># Item that would time out if actually uploaded</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_file</span><span class="p">(</span><span class="s1">&#39;qlog.bz2&#39;</span><span class="p">)</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">UploadItem</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://localhost:44444/qlog.bz2&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{},</span> <span class="n">created_at</span><span class="o">=</span><span class="n">ts</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">allow_cellular</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+    <span class="n">end_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_handler</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">end_event</span><span class="p">,))</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_upload</span><span class="p">()</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+      <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_listUploadQueueEmpty">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_listUploadQueueEmpty">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_listUploadQueueEmpty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;listUploadQueue&quot;</span><span class="p">]()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_listUploadQueueCurrent">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_listUploadQueueCurrent">[docs]</a>
+  <span class="nd">@with_http_server</span>
+  <span class="k">def</span> <span class="nf">test_listUploadQueueCurrent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_file</span><span class="p">(</span><span class="s1">&#39;qlog.bz2&#39;</span><span class="p">)</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">UploadItem</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">/qlog.bz2&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{},</span> <span class="n">created_at</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">*</span><span class="mi">1000</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">allow_cellular</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">end_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_handler</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">end_event</span><span class="p">,))</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_upload</span><span class="p">()</span>
+
+      <span class="n">items</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;listUploadQueue&quot;</span><span class="p">]()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;current&#39;</span><span class="p">])</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+      <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_listUploadQueue">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_listUploadQueue">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_listUploadQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">UploadItem</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;qlog.bz2&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://localhost:44444/qlog.bz2&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{},</span>
+                              <span class="n">created_at</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">*</span><span class="mi">1000</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">allow_cellular</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="n">items</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;listUploadQueue&quot;</span><span class="p">]()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">asdict</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;current&#39;</span><span class="p">])</span>
+
+    <span class="n">athenad</span><span class="o">.</span><span class="n">cancelled_uploads</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;listUploadQueue&quot;</span><span class="p">]()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_upload_queue_persistence">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_upload_queue_persistence">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_upload_queue_persistence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">item1</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">UploadItem</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{},</span> <span class="n">created_at</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;id1&#39;</span><span class="p">)</span>
+    <span class="n">item2</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">UploadItem</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{},</span> <span class="n">created_at</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;id2&#39;</span><span class="p">)</span>
+
+    <span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">item1</span><span class="p">)</span>
+    <span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">item2</span><span class="p">)</span>
+
+    <span class="c1"># Ensure cancelled items are not persisted</span>
+    <span class="n">athenad</span><span class="o">.</span><span class="n">cancelled_uploads</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item2</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+    <span class="c1"># serialize item</span>
+    <span class="n">athenad</span><span class="o">.</span><span class="n">UploadQueueCache</span><span class="o">.</span><span class="n">cache</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="p">)</span>
+
+    <span class="c1"># deserialize item</span>
+    <span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">athenad</span><span class="o">.</span><span class="n">UploadQueueCache</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">asdict</span><span class="p">(</span><span class="n">athenad</span><span class="o">.</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">queue</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">asdict</span><span class="p">(</span><span class="n">item1</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_startLocalProxy">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_startLocalProxy">[docs]</a>
+  <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;openpilot.selfdrive.athena.athenad.create_connection&#39;</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">test_startLocalProxy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_create_connection</span><span class="p">):</span>
+    <span class="n">end_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+
+    <span class="n">ws_recv</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+    <span class="n">ws_send</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+    <span class="n">mock_ws</span> <span class="o">=</span> <span class="n">MockWebsocket</span><span class="p">(</span><span class="n">ws_recv</span><span class="p">,</span> <span class="n">ws_send</span><span class="p">)</span>
+    <span class="n">mock_create_connection</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mock_ws</span>
+
+    <span class="n">echo_socket</span> <span class="o">=</span> <span class="n">EchoSocket</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SOCKET_PORT</span><span class="p">)</span>
+    <span class="n">socket_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">echo_socket</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+    <span class="n">socket_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">athenad</span><span class="o">.</span><span class="n">startLocalProxy</span><span class="p">(</span><span class="n">end_event</span><span class="p">,</span> <span class="s1">&#39;ws://localhost:1234&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">SOCKET_PORT</span><span class="p">)</span>
+
+    <span class="n">ws_recv</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">recv</span> <span class="o">=</span> <span class="n">ws_send</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+      <span class="k">assert</span> <span class="n">recv</span> <span class="o">==</span> <span class="p">(</span><span class="sa">b</span><span class="s1">&#39;ping&#39;</span><span class="p">,</span> <span class="n">ABNF</span><span class="o">.</span><span class="n">OPCODE_BINARY</span><span class="p">),</span> <span class="n">recv</span>
+    <span class="k">finally</span><span class="p">:</span>
+      <span class="c1"># signal websocket close to athenad.ws_proxy_recv</span>
+      <span class="n">ws_recv</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">WebSocketConnectionClosedException</span><span class="p">())</span>
+      <span class="n">socket_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_getSshAuthorizedKeys">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_getSshAuthorizedKeys">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_getSshAuthorizedKeys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;getSshAuthorizedKeys&quot;</span><span class="p">]()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">MockParams</span><span class="p">()</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;GithubSshKeys&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_getGithubUsername">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_getGithubUsername">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_getGithubUsername</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;getGithubUsername&quot;</span><span class="p">]()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">MockParams</span><span class="p">()</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;GithubUsername&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_getVersion">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_getVersion">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_getVersion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;getVersion&quot;</span><span class="p">]()</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="s2">&quot;remote&quot;</span><span class="p">,</span> <span class="s2">&quot;branch&quot;</span><span class="p">,</span> <span class="s2">&quot;commit&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="n">keys</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">resp</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="nb">str</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> is not a string&quot;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> has no value&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_jsonrpc_handler">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_jsonrpc_handler">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_jsonrpc_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">end_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">athenad</span><span class="o">.</span><span class="n">jsonrpc_handler</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">end_event</span><span class="p">,))</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="c1"># with params</span>
+      <span class="n">athenad</span><span class="o">.</span><span class="n">recv_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;echo&quot;</span><span class="p">,</span> <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;hello&quot;</span><span class="p">],</span> <span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span> <span class="s2">&quot;2.0&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}))</span>
+      <span class="n">resp</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">send_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="p">),</span> <span class="p">{</span><span class="s1">&#39;result&#39;</span><span class="p">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;jsonrpc&#39;</span><span class="p">:</span> <span class="s1">&#39;2.0&#39;</span><span class="p">})</span>
+      <span class="c1"># without params</span>
+      <span class="n">athenad</span><span class="o">.</span><span class="n">recv_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;getNetworkType&quot;</span><span class="p">,</span> <span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span> <span class="s2">&quot;2.0&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}))</span>
+      <span class="n">resp</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">send_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="p">),</span> <span class="p">{</span><span class="s1">&#39;result&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;jsonrpc&#39;</span><span class="p">:</span> <span class="s1">&#39;2.0&#39;</span><span class="p">})</span>
+      <span class="c1"># log forwarding</span>
+      <span class="n">athenad</span><span class="o">.</span><span class="n">recv_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s1">&#39;result&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;success&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;jsonrpc&#39;</span><span class="p">:</span> <span class="s1">&#39;2.0&#39;</span><span class="p">}))</span>
+      <span class="n">resp</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">log_recv_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="p">),</span> <span class="p">{</span><span class="s1">&#39;result&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;success&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;jsonrpc&#39;</span><span class="p">:</span> <span class="s1">&#39;2.0&#39;</span><span class="p">})</span>
+    <span class="k">finally</span><span class="p">:</span>
+      <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+      <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TestAthenadMethods.test_get_logs_to_send_sorted">
+<a class="viewcode-back" href="../../../../selfdrive.athena.tests.html#selfdrive.athena.tests.test_athenad.TestAthenadMethods.test_get_logs_to_send_sorted">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_get_logs_to_send_sorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">fl</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+      <span class="n">file</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;swaglog.</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s1">010</span><span class="si">}</span><span class="s1">&#39;</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_create_file</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">Paths</span><span class="o">.</span><span class="n">swaglog_root</span><span class="p">())</span>
+      <span class="n">fl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="c1"># ensure the list is all logs except most recent</span>
+    <span class="n">sl</span> <span class="o">=</span> <span class="n">athenad</span><span class="o">.</span><span class="n">get_logs_to_send_sorted</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertListEqual</span><span class="p">(</span><span class="n">sl</span><span class="p">,</span> <span class="n">fl</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.hyundai.values &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/hyundai/values.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.hyundai.values</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.hyundai.values</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">IntFlag</span><span class="p">,</span> <span class="n">StrEnum</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">panda.python</span> <span class="kn">import</span> <span class="n">uds</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">dbc_dict</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.docs_definitions</span> <span class="kn">import</span> <span class="n">CarFootnote</span><span class="p">,</span> <span class="n">CarHarness</span><span class="p">,</span> <span class="n">CarInfo</span><span class="p">,</span> <span class="n">CarParts</span><span class="p">,</span> <span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.fw_query_definitions</span> <span class="kn">import</span> <span class="n">FwQueryConfig</span><span class="p">,</span> <span class="n">Request</span><span class="p">,</span> <span class="n">p16</span>
+
+<span class="n">Ecu</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">Ecu</span>
+
+
+<div class="viewcode-block" id="CarControllerParams">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.values.CarControllerParams">[docs]</a>
+<span class="k">class</span> <span class="nc">CarControllerParams</span><span class="p">:</span>
+  <span class="n">ACCEL_MIN</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.5</span> <span class="c1"># m/s</span>
+  <span class="n">ACCEL_MAX</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="c1"># m/s</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DELTA_UP</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DELTA_DOWN</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DRIVER_ALLOWANCE</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DRIVER_MULTIPLIER</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DRIVER_FACTOR</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">STEER_THRESHOLD</span> <span class="o">=</span> <span class="mi">150</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">STEER_STEP</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 100 Hz</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_MAX</span> <span class="o">=</span> <span class="mi">270</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DRIVER_ALLOWANCE</span> <span class="o">=</span> <span class="mi">250</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DRIVER_MULTIPLIER</span> <span class="o">=</span> <span class="mi">2</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_THRESHOLD</span> <span class="o">=</span> <span class="mi">250</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DELTA_UP</span> <span class="o">=</span> <span class="mi">2</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DELTA_DOWN</span> <span class="o">=</span> <span class="mi">3</span>
+
+    <span class="c1"># To determine the limit for your car, find the maximum value that the stock LKAS will request.</span>
+    <span class="c1"># If the max stock LKAS request is &lt;384, add your car to this list.</span>
+    <span class="k">elif</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G80</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G90</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_GT_I30</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ</span><span class="p">,</span>
+                               <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_EV_LTD</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_PHEV_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA_LF</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_FORTE</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_PHEV</span><span class="p">,</span>
+                               <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_H_G4_FL</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_MAX</span> <span class="o">=</span> <span class="mi">255</span>
+
+    <span class="c1"># these cars have significantly more torque than most HKG; limit to 70% of max</span>
+    <span class="k">elif</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">ALT_LIMITS</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_MAX</span> <span class="o">=</span> <span class="mi">270</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DELTA_UP</span> <span class="o">=</span> <span class="mi">2</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DELTA_DOWN</span> <span class="o">=</span> <span class="mi">3</span>
+
+    <span class="c1"># Default for most HKG</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_MAX</span> <span class="o">=</span> <span class="mi">384</span></div>
+
+
+
+<div class="viewcode-block" id="HyundaiFlags">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.values.HyundaiFlags">[docs]</a>
+<span class="k">class</span> <span class="nc">HyundaiFlags</span><span class="p">(</span><span class="n">IntFlag</span><span class="p">):</span>
+  <span class="n">CANFD_HDA2</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">CANFD_ALT_BUTTONS</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">CANFD_ALT_GEARS</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">CANFD_CAMERA_SCC</span> <span class="o">=</span> <span class="mi">8</span>
+
+  <span class="n">ALT_LIMITS</span> <span class="o">=</span> <span class="mi">16</span>
+  <span class="n">ENABLE_BLINKERS</span> <span class="o">=</span> <span class="mi">32</span>
+  <span class="n">CANFD_ALT_GEARS_2</span> <span class="o">=</span> <span class="mi">64</span>
+  <span class="n">SEND_LFA</span> <span class="o">=</span> <span class="mi">128</span>
+  <span class="n">USE_FCA</span> <span class="o">=</span> <span class="mi">256</span>
+  <span class="n">CANFD_HDA2_ALT_STEERING</span> <span class="o">=</span> <span class="mi">512</span></div>
+
+
+
+<div class="viewcode-block" id="CAR">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.values.CAR">[docs]</a>
+<span class="k">class</span> <span class="nc">CAR</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+  <span class="c1"># Hyundai</span>
+  <span class="n">AZERA_6TH_GEN</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI AZERA 6TH GEN&quot;</span>
+  <span class="n">AZERA_HEV_6TH_GEN</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI AZERA HYBRID 6TH GEN&quot;</span>
+  <span class="n">ELANTRA</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI ELANTRA 2017&quot;</span>
+  <span class="n">ELANTRA_GT_I30</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI I30 N LINE 2019 &amp; GT 2018 DCT&quot;</span>
+  <span class="n">ELANTRA_2021</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI ELANTRA 2021&quot;</span>
+  <span class="n">ELANTRA_HEV_2021</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI ELANTRA HYBRID 2021&quot;</span>
+  <span class="n">HYUNDAI_GENESIS</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI GENESIS 2015-2016&quot;</span>
+  <span class="n">IONIQ</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI IONIQ HYBRID 2017-2019&quot;</span>
+  <span class="n">IONIQ_HEV_2022</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI IONIQ HYBRID 2020-2022&quot;</span>
+  <span class="n">IONIQ_EV_LTD</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI IONIQ ELECTRIC LIMITED 2019&quot;</span>
+  <span class="n">IONIQ_EV_2020</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI IONIQ ELECTRIC 2020&quot;</span>
+  <span class="n">IONIQ_PHEV_2019</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI IONIQ PLUG-IN HYBRID 2019&quot;</span>
+  <span class="n">IONIQ_PHEV</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI IONIQ PHEV 2020&quot;</span>
+  <span class="n">KONA</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI KONA 2020&quot;</span>
+  <span class="n">KONA_EV</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI KONA ELECTRIC 2019&quot;</span>
+  <span class="n">KONA_EV_2022</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI KONA ELECTRIC 2022&quot;</span>
+  <span class="n">KONA_EV_2ND_GEN</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI KONA ELECTRIC 2ND GEN&quot;</span>
+  <span class="n">KONA_HEV</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI KONA HYBRID 2020&quot;</span>
+  <span class="n">SANTA_FE</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI SANTA FE 2019&quot;</span>
+  <span class="n">SANTA_FE_2022</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI SANTA FE 2022&quot;</span>
+  <span class="n">SANTA_FE_HEV_2022</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI SANTA FE HYBRID 2022&quot;</span>
+  <span class="n">SANTA_FE_PHEV_2022</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI SANTA FE PlUG-IN HYBRID 2022&quot;</span>
+  <span class="n">SONATA</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI SONATA 2020&quot;</span>
+  <span class="n">SONATA_LF</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI SONATA 2019&quot;</span>
+  <span class="n">STARIA_4TH_GEN</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI STARIA 4TH GEN&quot;</span>
+  <span class="n">TUCSON</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI TUCSON 2019&quot;</span>
+  <span class="n">PALISADE</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI PALISADE 2020&quot;</span>
+  <span class="n">VELOSTER</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI VELOSTER 2019&quot;</span>
+  <span class="n">SONATA_HYBRID</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI SONATA HYBRID 2021&quot;</span>
+  <span class="n">IONIQ_5</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI IONIQ 5 2022&quot;</span>
+  <span class="n">IONIQ_6</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI IONIQ 6 2023&quot;</span>
+  <span class="n">TUCSON_4TH_GEN</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI TUCSON 4TH GEN&quot;</span>
+  <span class="n">TUCSON_HYBRID_4TH_GEN</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI TUCSON HYBRID 4TH GEN&quot;</span>
+  <span class="n">SANTA_CRUZ_1ST_GEN</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI SANTA CRUZ 1ST GEN&quot;</span>
+  <span class="n">CUSTIN_1ST_GEN</span> <span class="o">=</span> <span class="s2">&quot;HYUNDAI CUSTIN 1ST GEN&quot;</span>
+
+  <span class="c1"># Kia</span>
+  <span class="n">KIA_FORTE</span> <span class="o">=</span> <span class="s2">&quot;KIA FORTE E 2018 &amp; GT 2021&quot;</span>
+  <span class="n">KIA_K5_2021</span> <span class="o">=</span> <span class="s2">&quot;KIA K5 2021&quot;</span>
+  <span class="n">KIA_K5_HEV_2020</span> <span class="o">=</span> <span class="s2">&quot;KIA K5 HYBRID 2020&quot;</span>
+  <span class="n">KIA_K8_HEV_1ST_GEN</span> <span class="o">=</span> <span class="s2">&quot;KIA K8 HYBRID 1ST GEN&quot;</span>
+  <span class="n">KIA_NIRO_EV</span> <span class="o">=</span> <span class="s2">&quot;KIA NIRO EV 2020&quot;</span>
+  <span class="n">KIA_NIRO_EV_2ND_GEN</span> <span class="o">=</span> <span class="s2">&quot;KIA NIRO EV 2ND GEN&quot;</span>
+  <span class="n">KIA_NIRO_PHEV</span> <span class="o">=</span> <span class="s2">&quot;KIA NIRO HYBRID 2019&quot;</span>
+  <span class="n">KIA_NIRO_PHEV_2022</span> <span class="o">=</span> <span class="s2">&quot;KIA NIRO PLUG-IN HYBRID 2022&quot;</span>
+  <span class="n">KIA_NIRO_HEV_2021</span> <span class="o">=</span> <span class="s2">&quot;KIA NIRO HYBRID 2021&quot;</span>
+  <span class="n">KIA_NIRO_HEV_2ND_GEN</span> <span class="o">=</span> <span class="s2">&quot;KIA NIRO HYBRID 2ND GEN&quot;</span>
+  <span class="n">KIA_OPTIMA_G4</span> <span class="o">=</span> <span class="s2">&quot;KIA OPTIMA 4TH GEN&quot;</span>
+  <span class="n">KIA_OPTIMA_G4_FL</span> <span class="o">=</span> <span class="s2">&quot;KIA OPTIMA 4TH GEN FACELIFT&quot;</span>
+  <span class="n">KIA_OPTIMA_H</span> <span class="o">=</span> <span class="s2">&quot;KIA OPTIMA HYBRID 2017 &amp; SPORTS 2019&quot;</span>
+  <span class="n">KIA_OPTIMA_H_G4_FL</span> <span class="o">=</span> <span class="s2">&quot;KIA OPTIMA HYBRID 4TH GEN FACELIFT&quot;</span>
+  <span class="n">KIA_SELTOS</span> <span class="o">=</span> <span class="s2">&quot;KIA SELTOS 2021&quot;</span>
+  <span class="n">KIA_SPORTAGE_5TH_GEN</span> <span class="o">=</span> <span class="s2">&quot;KIA SPORTAGE 5TH GEN&quot;</span>
+  <span class="n">KIA_SORENTO</span> <span class="o">=</span> <span class="s2">&quot;KIA SORENTO GT LINE 2018&quot;</span>
+  <span class="n">KIA_SORENTO_4TH_GEN</span> <span class="o">=</span> <span class="s2">&quot;KIA SORENTO 4TH GEN&quot;</span>
+  <span class="n">KIA_SORENTO_HEV_4TH_GEN</span> <span class="o">=</span> <span class="s2">&quot;KIA SORENTO HYBRID 4TH GEN&quot;</span>
+  <span class="n">KIA_SORENTO_PHEV_4TH_GEN</span> <span class="o">=</span> <span class="s2">&quot;KIA SORENTO PLUG-IN HYBRID 4TH GEN&quot;</span>
+  <span class="n">KIA_SPORTAGE_HYBRID_5TH_GEN</span> <span class="o">=</span> <span class="s2">&quot;KIA SPORTAGE HYBRID 5TH GEN&quot;</span>
+  <span class="n">KIA_STINGER</span> <span class="o">=</span> <span class="s2">&quot;KIA STINGER GT2 2018&quot;</span>
+  <span class="n">KIA_STINGER_2022</span> <span class="o">=</span> <span class="s2">&quot;KIA STINGER 2022&quot;</span>
+  <span class="n">KIA_CEED</span> <span class="o">=</span> <span class="s2">&quot;KIA CEED INTRO ED 2019&quot;</span>
+  <span class="n">KIA_EV6</span> <span class="o">=</span> <span class="s2">&quot;KIA EV6 2022&quot;</span>
+  <span class="n">KIA_CARNIVAL_4TH_GEN</span> <span class="o">=</span> <span class="s2">&quot;KIA CARNIVAL 4TH GEN&quot;</span>
+
+  <span class="c1"># Genesis</span>
+  <span class="n">GENESIS_GV60_EV_1ST_GEN</span> <span class="o">=</span> <span class="s2">&quot;GENESIS GV60 ELECTRIC 1ST GEN&quot;</span>
+  <span class="n">GENESIS_G70</span> <span class="o">=</span> <span class="s2">&quot;GENESIS G70 2018&quot;</span>
+  <span class="n">GENESIS_G70_2020</span> <span class="o">=</span> <span class="s2">&quot;GENESIS G70 2020&quot;</span>
+  <span class="n">GENESIS_GV70_1ST_GEN</span> <span class="o">=</span> <span class="s2">&quot;GENESIS GV70 1ST GEN&quot;</span>
+  <span class="n">GENESIS_G80</span> <span class="o">=</span> <span class="s2">&quot;GENESIS G80 2017&quot;</span>
+  <span class="n">GENESIS_G90</span> <span class="o">=</span> <span class="s2">&quot;GENESIS G90 2017&quot;</span>
+  <span class="n">GENESIS_GV80</span> <span class="o">=</span> <span class="s2">&quot;GENESIS GV80 2023&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="Footnote">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.values.Footnote">[docs]</a>
+<span class="k">class</span> <span class="nc">Footnote</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+  <span class="n">CANFD</span> <span class="o">=</span> <span class="n">CarFootnote</span><span class="p">(</span>
+    <span class="s2">&quot;Requires a &lt;a href=</span><span class="se">\&quot;</span><span class="s2">https://comma.ai/shop/can-fd-panda-kit</span><span class="se">\&quot;</span><span class="s2"> target=</span><span class="se">\&quot;</span><span class="s2">_blank</span><span class="se">\&quot;</span><span class="s2">&gt;CAN FD panda kit&lt;/a&gt; if not using &quot;</span> <span class="o">+</span>
+    <span class="s2">&quot;comma 3X for this &lt;a href=</span><span class="se">\&quot;</span><span class="s2">https://en.wikipedia.org/wiki/CAN_FD</span><span class="se">\&quot;</span><span class="s2"> target=</span><span class="se">\&quot;</span><span class="s2">_blank</span><span class="se">\&quot;</span><span class="s2">&gt;CAN FD car&lt;/a&gt;.&quot;</span><span class="p">,</span>
+    <span class="n">Column</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span> <span class="n">shop_footnote</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="HyundaiCarInfo">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.values.HyundaiCarInfo">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">HyundaiCarInfo</span><span class="p">(</span><span class="n">CarInfo</span><span class="p">):</span>
+  <span class="n">package</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Smart Cruise Control (SCC)&quot;</span>
+
+<div class="viewcode-block" id="HyundaiCarInfo.init_make">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.values.HyundaiCarInfo.init_make">[docs]</a>
+  <span class="k">def</span> <span class="nf">init_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">footnotes</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Footnote</span><span class="o">.</span><span class="n">CANFD</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="n">CAR_INFO</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">HyundaiCarInfo</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">HyundaiCarInfo</span><span class="p">]]]]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">AZERA_6TH_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Azera 2022&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_k</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">AZERA_HEV_6TH_GEN</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Azera Hybrid 2019&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_c</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Azera Hybrid 2020&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_k</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA</span><span class="p">:</span> <span class="p">[</span>
+    <span class="c1"># TODO: 2017-18 could be Hyundai G</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Elantra 2017-18&quot;</span><span class="p">,</span> <span class="n">min_enable_speed</span><span class="o">=</span><span class="mi">19</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_b</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Elantra 2019&quot;</span><span class="p">,</span> <span class="n">min_enable_speed</span><span class="o">=</span><span class="mi">19</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_g</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_GT_I30</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Elantra GT 2017-19&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_e</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai i30 2017-19&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_e</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_2021</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Elantra 2021-23&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://youtu.be/_EdYQtV52-c&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_k</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_HEV_2021</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Elantra Hybrid 2021-23&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://youtu.be/_EdYQtV52-c&quot;</span><span class="p">,</span>
+                                       <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_k</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">HYUNDAI_GENESIS</span><span class="p">:</span> <span class="p">[</span>
+    <span class="c1"># TODO: check 2015 packages</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Genesis 2015-16&quot;</span><span class="p">,</span> <span class="n">min_enable_speed</span><span class="o">=</span><span class="mi">19</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_j</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Genesis G80 2017&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">min_enable_speed</span><span class="o">=</span><span class="mi">19</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_j</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Ioniq Hybrid 2017-19&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_c</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_HEV_2022</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Ioniq Hybrid 2020-22&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_h</span><span class="p">])),</span>  <span class="c1"># TODO: confirm 2020-21 harness</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_EV_LTD</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Ioniq Electric 2019&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_c</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_EV_2020</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Ioniq Electric 2020&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_h</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_PHEV_2019</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Ioniq Plug-in Hybrid 2019&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_c</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_PHEV</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Ioniq Plug-in Hybrid 2020-22&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_h</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KONA</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Kona 2020&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_b</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Kona Electric 2018-21&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_g</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2022</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Kona Electric 2022-23&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_o</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_HEV</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Kona Hybrid 2020&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_i</span><span class="p">])),</span>  <span class="c1"># TODO: check packages</span>
+  <span class="c1"># TODO: this is the 2024 US MY, not yet released</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2ND_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Kona Electric (with HDA II, Korea only) 2023&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=U2fOCmcQ8hw&quot;</span><span class="p">,</span>
+                                      <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_r</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Santa Fe 2019-20&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://youtu.be/bjDR0YjM__s&quot;</span><span class="p">,</span>
+                               <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_d</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_2022</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Santa Fe 2021-23&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://youtu.be/VnHzSTygTS4&quot;</span><span class="p">,</span>
+                                    <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_l</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_HEV_2022</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Santa Fe Hybrid 2022-23&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_l</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_PHEV_2022</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Santa Fe Plug-in Hybrid 2022-23&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_l</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Sonata 2020-23&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=ix63r9kE3Fw&quot;</span><span class="p">,</span>
+                             <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_a</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">STARIA_4TH_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Staria 2023&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_k</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA_LF</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Sonata 2018-19&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_e</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">TUCSON</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Tucson 2021&quot;</span><span class="p">,</span> <span class="n">min_enable_speed</span><span class="o">=</span><span class="mi">19</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_l</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Tucson Diesel 2019&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_l</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">PALISADE</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Palisade 2020-22&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://youtu.be/TAnDqjF4fDY?t=456&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_h</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Telluride 2020-22&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_h</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">VELOSTER</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Veloster 2019-20&quot;</span><span class="p">,</span> <span class="n">min_enable_speed</span><span class="o">=</span><span class="mf">5.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_e</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA_HYBRID</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Sonata Hybrid 2020-23&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_a</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_5</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Ioniq 5 (Southeast Asia only) 2022-23&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_q</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Ioniq 5 (without HDA II) 2022-23&quot;</span><span class="p">,</span> <span class="s2">&quot;Highway Driving Assist&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_k</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Ioniq 5 (with HDA II) 2022-23&quot;</span><span class="p">,</span> <span class="s2">&quot;Highway Driving Assist II&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_q</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_6</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Ioniq 6 (with HDA II) 2023&quot;</span><span class="p">,</span> <span class="s2">&quot;Highway Driving Assist II&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_p</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">TUCSON_4TH_GEN</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Tucson 2022&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_n</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Tucson 2023&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_n</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">TUCSON_HYBRID_4TH_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Tucson Hybrid 2022-24&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_n</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_CRUZ_1ST_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Santa Cruz 2022-23&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_n</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">CUSTIN_1ST_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Hyundai Custin 2023&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_k</span><span class="p">])),</span>
+
+  <span class="c1"># Kia</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_FORTE</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Forte 2019-21&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_g</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Forte 2023&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_e</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K5_2021</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia K5 2021-24&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_a</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K5_HEV_2020</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia K5 Hybrid 2020-22&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_a</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K8_HEV_1ST_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia K8 Hybrid (with HDA II) 2023&quot;</span><span class="p">,</span> <span class="s2">&quot;Highway Driving Assist II&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_q</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_EV</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Niro EV 2019&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=lT7zcG6ZpGo&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_h</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Niro EV 2020&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=lT7zcG6ZpGo&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_f</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Niro EV 2021&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=lT7zcG6ZpGo&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_c</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Niro EV 2022&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=lT7zcG6ZpGo&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_h</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_EV_2ND_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Niro EV 2023&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_a</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_PHEV</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Niro Plug-in Hybrid 2018-19&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">min_enable_speed</span><span class="o">=</span><span class="mf">10.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_c</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Niro Plug-in Hybrid 2020&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_d</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_PHEV_2022</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Niro Plug-in Hybrid 2022&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_f</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_HEV_2021</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Niro Hybrid 2021&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_d</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Niro Hybrid 2022&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_f</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_HEV_2ND_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Niro Hybrid 2023&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_a</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Optima 2017&quot;</span><span class="p">,</span> <span class="s2">&quot;Advanced Smart Cruise Control&quot;</span><span class="p">,</span>
+                                    <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_b</span><span class="p">])),</span>  <span class="c1"># TODO: may support 2016, 2018</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4_FL</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Optima 2019-20&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_g</span><span class="p">])),</span>
+  <span class="c1"># TODO: may support adjacent years. may have a non-zero minimum steering speed</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_H</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Optima Hybrid 2017&quot;</span><span class="p">,</span> <span class="s2">&quot;Advanced Smart Cruise Control&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_c</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_H_G4_FL</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Optima Hybrid 2019&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_h</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SELTOS</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Seltos 2021&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_a</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SPORTAGE_5TH_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Sportage 2023&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_n</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Sorento 2018&quot;</span><span class="p">,</span> <span class="s2">&quot;Advanced Smart Cruise Control &amp; LKAS&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=Fkh3s6WHJz8&quot;</span><span class="p">,</span>
+                   <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_e</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Sorento 2019&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=Fkh3s6WHJz8&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_e</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_4TH_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Sorento 2021-23&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_k</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_HEV_4TH_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Sorento Hybrid 2021-23&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_a</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_PHEV_4TH_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Sorento Plug-in Hybrid 2022-23&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_a</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SPORTAGE_HYBRID_5TH_GEN</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Sportage Hybrid 2023&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_n</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_STINGER</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Stinger 2018-20&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=MJ94qoofYw0&quot;</span><span class="p">,</span>
+                                  <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_c</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_STINGER_2022</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Stinger 2022-23&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_k</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_CEED</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Ceed 2019&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_e</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_EV6</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia EV6 (Southeast Asia only) 2022-23&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_p</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia EV6 (without HDA II) 2022-23&quot;</span><span class="p">,</span> <span class="s2">&quot;Highway Driving Assist&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_l</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia EV6 (with HDA II) 2022-23&quot;</span><span class="p">,</span> <span class="s2">&quot;Highway Driving Assist II&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_p</span><span class="p">]))</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_CARNIVAL_4TH_GEN</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Carnival 2022-24&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_a</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Kia Carnival (China only) 2023&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_k</span><span class="p">]))</span>
+  <span class="p">],</span>
+
+  <span class="c1"># Genesis</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV60_EV_1ST_GEN</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Genesis GV60 (Advanced Trim) 2023&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_a</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Genesis GV60 (Performance Trim) 2023&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_k</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G70</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Genesis G70 2018-19&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_f</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G70_2020</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Genesis G70 2020&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_f</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV70_1ST_GEN</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Genesis GV70 (2.5T Trim) 2022-23&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_l</span><span class="p">])),</span>
+    <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Genesis GV70 (3.5T Trim) 2022-23&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_m</span><span class="p">])),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G80</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Genesis G80 2018-19&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_h</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G90</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Genesis G90 2017-18&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_c</span><span class="p">])),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV80</span><span class="p">:</span> <span class="n">HyundaiCarInfo</span><span class="p">(</span><span class="s2">&quot;Genesis GV80 2023&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">car_parts</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">hyundai_m</span><span class="p">])),</span>
+<span class="p">}</span>
+
+<div class="viewcode-block" id="Buttons">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.values.Buttons">[docs]</a>
+<span class="k">class</span> <span class="nc">Buttons</span><span class="p">:</span>
+  <span class="n">NONE</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">RES_ACCEL</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">SET_DECEL</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">GAP_DIST</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">CANCEL</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># on newer models, this is a pause/resume button</span></div>
+
+
+
+<div class="viewcode-block" id="get_platform_codes">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.values.get_platform_codes">[docs]</a>
+<span class="k">def</span> <span class="nf">get_platform_codes</span><span class="p">(</span><span class="n">fw_versions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]]:</span>
+  <span class="c1"># Returns unique, platform-specific identification codes for a set of versions</span>
+  <span class="n">codes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1"># (code-Optional[part], date)</span>
+  <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">fw_versions</span><span class="p">:</span>
+    <span class="n">code_match</span> <span class="o">=</span> <span class="n">PLATFORM_CODE_FW_PATTERN</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">fw</span><span class="p">)</span>
+    <span class="n">part_match</span> <span class="o">=</span> <span class="n">PART_NUMBER_FW_PATTERN</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">fw</span><span class="p">)</span>
+    <span class="n">date_match</span> <span class="o">=</span> <span class="n">DATE_FW_PATTERN</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">fw</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">code_match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">code</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">code_match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+      <span class="n">part</span> <span class="o">=</span> <span class="n">part_match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span> <span class="k">if</span> <span class="n">part_match</span> <span class="k">else</span> <span class="kc">None</span>
+      <span class="n">date</span> <span class="o">=</span> <span class="n">date_match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span> <span class="k">if</span> <span class="n">date_match</span> <span class="k">else</span> <span class="kc">None</span>
+      <span class="k">if</span> <span class="n">part</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># part number starts with generic ECU part type, add what is specific to platform</span>
+        <span class="n">code</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">part</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]</span>
+
+      <span class="n">codes</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">code</span><span class="p">,</span> <span class="n">date</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">codes</span></div>
+
+
+
+<div class="viewcode-block" id="match_fw_to_car_fuzzy">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.values.match_fw_to_car_fuzzy">[docs]</a>
+<span class="k">def</span> <span class="nf">match_fw_to_car_fuzzy</span><span class="p">(</span><span class="n">live_fw_versions</span><span class="p">,</span> <span class="n">offline_fw_versions</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+  <span class="c1"># Non-electric CAN FD platforms often do not have platform code specifiers needed</span>
+  <span class="c1"># to distinguish between hybrid and ICE. All EVs so far are either exclusively</span>
+  <span class="c1"># electric or specify electric in the platform code.</span>
+  <span class="c1"># TODO: whitelist platforms that we&#39;ve seen hybrid and ICE versions of that have these specifiers</span>
+  <span class="n">fuzzy_platform_blacklist</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">CANFD_CAR</span> <span class="o">-</span> <span class="n">EV_CAR</span><span class="p">)}</span>
+  <span class="n">candidates</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+  <span class="k">for</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">fws</span> <span class="ow">in</span> <span class="n">offline_fw_versions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="c1"># Keep track of ECUs which pass all checks (platform codes, within date range)</span>
+    <span class="n">valid_found_ecus</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">valid_expected_ecus</span> <span class="o">=</span> <span class="p">{</span><span class="n">ecu</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">ecu</span> <span class="ow">in</span> <span class="n">fws</span> <span class="k">if</span> <span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">PLATFORM_CODE_ECUS</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">ecu</span><span class="p">,</span> <span class="n">expected_versions</span> <span class="ow">in</span> <span class="n">fws</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">addr</span> <span class="o">=</span> <span class="n">ecu</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+      <span class="c1"># Only check ECUs expected to have platform codes</span>
+      <span class="k">if</span> <span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">PLATFORM_CODE_ECUS</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+      <span class="c1"># Expected platform codes &amp; dates</span>
+      <span class="n">codes</span> <span class="o">=</span> <span class="n">get_platform_codes</span><span class="p">(</span><span class="n">expected_versions</span><span class="p">)</span>
+      <span class="n">expected_platform_codes</span> <span class="o">=</span> <span class="p">{</span><span class="n">code</span> <span class="k">for</span> <span class="n">code</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">codes</span><span class="p">}</span>
+      <span class="n">expected_dates</span> <span class="o">=</span> <span class="p">{</span><span class="n">date</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">codes</span> <span class="k">if</span> <span class="n">date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+
+      <span class="c1"># Found platform codes &amp; dates</span>
+      <span class="n">codes</span> <span class="o">=</span> <span class="n">get_platform_codes</span><span class="p">(</span><span class="n">live_fw_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="nb">set</span><span class="p">()))</span>
+      <span class="n">found_platform_codes</span> <span class="o">=</span> <span class="p">{</span><span class="n">code</span> <span class="k">for</span> <span class="n">code</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">codes</span><span class="p">}</span>
+      <span class="n">found_dates</span> <span class="o">=</span> <span class="p">{</span><span class="n">date</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">codes</span> <span class="k">if</span> <span class="n">date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+
+      <span class="c1"># Check platform code + part number matches for any found versions</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">found_platform_code</span> <span class="ow">in</span> <span class="n">expected_platform_codes</span> <span class="k">for</span> <span class="n">found_platform_code</span> <span class="ow">in</span> <span class="n">found_platform_codes</span><span class="p">):</span>
+        <span class="k">break</span>
+
+      <span class="k">if</span> <span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">DATE_FW_ECUS</span><span class="p">:</span>
+        <span class="c1"># If ECU can have a FW date, require it to exist</span>
+        <span class="c1"># (this excludes candidates in the database without dates)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">expected_dates</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_dates</span><span class="p">):</span>
+          <span class="k">break</span>
+
+        <span class="c1"># Check any date within range in the database, format is %y%m%d</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">expected_dates</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">found_date</span> <span class="o">&lt;=</span> <span class="nb">max</span><span class="p">(</span><span class="n">expected_dates</span><span class="p">)</span> <span class="k">for</span> <span class="n">found_date</span> <span class="ow">in</span> <span class="n">found_dates</span><span class="p">):</span>
+          <span class="k">break</span>
+
+      <span class="n">valid_found_ecus</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+
+    <span class="c1"># If all live ECUs pass all checks for candidate, add it as a match</span>
+    <span class="k">if</span> <span class="n">valid_expected_ecus</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">valid_found_ecus</span><span class="p">):</span>
+      <span class="n">candidates</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">candidates</span> <span class="o">-</span> <span class="n">fuzzy_platform_blacklist</span></div>
+
+
+
+<span class="n">HYUNDAI_VERSION_REQUEST_LONG</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">uds</span><span class="o">.</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">READ_DATA_BY_IDENTIFIER</span><span class="p">])</span> <span class="o">+</span> \
+  <span class="n">p16</span><span class="p">(</span><span class="mh">0xf100</span><span class="p">)</span>  <span class="c1"># Long description</span>
+
+<span class="n">HYUNDAI_VERSION_REQUEST_ALT</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">uds</span><span class="o">.</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">READ_DATA_BY_IDENTIFIER</span><span class="p">])</span> <span class="o">+</span> \
+  <span class="n">p16</span><span class="p">(</span><span class="mh">0xf110</span><span class="p">)</span>  <span class="c1"># Alt long description</span>
+
+<span class="n">HYUNDAI_VERSION_REQUEST_MULTI</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">uds</span><span class="o">.</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">READ_DATA_BY_IDENTIFIER</span><span class="p">])</span> <span class="o">+</span> \
+  <span class="n">p16</span><span class="p">(</span><span class="n">uds</span><span class="o">.</span><span class="n">DATA_IDENTIFIER_TYPE</span><span class="o">.</span><span class="n">VEHICLE_MANUFACTURER_SPARE_PART_NUMBER</span><span class="p">)</span> <span class="o">+</span> \
+  <span class="n">p16</span><span class="p">(</span><span class="n">uds</span><span class="o">.</span><span class="n">DATA_IDENTIFIER_TYPE</span><span class="o">.</span><span class="n">APPLICATION_SOFTWARE_IDENTIFICATION</span><span class="p">)</span> <span class="o">+</span> \
+  <span class="n">p16</span><span class="p">(</span><span class="mh">0xf100</span><span class="p">)</span>
+
+<span class="n">HYUNDAI_VERSION_RESPONSE</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">uds</span><span class="o">.</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">READ_DATA_BY_IDENTIFIER</span> <span class="o">+</span> <span class="mh">0x40</span><span class="p">])</span>
+
+<span class="c1"># Regex patterns for parsing platform code, FW date, and part number from FW versions</span>
+<span class="n">PLATFORM_CODE_FW_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;((?&lt;=&#39;</span> <span class="o">+</span> <span class="n">HYUNDAI_VERSION_REQUEST_LONG</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span>
+                                      <span class="sa">b</span><span class="s1">&#39;)[A-Z]</span><span class="si">{2}</span><span class="s1">[A-Za-z0-9]{0,2})&#39;</span><span class="p">)</span>
+<span class="n">DATE_FW_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;(?&lt;=[ -])([0-9]</span><span class="si">{6}</span><span class="s1">$)&#39;</span><span class="p">)</span>
+<span class="n">PART_NUMBER_FW_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;(?&lt;=[0-9][.,][0-9]</span><span class="si">{2}</span><span class="s1"> )([0-9]</span><span class="si">{5}</span><span class="s1">[-/]?[A-Z][A-Z0-9]</span><span class="si">{3}</span><span class="s1">[0-9])&#39;</span><span class="p">)</span>
+
+<span class="c1"># List of ECUs expected to have platform codes, camera and radar should exist on all cars</span>
+<span class="c1"># TODO: use abs, it has the platform code and part number on many platforms</span>
+<span class="n">PLATFORM_CODE_ECUS</span> <span class="o">=</span> <span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">fwdRadar</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">eps</span><span class="p">]</span>
+<span class="c1"># So far we&#39;ve only seen dates in fwdCamera</span>
+<span class="c1"># TODO: there are date codes in the ABS firmware versions in hex</span>
+<span class="n">DATE_FW_ECUS</span> <span class="o">=</span> <span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">]</span>
+
+<span class="n">FW_QUERY_CONFIG</span> <span class="o">=</span> <span class="n">FwQueryConfig</span><span class="p">(</span>
+  <span class="n">requests</span><span class="o">=</span><span class="p">[</span>
+    <span class="c1"># TODO: minimize shared whitelists for CAN and cornerRadar for CAN-FD</span>
+    <span class="c1"># CAN queries (OBD-II port)</span>
+    <span class="n">Request</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">HYUNDAI_VERSION_REQUEST_LONG</span><span class="p">],</span>
+      <span class="p">[</span><span class="n">HYUNDAI_VERSION_RESPONSE</span><span class="p">],</span>
+      <span class="n">whitelist_ecus</span><span class="o">=</span><span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">transmission</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">abs</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">fwdRadar</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">],</span>
+    <span class="p">),</span>
+    <span class="n">Request</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">HYUNDAI_VERSION_REQUEST_MULTI</span><span class="p">],</span>
+      <span class="p">[</span><span class="n">HYUNDAI_VERSION_RESPONSE</span><span class="p">],</span>
+      <span class="n">whitelist_ecus</span><span class="o">=</span><span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">transmission</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">abs</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">fwdRadar</span><span class="p">],</span>
+    <span class="p">),</span>
+
+    <span class="c1"># CAN-FD queries (from camera)</span>
+    <span class="c1"># TODO: combine shared whitelists with CAN requests</span>
+    <span class="n">Request</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">HYUNDAI_VERSION_REQUEST_LONG</span><span class="p">],</span>
+      <span class="p">[</span><span class="n">HYUNDAI_VERSION_RESPONSE</span><span class="p">],</span>
+      <span class="n">whitelist_ecus</span><span class="o">=</span><span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">fwdRadar</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">cornerRadar</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">hvac</span><span class="p">],</span>
+      <span class="n">bus</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+      <span class="n">auxiliary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">Request</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">HYUNDAI_VERSION_REQUEST_LONG</span><span class="p">],</span>
+      <span class="p">[</span><span class="n">HYUNDAI_VERSION_RESPONSE</span><span class="p">],</span>
+      <span class="n">whitelist_ecus</span><span class="o">=</span><span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">adas</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">cornerRadar</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">hvac</span><span class="p">],</span>
+      <span class="n">bus</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+      <span class="n">auxiliary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+      <span class="n">obd_multiplexing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">),</span>
+
+    <span class="c1"># CAN-FD debugging queries</span>
+    <span class="n">Request</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">HYUNDAI_VERSION_REQUEST_ALT</span><span class="p">],</span>
+      <span class="p">[</span><span class="n">HYUNDAI_VERSION_RESPONSE</span><span class="p">],</span>
+      <span class="n">whitelist_ecus</span><span class="o">=</span><span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">parkingAdas</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">hvac</span><span class="p">],</span>
+      <span class="n">bus</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+      <span class="n">auxiliary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">Request</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">HYUNDAI_VERSION_REQUEST_ALT</span><span class="p">],</span>
+      <span class="p">[</span><span class="n">HYUNDAI_VERSION_RESPONSE</span><span class="p">],</span>
+      <span class="n">whitelist_ecus</span><span class="o">=</span><span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">parkingAdas</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">hvac</span><span class="p">],</span>
+      <span class="n">bus</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+      <span class="n">auxiliary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+      <span class="n">obd_multiplexing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">extra_ecus</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">adas</span><span class="p">,</span> <span class="mh">0x730</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>         <span class="c1"># ADAS Driving ECU on HDA2 platforms</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">parkingAdas</span><span class="p">,</span> <span class="mh">0x7b1</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>  <span class="c1"># ADAS Parking ECU (may exist on all platforms)</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">hvac</span><span class="p">,</span> <span class="mh">0x7b3</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>         <span class="c1"># HVAC Control Assembly</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">cornerRadar</span><span class="p">,</span> <span class="mh">0x7b7</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="c1"># Custom fuzzy fingerprinting function using platform codes, part numbers + FW dates:</span>
+  <span class="n">match_fw_to_car_fuzzy</span><span class="o">=</span><span class="n">match_fw_to_car_fuzzy</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">CHECKSUM</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;crc8&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PALISADE</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SELTOS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_2021</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_HEV_2021</span><span class="p">,</span>
+           <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA_HYBRID</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K5_2021</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_HEV_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_PHEV_2022</span><span class="p">,</span>
+           <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K5_HEV_2020</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CUSTIN_1ST_GEN</span><span class="p">],</span>
+  <span class="s2">&quot;6B&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HYUNDAI_GENESIS</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">CAN_GEARS</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="c1"># which message has the gear. hybrid and EV use ELECT_GEAR</span>
+  <span class="s2">&quot;use_cluster_gears&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_GT_I30</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA</span><span class="p">},</span>
+  <span class="s2">&quot;use_tcu_gears&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4_FL</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA_LF</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">VELOSTER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">TUCSON</span><span class="p">},</span>
+<span class="p">}</span>
+
+<span class="n">CANFD_CAR</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">KIA_EV6</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_5</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_6</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">TUCSON_4TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">TUCSON_HYBRID_4TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SPORTAGE_HYBRID_5TH_GEN</span><span class="p">,</span>
+             <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_CRUZ_1ST_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SPORTAGE_5TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV70_1ST_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_PHEV_4TH_GEN</span><span class="p">,</span>
+             <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV60_EV_1ST_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_4TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_HEV_2ND_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_EV_2ND_GEN</span><span class="p">,</span>
+             <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV80</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_CARNIVAL_4TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_HEV_4TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2ND_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K8_HEV_1ST_GEN</span><span class="p">,</span>
+             <span class="n">CAR</span><span class="o">.</span><span class="n">STARIA_4TH_GEN</span><span class="p">}</span>
+
+<span class="c1"># The radar does SCC on these cars when HDA I, rather than the camera</span>
+<span class="n">CANFD_RADAR_SCC_CAR</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV70_1ST_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_PHEV_4TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_4TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV80</span><span class="p">,</span>
+                       <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_CARNIVAL_4TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_HEV_4TH_GEN</span><span class="p">}</span>
+
+<span class="c1"># These CAN FD cars do not accept communication control to disable the ADAS ECU,</span>
+<span class="c1"># responds with 0x7F2822 - &#39;conditions not correct&#39;</span>
+<span class="n">CANFD_UNSUPPORTED_LONGITUDINAL_CAR</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_6</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2ND_GEN</span><span class="p">}</span>
+
+<span class="c1"># The camera does SCC on these cars, rather than the radar</span>
+<span class="n">CAMERA_SCC_CAR</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2022</span><span class="p">,</span> <span class="p">}</span>
+
+<span class="c1"># these cars use a different gas signal</span>
+<span class="n">HYBRID_CAR</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_PHEV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_HEV_2021</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_PHEV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_HEV_2021</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA_HYBRID</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_HEV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ</span><span class="p">,</span>
+              <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_HEV_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_HEV_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_PHEV_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_PHEV_2019</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">TUCSON_HYBRID_4TH_GEN</span><span class="p">,</span>
+              <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SPORTAGE_HYBRID_5TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_PHEV_4TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K5_HEV_2020</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_HEV_2ND_GEN</span><span class="p">,</span>
+              <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_HEV_4TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_H_G4_FL</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K8_HEV_1ST_GEN</span><span class="p">,</span>
+              <span class="n">CAR</span><span class="o">.</span><span class="n">AZERA_HEV_6TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_PHEV_2022</span><span class="p">}</span>
+
+<span class="n">EV_CAR</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_EV_2020</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_EV_LTD</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_EV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_EV_2ND_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2022</span><span class="p">,</span>
+          <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_EV6</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_5</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_6</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV60_EV_1ST_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2ND_GEN</span><span class="p">}</span>
+
+<span class="c1"># these cars require a special panda safety mode due to missing counters and checksums in the messages</span>
+<span class="n">LEGACY_SAFETY_MODE_CAR</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">HYUNDAI_GENESIS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_EV_LTD</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4</span><span class="p">,</span>
+                          <span class="n">CAR</span><span class="o">.</span><span class="n">VELOSTER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G70</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G80</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_CEED</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_HEV_2022</span><span class="p">,</span>
+                          <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_GT_I30</span><span class="p">}</span>
+
+<span class="c1"># these cars have not been verified to work with longitudinal yet - radar disable, sending correct messages, etc.</span>
+<span class="n">UNSUPPORTED_LONGITUDINAL_CAR</span> <span class="o">=</span> <span class="n">LEGACY_SAFETY_MODE_CAR</span> <span class="o">|</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_PHEV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA_LF</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4_FL</span><span class="p">,</span>
+                                                         <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_H_G4_FL</span><span class="p">}</span>
+
+<span class="c1"># If 0x500 is present on bus 1 it probably has a Mando radar outputting radar points.</span>
+<span class="c1"># If no points are outputted by default it might be possible to turn it on using  selfdrive/debug/hyundai_enable_radar_points.py</span>
+<span class="n">DBC</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">AZERA_6TH_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">AZERA_HEV_6TH_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_GT_I30</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_2021</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_HEV_2021</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G70</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G70_2020</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="s1">&#39;hyundai_kia_mando_front_radar_generated&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G80</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G90</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">HYUNDAI_GENESIS</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_PHEV_2019</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_PHEV</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_EV_2020</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_EV_LTD</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="s1">&#39;hyundai_kia_mando_front_radar_generated&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_HEV_2022</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_FORTE</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K5_2021</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K5_HEV_2020</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="s1">&#39;hyundai_kia_mando_front_radar_generated&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_EV</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="s1">&#39;hyundai_kia_mando_front_radar_generated&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_PHEV</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="s1">&#39;hyundai_kia_mando_front_radar_generated&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_HEV_2021</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4_FL</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_H</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_H_G4_FL</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SELTOS</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="c1"># Has 0x5XX messages, but different format</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_STINGER</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_STINGER_2022</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KONA</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2022</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_HEV</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="s1">&#39;hyundai_kia_mando_front_radar_generated&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_2022</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_HEV_2022</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_PHEV_2022</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="s1">&#39;hyundai_kia_mando_front_radar_generated&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA_LF</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="c1"># Has 0x5XX messages, but different format</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">TUCSON</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">PALISADE</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="s1">&#39;hyundai_kia_mando_front_radar_generated&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">VELOSTER</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_CEED</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_EV6</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA_HYBRID</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="s1">&#39;hyundai_kia_mando_front_radar_generated&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">TUCSON_4TH_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">TUCSON_HYBRID_4TH_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_5</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_6</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_CRUZ_1ST_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SPORTAGE_5TH_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SPORTAGE_HYBRID_5TH_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV70_1ST_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_PHEV_4TH_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV60_EV_1ST_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_4TH_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_HEV_2ND_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_EV_2ND_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV80</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_CARNIVAL_4TH_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_HEV_4TH_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2ND_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K8_HEV_1ST_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">CUSTIN_1ST_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_PHEV_2022</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_kia_generic&#39;</span><span class="p">,</span> <span class="s1">&#39;hyundai_kia_mando_front_radar_generated&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">STARIA_4TH_GEN</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;hyundai_canfd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="p">}</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

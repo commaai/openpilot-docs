@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.manager.process_config &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/manager/process_config.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.manager.process_config</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.manager.process_config</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware</span> <span class="kn">import</span> <span class="n">PC</span><span class="p">,</span> <span class="n">TICI</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.manager.process</span> <span class="kn">import</span> <span class="n">PythonProcess</span><span class="p">,</span> <span class="n">NativeProcess</span><span class="p">,</span> <span class="n">DaemonProcess</span>
+
+<span class="n">WEBCAM</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;USE_WEBCAM&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="driverview">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process_config.driverview">[docs]</a>
+<span class="k">def</span> <span class="nf">driverview</span><span class="p">(</span><span class="n">started</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Params</span><span class="p">,</span> <span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">started</span> <span class="ow">or</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;IsDriverViewEnabled&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="notcar">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process_config.notcar">[docs]</a>
+<span class="k">def</span> <span class="nf">notcar</span><span class="p">(</span><span class="n">started</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Params</span><span class="p">,</span> <span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">started</span> <span class="ow">and</span> <span class="n">CP</span><span class="o">.</span><span class="n">notCar</span></div>
+
+
+<div class="viewcode-block" id="iscar">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process_config.iscar">[docs]</a>
+<span class="k">def</span> <span class="nf">iscar</span><span class="p">(</span><span class="n">started</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Params</span><span class="p">,</span> <span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">started</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">CP</span><span class="o">.</span><span class="n">notCar</span></div>
+
+
+<div class="viewcode-block" id="logging">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process_config.logging">[docs]</a>
+<span class="k">def</span> <span class="nf">logging</span><span class="p">(</span><span class="n">started</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="n">run</span> <span class="o">=</span> <span class="p">(</span><span class="ow">not</span> <span class="n">CP</span><span class="o">.</span><span class="n">notCar</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;DisableLogging&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">started</span> <span class="ow">and</span> <span class="n">run</span></div>
+
+
+<div class="viewcode-block" id="ublox_available">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process_config.ublox_available">[docs]</a>
+<span class="k">def</span> <span class="nf">ublox_available</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/dev/ttyHS0&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/persist/comma/use-quectel-gps&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ublox">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process_config.ublox">[docs]</a>
+<span class="k">def</span> <span class="nf">ublox</span><span class="p">(</span><span class="n">started</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="n">use_ublox</span> <span class="o">=</span> <span class="n">ublox_available</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">use_ublox</span> <span class="o">!=</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;UbloxAvailable&quot;</span><span class="p">):</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;UbloxAvailable&quot;</span><span class="p">,</span> <span class="n">use_ublox</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">started</span> <span class="ow">and</span> <span class="n">use_ublox</span></div>
+
+
+<div class="viewcode-block" id="qcomgps">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process_config.qcomgps">[docs]</a>
+<span class="k">def</span> <span class="nf">qcomgps</span><span class="p">(</span><span class="n">started</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">started</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ublox_available</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="always_run">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process_config.always_run">[docs]</a>
+<span class="k">def</span> <span class="nf">always_run</span><span class="p">(</span><span class="n">started</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="only_onroad">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process_config.only_onroad">[docs]</a>
+<span class="k">def</span> <span class="nf">only_onroad</span><span class="p">(</span><span class="n">started</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">started</span></div>
+
+
+<div class="viewcode-block" id="only_offroad">
+<a class="viewcode-back" href="../../../selfdrive.manager.html#selfdrive.manager.process_config.only_offroad">[docs]</a>
+<span class="k">def</span> <span class="nf">only_offroad</span><span class="p">(</span><span class="n">started</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">return</span> <span class="ow">not</span> <span class="n">started</span></div>
+
+
+<span class="n">procs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">DaemonProcess</span><span class="p">(</span><span class="s2">&quot;manage_athenad&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.athena.manage_athenad&quot;</span><span class="p">,</span> <span class="s2">&quot;AthenadPid&quot;</span><span class="p">),</span>
+
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;camerad&quot;</span><span class="p">,</span> <span class="s2">&quot;system/camerad&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./camerad&quot;</span><span class="p">],</span> <span class="n">driverview</span><span class="p">),</span>
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;logcatd&quot;</span><span class="p">,</span> <span class="s2">&quot;system/logcatd&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./logcatd&quot;</span><span class="p">],</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;proclogd&quot;</span><span class="p">,</span> <span class="s2">&quot;system/proclogd&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./proclogd&quot;</span><span class="p">],</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;logmessaged&quot;</span><span class="p">,</span> <span class="s2">&quot;system.logmessaged&quot;</span><span class="p">,</span> <span class="n">always_run</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;micd&quot;</span><span class="p">,</span> <span class="s2">&quot;system.micd&quot;</span><span class="p">,</span> <span class="n">iscar</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;timezoned&quot;</span><span class="p">,</span> <span class="s2">&quot;system.timezoned&quot;</span><span class="p">,</span> <span class="n">always_run</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="ow">not</span> <span class="n">PC</span><span class="p">),</span>
+
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;dmonitoringmodeld&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.modeld.dmonitoringmodeld&quot;</span><span class="p">,</span> <span class="n">driverview</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="p">(</span><span class="ow">not</span> <span class="n">PC</span> <span class="ow">or</span> <span class="n">WEBCAM</span><span class="p">)),</span>
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;encoderd&quot;</span><span class="p">,</span> <span class="s2">&quot;system/loggerd&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./encoderd&quot;</span><span class="p">],</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;stream_encoderd&quot;</span><span class="p">,</span> <span class="s2">&quot;system/loggerd&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./encoderd&quot;</span><span class="p">,</span> <span class="s2">&quot;--stream&quot;</span><span class="p">],</span> <span class="n">notcar</span><span class="p">),</span>
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;loggerd&quot;</span><span class="p">,</span> <span class="s2">&quot;system/loggerd&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./loggerd&quot;</span><span class="p">],</span> <span class="n">logging</span><span class="p">),</span>
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;modeld&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive/modeld&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./modeld&quot;</span><span class="p">],</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;mapsd&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive/navd&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./mapsd&quot;</span><span class="p">],</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;navmodeld&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.modeld.navmodeld&quot;</span><span class="p">,</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;sensord&quot;</span><span class="p">,</span> <span class="s2">&quot;system/sensord&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./sensord&quot;</span><span class="p">],</span> <span class="n">only_onroad</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="ow">not</span> <span class="n">PC</span><span class="p">),</span>
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;ui&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive/ui&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./ui&quot;</span><span class="p">],</span> <span class="n">always_run</span><span class="p">,</span> <span class="n">watchdog_max_dt</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">PC</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;soundd&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.ui.soundd&quot;</span><span class="p">,</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;locationd&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive/locationd&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./locationd&quot;</span><span class="p">],</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;boardd&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive/boardd&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./boardd&quot;</span><span class="p">],</span> <span class="n">always_run</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;calibrationd&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.locationd.calibrationd&quot;</span><span class="p">,</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;torqued&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.locationd.torqued&quot;</span><span class="p">,</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;controlsd&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.controls.controlsd&quot;</span><span class="p">,</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;deleter&quot;</span><span class="p">,</span> <span class="s2">&quot;system.loggerd.deleter&quot;</span><span class="p">,</span> <span class="n">always_run</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;dmonitoringd&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.monitoring.dmonitoringd&quot;</span><span class="p">,</span> <span class="n">driverview</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="p">(</span><span class="ow">not</span> <span class="n">PC</span> <span class="ow">or</span> <span class="n">WEBCAM</span><span class="p">)),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;qcomgpsd&quot;</span><span class="p">,</span> <span class="s2">&quot;system.qcomgpsd.qcomgpsd&quot;</span><span class="p">,</span> <span class="n">qcomgps</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="n">TICI</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;navd&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.navd.navd&quot;</span><span class="p">,</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;pandad&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.boardd.pandad&quot;</span><span class="p">,</span> <span class="n">always_run</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;paramsd&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.locationd.paramsd&quot;</span><span class="p">,</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;ubloxd&quot;</span><span class="p">,</span> <span class="s2">&quot;system/ubloxd&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./ubloxd&quot;</span><span class="p">],</span> <span class="n">ublox</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="n">TICI</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;pigeond&quot;</span><span class="p">,</span> <span class="s2">&quot;system.sensord.pigeond&quot;</span><span class="p">,</span> <span class="n">ublox</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="n">TICI</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;plannerd&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.controls.plannerd&quot;</span><span class="p">,</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;radard&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.controls.radard&quot;</span><span class="p">,</span> <span class="n">only_onroad</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;thermald&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.thermald.thermald&quot;</span><span class="p">,</span> <span class="n">always_run</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;tombstoned&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.tombstoned&quot;</span><span class="p">,</span> <span class="n">always_run</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="ow">not</span> <span class="n">PC</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;updated&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.updated&quot;</span><span class="p">,</span> <span class="n">only_offroad</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="ow">not</span> <span class="n">PC</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;uploader&quot;</span><span class="p">,</span> <span class="s2">&quot;system.loggerd.uploader&quot;</span><span class="p">,</span> <span class="n">always_run</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;statsd&quot;</span><span class="p">,</span> <span class="s2">&quot;selfdrive.statsd&quot;</span><span class="p">,</span> <span class="n">always_run</span><span class="p">),</span>
+
+  <span class="c1"># debug procs</span>
+  <span class="n">NativeProcess</span><span class="p">(</span><span class="s2">&quot;bridge&quot;</span><span class="p">,</span> <span class="s2">&quot;cereal/messaging&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;./bridge&quot;</span><span class="p">],</span> <span class="n">notcar</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;webrtcd&quot;</span><span class="p">,</span> <span class="s2">&quot;system.webrtc.webrtcd&quot;</span><span class="p">,</span> <span class="n">notcar</span><span class="p">),</span>
+  <span class="n">PythonProcess</span><span class="p">(</span><span class="s2">&quot;webjoystick&quot;</span><span class="p">,</span> <span class="s2">&quot;tools.bodyteleop.web&quot;</span><span class="p">,</span> <span class="n">notcar</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">managed_processes</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">procs</span><span class="p">}</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

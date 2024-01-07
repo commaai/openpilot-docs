@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.subaru.carcontroller &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/subaru/carcontroller.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.subaru.carcontroller</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.subaru.carcontroller</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">openpilot.common.numpy_fast</span> <span class="kn">import</span> <span class="n">clip</span><span class="p">,</span> <span class="n">interp</span>
+<span class="kn">from</span> <span class="nn">opendbc.can.packer</span> <span class="kn">import</span> <span class="n">CANPacker</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">apply_driver_steer_torque_limits</span><span class="p">,</span> <span class="n">common_fault_avoidance</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.subaru</span> <span class="kn">import</span> <span class="n">subarucan</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.subaru.values</span> <span class="kn">import</span> <span class="n">DBC</span><span class="p">,</span> <span class="n">GLOBAL_ES_ADDR</span><span class="p">,</span> <span class="n">GLOBAL_GEN2</span><span class="p">,</span> <span class="n">PREGLOBAL_CARS</span><span class="p">,</span> <span class="n">HYBRID_CARS</span><span class="p">,</span> <span class="n">STEER_RATE_LIMITED</span><span class="p">,</span> \
+                                                  <span class="n">CanBus</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="p">,</span> <span class="n">SubaruFlags</span>
+
+<span class="c1"># FIXME: These limits aren&#39;t exact. The real limit is more than likely over a larger time period and</span>
+<span class="c1"># involves the total steering angle change rather than rate, but these limits work well for now</span>
+<span class="n">MAX_STEER_RATE</span> <span class="o">=</span> <span class="mi">25</span>  <span class="c1"># deg/s</span>
+<span class="n">MAX_STEER_RATE_FRAMES</span> <span class="o">=</span> <span class="mi">7</span>  <span class="c1"># tx control frames needed before torque can be cut</span>
+
+
+<div class="viewcode-block" id="CarController">
+<a class="viewcode-back" href="../../../../selfdrive.car.subaru.html#selfdrive.car.subaru.carcontroller.CarController">[docs]</a>
+<span class="k">class</span> <span class="nc">CarController</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbc_name</span><span class="p">,</span> <span class="n">CP</span><span class="p">,</span> <span class="n">VM</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CP</span> <span class="o">=</span> <span class="n">CP</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">apply_steer_last</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">cruise_button_prev</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">steer_rate_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">CarControllerParams</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">packer</span> <span class="o">=</span> <span class="n">CANPacker</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s1">&#39;pt&#39;</span><span class="p">])</span>
+
+<div class="viewcode-block" id="CarController.update">
+<a class="viewcode-back" href="../../../../selfdrive.car.subaru.html#selfdrive.car.subaru.carcontroller.CarController.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CC</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="n">now_nanos</span><span class="p">):</span>
+    <span class="n">actuators</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">actuators</span>
+    <span class="n">hud_control</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">hudControl</span>
+    <span class="n">pcm_cancel_cmd</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">cruiseControl</span><span class="o">.</span><span class="n">cancel</span>
+
+    <span class="n">can_sends</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># *** steering ***</span>
+    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">STEER_STEP</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">apply_steer</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">actuators</span><span class="o">.</span><span class="n">steer</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">STEER_MAX</span><span class="p">))</span>
+
+      <span class="c1"># limits due to driver torque</span>
+
+      <span class="n">new_steer</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">apply_steer</span><span class="p">))</span>
+      <span class="n">apply_steer</span> <span class="o">=</span> <span class="n">apply_driver_steer_torque_limits</span><span class="p">(</span><span class="n">new_steer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_steer_last</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">steeringTorque</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">CC</span><span class="o">.</span><span class="n">latActive</span><span class="p">:</span>
+        <span class="n">apply_steer</span> <span class="o">=</span> <span class="mi">0</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">PREGLOBAL_CARS</span><span class="p">:</span>
+        <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarucan</span><span class="o">.</span><span class="n">create_preglobal_steering_control</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">STEER_STEP</span><span class="p">,</span> <span class="n">apply_steer</span><span class="p">,</span> <span class="n">CC</span><span class="o">.</span><span class="n">latActive</span><span class="p">))</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">apply_steer_req</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">latActive</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">STEER_RATE_LIMITED</span><span class="p">:</span>
+          <span class="c1"># Steering rate fault prevention</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">steer_rate_counter</span><span class="p">,</span> <span class="n">apply_steer_req</span> <span class="o">=</span> \
+            <span class="n">common_fault_avoidance</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">steeringRateDeg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">MAX_STEER_RATE</span><span class="p">,</span> <span class="n">apply_steer_req</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">steer_rate_counter</span><span class="p">,</span> <span class="n">MAX_STEER_RATE_FRAMES</span><span class="p">)</span>
+
+        <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarucan</span><span class="o">.</span><span class="n">create_steering_control</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="n">apply_steer</span><span class="p">,</span> <span class="n">apply_steer_req</span><span class="p">))</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">apply_steer_last</span> <span class="o">=</span> <span class="n">apply_steer</span>
+
+    <span class="c1"># *** longitudinal ***</span>
+
+    <span class="k">if</span> <span class="n">CC</span><span class="o">.</span><span class="n">longActive</span><span class="p">:</span>
+      <span class="n">apply_throttle</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">interp</span><span class="p">(</span><span class="n">actuators</span><span class="o">.</span><span class="n">accel</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">THROTTLE_LOOKUP_BP</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">THROTTLE_LOOKUP_V</span><span class="p">)))</span>
+      <span class="n">apply_rpm</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">interp</span><span class="p">(</span><span class="n">actuators</span><span class="o">.</span><span class="n">accel</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">RPM_LOOKUP_BP</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">RPM_LOOKUP_V</span><span class="p">)))</span>
+      <span class="n">apply_brake</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">interp</span><span class="p">(</span><span class="n">actuators</span><span class="o">.</span><span class="n">accel</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">BRAKE_LOOKUP_BP</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">BRAKE_LOOKUP_V</span><span class="p">)))</span>
+
+      <span class="c1"># limit min and max values</span>
+      <span class="n">cruise_throttle</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">apply_throttle</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">THROTTLE_MIN</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">THROTTLE_MAX</span><span class="p">)</span>
+      <span class="n">cruise_rpm</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">apply_rpm</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">RPM_MIN</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">RPM_MAX</span><span class="p">)</span>
+      <span class="n">cruise_brake</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">apply_brake</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">BRAKE_MIN</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">BRAKE_MAX</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">cruise_throttle</span> <span class="o">=</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">THROTTLE_INACTIVE</span>
+      <span class="n">cruise_rpm</span> <span class="o">=</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">RPM_MIN</span>
+      <span class="n">cruise_brake</span> <span class="o">=</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">BRAKE_MIN</span>
+
+    <span class="c1"># *** alerts and pcm cancel ***</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">PREGLOBAL_CARS</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># 1 = main, 2 = set shallow, 3 = set deep, 4 = resume shallow, 5 = resume deep</span>
+        <span class="c1"># disengage ACC when OP is disengaged</span>
+        <span class="k">if</span> <span class="n">pcm_cancel_cmd</span><span class="p">:</span>
+          <span class="n">cruise_button</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="c1"># turn main on if off and past start-up state</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">available</span> <span class="ow">and</span> <span class="n">CS</span><span class="o">.</span><span class="n">ready</span><span class="p">:</span>
+          <span class="n">cruise_button</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">cruise_button</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">cruise_button</span>
+
+        <span class="c1"># unstick previous mocked button press</span>
+        <span class="k">if</span> <span class="n">cruise_button</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cruise_button_prev</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+          <span class="n">cruise_button</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cruise_button_prev</span> <span class="o">=</span> <span class="n">cruise_button</span>
+
+        <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarucan</span><span class="o">.</span><span class="n">create_preglobal_es_distance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="n">cruise_button</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">es_distance_msg</span><span class="p">))</span>
+
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarucan</span><span class="o">.</span><span class="n">create_es_dashstatus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">//</span> <span class="mi">10</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">es_dashstatus_msg</span><span class="p">,</span> <span class="n">CC</span><span class="o">.</span><span class="n">enabled</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">,</span> <span class="n">CC</span><span class="o">.</span><span class="n">longActive</span><span class="p">,</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">leadVisible</span><span class="p">))</span>
+
+        <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarucan</span><span class="o">.</span><span class="n">create_es_lkas_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">//</span> <span class="mi">10</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">es_lkas_state_msg</span><span class="p">,</span> <span class="n">CC</span><span class="o">.</span><span class="n">enabled</span><span class="p">,</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">visualAlert</span><span class="p">,</span>
+                                                        <span class="n">hud_control</span><span class="o">.</span><span class="n">leftLaneVisible</span><span class="p">,</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">rightLaneVisible</span><span class="p">,</span>
+                                                        <span class="n">hud_control</span><span class="o">.</span><span class="n">leftLaneDepart</span><span class="p">,</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">rightLaneDepart</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">SubaruFlags</span><span class="o">.</span><span class="n">SEND_INFOTAINMENT</span><span class="p">:</span>
+          <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarucan</span><span class="o">.</span><span class="n">create_es_infotainment</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">//</span> <span class="mi">10</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">es_infotainment_msg</span><span class="p">,</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">visualAlert</span><span class="p">))</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarucan</span><span class="o">.</span><span class="n">create_es_status</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">//</span> <span class="mi">5</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">es_status_msg</span><span class="p">,</span>
+                                                      <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">,</span> <span class="n">CC</span><span class="o">.</span><span class="n">longActive</span><span class="p">,</span> <span class="n">cruise_rpm</span><span class="p">))</span>
+
+          <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarucan</span><span class="o">.</span><span class="n">create_es_brake</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">//</span> <span class="mi">5</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">es_brake_msg</span><span class="p">,</span>
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">,</span> <span class="n">CC</span><span class="o">.</span><span class="n">longActive</span><span class="p">,</span> <span class="n">cruise_brake</span><span class="p">))</span>
+
+          <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarucan</span><span class="o">.</span><span class="n">create_es_distance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">//</span> <span class="mi">5</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">es_distance_msg</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pcm_cancel_cmd</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">,</span> <span class="n">cruise_brake</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cruise_throttle</span><span class="p">))</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">pcm_cancel_cmd</span><span class="p">:</span>
+          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">HYBRID_CARS</span><span class="p">:</span>
+            <span class="n">bus</span> <span class="o">=</span> <span class="n">CanBus</span><span class="o">.</span><span class="n">alt</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">GLOBAL_GEN2</span> <span class="k">else</span> <span class="n">CanBus</span><span class="o">.</span><span class="n">main</span>
+            <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarucan</span><span class="o">.</span><span class="n">create_es_distance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">es_distance_msg</span><span class="p">[</span><span class="s2">&quot;COUNTER&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">es_distance_msg</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">pcm_cancel_cmd</span><span class="p">))</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">SubaruFlags</span><span class="o">.</span><span class="n">DISABLE_EYESIGHT</span><span class="p">:</span>
+        <span class="c1"># Tester present (keeps eyesight disabled)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">GLOBAL_ES_ADDR</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x02\x3E\x80\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">CanBus</span><span class="o">.</span><span class="n">camera</span><span class="p">])</span>
+
+        <span class="c1"># Create all of the other eyesight messages to keep the rest of the car happy when eyesight is disabled</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarucan</span><span class="o">.</span><span class="n">create_es_highbeamassist</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarucan</span><span class="o">.</span><span class="n">create_es_static_1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarucan</span><span class="o">.</span><span class="n">create_es_static_2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">))</span>
+
+    <span class="n">new_actuators</span> <span class="o">=</span> <span class="n">actuators</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">new_actuators</span><span class="o">.</span><span class="n">steer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_steer_last</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">STEER_MAX</span>
+    <span class="n">new_actuators</span><span class="o">.</span><span class="n">steerOutputCan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_steer_last</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">new_actuators</span><span class="p">,</span> <span class="n">can_sends</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

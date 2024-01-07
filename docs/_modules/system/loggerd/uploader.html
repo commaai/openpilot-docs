@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>system.loggerd.uploader &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/system/loggerd/uploader.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">system.loggerd.uploader</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for system.loggerd.uploader</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">bz2</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">BinaryIO</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.api</span> <span class="kn">import</span> <span class="n">Api</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">set_core_affinity</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware</span> <span class="kn">import</span> <span class="n">TICI</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware.hw</span> <span class="kn">import</span> <span class="n">Paths</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.loggerd.xattr_cache</span> <span class="kn">import</span> <span class="n">getxattr</span><span class="p">,</span> <span class="n">setxattr</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+
+<span class="n">NetworkType</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">DeviceState</span><span class="o">.</span><span class="n">NetworkType</span>
+<span class="n">UPLOAD_ATTR_NAME</span> <span class="o">=</span> <span class="s1">&#39;user.upload&#39;</span>
+<span class="n">UPLOAD_ATTR_VALUE</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;1&#39;</span>
+
+<span class="n">UPLOAD_QLOG_QCAM_MAX_SIZE</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mf">1e6</span>  <span class="c1"># MB</span>
+
+<span class="n">allow_sleep</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;UPLOADER_SLEEP&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">))</span>
+<span class="n">force_wifi</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;FORCEWIFI&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="n">fake_upload</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;FAKEUPLOAD&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="FakeRequest">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.FakeRequest">[docs]</a>
+<span class="k">class</span> <span class="nc">FakeRequest</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="FakeResponse">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.FakeResponse">[docs]</a>
+<span class="k">class</span> <span class="nc">FakeResponse</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">FakeRequest</span><span class="p">()</span></div>
+
+
+
+<span class="n">UploadResponse</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">,</span> <span class="n">FakeResponse</span><span class="p">]</span>
+
+<div class="viewcode-block" id="get_directory_sort">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.get_directory_sort">[docs]</a>
+<span class="k">def</span> <span class="nf">get_directory_sort</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="listdir_by_creation">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.listdir_by_creation">[docs]</a>
+<span class="k">def</span> <span class="nf">listdir_by_creation</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">f</span><span class="p">))]</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">get_directory_sort</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">paths</span>
+  <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;listdir_by_creation failed&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="clear_locks">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.clear_locks">[docs]</a>
+<span class="k">def</span> <span class="nf">clear_locks</span><span class="p">(</span><span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">logname</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">logname</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.lock&quot;</span><span class="p">):</span>
+          <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">fname</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;clear_locks failed&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Uploader">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.Uploader">[docs]</a>
+<span class="k">class</span> <span class="nc">Uploader</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dongle_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dongle_id</span> <span class="o">=</span> <span class="n">dongle_id</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">api</span> <span class="o">=</span> <span class="n">Api</span><span class="p">(</span><span class="n">dongle_id</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_resp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">UploadResponse</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_exc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="ne">Exception</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">immediate_size</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">immediate_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># stats for last successfully uploaded file</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_speed</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_filename</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">immediate_folders</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;crash/&quot;</span><span class="p">,</span> <span class="s2">&quot;boot/&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">immediate_priority</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;qlog&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;qlog.bz2&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;qcamera.ts&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+<div class="viewcode-block" id="Uploader.get_upload_sort">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.Uploader.get_upload_sort">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_upload_sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">immediate_priority</span><span class="p">:</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">immediate_priority</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+    <span class="k">return</span> <span class="mi">1000</span></div>
+
+
+<div class="viewcode-block" id="Uploader.list_upload_files">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.Uploader.list_upload_files">[docs]</a>
+  <span class="k">def</span> <span class="nf">list_upload_files</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">):</span>
+      <span class="k">return</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">immediate_size</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">immediate_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">logname</span> <span class="ow">in</span> <span class="n">listdir_by_creation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">):</span>
+      <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">logname</span><span class="p">)</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+      <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.lock&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">):</span>
+        <span class="k">continue</span>
+
+      <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_upload_sort</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">logname</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="c1"># skip files already uploaded</span>
+        <span class="k">try</span><span class="p">:</span>
+          <span class="n">is_uploaded</span> <span class="o">=</span> <span class="n">getxattr</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">UPLOAD_ATTR_NAME</span><span class="p">)</span> <span class="o">==</span> <span class="n">UPLOAD_ATTR_VALUE</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;uploader_getxattr_failed&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">last_exc</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">)</span>
+          <span class="n">is_uploaded</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># deleter could have deleted</span>
+        <span class="k">if</span> <span class="n">is_uploaded</span><span class="p">:</span>
+          <span class="k">continue</span>
+
+        <span class="k">try</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">immediate_priority</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">immediate_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">immediate_size</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+          <span class="k">pass</span>
+
+        <span class="k">yield</span> <span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">fn</span></div>
+
+
+<div class="viewcode-block" id="Uploader.next_file_to_upload">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.Uploader.next_file_to_upload">[docs]</a>
+  <span class="k">def</span> <span class="nf">next_file_to_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+    <span class="n">upload_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_upload_files</span><span class="p">())</span>
+
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">upload_files</span><span class="p">:</span>
+      <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">f</span> <span class="ow">in</span> <span class="n">fn</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">immediate_folders</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">fn</span>
+
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">upload_files</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">immediate_priority</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">fn</span>
+
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Uploader.do_upload">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.Uploader.do_upload">[docs]</a>
+  <span class="k">def</span> <span class="nf">do_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fn</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">url_resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;v1.4/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dongle_id</span> <span class="o">+</span> <span class="s2">&quot;/upload_url/&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">access_token</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">get_token</span><span class="p">())</span>
+      <span class="k">if</span> <span class="n">url_resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">412</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_resp</span> <span class="o">=</span> <span class="n">url_resp</span>
+        <span class="k">return</span>
+
+      <span class="n">url_resp_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">url_resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+      <span class="n">url</span> <span class="o">=</span> <span class="n">url_resp_json</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span>
+      <span class="n">headers</span> <span class="o">=</span> <span class="n">url_resp_json</span><span class="p">[</span><span class="s1">&#39;headers&#39;</span><span class="p">]</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;upload_url v1.4 </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">headers</span><span class="p">))</span>
+
+      <span class="k">if</span> <span class="n">fake_upload</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;*** WARNING, THIS IS A FAKE UPLOAD TO </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> ***&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_resp</span> <span class="o">=</span> <span class="n">FakeResponse</span><span class="p">()</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+          <span class="n">data</span><span class="p">:</span> <span class="n">BinaryIO</span>
+          <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.bz2&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">fn</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.bz2&#39;</span><span class="p">):</span>
+            <span class="n">compressed</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">compressed</span><span class="p">)</span>
+          <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">f</span>
+
+          <span class="bp">self</span><span class="o">.</span><span class="n">last_resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">last_exc</span> <span class="o">=</span> <span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+      <span class="k">raise</span></div>
+
+
+<div class="viewcode-block" id="Uploader.normal_upload">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.Uploader.normal_upload">[docs]</a>
+  <span class="k">def</span> <span class="nf">normal_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fn</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">UploadResponse</span><span class="p">]:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_resp</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_exc</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">do_upload</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">fn</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_resp</span></div>
+
+
+<div class="viewcode-block" id="Uploader.upload">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.Uploader.upload">[docs]</a>
+  <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fn</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">network_type</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">metered</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">sz</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;upload: getsize failed&quot;</span><span class="p">)</span>
+      <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;upload_start&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">sz</span><span class="o">=</span><span class="n">sz</span><span class="p">,</span> <span class="n">network_type</span><span class="o">=</span><span class="n">network_type</span><span class="p">,</span> <span class="n">metered</span><span class="o">=</span><span class="n">metered</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">sz</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="c1"># tag files of 0 size as uploaded</span>
+      <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">immediate_priority</span> <span class="ow">and</span> <span class="n">sz</span> <span class="o">&gt;</span> <span class="n">UPLOAD_QLOG_QCAM_MAX_SIZE</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;uploader_too_large&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">sz</span><span class="o">=</span><span class="n">sz</span><span class="p">)</span>
+      <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+      <span class="n">stat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normal_upload</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">fn</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">stat</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">stat</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">401</span><span class="p">,</span> <span class="mi">403</span><span class="p">,</span> <span class="mi">412</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_filename</span> <span class="o">=</span> <span class="n">fn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+        <span class="k">if</span> <span class="n">stat</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">412</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">last_speed</span> <span class="o">=</span> <span class="mi">0</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;upload_ignored&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">sz</span><span class="o">=</span><span class="n">sz</span><span class="p">,</span> <span class="n">network_type</span><span class="o">=</span><span class="n">network_type</span><span class="p">,</span> <span class="n">metered</span><span class="o">=</span><span class="n">metered</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">content_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">stat</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">last_speed</span> <span class="o">=</span> <span class="p">(</span><span class="n">content_length</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;upload_success&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">sz</span><span class="o">=</span><span class="n">sz</span><span class="p">,</span> <span class="n">content_length</span><span class="o">=</span><span class="n">content_length</span><span class="p">,</span>
+                         <span class="n">network_type</span><span class="o">=</span><span class="n">network_type</span><span class="p">,</span> <span class="n">metered</span><span class="o">=</span><span class="n">metered</span><span class="p">,</span> <span class="n">speed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">last_speed</span><span class="p">)</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;upload_failed&quot;</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="n">stat</span><span class="p">,</span> <span class="n">exc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">last_exc</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">sz</span><span class="o">=</span><span class="n">sz</span><span class="p">,</span> <span class="n">network_type</span><span class="o">=</span><span class="n">network_type</span><span class="p">,</span> <span class="n">metered</span><span class="o">=</span><span class="n">metered</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+      <span class="c1"># tag file as uploaded</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">setxattr</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">UPLOAD_ATTR_NAME</span><span class="p">,</span> <span class="n">UPLOAD_ATTR_VALUE</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;uploader_setxattr_failed&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">last_exc</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">sz</span><span class="o">=</span><span class="n">sz</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">success</span></div>
+
+
+<div class="viewcode-block" id="Uploader.get_msg">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.Uploader.get_msg">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s2">&quot;uploaderState&quot;</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">us</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">uploaderState</span>
+    <span class="n">us</span><span class="o">.</span><span class="n">immediateQueueSize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">immediate_size</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">)</span>
+    <span class="n">us</span><span class="o">.</span><span class="n">immediateQueueCount</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">immediate_count</span>
+    <span class="n">us</span><span class="o">.</span><span class="n">lastTime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span>
+    <span class="n">us</span><span class="o">.</span><span class="n">lastSpeed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_speed</span>
+    <span class="n">us</span><span class="o">.</span><span class="n">lastFilename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_filename</span>
+    <span class="k">return</span> <span class="n">msg</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="uploader_fn">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.uploader_fn">[docs]</a>
+<span class="k">def</span> <span class="nf">uploader_fn</span><span class="p">(</span><span class="n">exit_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">set_core_affinity</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+  <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;failed to set core affinity&quot;</span><span class="p">)</span>
+
+  <span class="n">clear_locks</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">log_root</span><span class="p">())</span>
+
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+  <span class="n">dongle_id</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DongleId&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">dongle_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;uploader missing dongle_id&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;uploader can&#39;t start without dongle id&quot;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">TICI</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/data/media&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_mount</span><span class="p">():</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;NVME not mounted&quot;</span><span class="p">)</span>
+
+  <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="s1">&#39;deviceState&#39;</span><span class="p">])</span>
+  <span class="n">pm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">([</span><span class="s1">&#39;uploaderState&#39;</span><span class="p">])</span>
+  <span class="n">uploader</span> <span class="o">=</span> <span class="n">Uploader</span><span class="p">(</span><span class="n">dongle_id</span><span class="p">,</span> <span class="n">Paths</span><span class="o">.</span><span class="n">log_root</span><span class="p">())</span>
+
+  <span class="n">backoff</span> <span class="o">=</span> <span class="mf">0.1</span>
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">exit_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">offroad</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;IsOffroad&quot;</span><span class="p">)</span>
+    <span class="n">network_type</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">networkType</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">force_wifi</span> <span class="k">else</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">wifi</span>
+    <span class="k">if</span> <span class="n">network_type</span> <span class="o">==</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">none</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">allow_sleep</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span> <span class="k">if</span> <span class="n">offroad</span> <span class="k">else</span> <span class="mi">5</span><span class="p">)</span>
+      <span class="k">continue</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">uploader</span><span class="o">.</span><span class="n">next_file_to_upload</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Nothing to upload</span>
+      <span class="k">if</span> <span class="n">allow_sleep</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span> <span class="k">if</span> <span class="n">offroad</span> <span class="k">else</span> <span class="mi">5</span><span class="p">)</span>
+      <span class="k">continue</span>
+
+    <span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">d</span>
+
+    <span class="c1"># qlogs and bootlogs need to be compressed before uploading</span>
+    <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s1">&#39;qlog&#39;</span><span class="p">,</span> <span class="s1">&#39;rlog&#39;</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;boot/&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">key</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.bz2&#39;</span><span class="p">)):</span>
+      <span class="n">key</span> <span class="o">+=</span> <span class="s2">&quot;.bz2&quot;</span>
+
+    <span class="n">success</span> <span class="o">=</span> <span class="n">uploader</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">networkType</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">networkMetered</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+      <span class="n">backoff</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="k">elif</span> <span class="n">allow_sleep</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;upload backoff </span><span class="si">%r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">backoff</span><span class="p">)</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">backoff</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">backoff</span><span class="p">))</span>
+      <span class="n">backoff</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">backoff</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+
+    <span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;uploaderState&quot;</span><span class="p">,</span> <span class="n">uploader</span><span class="o">.</span><span class="n">get_msg</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../system.loggerd.html#system.loggerd.uploader.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">uploader_fn</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">())</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

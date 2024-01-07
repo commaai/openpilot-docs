@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.gm.gmcan &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/gm/gmcan.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.gm.gmcan</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.gm.gmcan</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">make_can_msg</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.gm.values</span> <span class="kn">import</span> <span class="n">CAR</span>
+
+
+<div class="viewcode-block" id="create_buttons">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.gmcan.create_buttons">[docs]</a>
+<span class="k">def</span> <span class="nf">create_buttons</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ACCButtons&quot;</span><span class="p">:</span> <span class="n">button</span><span class="p">,</span>
+    <span class="s2">&quot;RollingCounter&quot;</span><span class="p">:</span> <span class="n">idx</span><span class="p">,</span>
+    <span class="s2">&quot;ACCAlwaysOne&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;DistanceButton&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="p">}</span>
+
+  <span class="n">checksum</span> <span class="o">=</span> <span class="mi">240</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="s2">&quot;ACCAlwaysOne&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mh">0xf</span><span class="p">)</span>
+  <span class="n">checksum</span> <span class="o">+=</span> <span class="n">values</span><span class="p">[</span><span class="s2">&quot;RollingCounter&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mh">0x4ef</span> <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="s2">&quot;ACCAlwaysOne&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mh">0x3f0</span><span class="p">)</span>
+  <span class="n">checksum</span> <span class="o">-=</span> <span class="nb">int</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="s2">&quot;ACCButtons&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span>  <span class="c1"># not correct if value is 0</span>
+  <span class="n">checksum</span> <span class="o">-=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">values</span><span class="p">[</span><span class="s2">&quot;DistanceButton&quot;</span><span class="p">]</span>
+
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;SteeringButtonChecksum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">checksum</span>
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;ASCMSteeringButton&quot;</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_pscm_status">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.gmcan.create_pscm_status">[docs]</a>
+<span class="k">def</span> <span class="nf">create_pscm_status</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">pscm_status</span><span class="p">):</span>
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">pscm_status</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="s2">&quot;HandsOffSWDetectionMode&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HandsOffSWlDetectionStatus&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LKATorqueDeliveredStatus&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LKADriverAppldTrq&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LKATorqueDelivered&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LKATotalTorqueDelivered&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RollingCounter&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PSCMStatusChecksum&quot;</span><span class="p">,</span>
+  <span class="p">]}</span>
+  <span class="n">checksum_mod</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">values</span><span class="p">[</span><span class="s2">&quot;HandsOffSWlDetectionStatus&quot;</span><span class="p">])</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;HandsOffSWlDetectionStatus&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;PSCMStatusChecksum&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">checksum_mod</span>
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;PSCMStatus&quot;</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_steering_control">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.gmcan.create_steering_control">[docs]</a>
+<span class="k">def</span> <span class="nf">create_steering_control</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">apply_steer</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">lkas_active</span><span class="p">):</span>
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;LKASteeringCmdActive&quot;</span><span class="p">:</span> <span class="n">lkas_active</span><span class="p">,</span>
+    <span class="s2">&quot;LKASteeringCmd&quot;</span><span class="p">:</span> <span class="n">apply_steer</span><span class="p">,</span>
+    <span class="s2">&quot;RollingCounter&quot;</span><span class="p">:</span> <span class="n">idx</span><span class="p">,</span>
+    <span class="s2">&quot;LKASteeringCmdChecksum&quot;</span><span class="p">:</span> <span class="mh">0x1000</span> <span class="o">-</span> <span class="p">(</span><span class="n">lkas_active</span> <span class="o">&lt;&lt;</span> <span class="mi">11</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">apply_steer</span> <span class="o">&amp;</span> <span class="mh">0x7ff</span><span class="p">)</span> <span class="o">-</span> <span class="n">idx</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;ASCMLKASteeringCmd&quot;</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_adas_keepalive">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.gmcan.create_adas_keepalive">[docs]</a>
+<span class="k">def</span> <span class="nf">create_adas_keepalive</span><span class="p">(</span><span class="n">bus</span><span class="p">):</span>
+  <span class="n">dat</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00\x00\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">make_can_msg</span><span class="p">(</span><span class="mh">0x409</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">bus</span><span class="p">),</span> <span class="n">make_can_msg</span><span class="p">(</span><span class="mh">0x40a</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">bus</span><span class="p">)]</span></div>
+
+
+
+<div class="viewcode-block" id="create_gas_regen_command">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.gmcan.create_gas_regen_command">[docs]</a>
+<span class="k">def</span> <span class="nf">create_gas_regen_command</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">throttle</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">enabled</span><span class="p">,</span> <span class="n">at_full_stop</span><span class="p">):</span>
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;GasRegenCmdActive&quot;</span><span class="p">:</span> <span class="n">enabled</span><span class="p">,</span>
+    <span class="s2">&quot;RollingCounter&quot;</span><span class="p">:</span> <span class="n">idx</span><span class="p">,</span>
+    <span class="s2">&quot;GasRegenCmdActiveInv&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">enabled</span><span class="p">,</span>
+    <span class="s2">&quot;GasRegenCmd&quot;</span><span class="p">:</span> <span class="n">throttle</span><span class="p">,</span>
+    <span class="s2">&quot;GasRegenFullStopActive&quot;</span><span class="p">:</span> <span class="n">at_full_stop</span><span class="p">,</span>
+    <span class="s2">&quot;GasRegenAlwaysOne&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;GasRegenAlwaysOne2&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;GasRegenAlwaysOne3&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="p">}</span>
+
+  <span class="n">dat</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;ASCMGasRegenCmd&quot;</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">values</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;GasRegenChecksum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(((</span><span class="mh">0xff</span> <span class="o">-</span> <span class="n">dat</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">|</span> \
+                               <span class="p">(((</span><span class="mh">0xff</span> <span class="o">-</span> <span class="n">dat</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> \
+                               <span class="p">((</span><span class="mh">0x100</span> <span class="o">-</span> <span class="n">dat</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">idx</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;ASCMGasRegenCmd&quot;</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_friction_brake_command">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.gmcan.create_friction_brake_command">[docs]</a>
+<span class="k">def</span> <span class="nf">create_friction_brake_command</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">apply_brake</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">enabled</span><span class="p">,</span> <span class="n">near_stop</span><span class="p">,</span> <span class="n">at_full_stop</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+  <span class="n">mode</span> <span class="o">=</span> <span class="mh">0x1</span>
+
+  <span class="c1"># TODO: Understand this better. Volts and ICE Camera ACC cars are 0x1 when enabled with no brake</span>
+  <span class="k">if</span> <span class="n">enabled</span> <span class="ow">and</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">BOLT_EUV</span><span class="p">,):</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="mh">0x9</span>
+
+  <span class="k">if</span> <span class="n">apply_brake</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="mh">0xa</span>
+    <span class="k">if</span> <span class="n">at_full_stop</span><span class="p">:</span>
+      <span class="n">mode</span> <span class="o">=</span> <span class="mh">0xd</span>
+
+    <span class="c1"># TODO: this is to have GM bringing the car to complete stop,</span>
+    <span class="c1"># but currently it conflicts with OP controls, so turned off. Not set by all cars</span>
+    <span class="c1">#elif near_stop:</span>
+    <span class="c1">#  mode = 0xb</span>
+
+  <span class="n">brake</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x1000</span> <span class="o">-</span> <span class="n">apply_brake</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xfff</span>
+  <span class="n">checksum</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x10000</span> <span class="o">-</span> <span class="p">(</span><span class="n">mode</span> <span class="o">&lt;&lt;</span> <span class="mi">12</span><span class="p">)</span> <span class="o">-</span> <span class="n">brake</span> <span class="o">-</span> <span class="n">idx</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xffff</span>
+
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;RollingCounter&quot;</span><span class="p">:</span> <span class="n">idx</span><span class="p">,</span>
+    <span class="s2">&quot;FrictionBrakeMode&quot;</span><span class="p">:</span> <span class="n">mode</span><span class="p">,</span>
+    <span class="s2">&quot;FrictionBrakeChecksum&quot;</span><span class="p">:</span> <span class="n">checksum</span><span class="p">,</span>
+    <span class="s2">&quot;FrictionBrakeCmd&quot;</span><span class="p">:</span> <span class="o">-</span><span class="n">apply_brake</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;EBCMFrictionBrakeCmd&quot;</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_acc_dashboard_command">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.gmcan.create_acc_dashboard_command">[docs]</a>
+<span class="k">def</span> <span class="nf">create_acc_dashboard_command</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">enabled</span><span class="p">,</span> <span class="n">target_speed_kph</span><span class="p">,</span> <span class="n">lead_car_in_sight</span><span class="p">,</span> <span class="n">fcw</span><span class="p">):</span>
+  <span class="n">target_speed</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_speed_kph</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ACCAlwaysOne&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;ACCResumeButton&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;ACCSpeedSetpoint&quot;</span><span class="p">:</span> <span class="n">target_speed</span><span class="p">,</span>
+    <span class="s2">&quot;ACCGapLevel&quot;</span><span class="p">:</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">enabled</span><span class="p">,</span>  <span class="c1"># 3 &quot;far&quot;, 0 &quot;inactive&quot;</span>
+    <span class="s2">&quot;ACCCmdActive&quot;</span><span class="p">:</span> <span class="n">enabled</span><span class="p">,</span>
+    <span class="s2">&quot;ACCAlwaysOne2&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;ACCLeadCar&quot;</span><span class="p">:</span> <span class="n">lead_car_in_sight</span><span class="p">,</span>
+    <span class="s2">&quot;FCWAlert&quot;</span><span class="p">:</span> <span class="mh">0x3</span> <span class="k">if</span> <span class="n">fcw</span> <span class="k">else</span> <span class="mi">0</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;ASCMActiveCruiseControlStatus&quot;</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_adas_time_status">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.gmcan.create_adas_time_status">[docs]</a>
+<span class="k">def</span> <span class="nf">create_adas_time_status</span><span class="p">(</span><span class="n">bus</span><span class="p">,</span> <span class="n">tt</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+  <span class="n">dat</span> <span class="o">=</span> <span class="p">[(</span><span class="n">tt</span> <span class="o">&gt;&gt;</span> <span class="mi">20</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">,</span> <span class="p">(</span><span class="n">tt</span> <span class="o">&gt;&gt;</span> <span class="mi">12</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">,</span> <span class="p">(</span><span class="n">tt</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">,</span>
+         <span class="p">((</span><span class="n">tt</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">)]</span>
+  <span class="n">chksum</span> <span class="o">=</span> <span class="mh">0x1000</span> <span class="o">-</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">dat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">dat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">dat</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+  <span class="n">chksum</span> <span class="o">=</span> <span class="n">chksum</span> <span class="o">&amp;</span> <span class="mh">0xfff</span>
+  <span class="n">dat</span> <span class="o">+=</span> <span class="p">[</span><span class="mh">0x40</span> <span class="o">+</span> <span class="p">(</span><span class="n">chksum</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">),</span> <span class="n">chksum</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">,</span> <span class="mh">0x12</span><span class="p">]</span>
+  <span class="k">return</span> <span class="n">make_can_msg</span><span class="p">(</span><span class="mh">0xa1</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">dat</span><span class="p">),</span> <span class="n">bus</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_adas_steering_status">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.gmcan.create_adas_steering_status">[docs]</a>
+<span class="k">def</span> <span class="nf">create_adas_steering_status</span><span class="p">(</span><span class="n">bus</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+  <span class="n">dat</span> <span class="o">=</span> <span class="p">[</span><span class="n">idx</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span><span class="p">,</span> <span class="mh">0xf0</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="n">chksum</span> <span class="o">=</span> <span class="mh">0x60</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+  <span class="n">dat</span> <span class="o">+=</span> <span class="p">[</span><span class="n">chksum</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">,</span> <span class="n">chksum</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">]</span>
+  <span class="k">return</span> <span class="n">make_can_msg</span><span class="p">(</span><span class="mh">0x306</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">dat</span><span class="p">),</span> <span class="n">bus</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_adas_accelerometer_speed_status">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.gmcan.create_adas_accelerometer_speed_status">[docs]</a>
+<span class="k">def</span> <span class="nf">create_adas_accelerometer_speed_status</span><span class="p">(</span><span class="n">bus</span><span class="p">,</span> <span class="n">speed_ms</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+  <span class="n">spd</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">speed_ms</span> <span class="o">*</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xfff</span>
+  <span class="n">accel</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">&amp;</span> <span class="mh">0xfff</span>
+  <span class="c1"># 0 if in park/neutral, 0x10 if in reverse, 0x08 for D/L</span>
+  <span class="c1">#stick = 0x08</span>
+  <span class="n">near_range_cutoff</span> <span class="o">=</span> <span class="mh">0x27</span>
+  <span class="n">near_range_mode</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">spd</span> <span class="o">&lt;=</span> <span class="n">near_range_cutoff</span> <span class="k">else</span> <span class="mi">0</span>
+  <span class="n">far_range_mode</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">near_range_mode</span>
+  <span class="n">dat</span> <span class="o">=</span> <span class="p">[</span><span class="mh">0x08</span><span class="p">,</span> <span class="n">spd</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">,</span> <span class="p">((</span><span class="n">spd</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">accel</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">),</span> <span class="n">accel</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="n">chksum</span> <span class="o">=</span> <span class="mh">0x62</span> <span class="o">+</span> <span class="n">far_range_mode</span> <span class="o">+</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">dat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">dat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">dat</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">dat</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+  <span class="n">dat</span> <span class="o">+=</span> <span class="p">[(</span><span class="n">idx</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">far_range_mode</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">near_range_mode</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">chksum</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">),</span> <span class="n">chksum</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">]</span>
+  <span class="k">return</span> <span class="n">make_can_msg</span><span class="p">(</span><span class="mh">0x308</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">dat</span><span class="p">),</span> <span class="n">bus</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_adas_headlights_status">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.gmcan.create_adas_headlights_status">[docs]</a>
+<span class="k">def</span> <span class="nf">create_adas_headlights_status</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">bus</span><span class="p">):</span>
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Always42&quot;</span><span class="p">:</span> <span class="mh">0x42</span><span class="p">,</span>
+    <span class="s2">&quot;Always4&quot;</span><span class="p">:</span> <span class="mh">0x4</span><span class="p">,</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;ASCMHeadlight&quot;</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_lka_icon_command">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.gmcan.create_lka_icon_command">[docs]</a>
+<span class="k">def</span> <span class="nf">create_lka_icon_command</span><span class="p">(</span><span class="n">bus</span><span class="p">,</span> <span class="n">active</span><span class="p">,</span> <span class="n">critical</span><span class="p">,</span> <span class="n">steer</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">active</span> <span class="ow">and</span> <span class="n">steer</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">critical</span><span class="p">:</span>
+      <span class="n">dat</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x50\xc0\x14</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">dat</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x50\x40\x18</span><span class="s2">&quot;</span>
+  <span class="k">elif</span> <span class="n">active</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">critical</span><span class="p">:</span>
+      <span class="n">dat</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x40\xc0\x14</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">dat</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x40\x40\x18</span><span class="s2">&quot;</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00\x00\x00</span><span class="s2">&quot;</span>
+  <span class="k">return</span> <span class="n">make_can_msg</span><span class="p">(</span><span class="mh">0x104c006c</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">bus</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

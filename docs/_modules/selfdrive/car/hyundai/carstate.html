@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.hyundai.carstate &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/hyundai/carstate.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.hyundai.carstate</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.hyundai.carstate</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">opendbc.can.parser</span> <span class="kn">import</span> <span class="n">CANParser</span>
+<span class="kn">from</span> <span class="nn">opendbc.can.can_define</span> <span class="kn">import</span> <span class="n">CANDefine</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.hyundai.hyundaicanfd</span> <span class="kn">import</span> <span class="n">CanBus</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.hyundai.values</span> <span class="kn">import</span> <span class="n">HyundaiFlags</span><span class="p">,</span> <span class="n">CAR</span><span class="p">,</span> <span class="n">DBC</span><span class="p">,</span> <span class="n">CAN_GEARS</span><span class="p">,</span> <span class="n">CAMERA_SCC_CAR</span><span class="p">,</span> \
+                                                   <span class="n">CANFD_CAR</span><span class="p">,</span> <span class="n">EV_CAR</span><span class="p">,</span> <span class="n">HYBRID_CAR</span><span class="p">,</span> <span class="n">Buttons</span><span class="p">,</span> <span class="n">CarControllerParams</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.interfaces</span> <span class="kn">import</span> <span class="n">CarStateBase</span>
+
+<span class="n">PREV_BUTTON_SAMPLES</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">CLUSTER_SAMPLE_RATE</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># frames</span>
+<span class="n">STANDSTILL_THRESHOLD</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="mf">0.03125</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span>
+
+
+<div class="viewcode-block" id="CarState">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.carstate.CarState">[docs]</a>
+<span class="k">class</span> <span class="nc">CarState</span><span class="p">(</span><span class="n">CarStateBase</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+    <span class="n">can_define</span> <span class="o">=</span> <span class="n">CANDefine</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">])</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">cruise_buttons</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="n">Buttons</span><span class="o">.</span><span class="n">NONE</span><span class="p">]</span> <span class="o">*</span> <span class="n">PREV_BUTTON_SAMPLES</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">PREV_BUTTON_SAMPLES</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">main_buttons</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="n">Buttons</span><span class="o">.</span><span class="n">NONE</span><span class="p">]</span> <span class="o">*</span> <span class="n">PREV_BUTTON_SAMPLES</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">PREV_BUTTON_SAMPLES</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">gear_msg_canfd</span> <span class="o">=</span> <span class="s2">&quot;GEAR_ALT&quot;</span> <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_ALT_GEARS</span> <span class="k">else</span> \
+                          <span class="s2">&quot;GEAR_ALT_2&quot;</span> <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_ALT_GEARS_2</span> <span class="k">else</span> \
+                          <span class="s2">&quot;GEAR_SHIFTER&quot;</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">shifter_values</span> <span class="o">=</span> <span class="n">can_define</span><span class="o">.</span><span class="n">dv</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">gear_msg_canfd</span><span class="p">][</span><span class="s2">&quot;GEAR&quot;</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CAN_GEARS</span><span class="p">[</span><span class="s2">&quot;use_cluster_gears&quot;</span><span class="p">]:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">shifter_values</span> <span class="o">=</span> <span class="n">can_define</span><span class="o">.</span><span class="n">dv</span><span class="p">[</span><span class="s2">&quot;CLU15&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Clu_Gear&quot;</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CAN_GEARS</span><span class="p">[</span><span class="s2">&quot;use_tcu_gears&quot;</span><span class="p">]:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">shifter_values</span> <span class="o">=</span> <span class="n">can_define</span><span class="o">.</span><span class="n">dv</span><span class="p">[</span><span class="s2">&quot;TCU12&quot;</span><span class="p">][</span><span class="s2">&quot;CUR_GR&quot;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># preferred and elect gear methods use same definition</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">shifter_values</span> <span class="o">=</span> <span class="n">can_define</span><span class="o">.</span><span class="n">dv</span><span class="p">[</span><span class="s2">&quot;LVR12&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Lvr_Gear&quot;</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">accelerator_msg_canfd</span> <span class="o">=</span> <span class="s2">&quot;ACCELERATOR&quot;</span> <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">EV_CAR</span> <span class="k">else</span> \
+                                 <span class="s2">&quot;ACCELERATOR_ALT&quot;</span> <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">HYBRID_CAR</span> <span class="k">else</span> \
+                                 <span class="s2">&quot;ACCELERATOR_BRAKE_ALT&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cruise_btns_msg_canfd</span> <span class="o">=</span> <span class="s2">&quot;CRUISE_BUTTONS_ALT&quot;</span> <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_ALT_BUTTONS</span> <span class="k">else</span> \
+                                 <span class="s2">&quot;CRUISE_BUTTONS&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">is_metric</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">buttons_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">cruise_info</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># On some cars, CLU15-&gt;CF_Clu_VehicleSpeed can oscillate faster than the dash updates. Sample at 5 Hz</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cluster_speed</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cluster_speed_counter</span> <span class="o">=</span> <span class="n">CLUSTER_SAMPLE_RATE</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">CarControllerParams</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CarState.update">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.carstate.CarState.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="n">cp_cam</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_canfd</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="n">cp_cam</span><span class="p">)</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="n">cp_cruise</span> <span class="o">=</span> <span class="n">cp_cam</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CAMERA_SCC_CAR</span> <span class="k">else</span> <span class="n">cp</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">is_metric</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CLU11&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Clu_SPEED_UNIT&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">speed_conv</span> <span class="o">=</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_metric</span> <span class="k">else</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">doorOpen</span> <span class="o">=</span> <span class="nb">any</span><span class="p">([</span><span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CGW1&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Gway_DrvDrSw&quot;</span><span class="p">],</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CGW1&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Gway_AstDrSw&quot;</span><span class="p">],</span>
+                        <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CGW2&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Gway_RLDrSw&quot;</span><span class="p">],</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CGW2&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Gway_RRDrSw&quot;</span><span class="p">]])</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">seatbeltUnlatched</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CGW1&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Gway_DrvSeatBeltSw&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wheel_speeds</span><span class="p">(</span>
+      <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;WHL_SPD11&quot;</span><span class="p">][</span><span class="s2">&quot;WHL_SPD_FL&quot;</span><span class="p">],</span>
+      <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;WHL_SPD11&quot;</span><span class="p">][</span><span class="s2">&quot;WHL_SPD_FR&quot;</span><span class="p">],</span>
+      <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;WHL_SPD11&quot;</span><span class="p">][</span><span class="s2">&quot;WHL_SPD_RL&quot;</span><span class="p">],</span>
+      <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;WHL_SPD11&quot;</span><span class="p">][</span><span class="s2">&quot;WHL_SPD_RR&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span> <span class="o">=</span> <span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">fl</span> <span class="o">+</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">fr</span> <span class="o">+</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rl</span> <span class="o">+</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rr</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">aEgo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_speed_kf</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">fl</span> <span class="o">&lt;=</span> <span class="n">STANDSTILL_THRESHOLD</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rr</span> <span class="o">&lt;=</span> <span class="n">STANDSTILL_THRESHOLD</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">cluster_speed_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster_speed_counter</span> <span class="o">&gt;</span> <span class="n">CLUSTER_SAMPLE_RATE</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cluster_speed</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CLU15&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Clu_VehicleSpeed&quot;</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cluster_speed_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+      <span class="c1"># Mimic how dash converts to imperial.</span>
+      <span class="c1"># Sorento is the only platform where CF_Clu_VehicleSpeed is already imperial when not is_metric</span>
+      <span class="c1"># TODO: CGW_USM1-&gt;CF_Gway_DrLockSoundRValue may describe this</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_metric</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO</span><span class="p">,):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cluster_speed</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster_speed</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MPH</span> <span class="o">+</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MPH</span><span class="p">)</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgoCluster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster_speed</span> <span class="o">*</span> <span class="n">speed_conv</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringAngleDeg</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SAS11&quot;</span><span class="p">][</span><span class="s2">&quot;SAS_Angle&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringRateDeg</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SAS11&quot;</span><span class="p">][</span><span class="s2">&quot;SAS_Speed&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">yawRate</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ESP12&quot;</span><span class="p">][</span><span class="s2">&quot;YAW_RATE&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">leftBlinker</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">rightBlinker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_blinker_from_lamp</span><span class="p">(</span>
+      <span class="mi">50</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CGW1&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Gway_TurnSigLh&quot;</span><span class="p">],</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CGW1&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Gway_TurnSigRh&quot;</span><span class="p">])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringTorque</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;MDPS12&quot;</span><span class="p">][</span><span class="s2">&quot;CR_Mdps_StrColTq&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringTorqueEps</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;MDPS12&quot;</span><span class="p">][</span><span class="s2">&quot;CR_Mdps_OutTq&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringPressed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_steering_pressed</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">steeringTorque</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">STEER_THRESHOLD</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerFaultTemporary</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;MDPS12&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Mdps_ToiUnavail&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;MDPS12&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Mdps_ToiFlt&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+
+    <span class="c1"># cruise state</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="c1"># These are not used for engage/disengage since openpilot keeps track of state using the buttons</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">available</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TCS13&quot;</span><span class="p">][</span><span class="s2">&quot;ACCEnable&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TCS13&quot;</span><span class="p">][</span><span class="s2">&quot;ACC_REQ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">nonAdaptive</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">available</span> <span class="o">=</span> <span class="n">cp_cruise</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SCC11&quot;</span><span class="p">][</span><span class="s2">&quot;MainMode_ACC&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">cp_cruise</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SCC12&quot;</span><span class="p">][</span><span class="s2">&quot;ACCMode&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="n">cp_cruise</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SCC11&quot;</span><span class="p">][</span><span class="s2">&quot;SCCInfoDisplay&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">4.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">nonAdaptive</span> <span class="o">=</span> <span class="n">cp_cruise</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SCC11&quot;</span><span class="p">][</span><span class="s2">&quot;SCCInfoDisplay&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">2.</span>  <span class="c1"># Shows &#39;Cruise Control&#39; on dash</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">cp_cruise</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SCC11&quot;</span><span class="p">][</span><span class="s2">&quot;VSetDis&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">speed_conv</span>
+
+    <span class="c1"># TODO: Find brake pressure</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">brake</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">brakePressed</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TCS13&quot;</span><span class="p">][</span><span class="s2">&quot;DriverOverride&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>  <span class="c1"># 2 includes regen braking by user on HEV/EV</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">brakeHoldActive</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TCS15&quot;</span><span class="p">][</span><span class="s2">&quot;AVH_LAMP&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>  <span class="c1"># 0 OFF, 1 ERROR, 2 ACTIVE, 3 READY</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">parkingBrake</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TCS13&quot;</span><span class="p">][</span><span class="s2">&quot;PBRAKE_ACT&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">accFaulted</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TCS13&quot;</span><span class="p">][</span><span class="s2">&quot;ACCEnable&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>  <span class="c1"># 0 ACC CONTROL ENABLED, 1-3 ACC CONTROL DISABLED</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="p">(</span><span class="n">HYBRID_CAR</span> <span class="o">|</span> <span class="n">EV_CAR</span><span class="p">):</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">HYBRID_CAR</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;E_EMS11&quot;</span><span class="p">][</span><span class="s2">&quot;CR_Vcu_AccPedDep_Pos&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">254.</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;E_EMS11&quot;</span><span class="p">][</span><span class="s2">&quot;Accel_Pedal_Pos&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">254.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">gasPressed</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EMS12&quot;</span><span class="p">][</span><span class="s2">&quot;PV_AV_CAN&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">100.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">gasPressed</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EMS16&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Ems_AclAct&quot;</span><span class="p">])</span>
+
+    <span class="c1"># Gear Selection via Cluster - For those Kia/Hyundai which are not fully discovered, we can use the Cluster Indicator for Gear Selection,</span>
+    <span class="c1"># as this seems to be standard over all cars, but is not the preferred method.</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="p">(</span><span class="n">HYBRID_CAR</span> <span class="o">|</span> <span class="n">EV_CAR</span><span class="p">):</span>
+      <span class="n">gear</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ELECT_GEAR&quot;</span><span class="p">][</span><span class="s2">&quot;Elect_Gear_Shifter&quot;</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CAN_GEARS</span><span class="p">[</span><span class="s2">&quot;use_cluster_gears&quot;</span><span class="p">]:</span>
+      <span class="n">gear</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CLU15&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Clu_Gear&quot;</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CAN_GEARS</span><span class="p">[</span><span class="s2">&quot;use_tcu_gears&quot;</span><span class="p">]:</span>
+      <span class="n">gear</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TCU12&quot;</span><span class="p">][</span><span class="s2">&quot;CUR_GR&quot;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">gear</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LVR12&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Lvr_Gear&quot;</span><span class="p">]</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_gear_shifter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shifter_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">gear</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="n">aeb_src</span> <span class="o">=</span> <span class="s2">&quot;FCA11&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">USE_FCA</span><span class="o">.</span><span class="n">value</span> <span class="k">else</span> <span class="s2">&quot;SCC12&quot;</span>
+      <span class="n">aeb_sig</span> <span class="o">=</span> <span class="s2">&quot;FCA_CmdAct&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">USE_FCA</span><span class="o">.</span><span class="n">value</span> <span class="k">else</span> <span class="s2">&quot;AEB_CmdAct&quot;</span>
+      <span class="n">aeb_warning</span> <span class="o">=</span> <span class="n">cp_cruise</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="n">aeb_src</span><span class="p">][</span><span class="s2">&quot;CF_VSM_Warn&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+      <span class="n">scc_warning</span> <span class="o">=</span> <span class="n">cp_cruise</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SCC12&quot;</span><span class="p">][</span><span class="s2">&quot;TakeOverReq&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>  <span class="c1"># sometimes only SCC system shows an FCW</span>
+      <span class="n">aeb_braking</span> <span class="o">=</span> <span class="n">cp_cruise</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="n">aeb_src</span><span class="p">][</span><span class="s2">&quot;CF_VSM_DecCmdAct&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">cp_cruise</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="n">aeb_src</span><span class="p">][</span><span class="n">aeb_sig</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">stockFcw</span> <span class="o">=</span> <span class="p">(</span><span class="n">aeb_warning</span> <span class="ow">or</span> <span class="n">scc_warning</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">aeb_braking</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">stockAeb</span> <span class="o">=</span> <span class="n">aeb_warning</span> <span class="ow">and</span> <span class="n">aeb_braking</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">leftBlindspot</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LCA11&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Lca_IndLeft&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">rightBlindspot</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LCA11&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Lca_IndRight&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+
+    <span class="c1"># save the entire LKAS11 and CLU11</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lkas11</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">cp_cam</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LKAS11&quot;</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">clu11</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CLU11&quot;</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">steer_state</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;MDPS12&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Mdps_ToiActive&quot;</span><span class="p">]</span>  <span class="c1"># 0 NOT ACTIVE, 1 ACTIVE</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">prev_cruise_buttons</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cruise_buttons</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cruise_buttons</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">vl_all</span><span class="p">[</span><span class="s2">&quot;CLU11&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Clu_CruiseSwState&quot;</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">main_buttons</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">vl_all</span><span class="p">[</span><span class="s2">&quot;CLU11&quot;</span><span class="p">][</span><span class="s2">&quot;CF_Clu_CruiseSwMain&quot;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="CarState.update_canfd">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.carstate.CarState.update_canfd">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_canfd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="n">cp_cam</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">is_metric</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CRUISE_BUTTONS_ALT&quot;</span><span class="p">][</span><span class="s2">&quot;DISTANCE_UNIT&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span>
+    <span class="n">speed_factor</span> <span class="o">=</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_metric</span> <span class="k">else</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="p">(</span><span class="n">EV_CAR</span> <span class="o">|</span> <span class="n">HYBRID_CAR</span><span class="p">):</span>
+      <span class="n">offset</span> <span class="o">=</span> <span class="mf">255.</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">EV_CAR</span> <span class="k">else</span> <span class="mf">1023.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">accelerator_msg_canfd</span><span class="p">][</span><span class="s2">&quot;ACCELERATOR_PEDAL&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">offset</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">gasPressed</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">&gt;</span> <span class="mf">1e-5</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">gasPressed</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">accelerator_msg_canfd</span><span class="p">][</span><span class="s2">&quot;ACCELERATOR_PEDAL_PRESSED&quot;</span><span class="p">])</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">brakePressed</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TCS&quot;</span><span class="p">][</span><span class="s2">&quot;DriverBraking&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">doorOpen</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;DOORS_SEATBELTS&quot;</span><span class="p">][</span><span class="s2">&quot;DRIVER_DOOR&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">seatbeltUnlatched</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;DOORS_SEATBELTS&quot;</span><span class="p">][</span><span class="s2">&quot;DRIVER_SEATBELT&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="n">gear</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">gear_msg_canfd</span><span class="p">][</span><span class="s2">&quot;GEAR&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_gear_shifter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shifter_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">gear</span><span class="p">))</span>
+
+    <span class="c1"># TODO: figure out positions</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wheel_speeds</span><span class="p">(</span>
+      <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;WHEEL_SPEEDS&quot;</span><span class="p">][</span><span class="s2">&quot;WHEEL_SPEED_1&quot;</span><span class="p">],</span>
+      <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;WHEEL_SPEEDS&quot;</span><span class="p">][</span><span class="s2">&quot;WHEEL_SPEED_2&quot;</span><span class="p">],</span>
+      <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;WHEEL_SPEEDS&quot;</span><span class="p">][</span><span class="s2">&quot;WHEEL_SPEED_3&quot;</span><span class="p">],</span>
+      <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;WHEEL_SPEEDS&quot;</span><span class="p">][</span><span class="s2">&quot;WHEEL_SPEED_4&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span> <span class="o">=</span> <span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">fl</span> <span class="o">+</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">fr</span> <span class="o">+</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rl</span> <span class="o">+</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rr</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">aEgo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_speed_kf</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">fl</span> <span class="o">&lt;=</span> <span class="n">STANDSTILL_THRESHOLD</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rr</span> <span class="o">&lt;=</span> <span class="n">STANDSTILL_THRESHOLD</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringRateDeg</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;STEERING_SENSORS&quot;</span><span class="p">][</span><span class="s2">&quot;STEERING_RATE&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringAngleDeg</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;STEERING_SENSORS&quot;</span><span class="p">][</span><span class="s2">&quot;STEERING_ANGLE&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringTorque</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;MDPS&quot;</span><span class="p">][</span><span class="s2">&quot;STEERING_COL_TORQUE&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringTorqueEps</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;MDPS&quot;</span><span class="p">][</span><span class="s2">&quot;STEERING_OUT_TORQUE&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringPressed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_steering_pressed</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">steeringTorque</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">STEER_THRESHOLD</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerFaultTemporary</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;MDPS&quot;</span><span class="p">][</span><span class="s2">&quot;LKA_FAULT&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+
+    <span class="c1"># TODO: alt signal usage may be described by cp.vl[&#39;BLINKERS&#39;][&#39;USE_ALT_LAMP&#39;]</span>
+    <span class="n">left_blinker_sig</span><span class="p">,</span> <span class="n">right_blinker_sig</span> <span class="o">=</span> <span class="s2">&quot;LEFT_LAMP&quot;</span><span class="p">,</span> <span class="s2">&quot;RIGHT_LAMP&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2ND_GEN</span><span class="p">:</span>
+      <span class="n">left_blinker_sig</span><span class="p">,</span> <span class="n">right_blinker_sig</span> <span class="o">=</span> <span class="s2">&quot;LEFT_LAMP_ALT&quot;</span><span class="p">,</span> <span class="s2">&quot;RIGHT_LAMP_ALT&quot;</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">leftBlinker</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">rightBlinker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_blinker_from_lamp</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BLINKERS&quot;</span><span class="p">][</span><span class="n">left_blinker_sig</span><span class="p">],</span>
+                                                                      <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BLINKERS&quot;</span><span class="p">][</span><span class="n">right_blinker_sig</span><span class="p">])</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">leftBlindspot</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BLINDSPOTS_REAR_CORNERS&quot;</span><span class="p">][</span><span class="s2">&quot;FL_INDICATOR&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">rightBlindspot</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BLINDSPOTS_REAR_CORNERS&quot;</span><span class="p">][</span><span class="s2">&quot;FR_INDICATOR&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+
+    <span class="c1"># cruise state</span>
+    <span class="c1"># CAN FD cars enable on main button press, set available if no TCS faults preventing engagement</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">available</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TCS&quot;</span><span class="p">][</span><span class="s2">&quot;ACCEnable&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="c1"># These are not used for engage/disengage since openpilot keeps track of state using the buttons</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TCS&quot;</span><span class="p">][</span><span class="s2">&quot;ACC_REQ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">cp_cruise_info</span> <span class="o">=</span> <span class="n">cp_cam</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_CAMERA_SCC</span> <span class="k">else</span> <span class="n">cp</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">cp_cruise_info</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SCC_CONTROL&quot;</span><span class="p">][</span><span class="s2">&quot;ACCMode&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="n">cp_cruise_info</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SCC_CONTROL&quot;</span><span class="p">][</span><span class="s2">&quot;CRUISE_STANDSTILL&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">cp_cruise_info</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SCC_CONTROL&quot;</span><span class="p">][</span><span class="s2">&quot;VSetDis&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">speed_factor</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cruise_info</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">cp_cruise_info</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SCC_CONTROL&quot;</span><span class="p">])</span>
+
+    <span class="c1"># Manual Speed Limit Assist is a feature that replaces non-adaptive cruise control on EV CAN FD platforms.</span>
+    <span class="c1"># It limits the vehicle speed, overridable by pressing the accelerator past a certain point.</span>
+    <span class="c1"># The car will brake, but does not respect positive acceleration commands in this mode</span>
+    <span class="c1"># TODO: find this message on ICE &amp; HYBRID cars + cruise control signals (if exists)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">EV_CAR</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">nonAdaptive</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;MANUAL_SPEED_LIMIT_ASSIST&quot;</span><span class="p">][</span><span class="s2">&quot;MSLA_ENABLED&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">prev_cruise_buttons</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cruise_buttons</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cruise_buttons</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">vl_all</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cruise_btns_msg_canfd</span><span class="p">][</span><span class="s2">&quot;CRUISE_BUTTONS&quot;</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">main_buttons</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">vl_all</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cruise_btns_msg_canfd</span><span class="p">][</span><span class="s2">&quot;ADAPTIVE_CRUISE_MAIN_BTN&quot;</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">buttons_counter</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cruise_btns_msg_canfd</span><span class="p">][</span><span class="s2">&quot;COUNTER&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">accFaulted</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TCS&quot;</span><span class="p">][</span><span class="s2">&quot;ACCEnable&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>  <span class="c1"># 0 ACC CONTROL ENABLED, 1-3 ACC CONTROL DISABLED</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_HDA2</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">hda2_lfa_block_msg</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">cp_cam</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CAM_0x362&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_HDA2_ALT_STEERING</span>
+                                          <span class="k">else</span> <span class="n">cp_cam</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CAM_0x2a4&quot;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="CarState.get_can_parser">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.carstate.CarState.get_can_parser">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_can_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_can_parser_canfd</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="c1"># address, frequency</span>
+      <span class="p">(</span><span class="s2">&quot;MDPS12&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;TCS13&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;TCS15&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;CLU11&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;CLU15&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;ESP12&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;CGW1&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;CGW2&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;CGW4&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;WHL_SPD11&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;SAS11&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="ow">and</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CAMERA_SCC_CAR</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;SCC11&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;SCC12&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">]</span>
+      <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">USE_FCA</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;FCA11&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span><span class="p">:</span>
+      <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;LCA11&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="p">(</span><span class="n">HYBRID_CAR</span> <span class="o">|</span> <span class="n">EV_CAR</span><span class="p">):</span>
+      <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;E_EMS11&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;EMS12&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;EMS16&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+      <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="p">(</span><span class="n">HYBRID_CAR</span> <span class="o">|</span> <span class="n">EV_CAR</span><span class="p">):</span>
+      <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;ELECT_GEAR&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CAN_GEARS</span><span class="p">[</span><span class="s2">&quot;use_cluster_gears&quot;</span><span class="p">]:</span>
+      <span class="k">pass</span>
+    <span class="k">elif</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CAN_GEARS</span><span class="p">[</span><span class="s2">&quot;use_tcu_gears&quot;</span><span class="p">]:</span>
+      <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;TCU12&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;LVR12&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="n">messages</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarState.get_cam_can_parser">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.carstate.CarState.get_cam_can_parser">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_cam_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">CarState</span><span class="o">.</span><span class="n">get_cam_can_parser_canfd</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">(</span><span class="s2">&quot;LKAS11&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="ow">and</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CAMERA_SCC_CAR</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;SCC11&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;SCC12&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">]</span>
+
+      <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">USE_FCA</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;FCA11&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="n">messages</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarState.get_can_parser_canfd">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.carstate.CarState.get_can_parser_canfd">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_can_parser_canfd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gear_msg_canfd</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+      <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accelerator_msg_canfd</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;WHEEL_SPEEDS&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;STEERING_SENSORS&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;MDPS&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;TCS&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;CRUISE_BUTTONS_ALT&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;BLINKERS&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;DOORS_SEATBELTS&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">EV_CAR</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;MANUAL_SPEED_LIMIT_ASSIST&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+      <span class="p">]</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_ALT_BUTTONS</span><span class="p">):</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;CRUISE_BUTTONS&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+      <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;BLINDSPOTS_REAR_CORNERS&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+      <span class="p">]</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_CAMERA_SCC</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;SCC_CONTROL&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="n">messages</span><span class="p">,</span> <span class="n">CanBus</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span><span class="o">.</span><span class="n">ECAN</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarState.get_cam_can_parser_canfd">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.carstate.CarState.get_cam_can_parser_canfd">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_cam_can_parser_canfd</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_HDA2</span><span class="p">:</span>
+      <span class="n">block_lfa_msg</span> <span class="o">=</span> <span class="s2">&quot;CAM_0x362&quot;</span> <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_HDA2_ALT_STEERING</span> <span class="k">else</span> <span class="s2">&quot;CAM_0x2a4&quot;</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[(</span><span class="n">block_lfa_msg</span><span class="p">,</span> <span class="mi">20</span><span class="p">)]</span>
+    <span class="k">elif</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_CAMERA_SCC</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;SCC_CONTROL&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="n">messages</span><span class="p">,</span> <span class="n">CanBus</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span><span class="o">.</span><span class="n">CAM</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

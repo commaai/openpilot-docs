@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.tests.test_models &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/tests/test_models.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.tests.test_models</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.tests.test_models</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">capnp</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">Counter</span>
+<span class="kn">import</span> <span class="nn">hypothesis.strategies</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">from</span> <span class="nn">hypothesis</span> <span class="kn">import</span> <span class="n">Phase</span><span class="p">,</span> <span class="n">given</span><span class="p">,</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">parameterized</span> <span class="kn">import</span> <span class="n">parameterized_class</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">messaging</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.basedir</span> <span class="kn">import</span> <span class="n">BASEDIR</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">DT_CTRL</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">gen_empty_fingerprint</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.fingerprints</span> <span class="kn">import</span> <span class="n">all_known_cars</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.car_helpers</span> <span class="kn">import</span> <span class="n">FRAME_FINGERPRINT</span><span class="p">,</span> <span class="n">interfaces</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.honda.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">HONDA</span><span class="p">,</span> <span class="n">HONDA_BOSCH</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.tests.routes</span> <span class="kn">import</span> <span class="n">non_tested_cars</span><span class="p">,</span> <span class="n">routes</span><span class="p">,</span> <span class="n">CarTestRoute</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.controlsd</span> <span class="kn">import</span> <span class="n">Controls</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.helpers</span> <span class="kn">import</span> <span class="n">read_segment_list</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.openpilotci</span> <span class="kn">import</span> <span class="n">get_url</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.logreader</span> <span class="kn">import</span> <span class="n">LogReader</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.route</span> <span class="kn">import</span> <span class="n">Route</span><span class="p">,</span> <span class="n">SegmentName</span><span class="p">,</span> <span class="n">RouteName</span>
+
+<span class="kn">from</span> <span class="nn">panda.tests.libpanda</span> <span class="kn">import</span> <span class="n">libpanda_py</span>
+
+<span class="n">EventName</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">EventName</span>
+<span class="n">PandaType</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">PandaState</span><span class="o">.</span><span class="n">PandaType</span>
+<span class="n">SafetyModel</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SafetyModel</span>
+
+<span class="n">NUM_JOBS</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NUM_JOBS&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">))</span>
+<span class="n">JOB_ID</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;JOB_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">))</span>
+<span class="n">INTERNAL_SEG_LIST</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;INTERNAL_SEG_LIST&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">INTERNAL_SEG_CNT</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;INTERNAL_SEG_CNT&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">))</span>
+<span class="n">MAX_EXAMPLES</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MAX_EXAMPLES&quot;</span><span class="p">,</span> <span class="s2">&quot;50&quot;</span><span class="p">))</span>
+<span class="n">CI</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CI&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="get_test_cases">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.get_test_cases">[docs]</a>
+<span class="k">def</span> <span class="nf">get_test_cases</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CarTestRoute</span><span class="p">]]]:</span>
+  <span class="c1"># build list of test cases</span>
+  <span class="n">test_cases</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">INTERNAL_SEG_LIST</span><span class="p">):</span>
+    <span class="n">routes_by_car</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">routes</span><span class="p">:</span>
+      <span class="n">routes_by_car</span><span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">car_model</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">all_known_cars</span><span class="p">())):</span>
+      <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">NUM_JOBS</span> <span class="o">==</span> <span class="n">JOB_ID</span><span class="p">:</span>
+        <span class="n">test_cases</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">sorted</span><span class="p">((</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">routes_by_car</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,))))</span>
+
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">segment_list</span> <span class="o">=</span> <span class="n">read_segment_list</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="n">INTERNAL_SEG_LIST</span><span class="p">))</span>
+    <span class="n">segment_list</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">segment_list</span><span class="p">,</span> <span class="n">INTERNAL_SEG_CNT</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">segment_list</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">platform</span><span class="p">,</span> <span class="n">segment</span> <span class="ow">in</span> <span class="n">segment_list</span><span class="p">:</span>
+      <span class="n">segment_name</span> <span class="o">=</span> <span class="n">SegmentName</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span>
+      <span class="n">test_cases</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">platform</span><span class="p">,</span> <span class="n">CarTestRoute</span><span class="p">(</span><span class="n">segment_name</span><span class="o">.</span><span class="n">route_name</span><span class="o">.</span><span class="n">canonical_name</span><span class="p">,</span> <span class="n">platform</span><span class="p">,</span>
+                                                <span class="n">segment</span><span class="o">=</span><span class="n">segment_name</span><span class="o">.</span><span class="n">segment_num</span><span class="p">)))</span>
+  <span class="k">return</span> <span class="n">test_cases</span></div>
+
+
+
+<div class="viewcode-block" id="TestCarModelBase">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">slow</span>
+<span class="k">class</span> <span class="nc">TestCarModelBase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+  <span class="n">car_model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">test_route</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CarTestRoute</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">test_route_on_bucket</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># whether the route is on the preserved CI bucket</span>
+
+  <span class="n">can_msgs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">capnp</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructReader</span><span class="p">]</span>
+  <span class="n">fingerprint</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span>
+  <span class="n">elm_frame</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+  <span class="n">car_safety_mode_frame</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+
+<div class="viewcode-block" id="TestCarModelBase.get_logreader">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.get_logreader">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">get_logreader</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">seg</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">INTERNAL_SEG_LIST</span><span class="p">):</span>
+      <span class="n">route_name</span> <span class="o">=</span> <span class="n">RouteName</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">test_route</span><span class="o">.</span><span class="n">route</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">LogReader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cd:/</span><span class="si">{</span><span class="n">route_name</span><span class="o">.</span><span class="n">dongle_id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">route_name</span><span class="o">.</span><span class="n">time_str</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">seg</span><span class="si">}</span><span class="s2">/rlog.bz2&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">LogReader</span><span class="p">(</span><span class="n">get_url</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">test_route</span><span class="o">.</span><span class="n">route</span><span class="p">,</span> <span class="n">seg</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestCarModelBase.get_testing_data_from_logreader">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.get_testing_data_from_logreader">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">get_testing_data_from_logreader</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">lr</span><span class="p">):</span>
+    <span class="n">car_fw</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">can_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">elm_frame</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">car_safety_mode_frame</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">fingerprint</span> <span class="o">=</span> <span class="n">gen_empty_fingerprint</span><span class="p">()</span>
+    <span class="n">experimental_long</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;can&quot;</span><span class="p">:</span>
+        <span class="n">can_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">can_msgs</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">FRAME_FINGERPRINT</span><span class="p">:</span>
+          <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">can</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">src</span> <span class="o">&lt;</span> <span class="mi">64</span><span class="p">:</span>
+              <span class="bp">cls</span><span class="o">.</span><span class="n">fingerprint</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">src</span><span class="p">][</span><span class="n">m</span><span class="o">.</span><span class="n">address</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">dat</span><span class="p">)</span>
+
+      <span class="k">elif</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;carParams&quot;</span><span class="p">:</span>
+        <span class="n">car_fw</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">carParams</span><span class="o">.</span><span class="n">carFw</span>
+        <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">carParams</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+          <span class="n">experimental_long</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">car_model</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">ci</span><span class="p">:</span>
+          <span class="bp">cls</span><span class="o">.</span><span class="n">car_model</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">carParams</span><span class="o">.</span><span class="n">carFingerprint</span>
+
+      <span class="c1"># Log which can frame the panda safety mode left ELM327, for CAN validity checks</span>
+      <span class="k">elif</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;pandaStates&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ps</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">pandaStates</span><span class="p">:</span>
+          <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">elm_frame</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ps</span><span class="o">.</span><span class="n">safetyModel</span> <span class="o">!=</span> <span class="n">SafetyModel</span><span class="o">.</span><span class="n">elm327</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">elm_frame</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">can_msgs</span><span class="p">)</span>
+          <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">car_safety_mode_frame</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ps</span><span class="o">.</span><span class="n">safetyModel</span> <span class="ow">not</span> <span class="ow">in</span> \
+            <span class="p">(</span><span class="n">SafetyModel</span><span class="o">.</span><span class="n">elm327</span><span class="p">,</span> <span class="n">SafetyModel</span><span class="o">.</span><span class="n">noOutput</span><span class="p">):</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">car_safety_mode_frame</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">can_msgs</span><span class="p">)</span>
+
+      <span class="k">elif</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;pandaStateDEPRECATED&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">elm_frame</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">msg</span><span class="o">.</span><span class="n">pandaStateDEPRECATED</span><span class="o">.</span><span class="n">safetyModel</span> <span class="o">!=</span> <span class="n">SafetyModel</span><span class="o">.</span><span class="n">elm327</span><span class="p">:</span>
+          <span class="bp">cls</span><span class="o">.</span><span class="n">elm_frame</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">can_msgs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">car_safety_mode_frame</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">msg</span><span class="o">.</span><span class="n">pandaStateDEPRECATED</span><span class="o">.</span><span class="n">safetyModel</span> <span class="ow">not</span> <span class="ow">in</span> \
+          <span class="p">(</span><span class="n">SafetyModel</span><span class="o">.</span><span class="n">elm327</span><span class="p">,</span> <span class="n">SafetyModel</span><span class="o">.</span><span class="n">noOutput</span><span class="p">):</span>
+          <span class="bp">cls</span><span class="o">.</span><span class="n">car_safety_mode_frame</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">can_msgs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">can_msgs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="mi">50</span> <span class="o">/</span> <span class="n">DT_CTRL</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">car_fw</span><span class="p">,</span> <span class="n">can_msgs</span><span class="p">,</span> <span class="n">experimental_long</span>
+
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;no can data found&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestCarModelBase.get_testing_data">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.get_testing_data">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">get_testing_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="n">test_segs</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">test_route</span><span class="o">.</span><span class="n">segment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">test_segs</span> <span class="o">=</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">test_route</span><span class="o">.</span><span class="n">segment</span><span class="p">,)</span>
+
+    <span class="c1"># Try the primary method first (CI or internal)</span>
+    <span class="k">for</span> <span class="n">seg</span> <span class="ow">in</span> <span class="n">test_segs</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">lr</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_logreader</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_testing_data_from_logreader</span><span class="p">(</span><span class="n">lr</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># Route is not in CI bucket, assume either user has access (private), or it is public</span>
+    <span class="c1"># test_route_on_ci_bucket will fail when running in CI</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">INTERNAL_SEG_LIST</span><span class="p">):</span>
+      <span class="bp">cls</span><span class="o">.</span><span class="n">test_route_on_bucket</span> <span class="o">=</span> <span class="kc">False</span>
+
+      <span class="k">for</span> <span class="n">seg</span> <span class="ow">in</span> <span class="n">test_segs</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+          <span class="n">lr</span> <span class="o">=</span> <span class="n">LogReader</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">test_route</span><span class="o">.</span><span class="n">route</span><span class="p">)</span><span class="o">.</span><span class="n">log_paths</span><span class="p">()[</span><span class="n">seg</span><span class="p">])</span>
+          <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_testing_data_from_logreader</span><span class="p">(</span><span class="n">lr</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+          <span class="k">pass</span>
+
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Route: </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">test_route</span><span class="o">.</span><span class="n">route</span><span class="p">)</span><span class="si">}</span><span class="s2"> with segments: </span><span class="si">{</span><span class="n">test_segs</span><span class="si">}</span><span class="s2"> not found or no CAN msgs found. Is it uploaded and public?&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TestCarModelBase.setUpClass">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.setUpClass">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">setUpClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;TestCarModel&#39;</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;Base&#39;</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="n">unittest</span><span class="o">.</span><span class="n">SkipTest</span>
+
+    <span class="k">if</span> <span class="s1">&#39;FILTER&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">car_model</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;FILTER&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))):</span>
+        <span class="k">raise</span> <span class="n">unittest</span><span class="o">.</span><span class="n">SkipTest</span>
+
+    <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">test_route</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">car_model</span> <span class="ow">in</span> <span class="n">non_tested_cars</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipping tests for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">car_model</span><span class="si">}</span><span class="s2">: missing route&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">unittest</span><span class="o">.</span><span class="n">SkipTest</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;missing test route for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">car_model</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">car_fw</span><span class="p">,</span> <span class="n">can_msgs</span><span class="p">,</span> <span class="n">experimental_long</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_testing_data</span><span class="p">()</span>
+
+    <span class="c1"># if relay is expected to be open in the route</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">openpilot_enabled</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">car_safety_mode_frame</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="bp">cls</span><span class="o">.</span><span class="n">can_msgs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">can_msgs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="n">msg</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">)</span>
+
+    <span class="bp">cls</span><span class="o">.</span><span class="n">CarInterface</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">CarController</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">CarState</span> <span class="o">=</span> <span class="n">interfaces</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">car_model</span><span class="p">]</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">CP</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">CarInterface</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">car_model</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">fingerprint</span><span class="p">,</span> <span class="n">car_fw</span><span class="p">,</span> <span class="n">experimental_long</span><span class="p">,</span> <span class="n">docs</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="bp">cls</span><span class="o">.</span><span class="n">CP</span>
+    <span class="k">assert</span> <span class="bp">cls</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="o">==</span> <span class="bp">cls</span><span class="o">.</span><span class="n">car_model</span></div>
+
+
+<div class="viewcode-block" id="TestCarModelBase.tearDownClass">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.tearDownClass">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">tearDownClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">del</span> <span class="bp">cls</span><span class="o">.</span><span class="n">can_msgs</span></div>
+
+
+<div class="viewcode-block" id="TestCarModelBase.setUp">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.setUp">[docs]</a>
+  <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CI</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CarInterface</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">CarController</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CarState</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">CI</span>
+
+    <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;OpenpilotEnabledToggle&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">openpilot_enabled</span><span class="p">)</span>
+
+    <span class="c1"># TODO: check safetyModel is in release panda build</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span> <span class="o">=</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">libpanda</span>
+
+    <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">set_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_safety_hooks</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">safetyModel</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">safetyParam</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">set_status</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;failed to set safetyModel </span><span class="si">{</span><span class="n">cfg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">init_tests</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TestCarModelBase.test_car_params">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.test_car_params">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_car_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">dashcamOnly</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">skipTest</span><span class="p">(</span><span class="s2">&quot;no need to check carParams for dashcamOnly&quot;</span><span class="p">)</span>
+
+    <span class="c1"># make sure car params are within a valid range</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">mass</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">steerControlType</span> <span class="o">!=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SteerControlType</span><span class="o">.</span><span class="n">angle</span><span class="p">:</span>
+      <span class="n">tuning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">which</span><span class="p">()</span>
+      <span class="k">if</span> <span class="n">tuning</span> <span class="o">==</span> <span class="s1">&#39;pid&#39;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">))</span>
+      <span class="k">elif</span> <span class="n">tuning</span> <span class="o">==</span> <span class="s1">&#39;torque&#39;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">kf</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;unknown tuning&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestCarModelBase.test_car_interface">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.test_car_interface">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_car_interface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># TODO: also check for checksum violations from can parser</span>
+    <span class="n">can_invalid_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">can_valid</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">CC</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">msg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">can_msgs</span><span class="p">):</span>
+      <span class="n">CS</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CI</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">CC</span><span class="p">,</span> <span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(),))</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">CI</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">CC</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="n">CS</span><span class="o">.</span><span class="n">canValid</span><span class="p">:</span>
+        <span class="n">can_valid</span> <span class="o">=</span> <span class="kc">True</span>
+
+      <span class="c1"># wait max of 2s for low frequency msgs to be seen</span>
+      <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">200</span> <span class="ow">or</span> <span class="n">can_valid</span><span class="p">:</span>
+        <span class="n">can_invalid_cnt</span> <span class="o">+=</span> <span class="ow">not</span> <span class="n">CS</span><span class="o">.</span><span class="n">canValid</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">can_invalid_cnt</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestCarModelBase.test_radar_interface">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.test_radar_interface">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_radar_interface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;NO_RADAR_SLEEP&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+    <span class="n">RadarInterface</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;selfdrive.car.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carName</span><span class="si">}</span><span class="s1">.radar_interface&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">RadarInterface</span>
+    <span class="n">RI</span> <span class="o">=</span> <span class="n">RadarInterface</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">RI</span>
+
+    <span class="c1"># Since OBD port is multiplexed to bus 1 (commonly radar bus) while fingerprinting,</span>
+    <span class="c1"># start parsing CAN messages after we&#39;ve left ELM mode and can expect CAN traffic</span>
+    <span class="n">error_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">msg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">can_msgs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">elm_frame</span><span class="p">:]):</span>
+      <span class="n">rr</span> <span class="o">=</span> <span class="n">RI</span><span class="o">.</span><span class="n">update</span><span class="p">((</span><span class="n">msg</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(),))</span>
+      <span class="k">if</span> <span class="n">rr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+        <span class="n">error_cnt</span> <span class="o">+=</span> <span class="n">car</span><span class="o">.</span><span class="n">RadarData</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">canError</span> <span class="ow">in</span> <span class="n">rr</span><span class="o">.</span><span class="n">errors</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">error_cnt</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestCarModelBase.test_panda_safety_rx_checks">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.test_panda_safety_rx_checks">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_panda_safety_rx_checks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">dashcamOnly</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">skipTest</span><span class="p">(</span><span class="s2">&quot;no need to check panda safety for dashcamOnly&quot;</span><span class="p">)</span>
+
+    <span class="n">start_ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_msgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">logMonoTime</span>
+
+    <span class="n">failed_addrs</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">can</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_msgs</span><span class="p">:</span>
+      <span class="c1"># update panda timer</span>
+      <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">can</span><span class="o">.</span><span class="n">logMonoTime</span> <span class="o">-</span> <span class="n">start_ts</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1e3</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_timer</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+
+      <span class="c1"># run all msgs through the safety RX hook</span>
+      <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">can</span><span class="o">.</span><span class="n">can</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">src</span> <span class="o">&gt;=</span> <span class="mi">64</span><span class="p">:</span>
+          <span class="k">continue</span>
+
+        <span class="n">to_send</span> <span class="o">=</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">make_CANPacket</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">src</span> <span class="o">%</span> <span class="mi">4</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">dat</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">safety_rx_hook</span><span class="p">(</span><span class="n">to_send</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+          <span class="n">failed_addrs</span><span class="p">[</span><span class="nb">hex</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">address</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+      <span class="c1"># ensure all msgs defined in the addr checks are valid</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">safety_tick_current_safety_config</span><span class="p">()</span>
+      <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mf">1e6</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">safety_config_valid</span><span class="p">())</span>
+
+      <span class="c1"># Don&#39;t check relay malfunction on disabled routes (relay closed),</span>
+      <span class="c1"># or before fingerprinting is done (elm327 and noOutput)</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">openpilot_enabled</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">/</span> <span class="mf">1e4</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">car_safety_mode_frame</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_relay_malfunction</span><span class="p">())</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_relay_malfunction</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">failed_addrs</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;panda safety RX check failed: </span><span class="si">{</span><span class="n">failed_addrs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ensure RX checks go invalid after small time with no traffic</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_timer</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mf">1e6</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">safety_tick_current_safety_config</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">safety_config_valid</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="TestCarModelBase.test_panda_safety_tx_cases">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.test_panda_safety_tx_cases">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_panda_safety_tx_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Asserts we can tx common messages&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">notCar</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">skipTest</span><span class="p">(</span><span class="s2">&quot;Skipping test for notCar&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_car_controller</span><span class="p">(</span><span class="n">car_control</span><span class="p">):</span>
+      <span class="n">now_nanos</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="n">msgs_sent</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="n">CI</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CarInterface</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CarController</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CarState</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mf">10.0</span> <span class="o">/</span> <span class="n">DT_CTRL</span><span class="p">)):</span>  <span class="c1"># make sure we hit the slowest messages</span>
+        <span class="n">CI</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">car_control</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">sendcan</span> <span class="o">=</span> <span class="n">CI</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">car_control</span><span class="p">,</span> <span class="n">now_nanos</span><span class="p">)</span>
+
+        <span class="n">now_nanos</span> <span class="o">+=</span> <span class="n">DT_CTRL</span> <span class="o">*</span> <span class="mf">1e9</span>
+        <span class="n">msgs_sent</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sendcan</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">addr</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">bus</span> <span class="ow">in</span> <span class="n">sendcan</span><span class="p">:</span>
+          <span class="n">to_send</span> <span class="o">=</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">make_CANPacket</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">bus</span> <span class="o">%</span> <span class="mi">4</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">safety_tx_hook</span><span class="p">(</span><span class="n">to_send</span><span class="p">),</span> <span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">bus</span><span class="p">))</span>
+
+      <span class="c1"># Make sure we attempted to send messages</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">msgs_sent</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+    <span class="c1"># Make sure we can send all messages while inactive</span>
+    <span class="n">CC</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="n">test_car_controller</span><span class="p">(</span><span class="n">CC</span><span class="p">)</span>
+
+    <span class="c1"># Test cancel + general messages (controls_allowed=False &amp; cruise_engaged=True)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_cruise_engaged_prev</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">CC</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="n">cruiseControl</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;cancel&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+    <span class="n">test_car_controller</span><span class="p">(</span><span class="n">CC</span><span class="p">)</span>
+
+    <span class="c1"># Test resume + general messages (controls_allowed=True &amp; cruise_engaged=True)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_controls_allowed</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">CC</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="n">cruiseControl</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;resume&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+    <span class="n">test_car_controller</span><span class="p">(</span><span class="n">CC</span><span class="p">)</span></div>
+
+
+  <span class="c1"># Skip stdout/stderr capture with pytest, causes elevated memory usage</span>
+<div class="viewcode-block" id="TestCarModelBase.test_panda_safety_carstate_fuzzy">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.test_panda_safety_carstate_fuzzy">[docs]</a>
+  <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">nocapture</span>
+  <span class="nd">@settings</span><span class="p">(</span><span class="n">max_examples</span><span class="o">=</span><span class="n">MAX_EXAMPLES</span><span class="p">,</span> <span class="n">deadline</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">phases</span><span class="o">=</span><span class="p">(</span><span class="n">Phase</span><span class="o">.</span><span class="n">reuse</span><span class="p">,</span> <span class="n">Phase</span><span class="o">.</span><span class="n">generate</span><span class="p">,</span> <span class="n">Phase</span><span class="o">.</span><span class="n">shrink</span><span class="p">))</span>
+  <span class="nd">@given</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">data</span><span class="p">())</span>
+  <span class="k">def</span> <span class="nf">test_panda_safety_carstate_fuzzy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      For each example, pick a random CAN message on the bus and fuzz its data,</span>
+<span class="sd">      checking for panda state mismatches.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">dashcamOnly</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">skipTest</span><span class="p">(</span><span class="s2">&quot;no need to check panda safety for dashcamOnly&quot;</span><span class="p">)</span>
+
+    <span class="n">valid_addrs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">addr</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span> <span class="k">for</span> <span class="n">bus</span><span class="p">,</span> <span class="n">addrs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fingerprint</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">addr</span><span class="p">,</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">addrs</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+    <span class="n">address</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">sampled_from</span><span class="p">(</span><span class="n">valid_addrs</span><span class="p">))</span>
+
+    <span class="n">msg_strategy</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">binary</span><span class="p">(</span><span class="n">min_size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">msgs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">lists</span><span class="p">(</span><span class="n">msg_strategy</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">20</span><span class="p">))</span>
+
+    <span class="n">CC</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">dat</span> <span class="ow">in</span> <span class="n">msgs</span><span class="p">:</span>
+      <span class="c1"># due to panda updating state selectively, only edges are expected to match</span>
+      <span class="c1"># TODO: warm up CarState with real CAN messages to check edge of both sources</span>
+      <span class="c1">#  (eg. toyota&#39;s gasPressed is the inverse of a signal being set)</span>
+      <span class="n">prev_panda_gas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_gas_pressed_prev</span><span class="p">()</span>
+      <span class="n">prev_panda_brake</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_brake_pressed_prev</span><span class="p">()</span>
+      <span class="n">prev_panda_regen_braking</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_regen_braking_prev</span><span class="p">()</span>
+      <span class="n">prev_panda_vehicle_moving</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_vehicle_moving</span><span class="p">()</span>
+      <span class="n">prev_panda_cruise_engaged</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_cruise_engaged_prev</span><span class="p">()</span>
+      <span class="n">prev_panda_acc_main_on</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_acc_main_on</span><span class="p">()</span>
+
+      <span class="n">to_send</span> <span class="o">=</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">make_CANPacket</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">safety_rx_hook</span><span class="p">(</span><span class="n">to_send</span><span class="p">)</span>
+
+      <span class="n">can</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;can&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="n">can</span><span class="o">.</span><span class="n">can</span> <span class="o">=</span> <span class="p">[</span><span class="n">log</span><span class="o">.</span><span class="n">CanData</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span> <span class="n">dat</span><span class="o">=</span><span class="n">dat</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="n">bus</span><span class="p">)]</span>
+
+      <span class="n">CS</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CI</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">CC</span><span class="p">,</span> <span class="p">(</span><span class="n">can</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(),))</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_gas_pressed_prev</span><span class="p">()</span> <span class="o">!=</span> <span class="n">prev_panda_gas</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">gasPressed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_gas_pressed_prev</span><span class="p">())</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_brake_pressed_prev</span><span class="p">()</span> <span class="o">!=</span> <span class="n">prev_panda_brake</span><span class="p">:</span>
+        <span class="c1"># TODO: remove this exception once this mismatch is resolved</span>
+        <span class="n">brake_pressed</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">brakePressed</span>
+        <span class="k">if</span> <span class="n">CS</span><span class="o">.</span><span class="n">brakePressed</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_brake_pressed_prev</span><span class="p">():</span>
+          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="p">(</span><span class="n">HONDA</span><span class="o">.</span><span class="n">PILOT</span><span class="p">,</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">RIDGELINE</span><span class="p">)</span> <span class="ow">and</span> <span class="n">CS</span><span class="o">.</span><span class="n">brake</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">:</span>
+            <span class="n">brake_pressed</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">brake_pressed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_brake_pressed_prev</span><span class="p">())</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_regen_braking_prev</span><span class="p">()</span> <span class="o">!=</span> <span class="n">prev_panda_regen_braking</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">regenBraking</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_regen_braking_prev</span><span class="p">())</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_vehicle_moving</span><span class="p">()</span> <span class="o">!=</span> <span class="n">prev_panda_vehicle_moving</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="ow">not</span> <span class="n">CS</span><span class="o">.</span><span class="n">standstill</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_vehicle_moving</span><span class="p">())</span>
+
+      <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carName</span> <span class="o">==</span> <span class="s2">&quot;honda&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">HONDA_BOSCH</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_cruise_engaged_prev</span><span class="p">()</span> <span class="o">!=</span> <span class="n">prev_panda_cruise_engaged</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_cruise_engaged_prev</span><span class="p">())</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carName</span> <span class="o">==</span> <span class="s2">&quot;honda&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_acc_main_on</span><span class="p">()</span> <span class="o">!=</span> <span class="n">prev_panda_acc_main_on</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">available</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_acc_main_on</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="TestCarModelBase.test_panda_safety_carstate">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.test_panda_safety_carstate">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_panda_safety_carstate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      Assert that panda safety matches openpilot&#39;s carState</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">dashcamOnly</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">skipTest</span><span class="p">(</span><span class="s2">&quot;no need to check panda safety for dashcamOnly&quot;</span><span class="p">)</span>
+
+    <span class="n">CC</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+
+    <span class="c1"># warm up pass, as initial states may be different</span>
+    <span class="k">for</span> <span class="n">can</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_msgs</span><span class="p">[:</span><span class="mi">300</span><span class="p">]:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">CI</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">CC</span><span class="p">,</span> <span class="p">(</span><span class="n">can</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(),</span> <span class="p">))</span>
+      <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">src</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">),</span> <span class="n">can</span><span class="o">.</span><span class="n">can</span><span class="p">):</span>
+        <span class="n">to_send</span> <span class="o">=</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">make_CANPacket</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">src</span> <span class="o">%</span> <span class="mi">4</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">dat</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">safety_rx_hook</span><span class="p">(</span><span class="n">to_send</span><span class="p">)</span>
+
+    <span class="n">controls_allowed_prev</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">CS_prev</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="n">checks</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">controlsd</span> <span class="o">=</span> <span class="n">Controls</span><span class="p">(</span><span class="n">CI</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">CI</span><span class="p">)</span>
+    <span class="n">controlsd</span><span class="o">.</span><span class="n">initialized</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">can</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">can_msgs</span><span class="p">):</span>
+      <span class="n">CS</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CI</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">CC</span><span class="p">,</span> <span class="p">(</span><span class="n">can</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(),</span> <span class="p">))</span>
+      <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">src</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">),</span> <span class="n">can</span><span class="o">.</span><span class="n">can</span><span class="p">):</span>
+        <span class="n">to_send</span> <span class="o">=</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">make_CANPacket</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">src</span> <span class="o">%</span> <span class="mi">4</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">dat</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">safety_rx_hook</span><span class="p">(</span><span class="n">to_send</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ret</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;safety rx failed (</span><span class="si">{</span><span class="n">ret</span><span class="si">=}</span><span class="s2">): </span><span class="si">{</span><span class="n">to_send</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+      <span class="c1"># Skip first frame so CS_prev is properly initialized</span>
+      <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">CS_prev</span> <span class="o">=</span> <span class="n">CS</span>
+        <span class="c1"># Button may be left pressed in warm up period</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_controls_allowed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">continue</span>
+
+      <span class="c1"># TODO: check rest of panda&#39;s carstate (steering, ACC main on, etc.)</span>
+
+      <span class="n">checks</span><span class="p">[</span><span class="s1">&#39;gasPressed&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">CS</span><span class="o">.</span><span class="n">gasPressed</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_gas_pressed_prev</span><span class="p">()</span>
+      <span class="n">checks</span><span class="p">[</span><span class="s1">&#39;standstill&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">CS</span><span class="o">.</span><span class="n">standstill</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_vehicle_moving</span><span class="p">()</span>
+
+      <span class="c1"># TODO: remove this exception once this mismatch is resolved</span>
+      <span class="n">brake_pressed</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">brakePressed</span>
+      <span class="k">if</span> <span class="n">CS</span><span class="o">.</span><span class="n">brakePressed</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_brake_pressed_prev</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="p">(</span><span class="n">HONDA</span><span class="o">.</span><span class="n">PILOT</span><span class="p">,</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">RIDGELINE</span><span class="p">)</span> <span class="ow">and</span> <span class="n">CS</span><span class="o">.</span><span class="n">brake</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">:</span>
+          <span class="n">brake_pressed</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="n">checks</span><span class="p">[</span><span class="s1">&#39;brakePressed&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">brake_pressed</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_brake_pressed_prev</span><span class="p">()</span>
+      <span class="n">checks</span><span class="p">[</span><span class="s1">&#39;regenBraking&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">CS</span><span class="o">.</span><span class="n">regenBraking</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_regen_braking_prev</span><span class="p">()</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span><span class="p">:</span>
+        <span class="c1"># On most pcmCruise cars, openpilot&#39;s state is always tied to the PCM&#39;s cruise state.</span>
+        <span class="c1"># On Honda Nidec, we always engage on the rising edge of the PCM cruise state, but</span>
+        <span class="c1"># openpilot brakes to zero even if the min ACC speed is non-zero (i.e. the PCM disengages).</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carName</span> <span class="o">==</span> <span class="s2">&quot;honda&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">HONDA_BOSCH</span><span class="p">:</span>
+          <span class="c1"># only the rising edges are expected to match</span>
+          <span class="k">if</span> <span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">CS_prev</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+            <span class="n">checks</span><span class="p">[</span><span class="s1">&#39;controlsAllowed&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_controls_allowed</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">checks</span><span class="p">[</span><span class="s1">&#39;controlsAllowed&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="ow">not</span> <span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_controls_allowed</span><span class="p">()</span>
+
+        <span class="c1"># TODO: fix notCar mismatch</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">notCar</span><span class="p">:</span>
+          <span class="n">checks</span><span class="p">[</span><span class="s1">&#39;cruiseState&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_cruise_engaged_prev</span><span class="p">()</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Check for enable events on rising edge of controls allowed</span>
+        <span class="n">controlsd</span><span class="o">.</span><span class="n">update_events</span><span class="p">(</span><span class="n">CS</span><span class="p">)</span>
+        <span class="n">controlsd</span><span class="o">.</span><span class="n">CS_prev</span> <span class="o">=</span> <span class="n">CS</span>
+        <span class="n">button_enable</span> <span class="o">=</span> <span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">evt</span><span class="o">.</span><span class="n">enable</span> <span class="k">for</span> <span class="n">evt</span> <span class="ow">in</span> <span class="n">CS</span><span class="o">.</span><span class="n">events</span><span class="p">)</span> <span class="ow">and</span>
+                         <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">evt</span> <span class="o">==</span> <span class="n">EventName</span><span class="o">.</span><span class="n">pedalPressed</span> <span class="k">for</span> <span class="n">evt</span> <span class="ow">in</span> <span class="n">controlsd</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">names</span><span class="p">))</span>
+        <span class="n">mismatch</span> <span class="o">=</span> <span class="n">button_enable</span> <span class="o">!=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_controls_allowed</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">controls_allowed_prev</span><span class="p">)</span>
+        <span class="n">checks</span><span class="p">[</span><span class="s1">&#39;controlsAllowed&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">mismatch</span>
+        <span class="n">controls_allowed_prev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_controls_allowed</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">button_enable</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">mismatch</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_controls_allowed</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carName</span> <span class="o">==</span> <span class="s2">&quot;honda&quot;</span><span class="p">:</span>
+        <span class="n">checks</span><span class="p">[</span><span class="s1">&#39;mainOn&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">available</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_acc_main_on</span><span class="p">()</span>
+
+      <span class="n">CS_prev</span> <span class="o">=</span> <span class="n">CS</span>
+
+    <span class="n">failed_checks</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">checks</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">failed_checks</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;panda safety doesn&#39;t agree with openpilot: </span><span class="si">{</span><span class="n">failed_checks</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestCarModelBase.test_route_on_ci_bucket">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModelBase.test_route_on_ci_bucket">[docs]</a>
+  <span class="nd">@unittest</span><span class="o">.</span><span class="n">skipIf</span><span class="p">(</span><span class="ow">not</span> <span class="n">CI</span><span class="p">,</span> <span class="s2">&quot;Accessing non CI-bucket routes is allowed only when not in CI&quot;</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">test_route_on_ci_bucket</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_route_on_bucket</span><span class="p">,</span> <span class="s2">&quot;Route not on CI bucket. &quot;</span> <span class="o">+</span>
+                    <span class="s2">&quot;This is fine to fail for WIP car ports, just let us know and we can upload your routes to the CI bucket.&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TestCarModel">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_models.TestCarModel">[docs]</a>
+<span class="nd">@parameterized_class</span><span class="p">((</span><span class="s1">&#39;car_model&#39;</span><span class="p">,</span> <span class="s1">&#39;test_route&#39;</span><span class="p">),</span> <span class="n">get_test_cases</span><span class="p">())</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">xdist_group_class_property</span><span class="p">(</span><span class="s1">&#39;test_route&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">TestCarModel</span><span class="p">(</span><span class="n">TestCarModelBase</span><span class="p">):</span>
+  <span class="k">pass</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

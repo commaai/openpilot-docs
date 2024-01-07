@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.test.test_updated &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/test/test_updated.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.test.test_updated</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.test.test_updated</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.common.basedir</span> <span class="kn">import</span> <span class="n">BASEDIR</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+
+
+<div class="viewcode-block" id="TestUpdated">
+<a class="viewcode-back" href="../../../selfdrive.test.html#selfdrive.test.test_updated.TestUpdated">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">tici</span>
+<span class="k">class</span> <span class="nc">TestUpdated</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestUpdated.setUp">
+<a class="viewcode-back" href="../../../selfdrive.test.html#selfdrive.test.test_updated.TestUpdated.setUp">[docs]</a>
+  <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">updated_proc</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span>
+    <span class="n">org_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_dir</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;commaai&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">basedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">org_dir</span><span class="p">,</span> <span class="s2">&quot;openpilot&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">git_remote_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">org_dir</span><span class="p">,</span> <span class="s2">&quot;openpilot_remote&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">staging_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">org_dir</span><span class="p">,</span> <span class="s2">&quot;safe_staging&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">[</span><span class="n">org_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basedir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">git_remote_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">staging_dir</span><span class="p">]:</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">neos_version</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">org_dir</span><span class="p">,</span> <span class="s2">&quot;neos_version&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">neosupdate_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">org_dir</span><span class="p">,</span> <span class="s2">&quot;neosupdate&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neos_version</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">v</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;bash -c &#39;source launch_env.sh &amp;&amp; echo $REQUIRED_NEOS_VERSION&#39;&quot;</span><span class="p">,</span>
+                                  <span class="n">cwd</span><span class="o">=</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+      <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">upper_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">staging_dir</span><span class="p">,</span> <span class="s2">&quot;upper&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">merged_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">staging_dir</span><span class="p">,</span> <span class="s2">&quot;merged&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">finalized_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">staging_dir</span><span class="p">,</span> <span class="s2">&quot;finalized&quot;</span><span class="p">)</span>
+
+    <span class="c1"># setup local submodule remotes</span>
+    <span class="n">submodules</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="s2">&quot;git submodule --quiet foreach &#39;echo $name&#39;&quot;</span><span class="p">,</span>
+                                         <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">submodules</span><span class="p">:</span>
+      <span class="n">sub_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">org_dir</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_repo&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;git clone </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">sub_path</span><span class="si">}</span><span class="s2">.git&quot;</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">BASEDIR</span><span class="p">)</span>
+
+    <span class="c1"># setup two git repos, a remote and one we&#39;ll run updated in</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">([</span>
+      <span class="sa">f</span><span class="s2">&quot;git clone </span><span class="si">{</span><span class="n">BASEDIR</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">git_remote_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+      <span class="sa">f</span><span class="s2">&quot;git clone </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">git_remote_dir</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basedir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+      <span class="sa">f</span><span class="s2">&quot;cd </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basedir</span><span class="si">}</span><span class="s2"> &amp;&amp; git submodule init &amp;&amp; git submodule update&quot;</span><span class="p">,</span>
+      <span class="sa">f</span><span class="s2">&quot;cd </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basedir</span><span class="si">}</span><span class="s2"> &amp;&amp; scons -j</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span><span class="si">}</span><span class="s2"> cereal/ common/&quot;</span>
+    <span class="p">])</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basedir</span><span class="p">,</span> <span class="s2">&quot;persist/params&quot;</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">clear_all</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TestUpdated.tearDown">
+<a class="viewcode-back" href="../../../selfdrive.test.html#selfdrive.test.test_updated.TestUpdated.tearDown">[docs]</a>
+  <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">updated_proc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updated_proc</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updated_proc</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tmp_dir</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span></div>
+
+
+
+  <span class="c1"># *** test helpers ***</span>
+
+
+  <span class="k">def</span> <span class="nf">_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+      <span class="n">cmd</span> <span class="o">=</span> <span class="p">(</span><span class="n">cmd</span><span class="p">,)</span>
+
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cmd</span><span class="p">:</span>
+      <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_get_updated_proc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYTHONPATH&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basedir</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GIT_AUTHOR_NAME&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;testy tester&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GIT_COMMITTER_NAME&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;testy tester&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GIT_AUTHOR_EMAIL&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;testy@tester.test&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GIT_COMMITTER_EMAIL&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;testy@tester.test&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;UPDATER_TEST_IP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;UPDATER_LOCK_FILE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_dir</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;updater.lock&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;UPDATER_STAGING_ROOT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">staging_dir</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;UPDATER_NEOS_VERSION&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">neos_version</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;UPDATER_NEOSUPDATE_DIR&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">neosupdate_dir</span>
+    <span class="n">updated_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basedir</span><span class="p">,</span> <span class="s2">&quot;selfdrive/updated.py&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">updated_path</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_start_updater</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offroad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nosleep</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;IsOffroad&quot;</span><span class="p">,</span> <span class="n">offroad</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">updated_proc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_updated_proc</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">nosleep</span><span class="p">:</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_update_now</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">updated_proc</span><span class="o">.</span><span class="n">send_signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGHUP</span><span class="p">)</span>
+
+  <span class="c1"># TODO: this should be implemented in params</span>
+  <span class="k">def</span> <span class="nf">_read_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+        <span class="k">break</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+  <span class="k">def</span> <span class="nf">_wait_for_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">clear_param</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">clear_param</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;LastUpdateTime&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_update_now</span><span class="p">()</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_param</span><span class="p">(</span><span class="s2">&quot;LastUpdateTime&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;timed out waiting for update to complete&quot;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_make_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">all_dirs</span><span class="p">,</span> <span class="n">all_files</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">git_remote_dir</span><span class="p">):</span>
+      <span class="k">if</span> <span class="s2">&quot;.git&quot;</span> <span class="ow">in</span> <span class="n">root</span><span class="p">:</span>
+        <span class="k">continue</span>
+      <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+        <span class="n">all_dirs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+      <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">all_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
+
+    <span class="c1"># make a new dir and some new files</span>
+    <span class="n">new_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">git_remote_dir</span><span class="p">,</span> <span class="s2">&quot;this_is_a_new_dir&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">new_dir</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">30</span><span class="p">)):</span>
+      <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">(</span><span class="n">new_dir</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">all_dirs</span><span class="p">)):</span>
+        <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="nb">dir</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+          <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)))</span>
+
+    <span class="c1"># modify some files</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">all_files</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)):</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;w+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ff</span><span class="p">:</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="n">ff</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">txt</span><span class="p">:</span>
+          <span class="n">ff</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># remove some files</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">all_files</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)):</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="c1"># remove some dirs</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">all_dirs</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)):</span>
+      <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="c1"># commit the changes</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">([</span>
+      <span class="s2">&quot;git add -A&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;git commit -m &#39;an update&#39;&quot;</span><span class="p">,</span>
+    <span class="p">],</span> <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">git_remote_dir</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_check_update_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update_available</span><span class="p">):</span>
+    <span class="c1"># make sure LastUpdateTime is recent</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_param</span><span class="p">(</span><span class="s2">&quot;LastUpdateTime&quot;</span><span class="p">)</span>
+    <span class="n">last_update_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">td</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_update_time</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="n">td</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">(),</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;LastUpdateTime&quot;</span><span class="p">)</span>
+
+    <span class="c1"># wait a bit for the rest of the params to be written</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="c1"># check params</span>
+    <span class="n">update</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_param</span><span class="p">(</span><span class="s2">&quot;UpdateAvailable&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">update</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="n">update_available</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;UpdateAvailable: </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">update</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_param</span><span class="p">(</span><span class="s2">&quot;UpdateFailedCount&quot;</span><span class="p">),</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span>
+
+    <span class="c1"># TODO: check that the finalized update actually matches remote</span>
+    <span class="c1"># check the .overlay_init and .overlay_consistent flags</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basedir</span><span class="p">,</span> <span class="s2">&quot;.overlay_init&quot;</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">finalized_dir</span><span class="p">,</span> <span class="s2">&quot;.overlay_consistent&quot;</span><span class="p">)),</span> <span class="n">update_available</span><span class="p">)</span>
+
+
+  <span class="c1"># *** test cases ***</span>
+
+
+  <span class="c1"># Run updated for 100 cycles with no update</span>
+<div class="viewcode-block" id="TestUpdated.test_no_update">
+<a class="viewcode-back" href="../../../selfdrive.test.html#selfdrive.test.test_updated.TestUpdated.test_no_update">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_no_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_start_updater</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_update</span><span class="p">(</span><span class="n">clear_param</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_check_update_state</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+  <span class="c1"># Let the updater run with no update for a cycle, then write an update</span>
+<div class="viewcode-block" id="TestUpdated.test_update">
+<a class="viewcode-back" href="../../../selfdrive.test.html#selfdrive.test.test_updated.TestUpdated.test_update">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_start_updater</span><span class="p">()</span>
+
+    <span class="c1"># run for a cycle with no update</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_update</span><span class="p">(</span><span class="n">clear_param</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_update_state</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># write an update to our remote</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_make_commit</span><span class="p">()</span>
+
+    <span class="c1"># run for a cycle to get the update</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_update</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">clear_param</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_update_state</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># run another cycle with no update</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_update</span><span class="p">(</span><span class="n">clear_param</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_update_state</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+  <span class="c1"># Let the updater run for 10 cycles, and write an update every cycle</span>
+<div class="viewcode-block" id="TestUpdated.test_update_loop">
+<a class="viewcode-back" href="../../../selfdrive.test.html#selfdrive.test.test_updated.TestUpdated.test_update_loop">[docs]</a>
+  <span class="nd">@unittest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;need to make this faster&quot;</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">test_update_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_start_updater</span><span class="p">()</span>
+
+    <span class="c1"># run for a cycle with no update</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_update</span><span class="p">(</span><span class="n">clear_param</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_make_commit</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_update</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">clear_param</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_check_update_state</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+  <span class="c1"># Test overlay re-creation after tracking a new file in basedir&#39;s git</span>
+<div class="viewcode-block" id="TestUpdated.test_overlay_reinit">
+<a class="viewcode-back" href="../../../selfdrive.test.html#selfdrive.test.test_updated.TestUpdated.test_overlay_reinit">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_overlay_reinit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_start_updater</span><span class="p">()</span>
+
+    <span class="n">overlay_init_fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basedir</span><span class="p">,</span> <span class="s2">&quot;.overlay_init&quot;</span><span class="p">)</span>
+
+    <span class="c1"># run for a cycle with no update</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_update</span><span class="p">(</span><span class="n">clear_param</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;LastUpdateTime&quot;</span><span class="p">)</span>
+    <span class="n">first_mtime</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">overlay_init_fn</span><span class="p">)</span>
+
+    <span class="c1"># touch a file in the basedir</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="s2">&quot;touch new_file &amp;&amp; git add new_file&quot;</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">basedir</span><span class="p">)</span>
+
+    <span class="c1"># run another cycle, should have a new mtime</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_update</span><span class="p">(</span><span class="n">clear_param</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">second_mtime</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">overlay_init_fn</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">first_mtime</span> <span class="o">!=</span> <span class="n">second_mtime</span><span class="p">)</span>
+
+    <span class="c1"># run another cycle, mtime should be same as last cycle</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_update</span><span class="p">(</span><span class="n">clear_param</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">new_mtime</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">overlay_init_fn</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">second_mtime</span> <span class="o">==</span> <span class="n">new_mtime</span><span class="p">)</span></div>
+
+
+  <span class="c1"># Make sure updated exits if another instance is running</span>
+<div class="viewcode-block" id="TestUpdated.test_multiple_instances">
+<a class="viewcode-back" href="../../../selfdrive.test.html#selfdrive.test.test_updated.TestUpdated.test_multiple_instances">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_multiple_instances</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># start updated and let it run for a cycle</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_start_updater</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_update</span><span class="p">(</span><span class="n">clear_param</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># start another instance</span>
+    <span class="n">second_updated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_updated_proc</span><span class="p">()</span>
+    <span class="n">ret_code</span> <span class="o">=</span> <span class="n">second_updated</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">ret_code</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span></div>
+
+
+
+  <span class="c1"># *** test cases with NEOS updates ***</span>
+
+
+  <span class="c1"># Run updated with no update, make sure it clears the old NEOS update</span>
+<div class="viewcode-block" id="TestUpdated.test_clear_neos_cache">
+<a class="viewcode-back" href="../../../selfdrive.test.html#selfdrive.test.test_updated.TestUpdated.test_clear_neos_cache">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_clear_neos_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># make the dir and some junk files</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neosupdate_dir</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">):</span>
+      <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="nb">dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">neosupdate_dir</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_start_updater</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_update</span><span class="p">(</span><span class="n">clear_param</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_update_state</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neosupdate_dir</span><span class="p">))</span></div>
+
+
+  <span class="c1"># Let the updater run with no update for a cycle, then write an update</span>
+<div class="viewcode-block" id="TestUpdated.test_update_with_neos_update">
+<a class="viewcode-back" href="../../../selfdrive.test.html#selfdrive.test.test_updated.TestUpdated.test_update_with_neos_update">[docs]</a>
+  <span class="nd">@unittest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;TODO: only runs on device&quot;</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">test_update_with_neos_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># bump the NEOS version and commit it</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">([</span>
+      <span class="s2">&quot;echo &#39;export REQUIRED_NEOS_VERSION=3&#39; &gt;&gt; launch_env.sh&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;git -c user.name=&#39;testy&#39; -c user.email=&#39;testy@tester.test&#39; </span><span class="se">\</span>
+<span class="s2">       commit -am &#39;a neos update&#39;&quot;</span><span class="p">,</span>
+    <span class="p">],</span> <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">git_remote_dir</span><span class="p">)</span>
+
+    <span class="c1"># run for a cycle to get the update</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_start_updater</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_update</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">clear_param</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_update_state</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># TODO: more comprehensive check</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neosupdate_dir</span><span class="p">))</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

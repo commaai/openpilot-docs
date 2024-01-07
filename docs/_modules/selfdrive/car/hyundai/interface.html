@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.hyundai.interface &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/hyundai/interface.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.hyundai.interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.hyundai.interface</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">panda</span> <span class="kn">import</span> <span class="n">Panda</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.hyundai.hyundaicanfd</span> <span class="kn">import</span> <span class="n">CanBus</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.hyundai.values</span> <span class="kn">import</span> <span class="n">HyundaiFlags</span><span class="p">,</span> <span class="n">CAR</span><span class="p">,</span> <span class="n">DBC</span><span class="p">,</span> <span class="n">CANFD_CAR</span><span class="p">,</span> <span class="n">CAMERA_SCC_CAR</span><span class="p">,</span> <span class="n">CANFD_RADAR_SCC_CAR</span><span class="p">,</span> \
+                                         <span class="n">CANFD_UNSUPPORTED_LONGITUDINAL_CAR</span><span class="p">,</span> <span class="n">EV_CAR</span><span class="p">,</span> <span class="n">HYBRID_CAR</span><span class="p">,</span> <span class="n">LEGACY_SAFETY_MODE_CAR</span><span class="p">,</span> \
+                                         <span class="n">UNSUPPORTED_LONGITUDINAL_CAR</span><span class="p">,</span> <span class="n">Buttons</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.hyundai.radar_interface</span> <span class="kn">import</span> <span class="n">RADAR_START_ADDR</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">create_button_events</span><span class="p">,</span> <span class="n">get_safety_config</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.interfaces</span> <span class="kn">import</span> <span class="n">CarInterfaceBase</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.disable_ecu</span> <span class="kn">import</span> <span class="n">disable_ecu</span>
+
+<span class="n">Ecu</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">Ecu</span>
+<span class="n">SafetyModel</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SafetyModel</span>
+<span class="n">ButtonType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">ButtonEvent</span><span class="o">.</span><span class="n">Type</span>
+<span class="n">EventName</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">EventName</span>
+<span class="n">ENABLE_BUTTONS</span> <span class="o">=</span> <span class="p">(</span><span class="n">Buttons</span><span class="o">.</span><span class="n">RES_ACCEL</span><span class="p">,</span> <span class="n">Buttons</span><span class="o">.</span><span class="n">SET_DECEL</span><span class="p">,</span> <span class="n">Buttons</span><span class="o">.</span><span class="n">CANCEL</span><span class="p">)</span>
+<span class="n">BUTTONS_DICT</span> <span class="o">=</span> <span class="p">{</span><span class="n">Buttons</span><span class="o">.</span><span class="n">RES_ACCEL</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">accelCruise</span><span class="p">,</span> <span class="n">Buttons</span><span class="o">.</span><span class="n">SET_DECEL</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">decelCruise</span><span class="p">,</span>
+                <span class="n">Buttons</span><span class="o">.</span><span class="n">GAP_DIST</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">gapAdjustCruise</span><span class="p">,</span> <span class="n">Buttons</span><span class="o">.</span><span class="n">CANCEL</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">cancel</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="set_safety_config_hyundai">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.interface.set_safety_config_hyundai">[docs]</a>
+<span class="k">def</span> <span class="nf">set_safety_config_hyundai</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">CAN</span><span class="p">,</span> <span class="n">can_fd</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+  <span class="n">platform</span> <span class="o">=</span> <span class="n">SafetyModel</span><span class="o">.</span><span class="n">hyundaiCanfd</span> <span class="k">if</span> <span class="n">can_fd</span> <span class="k">else</span> \
+             <span class="n">SafetyModel</span><span class="o">.</span><span class="n">hyundaiLegacy</span> <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">LEGACY_SAFETY_MODE_CAR</span> <span class="k">else</span> \
+             <span class="n">SafetyModel</span><span class="o">.</span><span class="n">hyundai</span>
+  <span class="n">cfgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_safety_config</span><span class="p">(</span><span class="n">platform</span><span class="p">),</span> <span class="p">]</span>
+  <span class="k">if</span> <span class="n">CAN</span><span class="o">.</span><span class="n">ECAN</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="n">cfgs</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">get_safety_config</span><span class="p">(</span><span class="n">SafetyModel</span><span class="o">.</span><span class="n">noOutput</span><span class="p">))</span>
+
+  <span class="k">return</span> <span class="n">cfgs</span></div>
+
+
+
+<div class="viewcode-block" id="CarInterface">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.interface.CarInterface">[docs]</a>
+<span class="k">class</span> <span class="nc">CarInterface</span><span class="p">(</span><span class="n">CarInterfaceBase</span><span class="p">):</span>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">_get_params</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">,</span> <span class="n">car_fw</span><span class="p">,</span> <span class="n">experimental_long</span><span class="p">,</span> <span class="n">docs</span><span class="p">):</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">carName</span> <span class="o">=</span> <span class="s2">&quot;hyundai&quot;</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">radarUnavailable</span> <span class="o">=</span> <span class="n">RADAR_START_ADDR</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="n">DBC</span><span class="p">[</span><span class="n">ret</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;radar&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="c1"># These cars have been put into dashcam only due to both a lack of users and test coverage.</span>
+    <span class="c1"># These cars likely still work fine. Once a user confirms each car works and a test route is</span>
+    <span class="c1"># added to selfdrive/car/tests/routes.py, we can remove it from this list.</span>
+    <span class="c1"># FIXME: the Optima Hybrid 2017 uses a different SCC12 checksum</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">dashcamOnly</span> <span class="o">=</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_H</span><span class="p">,</span> <span class="p">}</span>
+
+    <span class="n">hda2</span> <span class="o">=</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">adas</span> <span class="ow">in</span> <span class="p">[</span><span class="n">fw</span><span class="o">.</span><span class="n">ecu</span> <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">car_fw</span><span class="p">]</span>
+    <span class="n">CAN</span> <span class="o">=</span> <span class="n">CanBus</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">hda2</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="c1"># detect HDA2 with ADAS Driving ECU</span>
+      <span class="k">if</span> <span class="n">hda2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="mh">0x110</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="n">CAN</span><span class="o">.</span><span class="n">CAM</span><span class="p">]:</span>
+          <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_HDA2_ALT_STEERING</span><span class="o">.</span><span class="n">value</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># non-HDA2</span>
+        <span class="k">if</span> <span class="mh">0x1cf</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="n">CAN</span><span class="o">.</span><span class="n">ECAN</span><span class="p">]:</span>
+          <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_ALT_BUTTONS</span><span class="o">.</span><span class="n">value</span>
+        <span class="c1"># ICE cars do not have 0x130; GEARS message on 0x40 or 0x70 instead</span>
+        <span class="k">if</span> <span class="mh">0x130</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="n">CAN</span><span class="o">.</span><span class="n">ECAN</span><span class="p">]:</span>
+          <span class="k">if</span> <span class="mh">0x40</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="n">CAN</span><span class="o">.</span><span class="n">ECAN</span><span class="p">]:</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_ALT_GEARS_2</span><span class="o">.</span><span class="n">value</span>
+          <span class="k">else</span><span class="p">:</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_ALT_GEARS</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">if</span> <span class="n">candidate</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CANFD_RADAR_SCC_CAR</span><span class="p">:</span>
+          <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_CAMERA_SCC</span><span class="o">.</span><span class="n">value</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># Send LFA message on cars with HDA</span>
+      <span class="k">if</span> <span class="mh">0x485</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">SEND_LFA</span><span class="o">.</span><span class="n">value</span>
+
+      <span class="c1"># These cars use the FCA11 message for the AEB and FCW signals, all others use SCC12</span>
+      <span class="k">if</span> <span class="mh">0x38d</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="mh">0x38d</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">USE_FCA</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># Default delay</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerLimitTimer</span> <span class="o">=</span> <span class="mf">0.4</span>
+    <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">AZERA_6TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AZERA_HEV_6TH_GEN</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1600.</span> <span class="k">if</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AZERA_6TH_GEN</span> <span class="k">else</span> <span class="mf">1675.</span>  <span class="c1"># ICE is ~average of 2.5L and 3.5L</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.885</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.5</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_HEV_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_FE_PHEV_2022</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3982.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.766</span>
+      <span class="c1"># Values from optimizer</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">16.55</span>  <span class="c1"># 13.8 is spec end-to-end</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.82</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">SONATA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA_HYBRID</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1513.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.84</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.27</span> <span class="o">*</span> <span class="mf">1.15</span>   <span class="c1"># 15% higher at the center seems reasonable</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.65</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SONATA_LF</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1536.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.804</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.27</span> <span class="o">*</span> <span class="mf">1.15</span>   <span class="c1"># 15% higher at the center seems reasonable</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PALISADE</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1999.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.90</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">15.6</span> <span class="o">*</span> <span class="mf">1.15</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.63</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_GT_I30</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1275.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.7</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">15.4</span>            <span class="c1"># 14 is Stock | Settled Params Learner values are steerRatio: 15.401566348670535</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.385</span>    <span class="c1"># stiffnessFactor settled on 1.0081302973865127</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">=</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_2021</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">2800.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.72</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">12.9</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.65</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ELANTRA_HEV_2021</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3017.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.72</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">12.9</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.65</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HYUNDAI_GENESIS</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">2060.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">3.01</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">16.5</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">KONA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_HEV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2ND_GEN</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV</span><span class="p">:</span> <span class="mf">1685.</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_HEV</span><span class="p">:</span> <span class="mf">1425.</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2022</span><span class="p">:</span> <span class="mf">1743.</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2ND_GEN</span><span class="p">:</span> <span class="mf">1740.</span><span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="mf">1275.</span><span class="p">)</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2ND_GEN</span><span class="p">:</span> <span class="mf">2.66</span><span class="p">,</span> <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="mf">2.6</span><span class="p">)</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2ND_GEN</span><span class="p">:</span> <span class="mf">13.6</span><span class="p">,</span> <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="mf">13.42</span><span class="p">)</span>  <span class="c1"># Spec</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.385</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_EV_LTD</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_PHEV_2019</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_HEV_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_EV_2020</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_PHEV</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1490.</span>  <span class="c1"># weight per hyundai site https://www.hyundaiusa.com/ioniq-electric/specifications.aspx</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.7</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.73</span>  <span class="c1"># Spec</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.385</span>
+      <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_EV_LTD</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_PHEV_2019</span><span class="p">):</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">=</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_5</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">IONIQ_6</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mi">1948</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.97</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.26</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.65</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">VELOSTER</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">2917.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.80</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.75</span> <span class="o">*</span> <span class="mf">1.15</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">TUCSON</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3520.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.67</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.00</span> <span class="o">*</span> <span class="mf">1.15</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.385</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">TUCSON_4TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">TUCSON_HYBRID_4TH_GEN</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1630.</span>  <span class="c1"># average</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.756</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">16.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.385</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SANTA_CRUZ_1ST_GEN</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1870.</span>  <span class="c1"># weight from Limited trim - the only supported trim</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">3.000</span>
+      <span class="c1"># steering ratio according to Hyundai News https://www.hyundainews.com/assets/documents/original/48035-2022SantaCruzProductGuideSpecsv2081521.pdf</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.2</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CUSTIN_1ST_GEN</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1690.</span>  <span class="c1"># from https://www.hyundai-motor.com.tw/clicktobuy/custin#spec_0</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">3.055</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">17.0</span>  <span class="c1"># from learner</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">STARIA_4TH_GEN</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">2205.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">3.273</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">11.94</span>  <span class="c1"># https://www.hyundai.com/content/dam/hyundai/au/en/models/staria-load/premium-pip-update-2023/spec-sheet/STARIA_Load_Spec-Table_March_2023_v3.1.pdf</span>
+
+    <span class="c1"># Kia</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1985.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.78</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.4</span> <span class="o">*</span> <span class="mf">1.1</span>   <span class="c1"># 10% higher at the center seems reasonable</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_EV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_EV_2ND_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_PHEV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_HEV_2021</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_HEV_2ND_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_PHEV_2022</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3543.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>  <span class="c1"># average of all the cars</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.7</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.6</span>  <span class="c1"># average of all the cars</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.385</span>
+      <span class="k">if</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_NIRO_PHEV</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">=</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SELTOS</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1337.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.63</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.56</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SPORTAGE_5TH_GEN</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1700.</span>  <span class="c1"># weight from SX and above trims, average of FWD and AWD versions</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.756</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.6</span>  <span class="c1"># steering ratio according to Kia News https://www.kiamedia.com/us/en/models/sportage/2023/specifications</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4_FL</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_H_G4_FL</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3558.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.80</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.75</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.5</span>
+      <span class="k">if</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">=</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">KIA_STINGER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_STINGER_2022</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1825.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.78</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.4</span> <span class="o">*</span> <span class="mf">1.15</span>   <span class="c1"># 15% higher at the center seems reasonable</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_FORTE</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">2878.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.80</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.75</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_CEED</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1450.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.65</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.75</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K5_2021</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K5_HEV_2020</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3381.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.85</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.27</span>  <span class="c1"># 2021 Kia K5 Steering Ratio (all trims)</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_EV6</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mi">2055</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.9</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">16.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">0.65</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SPORTAGE_HYBRID_5TH_GEN</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1767.</span>  <span class="c1"># SX Prestige trim support only</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.756</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.6</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_4TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_HEV_4TH_GEN</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_PHEV_4TH_GEN</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.81</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.5</span>  <span class="c1"># average of the platforms</span>
+      <span class="k">if</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_4TH_GEN</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mi">3957</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+      <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_SORENTO_HEV_4TH_GEN</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mi">4255</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mi">4537</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_CARNIVAL_4TH_GEN</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">2087.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">3.09</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.23</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KIA_K8_HEV_1ST_GEN</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1630.</span>  <span class="c1"># https://carprices.ae/brands/kia/2023/k8/1.6-turbo-hybrid</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.895</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.27</span>  <span class="c1"># guesstimate from K5 platform</span>
+
+    <span class="c1"># Genesis</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV60_EV_1ST_GEN</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mi">2205</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.9</span>
+      <span class="c1"># https://www.motor1.com/reviews/586376/2023-genesis-gv60-first-drive/#:~:text=Relative%20to%20the%20related%20Ioniq,5%2FEV6%27s%2014.3%3A1.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">12.6</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G70</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.1</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1640.0</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.84</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">13.56</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G70_2020</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">3673.0</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">LB_TO_KG</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.83</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">12.9</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV70_1ST_GEN</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">1950.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.87</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.6</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G80</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">2060.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">3.01</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">16.5</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_G90</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">2200.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">3.15</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">12.069</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GENESIS_GV80</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">2258.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">2.95</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="mf">14.14</span>
+
+    <span class="c1"># *** longitudinal control ***</span>
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">experimentalLongitudinalAvailable</span> <span class="o">=</span> <span class="n">candidate</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CANFD_UNSUPPORTED_LONGITUDINAL_CAR</span> <span class="o">|</span> <span class="n">CANFD_RADAR_SCC_CAR</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">experimentalLongitudinalAvailable</span> <span class="o">=</span> <span class="n">candidate</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">UNSUPPORTED_LONGITUDINAL_CAR</span> <span class="o">|</span> <span class="n">CAMERA_SCC_CAR</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="o">=</span> <span class="n">experimental_long</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">experimentalLongitudinalAvailable</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">pcmCruise</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">stoppingControl</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">startingState</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgoStarting</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">startAccel</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalActuatorDelayLowerBound</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalActuatorDelayUpperBound</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+    <span class="c1"># *** feature detection ***</span>
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">enableBsm</span> <span class="o">=</span> <span class="mh">0x1e5</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="n">CAN</span><span class="o">.</span><span class="n">ECAN</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">enableBsm</span> <span class="o">=</span> <span class="mh">0x58b</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># *** panda safety config ***</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span> <span class="o">=</span> <span class="n">set_safety_config_hyundai</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">CAN</span><span class="p">,</span> <span class="n">can_fd</span><span class="o">=</span><span class="p">(</span><span class="n">candidate</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">hda2</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_HDA2</span><span class="o">.</span><span class="n">value</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HYUNDAI_CANFD_HDA2</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">hda2</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_HDA2_ALT_STEERING</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HYUNDAI_CANFD_HDA2_ALT_STEERING</span>
+      <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_ALT_BUTTONS</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HYUNDAI_CANFD_ALT_BUTTONS</span>
+
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_CAMERA_SCC</span> <span class="ow">or</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">CAMERA_SCC_CAR</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HYUNDAI_CAMERA_SCC</span>
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HYUNDAI_LONG</span>
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">HYBRID_CAR</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HYUNDAI_HYBRID_GAS</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">EV_CAR</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HYUNDAI_EV_GAS</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">KONA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_HEV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">KONA_EV_2022</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">ALT_LIMITS</span><span class="o">.</span><span class="n">value</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HYUNDAI_ALT_LIMITS</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">centerToFront</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">*</span> <span class="mf">0.4</span>
+
+    <span class="k">return</span> <span class="n">ret</span>
+
+<div class="viewcode-block" id="CarInterface.init">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.interface.CarInterface.init">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_CAMERA_SCC</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+      <span class="n">addr</span><span class="p">,</span> <span class="n">bus</span> <span class="o">=</span> <span class="mh">0x7d0</span><span class="p">,</span> <span class="mi">0</span>
+      <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">CANFD_HDA2</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">addr</span><span class="p">,</span> <span class="n">bus</span> <span class="o">=</span> <span class="mh">0x730</span><span class="p">,</span> <span class="n">CanBus</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span><span class="o">.</span><span class="n">ECAN</span>
+      <span class="n">disable_ecu</span><span class="p">(</span><span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">,</span> <span class="n">bus</span><span class="o">=</span><span class="n">bus</span><span class="p">,</span> <span class="n">addr</span><span class="o">=</span><span class="n">addr</span><span class="p">,</span> <span class="n">com_cont_req</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x28\x83\x01</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># for blinkers</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HyundaiFlags</span><span class="o">.</span><span class="n">ENABLE_BLINKERS</span><span class="p">:</span>
+      <span class="n">disable_ecu</span><span class="p">(</span><span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">,</span> <span class="n">bus</span><span class="o">=</span><span class="n">CanBus</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span><span class="o">.</span><span class="n">ECAN</span><span class="p">,</span> <span class="n">addr</span><span class="o">=</span><span class="mh">0x7B1</span><span class="p">,</span> <span class="n">com_cont_req</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x28\x83\x01</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+  <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_cam</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">buttonEvents</span> <span class="o">=</span> <span class="n">create_button_events</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">cruise_buttons</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">prev_cruise_buttons</span><span class="p">,</span> <span class="n">BUTTONS_DICT</span><span class="p">)</span>
+
+    <span class="c1"># On some newer model years, the CANCEL button acts as a pause/resume button based on the PCM state</span>
+    <span class="c1"># To avoid re-engaging when openpilot cancels, check user engagement intention via buttons</span>
+    <span class="c1"># Main button also can trigger an engagement on these cars</span>
+    <span class="n">allow_enable</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">btn</span> <span class="ow">in</span> <span class="n">ENABLE_BUTTONS</span> <span class="k">for</span> <span class="n">btn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">cruise_buttons</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">main_buttons</span><span class="p">)</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_common_events</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">pcm_enable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span><span class="p">,</span> <span class="n">allow_enable</span><span class="o">=</span><span class="n">allow_enable</span><span class="p">)</span>
+
+    <span class="c1"># low speed steer alert hysteresis logic (only for cars with steer cut off above 10 m/s)</span>
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&lt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">+</span> <span class="mf">2.</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">&gt;</span> <span class="mf">10.</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">low_speed_alert</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&gt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">+</span> <span class="mf">4.</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">low_speed_alert</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">low_speed_alert</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">EventName</span><span class="o">.</span><span class="n">belowSteerSpeed</span><span class="p">)</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">to_msg</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">ret</span>
+
+<div class="viewcode-block" id="CarInterface.apply">
+<a class="viewcode-back" href="../../../../selfdrive.car.hyundai.html#selfdrive.car.hyundai.interface.CarInterface.apply">[docs]</a>
+  <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">now_nanos</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">CC</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">now_nanos</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

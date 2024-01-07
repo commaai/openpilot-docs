@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.controls.tests.test_startup &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/controls/tests/test_startup.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.controls.tests.test_startup</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.controls.tests.test_startup</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">parameterized</span> <span class="kn">import</span> <span class="n">parameterized</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">car</span>
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.boardd.boardd_api_impl</span> <span class="kn">import</span> <span class="n">can_list_to_can_capnp</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.fingerprints</span> <span class="kn">import</span> <span class="n">_FINGERPRINTS</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.toyota.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">TOYOTA</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.mazda.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">MAZDA</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.events</span> <span class="kn">import</span> <span class="n">EVENT_NAME</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.helpers</span> <span class="kn">import</span> <span class="n">with_processes</span>
+
+<span class="n">EventName</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">EventName</span>
+<span class="n">Ecu</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">Ecu</span>
+
+<span class="n">COROLLA_FW_VERSIONS</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="mh">0x7e0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x02</span><span class="s1">30ZC2000</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s1">50212000</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">abs</span><span class="p">,</span> <span class="mh">0x7b0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;F152602190</span><span class="se">\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span> <span class="mh">0x7a1</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;8965B02181</span><span class="se">\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">fwdRadar</span><span class="p">,</span> <span class="mh">0x750</span><span class="p">,</span> <span class="mh">0xf</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;8821F4702100</span><span class="se">\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">,</span> <span class="mh">0x750</span><span class="p">,</span> <span class="mh">0x6d</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;8646F0201101</span><span class="se">\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">dsu</span><span class="p">,</span> <span class="mh">0x791</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;881510201100</span><span class="se">\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">COROLLA_FW_VERSIONS_FUZZY</span> <span class="o">=</span> <span class="n">COROLLA_FW_VERSIONS</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">dsu</span><span class="p">,</span> <span class="mh">0x791</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;xxxxxx&#39;</span><span class="p">)]</span>
+<span class="n">COROLLA_FW_VERSIONS_NO_DSU</span> <span class="o">=</span> <span class="n">COROLLA_FW_VERSIONS</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">CX5_FW_VERSIONS</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="mh">0x7e0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;PYNF-188K2-F</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">abs</span><span class="p">,</span> <span class="mh">0x760</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;K123-437K2-E</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span> <span class="mh">0x730</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;KJ01-3210X-G-00</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">fwdRadar</span><span class="p">,</span> <span class="mh">0x764</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;K123-67XK2-F</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">,</span> <span class="mh">0x706</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;B61L-67XK2-T</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">transmission</span><span class="p">,</span> <span class="mh">0x7e1</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;PYNC-21PS1-B</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<div class="viewcode-block" id="TestStartup">
+<a class="viewcode-back" href="../../../../selfdrive.controls.tests.html#selfdrive.controls.tests.test_startup.TestStartup">[docs]</a>
+<span class="k">class</span> <span class="nc">TestStartup</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+  <span class="nd">@parameterized</span><span class="o">.</span><span class="n">expand</span><span class="p">([</span>
+    <span class="c1"># TODO: test EventName.startup for release branches</span>
+
+    <span class="c1"># officially supported car</span>
+    <span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">startupMaster</span><span class="p">,</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">COROLLA_FW_VERSIONS</span><span class="p">,</span> <span class="s2">&quot;toyota&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">startupMaster</span><span class="p">,</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">COROLLA_FW_VERSIONS</span><span class="p">,</span> <span class="s2">&quot;toyota&quot;</span><span class="p">),</span>
+
+    <span class="c1"># dashcamOnly car</span>
+    <span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">startupNoControl</span><span class="p">,</span> <span class="n">MAZDA</span><span class="o">.</span><span class="n">CX5</span><span class="p">,</span> <span class="n">CX5_FW_VERSIONS</span><span class="p">,</span> <span class="s2">&quot;mazda&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">startupNoControl</span><span class="p">,</span> <span class="n">MAZDA</span><span class="o">.</span><span class="n">CX5</span><span class="p">,</span> <span class="n">CX5_FW_VERSIONS</span><span class="p">,</span> <span class="s2">&quot;mazda&quot;</span><span class="p">),</span>
+
+    <span class="c1"># unrecognized car with no fw</span>
+    <span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">startupNoFw</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">startupNoFw</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+
+    <span class="c1"># unrecognized car</span>
+    <span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">startupNoCar</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">COROLLA_FW_VERSIONS</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;toyota&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">startupNoCar</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">COROLLA_FW_VERSIONS</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;toyota&quot;</span><span class="p">),</span>
+
+    <span class="c1"># fuzzy match</span>
+    <span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">startupMaster</span><span class="p">,</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">COROLLA_FW_VERSIONS_FUZZY</span><span class="p">,</span> <span class="s2">&quot;toyota&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">startupMaster</span><span class="p">,</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">COROLLA_FW_VERSIONS_FUZZY</span><span class="p">,</span> <span class="s2">&quot;toyota&quot;</span><span class="p">),</span>
+  <span class="p">])</span>
+  <span class="nd">@with_processes</span><span class="p">([</span><span class="s1">&#39;controlsd&#39;</span><span class="p">])</span>
+  <span class="k">def</span> <span class="nf">test_startup_alert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expected_event</span><span class="p">,</span> <span class="n">car_model</span><span class="p">,</span> <span class="n">fw_versions</span><span class="p">,</span> <span class="n">brand</span><span class="p">):</span>
+
+    <span class="c1"># TODO: this should be done without any real sockets</span>
+    <span class="n">controls_sock</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">sub_sock</span><span class="p">(</span><span class="s2">&quot;controlsState&quot;</span><span class="p">)</span>
+    <span class="n">pm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">([</span><span class="s1">&#39;can&#39;</span><span class="p">,</span> <span class="s1">&#39;pandaStates&#39;</span><span class="p">])</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">clear_all</span><span class="p">()</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;Passive&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;OpenpilotEnabledToggle&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Build capnn version of FW array</span>
+    <span class="k">if</span> <span class="n">fw_versions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">car_fw</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="n">cp</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+      <span class="k">for</span> <span class="n">ecu</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">subaddress</span><span class="p">,</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">fw_versions</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">CarFw</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">ecu</span> <span class="o">=</span> <span class="n">ecu</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">addr</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">fwVersion</span> <span class="o">=</span> <span class="n">version</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">brand</span> <span class="o">=</span> <span class="n">brand</span>
+
+        <span class="k">if</span> <span class="n">subaddress</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+          <span class="n">f</span><span class="o">.</span><span class="n">subAddress</span> <span class="o">=</span> <span class="n">subaddress</span>
+
+        <span class="n">car_fw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+      <span class="n">cp</span><span class="o">.</span><span class="n">carVin</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">*</span> <span class="mi">17</span>
+      <span class="n">cp</span><span class="o">.</span><span class="n">carFw</span> <span class="o">=</span> <span class="n">car_fw</span>
+      <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;CarParamsCache&quot;</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># wait for controlsd to be ready</span>
+
+    <span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;can&#39;</span><span class="p">,</span> <span class="n">can_list_to_can_capnp</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;pandaStates&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">pandaStates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pandaType</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">PandaState</span><span class="o">.</span><span class="n">PandaType</span><span class="o">.</span><span class="n">uno</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;pandaStates&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+
+    <span class="c1"># fingerprint</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">car_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">fw_versions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+      <span class="n">finger</span> <span class="o">=</span> <span class="p">{</span><span class="n">addr</span><span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">addr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)}</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">finger</span> <span class="o">=</span> <span class="n">_FINGERPRINTS</span><span class="p">[</span><span class="n">car_model</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+      <span class="c1"># controlsd waits for boardd to echo back that it has changed the multiplexing mode</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;ObdMultiplexingChanged&quot;</span><span class="p">):</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;ObdMultiplexingChanged&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+      <span class="n">msgs</span> <span class="o">=</span> <span class="p">[[</span><span class="n">addr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="o">*</span><span class="n">length</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">addr</span><span class="p">,</span> <span class="n">length</span> <span class="ow">in</span> <span class="n">finger</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;can&#39;</span><span class="p">,</span> <span class="n">can_list_to_can_capnp</span><span class="p">(</span><span class="n">msgs</span><span class="p">))</span>
+
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+      <span class="n">msgs</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">drain_sock</span><span class="p">(</span><span class="n">controls_sock</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msgs</span><span class="p">):</span>
+        <span class="n">event_name</span> <span class="o">=</span> <span class="n">msgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">controlsState</span><span class="o">.</span><span class="n">alertType</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">EVENT_NAME</span><span class="p">[</span><span class="n">expected_event</span><span class="p">],</span> <span class="n">event_name</span><span class="p">,</span>
+                         <span class="sa">f</span><span class="s2">&quot;expected </span><span class="si">{</span><span class="n">EVENT_NAME</span><span class="p">[</span><span class="n">expected_event</span><span class="p">]</span><span class="si">}</span><span class="s2"> for &#39;</span><span class="si">{</span><span class="n">car_model</span><span class="si">}</span><span class="s2">&#39;, got </span><span class="si">{</span><span class="n">event_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;failed to fingerprint </span><span class="si">{</span><span class="n">car_model</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

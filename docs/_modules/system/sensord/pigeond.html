@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>system.sensord.pigeond &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/system/sensord/pigeond.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">system.sensord.pigeond</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for system.sensord.pigeond</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">serial</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">urllib.parse</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">messaging</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware</span> <span class="kn">import</span> <span class="n">TICI</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.gpio</span> <span class="kn">import</span> <span class="n">gpio_init</span><span class="p">,</span> <span class="n">gpio_set</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware.tici.pins</span> <span class="kn">import</span> <span class="n">GPIO</span>
+
+<span class="n">UBLOX_TTY</span> <span class="o">=</span> <span class="s2">&quot;/dev/ttyHS0&quot;</span>
+
+<span class="n">UBLOX_ACK</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x05\x01\x02\x00</span><span class="s2">&quot;</span>
+<span class="n">UBLOX_NACK</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x05\x00\x02\x00</span><span class="s2">&quot;</span>
+<span class="n">UBLOX_SOS_ACK</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x09\x14\x08\x00\x02\x00\x00\x00\x01\x00\x00\x00</span><span class="s2">&quot;</span>
+<span class="n">UBLOX_SOS_NACK</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x09\x14\x08\x00\x02\x00\x00\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span>
+<span class="n">UBLOX_BACKUP_RESTORE_MSG</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x09\x14\x08\x00\x03</span><span class="s2">&quot;</span>
+<span class="n">UBLOX_ASSIST_ACK</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x13\x60\x08\x00</span><span class="s2">&quot;</span>
+
+<div class="viewcode-block" id="set_power">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.set_power">[docs]</a>
+<span class="k">def</span> <span class="nf">set_power</span><span class="p">(</span><span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">gpio_init</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">UBLOX_SAFEBOOT_N</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+  <span class="n">gpio_init</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">GNSS_PWR_EN</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+  <span class="n">gpio_init</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">UBLOX_RST_N</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+  <span class="n">gpio_set</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">UBLOX_SAFEBOOT_N</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+  <span class="n">gpio_set</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">GNSS_PWR_EN</span><span class="p">,</span> <span class="n">enabled</span><span class="p">)</span>
+  <span class="n">gpio_set</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">UBLOX_RST_N</span><span class="p">,</span> <span class="n">enabled</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_ubx_checksum">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.add_ubx_checksum">[docs]</a>
+<span class="k">def</span> <span class="nf">add_ubx_checksum</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+  <span class="n">A</span> <span class="o">=</span> <span class="n">B</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">[</span><span class="mi">2</span><span class="p">:]:</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="p">(</span><span class="n">B</span> <span class="o">+</span> <span class="n">A</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span>
+  <span class="k">return</span> <span class="n">msg</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="get_assistnow_messages">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.get_assistnow_messages">[docs]</a>
+<span class="k">def</span> <span class="nf">get_assistnow_messages</span><span class="p">(</span><span class="n">token</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]:</span>
+  <span class="c1"># make request</span>
+  <span class="c1"># TODO: implement adding the last known location</span>
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://online-live2.services.u-blox.com/GetOnlineData.ashx&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlencode</span><span class="p">({</span>
+    <span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+    <span class="s1">&#39;gnss&#39;</span><span class="p">:</span> <span class="s1">&#39;gps,glo&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;datatype&#39;</span><span class="p">:</span> <span class="s1">&#39;eph,alm,aux&#39;</span><span class="p">,</span>
+  <span class="p">},</span> <span class="n">safe</span><span class="o">=</span><span class="s1">&#39;:,&#39;</span><span class="p">),</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+  <span class="k">assert</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;Got invalid status code&quot;</span>
+  <span class="n">dat</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span>
+
+  <span class="c1"># split up messages</span>
+  <span class="n">msgs</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">dat</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62</span><span class="s2">&quot;</span>
+    <span class="n">msg_len</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">+</span> <span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">|</span> <span class="n">dat</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dat</span><span class="p">[:</span><span class="n">msg_len</span><span class="p">])</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="n">msg_len</span><span class="p">:]</span>
+  <span class="k">return</span> <span class="n">msgs</span></div>
+
+
+
+<div class="viewcode-block" id="TTYPigeon">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.TTYPigeon">[docs]</a>
+<span class="k">class</span> <span class="nc">TTYPigeon</span><span class="p">():</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tty</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">VTIMESerial</span><span class="p">(</span><span class="n">UBLOX_TTY</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="mi">9600</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TTYPigeon.send">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.TTYPigeon.send">[docs]</a>
+  <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dat</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tty</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TTYPigeon.receive">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.TTYPigeon.receive">[docs]</a>
+  <span class="k">def</span> <span class="nf">receive</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mh">0x1000</span><span class="p">:</span>
+      <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tty</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mh">0x40</span><span class="p">)</span>
+      <span class="n">dat</span> <span class="o">+=</span> <span class="n">d</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="k">return</span> <span class="n">dat</span></div>
+
+
+<div class="viewcode-block" id="TTYPigeon.set_baud">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.TTYPigeon.set_baud">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_baud</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">baud</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tty</span><span class="o">.</span><span class="n">baudrate</span> <span class="o">=</span> <span class="n">baud</span></div>
+
+
+<div class="viewcode-block" id="TTYPigeon.wait_for_ack">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.TTYPigeon.wait_for_ack">[docs]</a>
+  <span class="k">def</span> <span class="nf">wait_for_ack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ack</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">UBLOX_ACK</span><span class="p">,</span> <span class="n">nack</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">UBLOX_NACK</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+      <span class="n">dat</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">receive</span><span class="p">()</span>
+      <span class="k">if</span> <span class="n">ack</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Received ACK from ublox&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+      <span class="k">elif</span> <span class="n">nack</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Received NACK from ublox&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+      <span class="k">elif</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">st</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No response from ublox&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TimeoutError</span><span class="p">(</span><span class="s1">&#39;No response from ublox&#39;</span><span class="p">)</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.001</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TTYPigeon.send_with_ack">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.TTYPigeon.send_with_ack">[docs]</a>
+  <span class="k">def</span> <span class="nf">send_with_ack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dat</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">ack</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">UBLOX_ACK</span><span class="p">,</span> <span class="n">nack</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">UBLOX_NACK</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_ack</span><span class="p">(</span><span class="n">ack</span><span class="p">,</span> <span class="n">nack</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TTYPigeon.wait_for_backup_restore_status">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.TTYPigeon.wait_for_backup_restore_status">[docs]</a>
+  <span class="k">def</span> <span class="nf">wait_for_backup_restore_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+      <span class="n">dat</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">receive</span><span class="p">()</span>
+      <span class="n">position</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">UBLOX_BACKUP_RESTORE_MSG</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">position</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">position</span> <span class="o">+</span> <span class="mi">11</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dat</span><span class="p">[</span><span class="n">position</span> <span class="o">+</span> <span class="mi">10</span><span class="p">]</span>
+      <span class="k">elif</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">st</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No backup restore response from ublox&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TimeoutError</span><span class="p">(</span><span class="s1">&#39;No response from ublox&#39;</span><span class="p">)</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.001</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TTYPigeon.reset_device">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.TTYPigeon.reset_device">[docs]</a>
+  <span class="k">def</span> <span class="nf">reset_device</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="c1"># deleting the backup does not always work on first try (mostly on second try)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+      <span class="c1"># device cold start</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x06\x04\x04\x00\xff\xff\x00\x00\x0c\x5d</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># wait for cold start</span>
+      <span class="n">init_baudrate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+      <span class="c1"># clear configuration</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x06\x09\x0d\x00\x1f\x1f\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x17\x71\xd7</span><span class="s2">&quot;</span><span class="p">)</span>
+
+      <span class="c1"># clear flash memory (almanac backup)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x09\x14\x04\x00\x01\x00\x00\x00\x22\xf0</span><span class="s2">&quot;</span><span class="p">)</span>
+
+      <span class="c1"># try restoring backup to verify it got deleted</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x09\x14\x00\x00\x1D\x60</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="c1"># 1: failed to restore, 2: could restore, 3: no backup</span>
+      <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_backup_restore_status</span><span class="p">()</span>
+      <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+</div>
+
+
+<div class="viewcode-block" id="init_baudrate">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.init_baudrate">[docs]</a>
+<span class="k">def</span> <span class="nf">init_baudrate</span><span class="p">(</span><span class="n">pigeon</span><span class="p">:</span> <span class="n">TTYPigeon</span><span class="p">):</span>
+  <span class="c1"># ublox default setting on startup is 9600 baudrate</span>
+  <span class="n">pigeon</span><span class="o">.</span><span class="n">set_baud</span><span class="p">(</span><span class="mi">9600</span><span class="p">)</span>
+
+  <span class="c1"># $PUBX,41,1,0007,0003,460800,0*15\r\n</span>
+  <span class="n">pigeon</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x24\x50\x55\x42\x58\x2C\x34\x31\x2C\x31\x2C\x30\x30\x30\x37\x2C\x30\x30\x30\x33\x2C\x34\x36\x30\x38\x30\x30\x2C\x30\x2A\x31\x35\x0D\x0A</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+  <span class="n">pigeon</span><span class="o">.</span><span class="n">set_baud</span><span class="p">(</span><span class="mi">460800</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="initialize_pigeon">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.initialize_pigeon">[docs]</a>
+<span class="k">def</span> <span class="nf">initialize_pigeon</span><span class="p">(</span><span class="n">pigeon</span><span class="p">:</span> <span class="n">TTYPigeon</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="c1"># try initializing a few times</span>
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+
+      <span class="c1"># setup port config</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x06\x00\x14\x00\x03\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x01\x00\x00\x00\x00\x00\x1E\x7F</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x06\x00\x14\x00\x00\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x35</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x06\x00\x14\x00\x01\x00\x00\x00\xC0\x08\x00\x00\x00\x08\x07\x00\x01\x00\x01\x00\x00\x00\x00\x00\xF4\x80</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x06\x00\x14\x00\x04\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x1D\x85</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x06\x00\x00\x00\x06\x18</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x06\x00\x01\x00\x01\x08\x22</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb5\x62\x06\x00\x01\x00\x03\x0A\x24</span><span class="s2">&quot;</span><span class="p">)</span>
+
+      <span class="c1"># UBX-CFG-RATE (0x06 0x08)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x08\x06\x00\x64\x00\x01\x00\x00\x00\x79\x10</span><span class="s2">&quot;</span><span class="p">)</span>
+
+      <span class="c1"># UBX-CFG-NAV5 (0x06 0x24)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x24\x24\x00\x05\x00\x04\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x5A\x63</span><span class="s2">&quot;</span><span class="p">)</span>
+
+      <span class="c1"># UBX-CFG-ODO (0x06 0x1E)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x1E\x14\x00\x00\x00\x00\x00\x01\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x3C\x37</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x39\x08\x00\xFF\xAD\x62\xAD\x1E\x63\x00\x00\x83\x0C</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x23\x28\x00\x00\x00\x00\x04\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x56\x24</span><span class="s2">&quot;</span><span class="p">)</span>
+
+      <span class="c1"># UBX-CFG-NAV5 (0x06 0x24)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x24\x00\x00\x2A\x84</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x23\x00\x00\x29\x81</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x1E\x00\x00\x24\x72</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x39\x00\x00\x3F\xC3</span><span class="s2">&quot;</span><span class="p">)</span>
+
+      <span class="c1"># UBX-CFG-MSG (set message rate)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x01\x03\x00\x01\x07\x01\x13\x51</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x01\x03\x00\x02\x15\x01\x22\x70</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x01\x03\x00\x02\x13\x01\x20\x6C</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x01\x03\x00\x0A\x09\x01\x1E\x70</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x01\x03\x00\x0A\x0B\x01\x20\x74</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x01\x03\x00\x01\x35\x01\x41\xAD</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;pigeon configured&quot;</span><span class="p">)</span>
+
+      <span class="c1"># try restoring almanac backup</span>
+      <span class="n">pigeon</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x09\x14\x00\x00\x1D\x60</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">restore_status</span> <span class="o">=</span> <span class="n">pigeon</span><span class="o">.</span><span class="n">wait_for_backup_restore_status</span><span class="p">()</span>
+      <span class="k">if</span> <span class="n">restore_status</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;almanac backup restored&quot;</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">restore_status</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;no almanac backup found&quot;</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;failed to restore almanac backup, status: </span><span class="si">{</span><span class="n">restore_status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+      <span class="c1"># sending time to ublox</span>
+      <span class="n">t_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+      <span class="k">if</span> <span class="n">t_now</span> <span class="o">&gt;=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Sending current time to ublox&quot;</span><span class="p">)</span>
+
+        <span class="c1"># UBX-MGA-INI-TIME_UTC</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">add_ubx_checksum</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x13\x40\x18\x00</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;BBBBHBBBBBxIHxxI&quot;</span><span class="p">,</span>
+          <span class="mh">0x10</span><span class="p">,</span>
+          <span class="mh">0x00</span><span class="p">,</span>
+          <span class="mh">0x00</span><span class="p">,</span>
+          <span class="mh">0x80</span><span class="p">,</span>
+          <span class="n">t_now</span><span class="o">.</span><span class="n">year</span><span class="p">,</span>
+          <span class="n">t_now</span><span class="o">.</span><span class="n">month</span><span class="p">,</span>
+          <span class="n">t_now</span><span class="o">.</span><span class="n">day</span><span class="p">,</span>
+          <span class="n">t_now</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span>
+          <span class="n">t_now</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span>
+          <span class="n">t_now</span><span class="o">.</span><span class="n">second</span><span class="p">,</span>
+          <span class="mi">0</span><span class="p">,</span>
+          <span class="mi">30</span><span class="p">,</span>
+          <span class="mi">0</span>
+        <span class="p">))</span>
+        <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">ack</span><span class="o">=</span><span class="n">UBLOX_ASSIST_ACK</span><span class="p">)</span>
+
+      <span class="c1"># try getting AssistNow if we have a token</span>
+      <span class="n">token</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;AssistNowToken&#39;</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+          <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">get_assistnow_messages</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+            <span class="n">pigeon</span><span class="o">.</span><span class="n">send_with_ack</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">ack</span><span class="o">=</span><span class="n">UBLOX_ASSIST_ACK</span><span class="p">)</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;AssistNow messages sent&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;failed to get AssistNow messages&quot;</span><span class="p">)</span>
+
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Pigeon GPS on!&quot;</span><span class="p">)</span>
+      <span class="k">break</span>
+    <span class="k">except</span> <span class="ne">TimeoutError</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Initialization failed, trying again!&quot;</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Failed to initialize pigeon&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span>
+  <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="deinitialize_and_exit">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.deinitialize_and_exit">[docs]</a>
+<span class="k">def</span> <span class="nf">deinitialize_and_exit</span><span class="p">(</span><span class="n">pigeon</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TTYPigeon</span><span class="p">]):</span>
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Storing almanac in ublox flash&quot;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">pigeon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># controlled GNSS stop</span>
+    <span class="n">pigeon</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x06\x04\x04\x00\x00\x00\x08\x00\x16\x74</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># store almanac in flash</span>
+    <span class="n">pigeon</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xB5\x62\x09\x14\x04\x00\x00\x00\x00\x00\x21\xEC</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">pigeon</span><span class="o">.</span><span class="n">wait_for_ack</span><span class="p">(</span><span class="n">ack</span><span class="o">=</span><span class="n">UBLOX_SOS_ACK</span><span class="p">,</span> <span class="n">nack</span><span class="o">=</span><span class="n">UBLOX_SOS_NACK</span><span class="p">):</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Done storing almanac&quot;</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error storing almanac&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TimeoutError</span><span class="p">:</span>
+      <span class="k">pass</span>
+
+  <span class="c1"># turn off power and exit cleanly</span>
+  <span class="n">set_power</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+  <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_pigeon">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.create_pigeon">[docs]</a>
+<span class="k">def</span> <span class="nf">create_pigeon</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">TTYPigeon</span><span class="p">,</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">]:</span>
+  <span class="n">pigeon</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="c1"># register exit handler</span>
+  <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">sig</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">deinitialize_and_exit</span><span class="p">(</span><span class="n">pigeon</span><span class="p">))</span>
+  <span class="n">pm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">([</span><span class="s1">&#39;ubloxRaw&#39;</span><span class="p">])</span>
+
+  <span class="c1"># power cycle ublox</span>
+  <span class="n">set_power</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+  <span class="n">set_power</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+  <span class="n">pigeon</span> <span class="o">=</span> <span class="n">TTYPigeon</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">pigeon</span><span class="p">,</span> <span class="n">pm</span></div>
+
+
+<div class="viewcode-block" id="run_receiving">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.run_receiving">[docs]</a>
+<span class="k">def</span> <span class="nf">run_receiving</span><span class="p">(</span><span class="n">pigeon</span><span class="p">:</span> <span class="n">TTYPigeon</span><span class="p">,</span> <span class="n">pm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+
+  <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">end_condition</span><span class="p">():</span>
+    <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">duration</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span> <span class="o">&lt;</span> <span class="n">duration</span>
+
+  <span class="k">while</span> <span class="n">end_condition</span><span class="p">():</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="n">pigeon</span><span class="o">.</span><span class="n">receive</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x00</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;received invalid data from ublox, re-initing!&quot;</span><span class="p">)</span>
+        <span class="n">init_baudrate</span><span class="p">(</span><span class="n">pigeon</span><span class="p">)</span>
+        <span class="n">initialize_pigeon</span><span class="p">(</span><span class="n">pigeon</span><span class="p">)</span>
+        <span class="k">continue</span>
+
+      <span class="c1"># send out to socket</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;ubloxRaw&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">),</span> <span class="n">valid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="n">msg</span><span class="o">.</span><span class="n">ubloxRaw</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[:]</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;ubloxRaw&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># prevent locking up a CPU core if ublox disconnects</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.001</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../system.sensord.html#system.sensord.pigeond.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+  <span class="k">assert</span> <span class="n">TICI</span><span class="p">,</span> <span class="s2">&quot;unsupported hardware for pigeond&quot;</span>
+
+  <span class="n">pigeon</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">create_pigeon</span><span class="p">()</span>
+  <span class="n">init_baudrate</span><span class="p">(</span><span class="n">pigeon</span><span class="p">)</span>
+  <span class="n">initialize_pigeon</span><span class="p">(</span><span class="n">pigeon</span><span class="p">)</span>
+
+  <span class="c1"># start receiving data</span>
+  <span class="n">run_receiving</span><span class="p">(</span><span class="n">pigeon</span><span class="p">,</span> <span class="n">pm</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

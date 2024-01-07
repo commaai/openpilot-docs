@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>system.version &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/system/version.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">system.version</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for system.version</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.common.basedir</span> <span class="kn">import</span> <span class="n">BASEDIR</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+
+<span class="n">RELEASE_BRANCHES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;release3-staging&#39;</span><span class="p">,</span> <span class="s1">&#39;dashcam3-staging&#39;</span><span class="p">,</span> <span class="s1">&#39;release3&#39;</span><span class="p">,</span> <span class="s1">&#39;dashcam3&#39;</span><span class="p">,</span> <span class="s1">&#39;nightly&#39;</span><span class="p">]</span>
+<span class="n">TESTED_BRANCHES</span> <span class="o">=</span> <span class="n">RELEASE_BRANCHES</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;devel&#39;</span><span class="p">,</span> <span class="s1">&#39;devel-staging&#39;</span><span class="p">]</span>
+
+<span class="n">training_version</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;0.2.0&quot;</span>
+<span class="n">terms_version</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;2&quot;</span>
+
+
+<div class="viewcode-block" id="cache">
+<a class="viewcode-back" href="../../system.html#system.version.cache">[docs]</a>
+<span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="n">user_function</span><span class="p">,</span> <span class="o">/</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)(</span><span class="n">user_function</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="run_cmd">
+<a class="viewcode-back" href="../../system.html#system.version.run_cmd">[docs]</a>
+<span class="k">def</span> <span class="nf">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="run_cmd_default">
+<a class="viewcode-back" href="../../system.html#system.version.run_cmd_default">[docs]</a>
+<span class="k">def</span> <span class="nf">run_cmd_default</span><span class="p">(</span><span class="n">cmd</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+  <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">default</span></div>
+
+
+
+<div class="viewcode-block" id="get_commit">
+<a class="viewcode-back" href="../../system.html#system.version.get_commit">[docs]</a>
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">get_commit</span><span class="p">(</span><span class="n">branch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;HEAD&quot;</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+  <span class="k">return</span> <span class="n">run_cmd_default</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;rev-parse&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_short_branch">
+<a class="viewcode-back" href="../../system.html#system.version.get_short_branch">[docs]</a>
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">get_short_branch</span><span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+  <span class="k">return</span> <span class="n">run_cmd_default</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;rev-parse&quot;</span><span class="p">,</span> <span class="s2">&quot;--abbrev-ref&quot;</span><span class="p">,</span> <span class="s2">&quot;HEAD&quot;</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_branch">
+<a class="viewcode-back" href="../../system.html#system.version.get_branch">[docs]</a>
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">get_branch</span><span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+  <span class="k">return</span> <span class="n">run_cmd_default</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;rev-parse&quot;</span><span class="p">,</span> <span class="s2">&quot;--abbrev-ref&quot;</span><span class="p">,</span> <span class="s2">&quot;--symbolic-full-name&quot;</span><span class="p">,</span> <span class="s2">&quot;@</span><span class="si">{u}</span><span class="s2">&quot;</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_origin">
+<a class="viewcode-back" href="../../system.html#system.version.get_origin">[docs]</a>
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">get_origin</span><span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">local_branch</span> <span class="o">=</span> <span class="n">run_cmd</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;name-rev&quot;</span><span class="p">,</span> <span class="s2">&quot;--name-only&quot;</span><span class="p">,</span> <span class="s2">&quot;HEAD&quot;</span><span class="p">])</span>
+    <span class="n">tracking_remote</span> <span class="o">=</span> <span class="n">run_cmd</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="s2">&quot;branch.&quot;</span> <span class="o">+</span> <span class="n">local_branch</span> <span class="o">+</span> <span class="s2">&quot;.remote&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">run_cmd</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="s2">&quot;remote.&quot;</span> <span class="o">+</span> <span class="n">tracking_remote</span> <span class="o">+</span> <span class="s2">&quot;.url&quot;</span><span class="p">])</span>
+  <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>  <span class="c1"># Not on a branch, fallback</span>
+    <span class="k">return</span> <span class="n">run_cmd_default</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="s2">&quot;--get&quot;</span><span class="p">,</span> <span class="s2">&quot;remote.origin.url&quot;</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_normalized_origin">
+<a class="viewcode-back" href="../../system.html#system.version.get_normalized_origin">[docs]</a>
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">get_normalized_origin</span><span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+  <span class="n">origin</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_origin</span><span class="p">()</span>
+
+  <span class="k">if</span> <span class="n">origin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">default</span>
+
+  <span class="k">return</span> <span class="n">origin</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;git@&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> \
+               <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.git&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> \
+               <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;https://&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> \
+               <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_version">
+<a class="viewcode-back" href="../../system.html#system.version.get_version">[docs]</a>
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">get_version</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="s2">&quot;common&quot;</span><span class="p">,</span> <span class="s2">&quot;version.h&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">_versionf</span><span class="p">:</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">_versionf</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="k">return</span> <span class="n">version</span></div>
+
+
+<div class="viewcode-block" id="get_short_version">
+<a class="viewcode-back" href="../../system.html#system.version.get_short_version">[docs]</a>
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">get_short_version</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">get_version</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># type: ignore</span></div>
+
+
+<div class="viewcode-block" id="is_prebuilt">
+<a class="viewcode-back" href="../../system.html#system.version.is_prebuilt">[docs]</a>
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">is_prebuilt</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="s1">&#39;prebuilt&#39;</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="is_comma_remote">
+<a class="viewcode-back" href="../../system.html#system.version.is_comma_remote">[docs]</a>
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">is_comma_remote</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="c1"># note to fork maintainers, this is used for release metrics. please do not</span>
+  <span class="c1"># touch this to get rid of the orange startup alert. there&#39;s better ways to do that</span>
+  <span class="n">origin</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_origin</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">origin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+  <span class="k">return</span> <span class="n">origin</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s1">&#39;git@github.com:commaai&#39;</span><span class="p">,</span> <span class="s1">&#39;https://github.com/commaai&#39;</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="is_tested_branch">
+<a class="viewcode-back" href="../../system.html#system.version.is_tested_branch">[docs]</a>
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">is_tested_branch</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">get_short_branch</span><span class="p">()</span> <span class="ow">in</span> <span class="n">TESTED_BRANCHES</span></div>
+
+
+<div class="viewcode-block" id="is_release_branch">
+<a class="viewcode-back" href="../../system.html#system.version.is_release_branch">[docs]</a>
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">is_release_branch</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">get_short_branch</span><span class="p">()</span> <span class="ow">in</span> <span class="n">RELEASE_BRANCHES</span></div>
+
+
+<div class="viewcode-block" id="is_dirty">
+<a class="viewcode-back" href="../../system.html#system.version.is_dirty">[docs]</a>
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">is_dirty</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="n">origin</span> <span class="o">=</span> <span class="n">get_origin</span><span class="p">()</span>
+  <span class="n">branch</span> <span class="o">=</span> <span class="n">get_branch</span><span class="p">()</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">origin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">branch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+  <span class="n">dirty</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Actually check dirty files</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_prebuilt</span><span class="p">():</span>
+      <span class="c1"># This is needed otherwise touched files might show up as modified</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;update-index&quot;</span><span class="p">,</span> <span class="s2">&quot;--refresh&quot;</span><span class="p">])</span>
+      <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+      <span class="n">dirty</span> <span class="o">=</span> <span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;diff-index&quot;</span><span class="p">,</span> <span class="s2">&quot;--quiet&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;git subprocess failed while checking dirty&quot;</span><span class="p">)</span>
+    <span class="n">dirty</span> <span class="o">=</span> <span class="kc">True</span>
+
+  <span class="k">return</span> <span class="n">dirty</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+  <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;TermsVersion&quot;</span><span class="p">,</span> <span class="n">terms_version</span><span class="p">)</span>
+  <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;TrainingVersion&quot;</span><span class="p">,</span> <span class="n">training_version</span><span class="p">)</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dirty: </span><span class="si">{</span><span class="n">is_dirty</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Version: </span><span class="si">{</span><span class="n">get_version</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Short version: </span><span class="si">{</span><span class="n">get_short_version</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Origin: </span><span class="si">{</span><span class="n">get_origin</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Normalized origin: </span><span class="si">{</span><span class="n">get_normalized_origin</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Branch: </span><span class="si">{</span><span class="n">get_branch</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Short branch: </span><span class="si">{</span><span class="n">get_short_branch</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prebuilt: </span><span class="si">{</span><span class="n">is_prebuilt</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

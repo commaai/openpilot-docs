@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>system.webrtc.webrtcd &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/system/webrtc/webrtcd.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">system.webrtc.webrtcd</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for system.webrtc.webrtcd</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="c1"># aiortc and its dependencies have lots of internal warnings :(</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">aiortc</span>
+<span class="kn">from</span> <span class="nn">aiortc.mediastreams</span> <span class="kn">import</span> <span class="n">VideoStreamTrack</span><span class="p">,</span> <span class="n">AudioStreamTrack</span>
+<span class="kn">from</span> <span class="nn">aiortc.contrib.media</span> <span class="kn">import</span> <span class="n">MediaBlackhole</span>
+<span class="kn">from</span> <span class="nn">aiortc.exceptions</span> <span class="kn">import</span> <span class="n">InvalidStateError</span>
+<span class="kn">from</span> <span class="nn">aiohttp</span> <span class="kn">import</span> <span class="n">web</span>
+<span class="kn">import</span> <span class="nn">capnp</span>
+<span class="kn">from</span> <span class="nn">teleoprtc</span> <span class="kn">import</span> <span class="n">WebRTCAnswerBuilder</span>
+<span class="kn">from</span> <span class="nn">teleoprtc.info</span> <span class="kn">import</span> <span class="n">parse_info_from_offer</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.system.webrtc.device.video</span> <span class="kn">import</span> <span class="n">LiveStreamVideoStreamTrack</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.webrtc.device.audio</span> <span class="kn">import</span> <span class="n">AudioInputStreamTrack</span><span class="p">,</span> <span class="n">AudioOutputSpeaker</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.webrtc.schema</span> <span class="kn">import</span> <span class="n">generate_field</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">messaging</span><span class="p">,</span> <span class="n">log</span>
+
+
+<div class="viewcode-block" id="CerealOutgoingMessageProxy">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.CerealOutgoingMessageProxy">[docs]</a>
+<span class="k">class</span> <span class="nc">CerealOutgoingMessageProxy</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sm</span> <span class="o">=</span> <span class="n">sm</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">aiortc</span><span class="o">.</span><span class="n">RTCDataChannel</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="CerealOutgoingMessageProxy.add_channel">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.CerealOutgoingMessageProxy.add_channel">[docs]</a>
+  <span class="k">def</span> <span class="nf">add_channel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="n">aiortc</span><span class="o">.</span><span class="n">RTCDataChannel</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CerealOutgoingMessageProxy.to_json">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.CerealOutgoingMessageProxy.to_json">[docs]</a>
+  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg_content</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg_content</span><span class="p">,</span> <span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructReader</span><span class="p">):</span>
+      <span class="n">msg_dict</span> <span class="o">=</span> <span class="n">msg_content</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg_content</span><span class="p">,</span> <span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicListReader</span><span class="p">):</span>
+      <span class="n">msg_dict</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">msg_content</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg_content</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+      <span class="n">msg_dict</span> <span class="o">=</span> <span class="n">msg_content</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">msg_dict</span> <span class="o">=</span> <span class="n">msg_content</span>
+
+    <span class="k">return</span> <span class="n">msg_dict</span></div>
+
+
+<div class="viewcode-block" id="CerealOutgoingMessageProxy.update">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.CerealOutgoingMessageProxy.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># this is blocking in async context...</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">service</span><span class="p">,</span> <span class="n">updated</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">updated</span><span class="p">:</span>
+        <span class="k">continue</span>
+      <span class="n">msg_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="n">service</span><span class="p">])</span>
+      <span class="n">mono_time</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">[</span><span class="n">service</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">valid</span><span class="p">[</span><span class="n">service</span><span class="p">]</span>
+      <span class="n">outgoing_msg</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">service</span><span class="p">,</span> <span class="s2">&quot;logMonoTime&quot;</span><span class="p">:</span> <span class="n">mono_time</span><span class="p">,</span> <span class="s2">&quot;valid&quot;</span><span class="p">:</span> <span class="n">valid</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">msg_dict</span><span class="p">}</span>
+      <span class="n">encoded_msg</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">outgoing_msg</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+      <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">:</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">encoded_msg</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="CerealIncomingMessageProxy">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.CerealIncomingMessageProxy">[docs]</a>
+<span class="k">class</span> <span class="nc">CerealIncomingMessageProxy</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pm</span> <span class="o">=</span> <span class="n">pm</span>
+
+<div class="viewcode-block" id="CerealIncomingMessageProxy.send">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.CerealIncomingMessageProxy.send">[docs]</a>
+  <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
+    <span class="n">msg_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">msg_type</span><span class="p">,</span> <span class="n">msg_data</span> <span class="o">=</span> <span class="n">msg_json</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">msg_json</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+      <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg_data</span><span class="p">)</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">,</span> <span class="n">msg_data</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="CerealProxyRunner">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.CerealProxyRunner">[docs]</a>
+<span class="k">class</span> <span class="nc">CerealProxyRunner</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proxy</span><span class="p">:</span> <span class="n">CerealOutgoingMessageProxy</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">proxy</span> <span class="o">=</span> <span class="n">proxy</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;webrtcd&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CerealProxyRunner.start">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.CerealProxyRunner.start">[docs]</a>
+  <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="ow">is</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="CerealProxyRunner.stop">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.CerealProxyRunner.stop">[docs]</a>
+  <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
+      <span class="k">return</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="CerealProxyRunner.run">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.CerealProxyRunner.run">[docs]</a>
+  <span class="k">async</span> <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proxy</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+      <span class="k">except</span> <span class="n">InvalidStateError</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Cereal outgoing proxy invalid state (connection closed)&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+      <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Cereal outgoing proxy failure: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
+      <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="StreamSession">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.StreamSession">[docs]</a>
+<span class="k">class</span> <span class="nc">StreamSession</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sdp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cameras</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">incoming_services</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">outgoing_services</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">debug_mode</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">parse_info_from_offer</span><span class="p">(</span><span class="n">sdp</span><span class="p">)</span>
+    <span class="n">builder</span> <span class="o">=</span> <span class="n">WebRTCAnswerBuilder</span><span class="p">(</span><span class="n">sdp</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">cameras</span><span class="p">)</span> <span class="o">==</span> <span class="n">config</span><span class="o">.</span><span class="n">n_expected_camera_tracks</span><span class="p">,</span> <span class="s2">&quot;Incoming stream has misconfigured number of video tracks&quot;</span>
+    <span class="k">for</span> <span class="n">cam</span> <span class="ow">in</span> <span class="n">cameras</span><span class="p">:</span>
+      <span class="n">track</span> <span class="o">=</span> <span class="n">LiveStreamVideoStreamTrack</span><span class="p">(</span><span class="n">cam</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">debug_mode</span> <span class="k">else</span> <span class="n">VideoStreamTrack</span><span class="p">()</span>
+      <span class="n">builder</span><span class="o">.</span><span class="n">add_video_stream</span><span class="p">(</span><span class="n">cam</span><span class="p">,</span> <span class="n">track</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">expected_audio_track</span><span class="p">:</span>
+      <span class="n">track</span> <span class="o">=</span> <span class="n">AudioInputStreamTrack</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">debug_mode</span> <span class="k">else</span> <span class="n">AudioStreamTrack</span><span class="p">()</span>
+      <span class="n">builder</span><span class="o">.</span><span class="n">add_audio_stream</span><span class="p">(</span><span class="n">track</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">incoming_audio_track</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">audio_output_cls</span> <span class="o">=</span> <span class="n">AudioOutputSpeaker</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">debug_mode</span> <span class="k">else</span> <span class="n">MediaBlackhole</span>
+      <span class="n">builder</span><span class="o">.</span><span class="n">offer_to_receive_audio_stream</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">stream</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">stream</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">outgoing_bridge</span> <span class="o">=</span> <span class="n">CerealOutgoingMessageProxy</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">(</span><span class="n">outgoing_services</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">incoming_bridge</span> <span class="o">=</span> <span class="n">CerealIncomingMessageProxy</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">(</span><span class="n">incoming_services</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">outgoing_bridge_runner</span> <span class="o">=</span> <span class="n">CerealProxyRunner</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outgoing_bridge</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">audio_output</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">AudioOutputSpeaker</span><span class="p">,</span> <span class="n">MediaBlackhole</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">run_task</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">Task</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;webrtcd&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;New stream session (</span><span class="si">%s</span><span class="s2">), cameras </span><span class="si">%s</span><span class="s2">, audio in </span><span class="si">%s</span><span class="s2"> out </span><span class="si">%s</span><span class="s2">, incoming services </span><span class="si">%s</span><span class="s2">, outgoing services </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="n">cameras</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">incoming_audio_track</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">expected_audio_track</span><span class="p">,</span> <span class="n">incoming_services</span><span class="p">,</span> <span class="n">outgoing_services</span><span class="p">)</span>
+
+<div class="viewcode-block" id="StreamSession.start">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.StreamSession.start">[docs]</a>
+  <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">run_task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="StreamSession.stop">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.StreamSession.stop">[docs]</a>
+  <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_task</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
+      <span class="k">return</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">run_task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">run_task</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">post_run_cleanup</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="StreamSession.get_answer">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.StreamSession.get_answer">[docs]</a>
+  <span class="k">async</span> <span class="k">def</span> <span class="nf">get_answer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="StreamSession.message_handler">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.StreamSession.message_handler">[docs]</a>
+  <span class="k">async</span> <span class="k">def</span> <span class="nf">message_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">incoming_bridge</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Cereal incoming proxy failure: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StreamSession.run">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.StreamSession.run">[docs]</a>
+  <span class="k">async</span> <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">wait_for_connection</span><span class="p">()</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">has_messaging_channel</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">set_message_handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message_handler</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">get_messaging_channel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outgoing_bridge_runner</span><span class="o">.</span><span class="n">proxy</span><span class="o">.</span><span class="n">add_channel</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outgoing_bridge_runner</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">has_incoming_audio_track</span><span class="p">():</span>
+        <span class="n">track</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">get_incoming_audio_track</span><span class="p">(</span><span class="n">buffered</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">audio_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">audio_output_cls</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">audio_output</span><span class="o">.</span><span class="n">addTrack</span><span class="p">(</span><span class="n">track</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">audio_output</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Stream session (</span><span class="si">%s</span><span class="s2">) connected&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+
+      <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">wait_for_disconnection</span><span class="p">()</span>
+      <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_run_cleanup</span><span class="p">()</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Stream session (</span><span class="si">%s</span><span class="s2">) ended&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Stream session failure: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StreamSession.post_run_cleanup">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.StreamSession.post_run_cleanup">[docs]</a>
+  <span class="k">async</span> <span class="k">def</span> <span class="nf">post_run_cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">outgoing_bridge_runner</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">audio_output</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">audio_output</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="StreamRequestBody">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.StreamRequestBody">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">StreamRequestBody</span><span class="p">:</span>
+  <span class="n">sdp</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">cameras</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+  <span class="n">bridge_services_in</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+  <span class="n">bridge_services_out</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_stream">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.get_stream">[docs]</a>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_stream</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">web</span><span class="o">.</span><span class="n">Request</span><span class="p">):</span>
+  <span class="n">stream_dict</span><span class="p">,</span> <span class="n">debug_mode</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">app</span><span class="p">[</span><span class="s1">&#39;streams&#39;</span><span class="p">],</span> <span class="n">request</span><span class="o">.</span><span class="n">app</span><span class="p">[</span><span class="s1">&#39;debug&#39;</span><span class="p">]</span>
+  <span class="n">raw_body</span> <span class="o">=</span> <span class="k">await</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+  <span class="n">body</span> <span class="o">=</span> <span class="n">StreamRequestBody</span><span class="p">(</span><span class="o">**</span><span class="n">raw_body</span><span class="p">)</span>
+
+  <span class="n">session</span> <span class="o">=</span> <span class="n">StreamSession</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">sdp</span><span class="p">,</span> <span class="n">body</span><span class="o">.</span><span class="n">cameras</span><span class="p">,</span> <span class="n">body</span><span class="o">.</span><span class="n">bridge_services_in</span><span class="p">,</span> <span class="n">body</span><span class="o">.</span><span class="n">bridge_services_out</span><span class="p">,</span> <span class="n">debug_mode</span><span class="p">)</span>
+  <span class="n">answer</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">get_answer</span><span class="p">()</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+  <span class="n">stream_dict</span><span class="p">[</span><span class="n">session</span><span class="o">.</span><span class="n">identifier</span><span class="p">]</span> <span class="o">=</span> <span class="n">session</span>
+
+  <span class="k">return</span> <span class="n">web</span><span class="o">.</span><span class="n">json_response</span><span class="p">({</span><span class="s2">&quot;sdp&quot;</span><span class="p">:</span> <span class="n">answer</span><span class="o">.</span><span class="n">sdp</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">answer</span><span class="o">.</span><span class="n">type</span><span class="p">})</span></div>
+
+
+
+<div class="viewcode-block" id="get_schema">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.get_schema">[docs]</a>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_schema</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">web</span><span class="o">.</span><span class="n">Request</span><span class="p">):</span>
+  <span class="n">services</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">query</span><span class="p">[</span><span class="s2">&quot;services&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+  <span class="n">services</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">services</span> <span class="k">if</span> <span class="n">s</span><span class="p">]</span>
+  <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="ow">in</span> <span class="n">log</span><span class="o">.</span><span class="n">Event</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">fields</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">s</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;DEPRECATED&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">services</span><span class="p">),</span> <span class="s2">&quot;Invalid service name&quot;</span>
+  <span class="n">schema_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">generate_field</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Event</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">s</span><span class="p">])</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">services</span><span class="p">}</span>
+  <span class="k">return</span> <span class="n">web</span><span class="o">.</span><span class="n">json_response</span><span class="p">(</span><span class="n">schema_dict</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="on_shutdown">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.on_shutdown">[docs]</a>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">on_shutdown</span><span class="p">(</span><span class="n">app</span><span class="p">:</span> <span class="n">web</span><span class="o">.</span><span class="n">Application</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">session</span> <span class="ow">in</span> <span class="n">app</span><span class="p">[</span><span class="s1">&#39;streams&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+  <span class="k">del</span> <span class="n">app</span><span class="p">[</span><span class="s1">&#39;streams&#39;</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="webrtcd_thread">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.webrtcd_thread">[docs]</a>
+<span class="k">def</span> <span class="nf">webrtcd_thread</span><span class="p">(</span><span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+  <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">,</span> <span class="n">handlers</span><span class="o">=</span><span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()])</span>
+  <span class="n">logging_level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span> <span class="k">if</span> <span class="n">debug</span> <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
+  <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;WebRTCStream&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging_level</span><span class="p">)</span>
+  <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;webrtcd&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging_level</span><span class="p">)</span>
+
+  <span class="n">app</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">Application</span><span class="p">()</span>
+
+  <span class="n">app</span><span class="p">[</span><span class="s1">&#39;streams&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+  <span class="n">app</span><span class="p">[</span><span class="s1">&#39;debug&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">debug</span>
+  <span class="n">app</span><span class="o">.</span><span class="n">on_shutdown</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">on_shutdown</span><span class="p">)</span>
+  <span class="n">app</span><span class="o">.</span><span class="n">router</span><span class="o">.</span><span class="n">add_post</span><span class="p">(</span><span class="s2">&quot;/stream&quot;</span><span class="p">,</span> <span class="n">get_stream</span><span class="p">)</span>
+  <span class="n">app</span><span class="o">.</span><span class="n">router</span><span class="o">.</span><span class="n">add_get</span><span class="p">(</span><span class="s2">&quot;/schema&quot;</span><span class="p">,</span> <span class="n">get_schema</span><span class="p">)</span>
+
+  <span class="n">web</span><span class="o">.</span><span class="n">run_app</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../system.webrtc.html#system.webrtc.webrtcd.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+  <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;WebRTC daemon&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--host&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Host to listen on&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--port&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">5001</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Port to listen on&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--debug&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable debug mode&quot;</span><span class="p">)</span>
+  <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+  <span class="n">webrtcd_thread</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

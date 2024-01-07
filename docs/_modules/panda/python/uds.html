@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>panda.python.uds &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/panda/python/uds.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../python.html">panda.python</a></li>
+      <li class="breadcrumb-item active">panda.python.uds</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for panda.python.uds</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Deque</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">cast</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<div class="viewcode-block" id="SERVICE_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.SERVICE_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">SERVICE_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">DIAGNOSTIC_SESSION_CONTROL</span> <span class="o">=</span> <span class="mh">0x10</span>
+  <span class="n">ECU_RESET</span> <span class="o">=</span> <span class="mh">0x11</span>
+  <span class="n">SECURITY_ACCESS</span> <span class="o">=</span> <span class="mh">0x27</span>
+  <span class="n">COMMUNICATION_CONTROL</span> <span class="o">=</span> <span class="mh">0x28</span>
+  <span class="n">TESTER_PRESENT</span> <span class="o">=</span> <span class="mh">0x3E</span>
+  <span class="n">ACCESS_TIMING_PARAMETER</span> <span class="o">=</span> <span class="mh">0x83</span>
+  <span class="n">SECURED_DATA_TRANSMISSION</span> <span class="o">=</span> <span class="mh">0x84</span>
+  <span class="n">CONTROL_DTC_SETTING</span> <span class="o">=</span> <span class="mh">0x85</span>
+  <span class="n">RESPONSE_ON_EVENT</span> <span class="o">=</span> <span class="mh">0x86</span>
+  <span class="n">LINK_CONTROL</span> <span class="o">=</span> <span class="mh">0x87</span>
+  <span class="n">READ_DATA_BY_IDENTIFIER</span> <span class="o">=</span> <span class="mh">0x22</span>
+  <span class="n">READ_MEMORY_BY_ADDRESS</span> <span class="o">=</span> <span class="mh">0x23</span>
+  <span class="n">READ_SCALING_DATA_BY_IDENTIFIER</span> <span class="o">=</span> <span class="mh">0x24</span>
+  <span class="n">READ_DATA_BY_PERIODIC_IDENTIFIER</span> <span class="o">=</span> <span class="mh">0x2A</span>
+  <span class="n">DYNAMICALLY_DEFINE_DATA_IDENTIFIER</span> <span class="o">=</span> <span class="mh">0x2C</span>
+  <span class="n">WRITE_DATA_BY_IDENTIFIER</span> <span class="o">=</span> <span class="mh">0x2E</span>
+  <span class="n">WRITE_MEMORY_BY_ADDRESS</span> <span class="o">=</span> <span class="mh">0x3D</span>
+  <span class="n">CLEAR_DIAGNOSTIC_INFORMATION</span> <span class="o">=</span> <span class="mh">0x14</span>
+  <span class="n">READ_DTC_INFORMATION</span> <span class="o">=</span> <span class="mh">0x19</span>
+  <span class="n">INPUT_OUTPUT_CONTROL_BY_IDENTIFIER</span> <span class="o">=</span> <span class="mh">0x2F</span>
+  <span class="n">ROUTINE_CONTROL</span> <span class="o">=</span> <span class="mh">0x31</span>
+  <span class="n">REQUEST_DOWNLOAD</span> <span class="o">=</span> <span class="mh">0x34</span>
+  <span class="n">REQUEST_UPLOAD</span> <span class="o">=</span> <span class="mh">0x35</span>
+  <span class="n">TRANSFER_DATA</span> <span class="o">=</span> <span class="mh">0x36</span>
+  <span class="n">REQUEST_TRANSFER_EXIT</span> <span class="o">=</span> <span class="mh">0x37</span></div>
+
+
+<div class="viewcode-block" id="SESSION_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.SESSION_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">SESSION_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">DEFAULT</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">PROGRAMMING</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">EXTENDED_DIAGNOSTIC</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">SAFETY_SYSTEM_DIAGNOSTIC</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="RESET_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.RESET_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">RESET_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">HARD</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">KEY_OFF_ON</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">SOFT</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">ENABLE_RAPID_POWER_SHUTDOWN</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">DISABLE_RAPID_POWER_SHUTDOWN</span> <span class="o">=</span> <span class="mi">5</span></div>
+
+
+<div class="viewcode-block" id="ACCESS_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.ACCESS_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">ACCESS_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">REQUEST_SEED</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">SEND_KEY</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="CONTROL_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.CONTROL_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">CONTROL_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">ENABLE_RX_ENABLE_TX</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">ENABLE_RX_DISABLE_TX</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">DISABLE_RX_ENABLE_TX</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">DISABLE_RX_DISABLE_TX</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="MESSAGE_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.MESSAGE_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">MESSAGE_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">NORMAL</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">NETWORK_MANAGEMENT</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">NORMAL_AND_NETWORK_MANAGEMENT</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="TIMING_PARAMETER_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.TIMING_PARAMETER_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">TIMING_PARAMETER_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">READ_EXTENDED_SET</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">SET_TO_DEFAULT_VALUES</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">READ_CURRENTLY_ACTIVE</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">SET_TO_GIVEN_VALUES</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="DTC_SETTING_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.DTC_SETTING_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">DTC_SETTING_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">ON</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">OFF</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="RESPONSE_EVENT_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.RESPONSE_EVENT_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">RESPONSE_EVENT_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">STOP_RESPONSE_ON_EVENT</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">ON_DTC_STATUS_CHANGE</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">ON_TIMER_INTERRUPT</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">ON_CHANGE_OF_DATA_IDENTIFIER</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">REPORT_ACTIVATED_EVENTS</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">START_RESPONSE_ON_EVENT</span> <span class="o">=</span> <span class="mi">5</span>
+  <span class="n">CLEAR_RESPONSE_ON_EVENT</span> <span class="o">=</span> <span class="mi">6</span>
+  <span class="n">ON_COMPARISON_OF_VALUES</span> <span class="o">=</span> <span class="mi">7</span></div>
+
+
+<div class="viewcode-block" id="LINK_CONTROL_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.LINK_CONTROL_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">LINK_CONTROL_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">VERIFY_BAUDRATE_TRANSITION_WITH_FIXED_BAUDRATE</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">VERIFY_BAUDRATE_TRANSITION_WITH_SPECIFIC_BAUDRATE</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">TRANSITION_BAUDRATE</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="BAUD_RATE_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.BAUD_RATE_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">BAUD_RATE_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">PC9600</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">PC19200</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">PC38400</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">PC57600</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">PC115200</span> <span class="o">=</span> <span class="mi">5</span>
+  <span class="n">CAN125000</span> <span class="o">=</span> <span class="mi">16</span>
+  <span class="n">CAN250000</span> <span class="o">=</span> <span class="mi">17</span>
+  <span class="n">CAN500000</span> <span class="o">=</span> <span class="mi">18</span>
+  <span class="n">CAN1000000</span> <span class="o">=</span> <span class="mi">19</span></div>
+
+
+<div class="viewcode-block" id="DATA_IDENTIFIER_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.DATA_IDENTIFIER_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">DATA_IDENTIFIER_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">BOOT_SOFTWARE_IDENTIFICATION</span> <span class="o">=</span> <span class="mh">0xF180</span>
+  <span class="n">APPLICATION_SOFTWARE_IDENTIFICATION</span> <span class="o">=</span> <span class="mh">0xF181</span>
+  <span class="n">APPLICATION_DATA_IDENTIFICATION</span> <span class="o">=</span> <span class="mh">0xF182</span>
+  <span class="n">BOOT_SOFTWARE_FINGERPRINT</span> <span class="o">=</span> <span class="mh">0xF183</span>
+  <span class="n">APPLICATION_SOFTWARE_FINGERPRINT</span> <span class="o">=</span> <span class="mh">0xF184</span>
+  <span class="n">APPLICATION_DATA_FINGERPRINT</span> <span class="o">=</span> <span class="mh">0xF185</span>
+  <span class="n">ACTIVE_DIAGNOSTIC_SESSION</span> <span class="o">=</span> <span class="mh">0xF186</span>
+  <span class="n">VEHICLE_MANUFACTURER_SPARE_PART_NUMBER</span> <span class="o">=</span> <span class="mh">0xF187</span>
+  <span class="n">VEHICLE_MANUFACTURER_ECU_SOFTWARE_NUMBER</span> <span class="o">=</span> <span class="mh">0xF188</span>
+  <span class="n">VEHICLE_MANUFACTURER_ECU_SOFTWARE_VERSION_NUMBER</span> <span class="o">=</span> <span class="mh">0xF189</span>
+  <span class="n">SYSTEM_SUPPLIER_IDENTIFIER</span> <span class="o">=</span> <span class="mh">0xF18A</span>
+  <span class="n">ECU_MANUFACTURING_DATE</span> <span class="o">=</span> <span class="mh">0xF18B</span>
+  <span class="n">ECU_SERIAL_NUMBER</span> <span class="o">=</span> <span class="mh">0xF18C</span>
+  <span class="n">SUPPORTED_FUNCTIONAL_UNITS</span> <span class="o">=</span> <span class="mh">0xF18D</span>
+  <span class="n">VEHICLE_MANUFACTURER_KIT_ASSEMBLY_PART_NUMBER</span> <span class="o">=</span> <span class="mh">0xF18E</span>
+  <span class="n">VIN</span> <span class="o">=</span> <span class="mh">0xF190</span>
+  <span class="n">VEHICLE_MANUFACTURER_ECU_HARDWARE_NUMBER</span> <span class="o">=</span> <span class="mh">0xF191</span>
+  <span class="n">SYSTEM_SUPPLIER_ECU_HARDWARE_NUMBER</span> <span class="o">=</span> <span class="mh">0xF192</span>
+  <span class="n">SYSTEM_SUPPLIER_ECU_HARDWARE_VERSION_NUMBER</span> <span class="o">=</span> <span class="mh">0xF193</span>
+  <span class="n">SYSTEM_SUPPLIER_ECU_SOFTWARE_NUMBER</span> <span class="o">=</span> <span class="mh">0xF194</span>
+  <span class="n">SYSTEM_SUPPLIER_ECU_SOFTWARE_VERSION_NUMBER</span> <span class="o">=</span> <span class="mh">0xF195</span>
+  <span class="n">EXHAUST_REGULATION_OR_TYPE_APPROVAL_NUMBER</span> <span class="o">=</span> <span class="mh">0xF196</span>
+  <span class="n">SYSTEM_NAME_OR_ENGINE_TYPE</span> <span class="o">=</span> <span class="mh">0xF197</span>
+  <span class="n">REPAIR_SHOP_CODE_OR_TESTER_SERIAL_NUMBER</span> <span class="o">=</span> <span class="mh">0xF198</span>
+  <span class="n">PROGRAMMING_DATE</span> <span class="o">=</span> <span class="mh">0xF199</span>
+  <span class="n">CALIBRATION_REPAIR_SHOP_CODE_OR_CALIBRATION_EQUIPMENT_SERIAL_NUMBER</span> <span class="o">=</span> <span class="mh">0xF19A</span>
+  <span class="n">CALIBRATION_DATE</span> <span class="o">=</span> <span class="mh">0xF19B</span>
+  <span class="n">CALIBRATION_EQUIPMENT_SOFTWARE_NUMBER</span> <span class="o">=</span> <span class="mh">0xF19C</span>
+  <span class="n">ECU_INSTALLATION_DATE</span> <span class="o">=</span> <span class="mh">0xF19D</span>
+  <span class="n">ODX_FILE</span> <span class="o">=</span> <span class="mh">0xF19E</span>
+  <span class="n">ENTITY</span> <span class="o">=</span> <span class="mh">0xF19F</span></div>
+
+
+<div class="viewcode-block" id="TRANSMISSION_MODE_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.TRANSMISSION_MODE_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">TRANSMISSION_MODE_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">SEND_AT_SLOW_RATE</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">SEND_AT_MEDIUM_RATE</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">SEND_AT_FAST_RATE</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">STOP_SENDING</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="DYNAMIC_DEFINITION_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.DYNAMIC_DEFINITION_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">DYNAMIC_DEFINITION_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">DEFINE_BY_IDENTIFIER</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">DEFINE_BY_MEMORY_ADDRESS</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">CLEAR_DYNAMICALLY_DEFINED_DATA_IDENTIFIER</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="ISOTP_FRAME_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.ISOTP_FRAME_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">ISOTP_FRAME_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">SINGLE</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">FIRST</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">CONSECUTIVE</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">FLOW</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="DynamicSourceDefinition">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.DynamicSourceDefinition">[docs]</a>
+<span class="k">class</span> <span class="nc">DynamicSourceDefinition</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+  <span class="n">data_identifier</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">position</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">memory_size</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">memory_address</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+<div class="viewcode-block" id="DTC_GROUP_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.DTC_GROUP_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">DTC_GROUP_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">EMISSIONS</span> <span class="o">=</span> <span class="mh">0x000000</span>
+  <span class="n">ALL</span> <span class="o">=</span> <span class="mh">0xFFFFFF</span></div>
+
+
+<div class="viewcode-block" id="DTC_REPORT_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.DTC_REPORT_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">DTC_REPORT_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">NUMBER_OF_DTC_BY_STATUS_MASK</span> <span class="o">=</span> <span class="mh">0x01</span>
+  <span class="n">DTC_BY_STATUS_MASK</span> <span class="o">=</span> <span class="mh">0x02</span>
+  <span class="n">DTC_SNAPSHOT_IDENTIFICATION</span> <span class="o">=</span> <span class="mh">0x03</span>
+  <span class="n">DTC_SNAPSHOT_RECORD_BY_DTC_NUMBER</span> <span class="o">=</span> <span class="mh">0x04</span>
+  <span class="n">DTC_SNAPSHOT_RECORD_BY_RECORD_NUMBER</span> <span class="o">=</span> <span class="mh">0x05</span>
+  <span class="n">DTC_EXTENDED_DATA_RECORD_BY_DTC_NUMBER</span> <span class="o">=</span> <span class="mh">0x06</span>
+  <span class="n">NUMBER_OF_DTC_BY_SEVERITY_MASK_RECORD</span> <span class="o">=</span> <span class="mh">0x07</span>
+  <span class="n">DTC_BY_SEVERITY_MASK_RECORD</span> <span class="o">=</span> <span class="mh">0x08</span>
+  <span class="n">SEVERITY_INFORMATION_OF_DTC</span> <span class="o">=</span> <span class="mh">0x09</span>
+  <span class="n">SUPPORTED_DTC</span> <span class="o">=</span> <span class="mh">0x0A</span>
+  <span class="n">FIRST_TEST_FAILED_DTC</span> <span class="o">=</span> <span class="mh">0x0B</span>
+  <span class="n">FIRST_CONFIRMED_DTC</span> <span class="o">=</span> <span class="mh">0x0C</span>
+  <span class="n">MOST_RECENT_TEST_FAILED_DTC</span> <span class="o">=</span> <span class="mh">0x0D</span>
+  <span class="n">MOST_RECENT_CONFIRMED_DTC</span> <span class="o">=</span> <span class="mh">0x0E</span>
+  <span class="n">MIRROR_MEMORY_DTC_BY_STATUS_MASK</span> <span class="o">=</span> <span class="mh">0x0F</span>
+  <span class="n">MIRROR_MEMORY_DTC_EXTENDED_DATA_RECORD_BY_DTC_NUMBER</span> <span class="o">=</span> <span class="mh">0x10</span>
+  <span class="n">NUMBER_OF_MIRROR_MEMORY_DTC_BY_STATUS_MASK</span> <span class="o">=</span> <span class="mh">0x11</span>
+  <span class="n">NUMBER_OF_EMISSIONS_RELATED_OBD_DTC_BY_STATUS_MASK</span> <span class="o">=</span> <span class="mh">0x12</span>
+  <span class="n">EMISSIONS_RELATED_OBD_DTC_BY_STATUS_MASK</span> <span class="o">=</span> <span class="mh">0x13</span>
+  <span class="n">DTC_FAULT_DETECTION_COUNTER</span> <span class="o">=</span> <span class="mh">0x14</span>
+  <span class="n">DTC_WITH_PERMANENT_STATUS</span> <span class="o">=</span> <span class="mh">0x15</span></div>
+
+
+<div class="viewcode-block" id="DTC_STATUS_MASK_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.DTC_STATUS_MASK_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">DTC_STATUS_MASK_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">TEST_FAILED</span> <span class="o">=</span> <span class="mh">0x01</span>
+  <span class="n">TEST_FAILED_THIS_OPERATION_CYCLE</span> <span class="o">=</span> <span class="mh">0x02</span>
+  <span class="n">PENDING_DTC</span> <span class="o">=</span> <span class="mh">0x04</span>
+  <span class="n">CONFIRMED_DTC</span> <span class="o">=</span> <span class="mh">0x08</span>
+  <span class="n">TEST_NOT_COMPLETED_SINCE_LAST_CLEAR</span> <span class="o">=</span> <span class="mh">0x10</span>
+  <span class="n">TEST_FAILED_SINCE_LAST_CLEAR</span> <span class="o">=</span> <span class="mh">0x20</span>
+  <span class="n">TEST_NOT_COMPLETED_THIS_OPERATION_CYCLE</span> <span class="o">=</span> <span class="mh">0x40</span>
+  <span class="n">WARNING_INDICATOR_REQUESTED</span> <span class="o">=</span> <span class="mh">0x80</span>
+  <span class="n">ALL</span> <span class="o">=</span> <span class="mh">0xFF</span></div>
+
+
+<div class="viewcode-block" id="DTC_SEVERITY_MASK_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.DTC_SEVERITY_MASK_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">DTC_SEVERITY_MASK_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">MAINTENANCE_ONLY</span> <span class="o">=</span> <span class="mh">0x20</span>
+  <span class="n">CHECK_AT_NEXT_HALT</span> <span class="o">=</span> <span class="mh">0x40</span>
+  <span class="n">CHECK_IMMEDIATELY</span> <span class="o">=</span> <span class="mh">0x80</span>
+  <span class="n">ALL</span> <span class="o">=</span> <span class="mh">0xE0</span></div>
+
+
+<div class="viewcode-block" id="CONTROL_PARAMETER_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.CONTROL_PARAMETER_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">CONTROL_PARAMETER_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">RETURN_CONTROL_TO_ECU</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">RESET_TO_DEFAULT</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">FREEZE_CURRENT_STATE</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">SHORT_TERM_ADJUSTMENT</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="ROUTINE_CONTROL_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.ROUTINE_CONTROL_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">ROUTINE_CONTROL_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">START</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">STOP</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">REQUEST_RESULTS</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="ROUTINE_IDENTIFIER_TYPE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.ROUTINE_IDENTIFIER_TYPE">[docs]</a>
+<span class="k">class</span> <span class="nc">ROUTINE_IDENTIFIER_TYPE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">ERASE_MEMORY</span> <span class="o">=</span> <span class="mh">0xFF00</span>
+  <span class="n">CHECK_PROGRAMMING_DEPENDENCIES</span> <span class="o">=</span> <span class="mh">0xFF01</span>
+  <span class="n">ERASE_MIRROR_MEMORY_DTCS</span> <span class="o">=</span> <span class="mh">0xFF02</span></div>
+
+
+<div class="viewcode-block" id="MessageTimeoutError">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.MessageTimeoutError">[docs]</a>
+<span class="k">class</span> <span class="nc">MessageTimeoutError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="NegativeResponseError">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.NegativeResponseError">[docs]</a>
+<span class="k">class</span> <span class="nc">NegativeResponseError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">service_id</span><span class="p">,</span> <span class="n">error_code</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">service_id</span> <span class="o">=</span> <span class="n">service_id</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">error_code</span> <span class="o">=</span> <span class="n">error_code</span>
+
+  <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span></div>
+
+
+<div class="viewcode-block" id="InvalidServiceIdError">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.InvalidServiceIdError">[docs]</a>
+<span class="k">class</span> <span class="nc">InvalidServiceIdError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="InvalidSubFunctionError">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.InvalidSubFunctionError">[docs]</a>
+<span class="k">class</span> <span class="nc">InvalidSubFunctionError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="InvalidSubAddressError">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.InvalidSubAddressError">[docs]</a>
+<span class="k">class</span> <span class="nc">InvalidSubAddressError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">pass</span></div>
+
+
+<span class="n">_negative_response_codes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mh">0x00</span><span class="p">:</span> <span class="s1">&#39;positive response&#39;</span><span class="p">,</span>
+    <span class="mh">0x10</span><span class="p">:</span> <span class="s1">&#39;general reject&#39;</span><span class="p">,</span>
+    <span class="mh">0x11</span><span class="p">:</span> <span class="s1">&#39;service not supported&#39;</span><span class="p">,</span>
+    <span class="mh">0x12</span><span class="p">:</span> <span class="s1">&#39;sub-function not supported&#39;</span><span class="p">,</span>
+    <span class="mh">0x13</span><span class="p">:</span> <span class="s1">&#39;incorrect message length or invalid format&#39;</span><span class="p">,</span>
+    <span class="mh">0x14</span><span class="p">:</span> <span class="s1">&#39;response too long&#39;</span><span class="p">,</span>
+    <span class="mh">0x21</span><span class="p">:</span> <span class="s1">&#39;busy repeat request&#39;</span><span class="p">,</span>
+    <span class="mh">0x22</span><span class="p">:</span> <span class="s1">&#39;conditions not correct&#39;</span><span class="p">,</span>
+    <span class="mh">0x24</span><span class="p">:</span> <span class="s1">&#39;request sequence error&#39;</span><span class="p">,</span>
+    <span class="mh">0x25</span><span class="p">:</span> <span class="s1">&#39;no response from subnet component&#39;</span><span class="p">,</span>
+    <span class="mh">0x26</span><span class="p">:</span> <span class="s1">&#39;failure prevents execution of requested action&#39;</span><span class="p">,</span>
+    <span class="mh">0x31</span><span class="p">:</span> <span class="s1">&#39;request out of range&#39;</span><span class="p">,</span>
+    <span class="mh">0x33</span><span class="p">:</span> <span class="s1">&#39;security access denied&#39;</span><span class="p">,</span>
+    <span class="mh">0x35</span><span class="p">:</span> <span class="s1">&#39;invalid key&#39;</span><span class="p">,</span>
+    <span class="mh">0x36</span><span class="p">:</span> <span class="s1">&#39;exceed number of attempts&#39;</span><span class="p">,</span>
+    <span class="mh">0x37</span><span class="p">:</span> <span class="s1">&#39;required time delay not expired&#39;</span><span class="p">,</span>
+    <span class="mh">0x70</span><span class="p">:</span> <span class="s1">&#39;upload download not accepted&#39;</span><span class="p">,</span>
+    <span class="mh">0x71</span><span class="p">:</span> <span class="s1">&#39;transfer data suspended&#39;</span><span class="p">,</span>
+    <span class="mh">0x72</span><span class="p">:</span> <span class="s1">&#39;general programming failure&#39;</span><span class="p">,</span>
+    <span class="mh">0x73</span><span class="p">:</span> <span class="s1">&#39;wrong block sequence counter&#39;</span><span class="p">,</span>
+    <span class="mh">0x78</span><span class="p">:</span> <span class="s1">&#39;request correctly received - response pending&#39;</span><span class="p">,</span>
+    <span class="mh">0x7e</span><span class="p">:</span> <span class="s1">&#39;sub-function not supported in active session&#39;</span><span class="p">,</span>
+    <span class="mh">0x7f</span><span class="p">:</span> <span class="s1">&#39;service not supported in active session&#39;</span><span class="p">,</span>
+    <span class="mh">0x81</span><span class="p">:</span> <span class="s1">&#39;rpm too high&#39;</span><span class="p">,</span>
+    <span class="mh">0x82</span><span class="p">:</span> <span class="s1">&#39;rpm too low&#39;</span><span class="p">,</span>
+    <span class="mh">0x83</span><span class="p">:</span> <span class="s1">&#39;engine is running&#39;</span><span class="p">,</span>
+    <span class="mh">0x84</span><span class="p">:</span> <span class="s1">&#39;engine is not running&#39;</span><span class="p">,</span>
+    <span class="mh">0x85</span><span class="p">:</span> <span class="s1">&#39;engine run time too low&#39;</span><span class="p">,</span>
+    <span class="mh">0x86</span><span class="p">:</span> <span class="s1">&#39;temperature too high&#39;</span><span class="p">,</span>
+    <span class="mh">0x87</span><span class="p">:</span> <span class="s1">&#39;temperature too low&#39;</span><span class="p">,</span>
+    <span class="mh">0x88</span><span class="p">:</span> <span class="s1">&#39;vehicle speed too high&#39;</span><span class="p">,</span>
+    <span class="mh">0x89</span><span class="p">:</span> <span class="s1">&#39;vehicle speed too low&#39;</span><span class="p">,</span>
+    <span class="mh">0x8a</span><span class="p">:</span> <span class="s1">&#39;throttle/pedal too high&#39;</span><span class="p">,</span>
+    <span class="mh">0x8b</span><span class="p">:</span> <span class="s1">&#39;throttle/pedal too low&#39;</span><span class="p">,</span>
+    <span class="mh">0x8c</span><span class="p">:</span> <span class="s1">&#39;transmission not in neutral&#39;</span><span class="p">,</span>
+    <span class="mh">0x8d</span><span class="p">:</span> <span class="s1">&#39;transmission not in gear&#39;</span><span class="p">,</span>
+    <span class="mh">0x8f</span><span class="p">:</span> <span class="s1">&#39;brake switch(es) not closed&#39;</span><span class="p">,</span>
+    <span class="mh">0x90</span><span class="p">:</span> <span class="s1">&#39;shifter lever not in park&#39;</span><span class="p">,</span>
+    <span class="mh">0x91</span><span class="p">:</span> <span class="s1">&#39;torque converter clutch locked&#39;</span><span class="p">,</span>
+    <span class="mh">0x92</span><span class="p">:</span> <span class="s1">&#39;voltage too high&#39;</span><span class="p">,</span>
+    <span class="mh">0x93</span><span class="p">:</span> <span class="s1">&#39;voltage too low&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<div class="viewcode-block" id="get_dtc_num_as_str">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.get_dtc_num_as_str">[docs]</a>
+<span class="k">def</span> <span class="nf">get_dtc_num_as_str</span><span class="p">(</span><span class="n">dtc_num_bytes</span><span class="p">):</span>
+  <span class="c1"># ISO 15031-6</span>
+  <span class="n">designator</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mb">0b00</span><span class="p">:</span> <span class="s2">&quot;P&quot;</span><span class="p">,</span>
+    <span class="mb">0b01</span><span class="p">:</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span>
+    <span class="mb">0b10</span><span class="p">:</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span>
+    <span class="mb">0b11</span><span class="p">:</span> <span class="s2">&quot;U&quot;</span><span class="p">,</span>
+  <span class="p">}</span>
+  <span class="n">d</span> <span class="o">=</span> <span class="n">designator</span><span class="p">[</span><span class="n">dtc_num_bytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span><span class="p">]</span>
+  <span class="n">n</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">dtc_num_bytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">])</span> <span class="o">+</span> <span class="n">dtc_num_bytes</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+  <span class="k">return</span> <span class="n">d</span> <span class="o">+</span> <span class="n">n</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="get_dtc_status_names">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.get_dtc_status_names">[docs]</a>
+<span class="k">def</span> <span class="nf">get_dtc_status_names</span><span class="p">(</span><span class="n">status</span><span class="p">):</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+  <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">DTC_STATUS_MASK_TYPE</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="n">DTC_STATUS_MASK_TYPE</span><span class="o">.</span><span class="n">ALL</span><span class="p">:</span>
+      <span class="k">continue</span>
+    <span class="k">if</span> <span class="n">status</span> <span class="o">&amp;</span> <span class="n">m</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+      <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="CanClient">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.CanClient">[docs]</a>
+<span class="k">class</span> <span class="nc">CanClient</span><span class="p">():</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">can_send</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span> <span class="n">can_recv</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]],</span>
+               <span class="n">tx_addr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rx_addr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bus</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tx</span> <span class="o">=</span> <span class="n">can_send</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rx</span> <span class="o">=</span> <span class="n">can_recv</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tx_addr</span> <span class="o">=</span> <span class="n">tx_addr</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rx_addr</span> <span class="o">=</span> <span class="n">rx_addr</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rx_buff</span><span class="p">:</span> <span class="n">Deque</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sub_addr</span> <span class="o">=</span> <span class="n">sub_addr</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">bus</span> <span class="o">=</span> <span class="n">bus</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
+
+  <span class="k">def</span> <span class="nf">_recv_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="c1"># handle functional addresses (switch to first addr to respond)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_addr</span> <span class="o">==</span> <span class="mh">0x7DF</span><span class="p">:</span>
+      <span class="n">is_response</span> <span class="o">=</span> <span class="n">addr</span> <span class="o">&gt;=</span> <span class="mh">0x7E8</span> <span class="ow">and</span> <span class="n">addr</span> <span class="o">&lt;=</span> <span class="mh">0x7EF</span>
+      <span class="k">if</span> <span class="n">is_response</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+          <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;switch to physical addr </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tx_addr</span> <span class="o">=</span> <span class="n">addr</span> <span class="o">-</span> <span class="mi">8</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rx_addr</span> <span class="o">=</span> <span class="n">addr</span>
+      <span class="k">return</span> <span class="n">is_response</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_addr</span> <span class="o">==</span> <span class="mh">0x18DB33F1</span><span class="p">:</span>
+      <span class="n">is_response</span> <span class="o">=</span> <span class="n">addr</span> <span class="o">&gt;=</span> <span class="mh">0x18DAF100</span> <span class="ow">and</span> <span class="n">addr</span> <span class="o">&lt;=</span> <span class="mh">0x18DAF1FF</span>
+      <span class="k">if</span> <span class="n">is_response</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+          <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;switch to physical addr </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tx_addr</span> <span class="o">=</span> <span class="mh">0x18DA00F1</span> <span class="o">+</span> <span class="p">(</span><span class="n">addr</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">&amp;</span> <span class="mh">0xFF00</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rx_addr</span> <span class="o">=</span> <span class="n">addr</span>
+    <span class="k">return</span> <span class="n">bus</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span> <span class="ow">and</span> <span class="n">addr</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_addr</span>
+
+  <span class="k">def</span> <span class="nf">_recv_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">drain</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+      <span class="n">msgs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span><span class="p">()</span>
+      <span class="k">if</span> <span class="n">drain</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+          <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CAN-RX: drain - </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">msgs</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rx_buff</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">rx_addr</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">rx_data</span><span class="p">,</span> <span class="n">rx_bus</span> <span class="ow">in</span> <span class="n">msgs</span> <span class="ow">or</span> <span class="p">[]:</span>
+          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_filter</span><span class="p">(</span><span class="n">rx_bus</span><span class="p">,</span> <span class="n">rx_addr</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">rx_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">rx_data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">rx_data</span><span class="p">)</span>  <span class="c1"># convert bytearray to bytes</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+              <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CAN-RX: </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">rx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2"> - 0x</span><span class="si">{</span><span class="nb">bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">(</span><span class="n">rx_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Cut off sub addr in first byte</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_addr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+              <span class="k">if</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_addr</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">InvalidSubAddressError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;isotp - rx: invalid sub-address: </span><span class="si">{</span><span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, expected: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sub_addr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+              <span class="n">rx_data</span> <span class="o">=</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">rx_buff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rx_data</span><span class="p">)</span>
+      <span class="c1"># break when non-full buffer is processed</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msgs</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">254</span><span class="p">:</span>
+        <span class="k">return</span>
+
+<div class="viewcode-block" id="CanClient.recv">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.CanClient.recv">[docs]</a>
+  <span class="k">def</span> <span class="nf">recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">drain</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+    <span class="c1"># buffer rx messages in case two response messages are received at once</span>
+    <span class="c1"># (e.g. response pending and success/failure response)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_recv_buffer</span><span class="p">(</span><span class="n">drain</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_buff</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+      <span class="k">pass</span>  <span class="c1"># empty</span></div>
+
+
+<div class="viewcode-block" id="CanClient.send">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.CanClient.send">[docs]</a>
+  <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msgs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">msg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">msgs</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">delay</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+          <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CAN-TX: delay - </span><span class="si">{</span><span class="n">delay</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_addr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">sub_addr</span><span class="p">])</span> <span class="o">+</span> <span class="n">msg</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CAN-TX: </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2"> - 0x</span><span class="si">{</span><span class="nb">bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">8</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">tx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tx_addr</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="p">)</span>
+      <span class="c1"># prevent rx buffer from overflowing on large tx</span>
+      <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recv_buffer</span><span class="p">()</span></div>
+</div>
+
+
+<div class="viewcode-block" id="IsoTpMessage">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.IsoTpMessage">[docs]</a>
+<span class="k">class</span> <span class="nc">IsoTpMessage</span><span class="p">():</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">can_client</span><span class="p">:</span> <span class="n">CanClient</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">single_frame_mode</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">separation_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+               <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">max_len</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span> <span class="o">=</span> <span class="n">can_client</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">single_frame_mode</span> <span class="o">=</span> <span class="n">single_frame_mode</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span> <span class="o">=</span> <span class="n">max_len</span>
+
+    <span class="c1"># &lt;= 127, separation time in milliseconds</span>
+    <span class="c1"># 0xF1 to 0xF9 UF, 100 to 900 microseconds</span>
+    <span class="k">if</span> <span class="mf">1e-4</span> <span class="o">&lt;=</span> <span class="n">separation_time</span> <span class="o">&lt;=</span> <span class="mf">9e-4</span><span class="p">:</span>
+      <span class="n">offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">separation_time</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e4</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+      <span class="n">separation_time</span> <span class="o">=</span> <span class="mh">0xF1</span> <span class="o">+</span> <span class="n">offset</span>
+    <span class="k">elif</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">separation_time</span> <span class="o">&lt;=</span> <span class="mf">0.127</span><span class="p">:</span>
+      <span class="n">separation_time</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">separation_time</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Separation time not in range&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">flow_control_msg</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span>
+      <span class="mh">0x30</span><span class="p">,</span>  <span class="c1"># flow control</span>
+      <span class="mh">0x01</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">single_frame_mode</span> <span class="k">else</span> <span class="mh">0x00</span><span class="p">,</span>  <span class="c1"># block size</span>
+      <span class="n">separation_time</span><span class="p">,</span>
+    <span class="p">])</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="IsoTpMessage.send">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.IsoTpMessage.send">[docs]</a>
+  <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dat</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">setup_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># throw away any stale data</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">drain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">tx_dat</span> <span class="o">=</span> <span class="n">dat</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tx_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tx_idx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tx_done</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">rx_dat</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rx_len</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rx_idx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rx_done</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">setup_only</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ISO-TP: REQUEST - </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">tx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2"> 0x</span><span class="si">{</span><span class="nb">bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tx_dat</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_tx_first_frame</span><span class="p">(</span><span class="n">setup_only</span><span class="o">=</span><span class="n">setup_only</span><span class="p">)</span></div>
+
+
+  <span class="k">def</span> <span class="nf">_tx_first_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">setup_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_len</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">:</span>
+      <span class="c1"># single frame (send all bytes)</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">setup_only</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ISO-TP: TX - single frame - </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">tx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">tx_len</span><span class="p">])</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_dat</span><span class="p">)</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">tx_done</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># first frame (send first 6 bytes)</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">setup_only</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ISO-TP: TX - first frame - </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">tx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;!H&quot;</span><span class="p">,</span> <span class="mh">0x1000</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_len</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_dat</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">max_len</span> <span class="o">-</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_len</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">setup_only</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">send</span><span class="p">([</span><span class="n">msg</span><span class="p">])</span>
+
+<div class="viewcode-block" id="IsoTpMessage.recv">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.IsoTpMessage.recv">[docs]</a>
+  <span class="k">def</span> <span class="nf">recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">timeout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
+
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+    <span class="n">rx_in_progress</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">recv</span><span class="p">():</span>
+          <span class="n">frame_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isotp_rx_next</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+          <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+          <span class="n">rx_in_progress</span> <span class="o">=</span> <span class="n">frame_type</span> <span class="o">==</span> <span class="n">ISOTP_FRAME_TYPE</span><span class="o">.</span><span class="n">CONSECUTIVE</span>
+          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_done</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_done</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_dat</span><span class="p">,</span> <span class="kc">False</span>
+        <span class="c1"># no timeout indicates non-blocking</span>
+        <span class="k">if</span> <span class="n">timeout</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">rx_in_progress</span>
+        <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+          <span class="k">raise</span> <span class="n">MessageTimeoutError</span><span class="p">(</span><span class="s2">&quot;timeout waiting for response&quot;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_dat</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ISO-TP: RESPONSE - </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">rx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2"> 0x</span><span class="si">{</span><span class="nb">bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rx_dat</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+  <span class="k">def</span> <span class="nf">_isotp_rx_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rx_data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ISOTP_FRAME_TYPE</span><span class="p">:</span>
+    <span class="c1"># TODO: Handle CAN frame data optimization, which is allowed with some frame types</span>
+    <span class="c1"># # ISO 15765-2 specifies an eight byte CAN frame for ISO-TP communication</span>
+    <span class="c1"># assert len(rx_data) == self.max_len, f&quot;isotp - rx: invalid CAN frame length: {len(rx_data)}&quot;</span>
+
+    <span class="k">if</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span> <span class="o">==</span> <span class="n">ISOTP_FRAME_TYPE</span><span class="o">.</span><span class="n">SINGLE</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">rx_len</span> <span class="o">=</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x0F</span>
+      <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_len</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;isotp - rx: invalid single frame length: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rx_len</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">rx_dat</span> <span class="o">=</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_len</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">rx_idx</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">rx_done</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ISO-TP: RX - single frame - </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">rx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2"> idx=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rx_idx</span><span class="si">}</span><span class="s2"> done=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rx_done</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">ISOTP_FRAME_TYPE</span><span class="o">.</span><span class="n">SINGLE</span>
+
+    <span class="k">elif</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span> <span class="o">==</span> <span class="n">ISOTP_FRAME_TYPE</span><span class="o">.</span><span class="n">FIRST</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">rx_len</span> <span class="o">=</span> <span class="p">((</span><span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x0F</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+      <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_len</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;isotp - rx: invalid first frame length: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rx_len</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">rx_dat</span> <span class="o">=</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">rx_idx</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">rx_done</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ISO-TP: RX - first frame - </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">rx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2"> idx=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rx_idx</span><span class="si">}</span><span class="s2"> done=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rx_done</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ISO-TP: TX - flow control continue - </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">tx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="c1"># send flow control message</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">send</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">flow_control_msg</span><span class="p">])</span>
+      <span class="k">return</span> <span class="n">ISOTP_FRAME_TYPE</span><span class="o">.</span><span class="n">FIRST</span>
+
+    <span class="k">elif</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span> <span class="o">==</span> <span class="n">ISOTP_FRAME_TYPE</span><span class="o">.</span><span class="n">CONSECUTIVE</span><span class="p">:</span>
+      <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_done</span><span class="p">,</span> <span class="s2">&quot;isotp - rx: consecutive frame with no active frame&quot;</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">rx_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_idx</span> <span class="o">&amp;</span> <span class="mh">0xF</span> <span class="o">==</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xF</span><span class="p">,</span> <span class="s2">&quot;isotp - rx: invalid consecutive frame index&quot;</span>
+      <span class="n">rx_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rx_dat</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">rx_dat</span> <span class="o">+=</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span> <span class="o">+</span> <span class="n">rx_size</span><span class="p">]</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_len</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rx_dat</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rx_done</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">single_frame_mode</span><span class="p">:</span>
+        <span class="c1"># notify ECU to send next frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">send</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">flow_control_msg</span><span class="p">])</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ISO-TP: RX - consecutive frame - </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">rx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2"> idx=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rx_idx</span><span class="si">}</span><span class="s2"> done=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rx_done</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">ISOTP_FRAME_TYPE</span><span class="o">.</span><span class="n">CONSECUTIVE</span>
+
+    <span class="k">elif</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span> <span class="o">==</span> <span class="n">ISOTP_FRAME_TYPE</span><span class="o">.</span><span class="n">FLOW</span><span class="p">:</span>
+      <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_done</span><span class="p">,</span> <span class="s2">&quot;isotp - rx: flow control with no active frame&quot;</span>
+      <span class="k">assert</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mh">0x32</span><span class="p">,</span> <span class="s2">&quot;isotp - rx: flow-control overflow/abort&quot;</span>
+      <span class="k">assert</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x30</span> <span class="ow">or</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x31</span><span class="p">,</span> <span class="s2">&quot;isotp - rx: flow-control transfer state indicator invalid&quot;</span>
+      <span class="k">if</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x30</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+          <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ISO-TP: RX - flow control continue - </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">tx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">delay_ts</span> <span class="o">=</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x7F</span>
+        <span class="c1"># scale is 1 milliseconds if first bit == 0, 100 micro seconds if first bit == 1</span>
+        <span class="n">delay_div</span> <span class="o">=</span> <span class="mf">1000.</span> <span class="k">if</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x80</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">10000.</span>
+        <span class="n">delay_sec</span> <span class="o">=</span> <span class="n">delay_ts</span> <span class="o">/</span> <span class="n">delay_div</span>
+
+        <span class="c1"># first frame = 6 bytes, each consecutive frame = 7 bytes</span>
+        <span class="n">num_bytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_idx</span> <span class="o">*</span> <span class="n">num_bytes</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">count</span> <span class="o">*</span> <span class="n">num_bytes</span> <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_len</span>
+        <span class="n">tx_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">num_bytes</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">tx_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+          <span class="c1"># consecutive tx messages</span>
+          <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">([</span><span class="mh">0x20</span> <span class="o">|</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tx_idx</span> <span class="o">&amp;</span> <span class="mh">0xF</span><span class="p">)])</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_dat</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">num_bytes</span><span class="p">])</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span><span class="p">)</span>
+          <span class="n">tx_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="c1"># send consecutive tx messages</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">tx_msgs</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="n">delay_sec</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">end</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_len</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">tx_done</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+          <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ISO-TP: TX - consecutive frame - </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">tx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2"> idx=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tx_idx</span><span class="si">}</span><span class="s2"> done=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tx_done</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x31</span><span class="p">:</span>
+        <span class="c1"># wait (do nothing until next flow control message)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+          <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ISO-TP: TX - flow control wait - </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="o">.</span><span class="n">tx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">ISOTP_FRAME_TYPE</span><span class="o">.</span><span class="n">FLOW</span>
+
+    <span class="c1"># 4-15 - reserved</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;isotp - rx: invalid frame type: </span><span class="si">{</span><span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">4</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="n">FUNCTIONAL_ADDRS</span> <span class="o">=</span> <span class="p">[</span><span class="mh">0x7DF</span><span class="p">,</span> <span class="mh">0x18DB33F1</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="get_rx_addr_for_tx_addr">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.get_rx_addr_for_tx_addr">[docs]</a>
+<span class="k">def</span> <span class="nf">get_rx_addr_for_tx_addr</span><span class="p">(</span><span class="n">tx_addr</span><span class="p">,</span> <span class="n">rx_offset</span><span class="o">=</span><span class="mh">0x8</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">tx_addr</span> <span class="ow">in</span> <span class="n">FUNCTIONAL_ADDRS</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+  <span class="k">if</span> <span class="n">tx_addr</span> <span class="o">&lt;</span> <span class="mh">0xFFF8</span><span class="p">:</span>
+    <span class="c1"># pseudo-standard 11 bit response addr (add 8) works for most manufacturers</span>
+    <span class="c1"># allow override; some manufacturers use other offsets for non-OBD2 access</span>
+    <span class="k">return</span> <span class="n">tx_addr</span> <span class="o">+</span> <span class="n">rx_offset</span>
+
+  <span class="k">if</span> <span class="n">tx_addr</span> <span class="o">&gt;</span> <span class="mh">0x10000000</span> <span class="ow">and</span> <span class="n">tx_addr</span> <span class="o">&lt;</span> <span class="mh">0xFFFFFFFF</span><span class="p">:</span>
+    <span class="c1"># standard 29 bit response addr (flip last two bytes)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">tx_addr</span> <span class="o">&amp;</span> <span class="mh">0xFFFF0000</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">tx_addr</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">&amp;</span> <span class="mh">0xFF00</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">tx_addr</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">)</span>
+
+  <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid tx_addr: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tx_addr</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="UdsClient">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient">[docs]</a>
+<span class="k">class</span> <span class="nc">UdsClient</span><span class="p">():</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">panda</span><span class="p">,</span> <span class="n">tx_addr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rx_addr</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">bus</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+               <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">tx_timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">response_pending_timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">bus</span> <span class="o">=</span> <span class="n">bus</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tx_addr</span> <span class="o">=</span> <span class="n">tx_addr</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rx_addr</span> <span class="o">=</span> <span class="n">rx_addr</span> <span class="k">if</span> <span class="n">rx_addr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">get_rx_addr_for_tx_addr</span><span class="p">(</span><span class="n">tx_addr</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sub_addr</span> <span class="o">=</span> <span class="n">sub_addr</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
+    <span class="n">can_send_with_timeout</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">panda</span><span class="o">.</span><span class="n">can_send</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">tx_timeout</span><span class="o">*</span><span class="mi">1000</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span> <span class="o">=</span> <span class="n">CanClient</span><span class="p">(</span><span class="n">can_send_with_timeout</span><span class="p">,</span> <span class="n">panda</span><span class="o">.</span><span class="n">can_recv</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_addr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_addr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_addr</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">response_pending_timeout</span> <span class="o">=</span> <span class="n">response_pending_timeout</span>
+
+  <span class="c1"># generic uds request</span>
+  <span class="k">def</span> <span class="nf">_uds_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_type</span><span class="p">:</span> <span class="n">SERVICE_TYPE</span><span class="p">,</span> <span class="n">subfunction</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">service_type</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">subfunction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">req</span> <span class="o">+=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">subfunction</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">req</span> <span class="o">+=</span> <span class="n">data</span>
+
+    <span class="c1"># send request, wait for response</span>
+    <span class="n">max_len</span> <span class="o">=</span> <span class="mi">8</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_addr</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">7</span>
+    <span class="n">isotp_msg</span> <span class="o">=</span> <span class="n">IsoTpMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_can_client</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="n">max_len</span><span class="p">)</span>
+    <span class="n">isotp_msg</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+    <span class="n">response_pending</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+      <span class="n">timeout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response_pending_timeout</span> <span class="k">if</span> <span class="n">response_pending</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
+      <span class="n">resp</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">isotp_msg</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="n">resp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+      <span class="n">response_pending</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="n">resp_sid</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+
+      <span class="c1"># negative response</span>
+      <span class="k">if</span> <span class="n">resp_sid</span> <span class="o">==</span> <span class="mh">0x7F</span><span class="p">:</span>
+        <span class="n">service_id</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">try</span><span class="p">:</span>
+          <span class="n">service_desc</span> <span class="o">=</span> <span class="n">SERVICE_TYPE</span><span class="p">(</span><span class="n">service_id</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">except</span> <span class="ne">BaseException</span><span class="p">:</span>
+          <span class="n">service_desc</span> <span class="o">=</span> <span class="s1">&#39;NON_STANDARD_SERVICE&#39;</span>
+        <span class="n">error_code</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">try</span><span class="p">:</span>
+          <span class="n">error_desc</span> <span class="o">=</span> <span class="n">_negative_response_codes</span><span class="p">[</span><span class="n">error_code</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">BaseException</span><span class="p">:</span>
+          <span class="n">error_desc</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
+        <span class="c1"># wait for another message if response pending</span>
+        <span class="k">if</span> <span class="n">error_code</span> <span class="o">==</span> <span class="mh">0x78</span><span class="p">:</span>
+          <span class="n">response_pending</span> <span class="o">=</span> <span class="kc">True</span>
+          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;UDS-RX: response pending&quot;</span><span class="p">)</span>
+          <span class="k">continue</span>
+        <span class="k">raise</span> <span class="n">NegativeResponseError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> - </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">service_desc</span><span class="p">,</span> <span class="n">error_desc</span><span class="p">),</span> <span class="n">service_id</span><span class="p">,</span> <span class="n">error_code</span><span class="p">)</span>
+
+      <span class="c1"># positive response</span>
+      <span class="k">if</span> <span class="n">service_type</span> <span class="o">+</span> <span class="mh">0x40</span> <span class="o">!=</span> <span class="n">resp_sid</span><span class="p">:</span>
+        <span class="n">resp_sid_hex</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">resp_sid</span><span class="p">)</span> <span class="k">if</span> <span class="n">resp_sid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">raise</span> <span class="n">InvalidServiceIdError</span><span class="p">(</span><span class="s1">&#39;invalid response service id: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp_sid_hex</span><span class="p">))</span>
+
+      <span class="k">if</span> <span class="n">subfunction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">resp_sfn</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">subfunction</span> <span class="o">!=</span> <span class="n">resp_sfn</span><span class="p">:</span>
+          <span class="n">resp_sfn_hex</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">resp_sfn</span><span class="p">)</span> <span class="k">if</span> <span class="n">resp_sfn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+          <span class="k">raise</span> <span class="n">InvalidSubFunctionError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;invalid response subfunction: </span><span class="si">{</span><span class="n">resp_sfn_hex</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+      <span class="c1"># return data (exclude service id and sub-function id)</span>
+      <span class="k">return</span> <span class="n">resp</span><span class="p">[(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">subfunction</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">2</span><span class="p">):]</span>
+
+  <span class="c1"># services</span>
+<div class="viewcode-block" id="UdsClient.diagnostic_session_control">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.diagnostic_session_control">[docs]</a>
+  <span class="k">def</span> <span class="nf">diagnostic_session_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_type</span><span class="p">:</span> <span class="n">SESSION_TYPE</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">DIAGNOSTIC_SESSION_CONTROL</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="n">session_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.ecu_reset">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.ecu_reset">[docs]</a>
+  <span class="k">def</span> <span class="nf">ecu_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reset_type</span><span class="p">:</span> <span class="n">RESET_TYPE</span><span class="p">):</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">ECU_RESET</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="n">reset_type</span><span class="p">)</span>
+    <span class="n">power_down_time</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">reset_type</span> <span class="o">==</span> <span class="n">RESET_TYPE</span><span class="o">.</span><span class="n">ENABLE_RAPID_POWER_SHUTDOWN</span><span class="p">:</span>
+      <span class="n">power_down_time</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="k">return</span> <span class="n">power_down_time</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.security_access">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.security_access">[docs]</a>
+  <span class="k">def</span> <span class="nf">security_access</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_type</span><span class="p">:</span> <span class="n">ACCESS_TYPE</span><span class="p">,</span> <span class="n">security_key</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">data_record</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="n">request_seed</span> <span class="o">=</span> <span class="n">access_type</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">request_seed</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">security_key</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;security_key not allowed&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">request_seed</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">security_key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;security_key is missing&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">request_seed</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_record</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;data_record not allowed&#39;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">security_key</span> <span class="o">+</span> <span class="n">data_record</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">SECURITY_ACCESS</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="n">access_type</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request_seed</span><span class="p">:</span>
+      <span class="n">security_seed</span> <span class="o">=</span> <span class="n">resp</span>
+      <span class="k">return</span> <span class="n">security_seed</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.communication_control">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.communication_control">[docs]</a>
+  <span class="k">def</span> <span class="nf">communication_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">control_type</span><span class="p">:</span> <span class="n">CONTROL_TYPE</span><span class="p">,</span> <span class="n">message_type</span><span class="p">:</span> <span class="n">MESSAGE_TYPE</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">message_type</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">COMMUNICATION_CONTROL</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="n">control_type</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.tester_present">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.tester_present">[docs]</a>
+  <span class="k">def</span> <span class="nf">tester_present</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">TESTER_PRESENT</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="mh">0x00</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.access_timing_parameter">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.access_timing_parameter">[docs]</a>
+  <span class="k">def</span> <span class="nf">access_timing_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timing_parameter_type</span><span class="p">:</span> <span class="n">TIMING_PARAMETER_TYPE</span><span class="p">,</span> <span class="n">parameter_values</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">write_custom_values</span> <span class="o">=</span> <span class="n">timing_parameter_type</span> <span class="o">==</span> <span class="n">TIMING_PARAMETER_TYPE</span><span class="o">.</span><span class="n">SET_TO_GIVEN_VALUES</span>
+    <span class="n">read_values</span> <span class="o">=</span> <span class="p">(</span><span class="n">timing_parameter_type</span> <span class="o">==</span> <span class="n">TIMING_PARAMETER_TYPE</span><span class="o">.</span><span class="n">READ_CURRENTLY_ACTIVE</span> <span class="ow">or</span>
+                   <span class="n">timing_parameter_type</span> <span class="o">==</span> <span class="n">TIMING_PARAMETER_TYPE</span><span class="o">.</span><span class="n">READ_EXTENDED_SET</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">write_custom_values</span> <span class="ow">and</span> <span class="n">parameter_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;parameter_values not allowed&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">write_custom_values</span> <span class="ow">and</span> <span class="n">parameter_values</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;parameter_values is missing&#39;</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">ACCESS_TIMING_PARAMETER</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="n">timing_parameter_type</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">parameter_values</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">read_values</span><span class="p">:</span>
+      <span class="c1"># TODO: parse response into values?</span>
+      <span class="n">parameter_values</span> <span class="o">=</span> <span class="n">resp</span>
+      <span class="k">return</span> <span class="n">parameter_values</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.secured_data_transmission">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.secured_data_transmission">[docs]</a>
+  <span class="k">def</span> <span class="nf">secured_data_transmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
+    <span class="c1"># TODO: split data into multiple input parameters?</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">SECURED_DATA_TRANSMISSION</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="c1"># TODO: parse response into multiple output values?</span>
+    <span class="k">return</span> <span class="n">resp</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.control_dtc_setting">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.control_dtc_setting">[docs]</a>
+  <span class="k">def</span> <span class="nf">control_dtc_setting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtc_setting_type</span><span class="p">:</span> <span class="n">DTC_SETTING_TYPE</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">CONTROL_DTC_SETTING</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="n">dtc_setting_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.response_on_event">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.response_on_event">[docs]</a>
+  <span class="k">def</span> <span class="nf">response_on_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response_event_type</span><span class="p">:</span> <span class="n">RESPONSE_EVENT_TYPE</span><span class="p">,</span> <span class="n">store_event</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">window_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="n">event_type_record</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">service_response_record</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">store_event</span><span class="p">:</span>
+      <span class="n">response_event_type</span> <span class="o">|=</span> <span class="mh">0x20</span>  <span class="c1"># type: ignore</span>
+    <span class="c1"># TODO: split record parameters into arrays</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">window_time</span><span class="p">,</span> <span class="n">event_type_record</span><span class="p">,</span> <span class="n">service_response_record</span><span class="p">])</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">RESPONSE_ON_EVENT</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="n">response_event_type</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">response_event_type</span> <span class="o">==</span> <span class="n">RESPONSE_EVENT_TYPE</span><span class="o">.</span><span class="n">REPORT_ACTIVATED_EVENTS</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;num_of_activated_events&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>  <span class="c1"># TODO: parse the reset of response</span>
+      <span class="p">}</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="s2">&quot;num_of_identified_events&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+      <span class="s2">&quot;event_window_time&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+      <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>  <span class="c1"># TODO: parse the reset of response</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.link_control">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.link_control">[docs]</a>
+  <span class="k">def</span> <span class="nf">link_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">link_control_type</span><span class="p">:</span> <span class="n">LINK_CONTROL_TYPE</span><span class="p">,</span> <span class="n">baud_rate_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">BAUD_RATE_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">link_control_type</span> <span class="o">==</span> <span class="n">LINK_CONTROL_TYPE</span><span class="o">.</span><span class="n">VERIFY_BAUDRATE_TRANSITION_WITH_FIXED_BAUDRATE</span><span class="p">:</span>
+      <span class="c1"># baud_rate_type = BAUD_RATE_TYPE</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">baud_rate_type</span><span class="p">)])</span>
+    <span class="k">elif</span> <span class="n">link_control_type</span> <span class="o">==</span> <span class="n">LINK_CONTROL_TYPE</span><span class="o">.</span><span class="n">VERIFY_BAUDRATE_TRANSITION_WITH_SPECIFIC_BAUDRATE</span><span class="p">:</span>
+      <span class="c1"># baud_rate_type = custom value (3 bytes big-endian)</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="n">baud_rate_type</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">LINK_CONTROL</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="n">link_control_type</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.read_data_by_identifier">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.read_data_by_identifier">[docs]</a>
+  <span class="k">def</span> <span class="nf">read_data_by_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_identifier_type</span><span class="p">:</span> <span class="n">DATA_IDENTIFIER_TYPE</span><span class="p">):</span>
+    <span class="c1"># TODO: support list of identifiers</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!H&#39;</span><span class="p">,</span> <span class="n">data_identifier_type</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">READ_DATA_BY_IDENTIFIER</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">resp_id</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;!H&#39;</span><span class="p">,</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">resp_id</span> <span class="o">!=</span> <span class="n">data_identifier_type</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid response data identifier: </span><span class="si">{}</span><span class="s1"> expected: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">resp_id</span><span class="p">),</span> <span class="nb">hex</span><span class="p">(</span><span class="n">data_identifier_type</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">resp</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.read_memory_by_address">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.read_memory_by_address">[docs]</a>
+  <span class="k">def</span> <span class="nf">read_memory_by_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_address</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">memory_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">memory_address_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">memory_size_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">memory_address_bytes</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">memory_address_bytes</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_address_bytes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_address_bytes</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">memory_size_bytes</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">memory_size_bytes</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_size_bytes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_size_bytes</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">memory_size_bytes</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="n">memory_address_bytes</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">memory_address</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">memory_address_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_address: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_address</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="n">memory_address</span><span class="p">)[</span><span class="mi">4</span> <span class="o">-</span> <span class="n">memory_address_bytes</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="n">memory_size</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">memory_size_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_size: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_size</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="n">memory_size</span><span class="p">)[</span><span class="mi">4</span> <span class="o">-</span> <span class="n">memory_size_bytes</span><span class="p">:]</span>
+
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">READ_MEMORY_BY_ADDRESS</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">resp</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.read_scaling_data_by_identifier">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.read_scaling_data_by_identifier">[docs]</a>
+  <span class="k">def</span> <span class="nf">read_scaling_data_by_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_identifier_type</span><span class="p">:</span> <span class="n">DATA_IDENTIFIER_TYPE</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!H&#39;</span><span class="p">,</span> <span class="n">data_identifier_type</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">READ_SCALING_DATA_BY_IDENTIFIER</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">resp_id</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;!H&#39;</span><span class="p">,</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">resp_id</span> <span class="o">!=</span> <span class="n">data_identifier_type</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid response data identifier: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">resp_id</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">resp</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>  <span class="c1"># TODO: parse the response</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.read_data_by_periodic_identifier">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.read_data_by_periodic_identifier">[docs]</a>
+  <span class="k">def</span> <span class="nf">read_data_by_periodic_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transmission_mode_type</span><span class="p">:</span> <span class="n">TRANSMISSION_MODE_TYPE</span><span class="p">,</span> <span class="n">periodic_data_identifier</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="c1"># TODO: support list of identifiers</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">transmission_mode_type</span><span class="p">,</span> <span class="n">periodic_data_identifier</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">READ_DATA_BY_PERIODIC_IDENTIFIER</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.dynamically_define_data_identifier">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.dynamically_define_data_identifier">[docs]</a>
+  <span class="k">def</span> <span class="nf">dynamically_define_data_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dynamic_definition_type</span><span class="p">:</span> <span class="n">DYNAMIC_DEFINITION_TYPE</span><span class="p">,</span> <span class="n">dynamic_data_identifier</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                                         <span class="n">source_definitions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DynamicSourceDefinition</span><span class="p">],</span> <span class="n">memory_address_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">memory_size_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">memory_address_bytes</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">memory_address_bytes</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_address_bytes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_address_bytes</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">memory_size_bytes</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">memory_size_bytes</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_size_bytes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_size_bytes</span><span class="p">))</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!H&#39;</span><span class="p">,</span> <span class="n">dynamic_data_identifier</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dynamic_definition_type</span> <span class="o">==</span> <span class="n">DYNAMIC_DEFINITION_TYPE</span><span class="o">.</span><span class="n">DEFINE_BY_IDENTIFIER</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">source_definitions</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!H&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">data_identifier</span><span class="p">)</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">s</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">memory_size</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">dynamic_definition_type</span> <span class="o">==</span> <span class="n">DYNAMIC_DEFINITION_TYPE</span><span class="o">.</span><span class="n">DEFINE_BY_MEMORY_ADDRESS</span><span class="p">:</span>
+      <span class="n">data</span> <span class="o">+=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">memory_size_bytes</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="n">memory_address_bytes</span><span class="p">])</span>
+      <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">source_definitions</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">memory_address</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">memory_address_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">):</span>
+          <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_address: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">memory_address</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">memory_address</span><span class="p">)[</span><span class="mi">4</span> <span class="o">-</span> <span class="n">memory_address_bytes</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">memory_size</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">memory_size_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">):</span>
+          <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_size: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">memory_size</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">memory_size</span><span class="p">)[</span><span class="mi">4</span> <span class="o">-</span> <span class="n">memory_size_bytes</span><span class="p">:]</span>
+    <span class="k">elif</span> <span class="n">dynamic_definition_type</span> <span class="o">==</span> <span class="n">DYNAMIC_DEFINITION_TYPE</span><span class="o">.</span><span class="n">CLEAR_DYNAMICALLY_DEFINED_DATA_IDENTIFIER</span><span class="p">:</span>
+      <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid dynamic identifier type: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">dynamic_definition_type</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">DYNAMICALLY_DEFINE_DATA_IDENTIFIER</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="n">dynamic_definition_type</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.write_data_by_identifier">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.write_data_by_identifier">[docs]</a>
+  <span class="k">def</span> <span class="nf">write_data_by_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_identifier_type</span><span class="p">:</span> <span class="n">DATA_IDENTIFIER_TYPE</span><span class="p">,</span> <span class="n">data_record</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!H&#39;</span><span class="p">,</span> <span class="n">data_identifier_type</span><span class="p">)</span> <span class="o">+</span> <span class="n">data_record</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">WRITE_DATA_BY_IDENTIFIER</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">resp_id</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;!H&#39;</span><span class="p">,</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">resp_id</span> <span class="o">!=</span> <span class="n">data_identifier_type</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid response data identifier: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">resp_id</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.write_memory_by_address">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.write_memory_by_address">[docs]</a>
+  <span class="k">def</span> <span class="nf">write_memory_by_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_address</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">memory_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data_record</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">memory_address_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">memory_size_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">memory_address_bytes</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">memory_address_bytes</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_address_bytes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_address_bytes</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">memory_size_bytes</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">memory_size_bytes</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_size_bytes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_size_bytes</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">memory_size_bytes</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="n">memory_address_bytes</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">memory_address</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">memory_address_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_address: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_address</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="n">memory_address</span><span class="p">)[</span><span class="mi">4</span> <span class="o">-</span> <span class="n">memory_address_bytes</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="n">memory_size</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">memory_size_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_size: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_size</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="n">memory_size</span><span class="p">)[</span><span class="mi">4</span> <span class="o">-</span> <span class="n">memory_size_bytes</span><span class="p">:]</span>
+
+    <span class="n">data</span> <span class="o">+=</span> <span class="n">data_record</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">WRITE_MEMORY_BY_ADDRESS</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="mh">0x00</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.clear_diagnostic_information">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.clear_diagnostic_information">[docs]</a>
+  <span class="k">def</span> <span class="nf">clear_diagnostic_information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtc_group_type</span><span class="p">:</span> <span class="n">DTC_GROUP_TYPE</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="n">dtc_group_type</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># 3 bytes</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">CLEAR_DIAGNOSTIC_INFORMATION</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.read_dtc_information">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.read_dtc_information">[docs]</a>
+  <span class="k">def</span> <span class="nf">read_dtc_information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtc_report_type</span><span class="p">:</span> <span class="n">DTC_REPORT_TYPE</span><span class="p">,</span> <span class="n">dtc_status_mask_type</span><span class="p">:</span> <span class="n">DTC_STATUS_MASK_TYPE</span> <span class="o">=</span> <span class="n">DTC_STATUS_MASK_TYPE</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span>
+                           <span class="n">dtc_severity_mask_type</span><span class="p">:</span> <span class="n">DTC_SEVERITY_MASK_TYPE</span> <span class="o">=</span> <span class="n">DTC_SEVERITY_MASK_TYPE</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span> <span class="n">dtc_mask_record</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mh">0xFFFFFF</span><span class="p">,</span>
+                           <span class="n">dtc_snapshot_record_num</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="n">dtc_extended_record_num</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mh">0xFF</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+    <span class="c1"># dtc_status_mask_type</span>
+    <span class="k">if</span> <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">NUMBER_OF_DTC_BY_STATUS_MASK</span> <span class="ow">or</span> \
+       <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">DTC_BY_STATUS_MASK</span> <span class="ow">or</span> \
+       <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">MIRROR_MEMORY_DTC_BY_STATUS_MASK</span> <span class="ow">or</span> \
+       <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">NUMBER_OF_MIRROR_MEMORY_DTC_BY_STATUS_MASK</span> <span class="ow">or</span> \
+       <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">NUMBER_OF_EMISSIONS_RELATED_OBD_DTC_BY_STATUS_MASK</span> <span class="ow">or</span> \
+       <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">EMISSIONS_RELATED_OBD_DTC_BY_STATUS_MASK</span><span class="p">:</span>
+       <span class="n">data</span> <span class="o">+=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">dtc_status_mask_type</span><span class="p">])</span>
+    <span class="c1"># dtc_mask_record</span>
+    <span class="k">if</span> <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">DTC_SNAPSHOT_IDENTIFICATION</span> <span class="ow">or</span> \
+       <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">DTC_SNAPSHOT_RECORD_BY_DTC_NUMBER</span> <span class="ow">or</span> \
+       <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">DTC_EXTENDED_DATA_RECORD_BY_DTC_NUMBER</span> <span class="ow">or</span> \
+       <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">MIRROR_MEMORY_DTC_EXTENDED_DATA_RECORD_BY_DTC_NUMBER</span> <span class="ow">or</span> \
+       <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">SEVERITY_INFORMATION_OF_DTC</span><span class="p">:</span>
+       <span class="n">data</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="n">dtc_mask_record</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># 3 bytes</span>
+    <span class="c1"># dtc_snapshot_record_num</span>
+    <span class="k">if</span> <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">DTC_SNAPSHOT_IDENTIFICATION</span> <span class="ow">or</span> \
+       <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">DTC_SNAPSHOT_RECORD_BY_DTC_NUMBER</span> <span class="ow">or</span> \
+       <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">DTC_SNAPSHOT_RECORD_BY_RECORD_NUMBER</span><span class="p">:</span>
+       <span class="n">data</span> <span class="o">+=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">dtc_snapshot_record_num</span><span class="p">])</span>
+    <span class="c1"># dtc_extended_record_num</span>
+    <span class="k">if</span> <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">DTC_EXTENDED_DATA_RECORD_BY_DTC_NUMBER</span> <span class="ow">or</span> \
+       <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">MIRROR_MEMORY_DTC_EXTENDED_DATA_RECORD_BY_DTC_NUMBER</span><span class="p">:</span>
+       <span class="n">data</span> <span class="o">+=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">dtc_extended_record_num</span><span class="p">])</span>
+    <span class="c1"># dtc_severity_mask_type</span>
+    <span class="k">if</span> <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">NUMBER_OF_DTC_BY_SEVERITY_MASK_RECORD</span> <span class="ow">or</span> \
+       <span class="n">dtc_report_type</span> <span class="o">==</span> <span class="n">DTC_REPORT_TYPE</span><span class="o">.</span><span class="n">DTC_BY_SEVERITY_MASK_RECORD</span><span class="p">:</span>
+       <span class="n">data</span> <span class="o">+=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">dtc_severity_mask_type</span><span class="p">,</span> <span class="n">dtc_status_mask_type</span><span class="p">])</span>
+
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">READ_DTC_INFORMATION</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="n">dtc_report_type</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># TODO: parse response</span>
+    <span class="k">return</span> <span class="n">resp</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.input_output_control_by_identifier">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.input_output_control_by_identifier">[docs]</a>
+  <span class="k">def</span> <span class="nf">input_output_control_by_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_identifier_type</span><span class="p">:</span> <span class="n">DATA_IDENTIFIER_TYPE</span><span class="p">,</span> <span class="n">control_parameter_type</span><span class="p">:</span> <span class="n">CONTROL_PARAMETER_TYPE</span><span class="p">,</span>
+                                         <span class="n">control_option_record</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">control_enable_mask_record</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!H&#39;</span><span class="p">,</span> <span class="n">data_identifier_type</span><span class="p">)</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">control_parameter_type</span><span class="p">])</span> <span class="o">+</span> <span class="n">control_option_record</span> <span class="o">+</span> <span class="n">control_enable_mask_record</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">INPUT_OUTPUT_CONTROL_BY_IDENTIFIER</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">resp_id</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;!H&#39;</span><span class="p">,</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">resp_id</span> <span class="o">!=</span> <span class="n">data_identifier_type</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid response data identifier: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">resp_id</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">resp</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.routine_control">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.routine_control">[docs]</a>
+  <span class="k">def</span> <span class="nf">routine_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">routine_control_type</span><span class="p">:</span> <span class="n">ROUTINE_CONTROL_TYPE</span><span class="p">,</span> <span class="n">routine_identifier_type</span><span class="p">:</span> <span class="n">ROUTINE_IDENTIFIER_TYPE</span><span class="p">,</span> <span class="n">routine_option_record</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!H&#39;</span><span class="p">,</span> <span class="n">routine_identifier_type</span><span class="p">)</span> <span class="o">+</span> <span class="n">routine_option_record</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">ROUTINE_CONTROL</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="n">routine_control_type</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">resp_id</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;!H&#39;</span><span class="p">,</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">resp_id</span> <span class="o">!=</span> <span class="n">routine_identifier_type</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid response routine identifier: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">resp_id</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">resp</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.request_download">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.request_download">[docs]</a>
+  <span class="k">def</span> <span class="nf">request_download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_address</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">memory_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">memory_address_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">memory_size_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">data_format</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mh">0x00</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">data_format</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">memory_address_bytes</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">memory_address_bytes</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_address_bytes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_address_bytes</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">memory_size_bytes</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">memory_size_bytes</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_size_bytes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_size_bytes</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">+=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">memory_size_bytes</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="n">memory_address_bytes</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">memory_address</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">memory_address_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_address: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_address</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="n">memory_address</span><span class="p">)[</span><span class="mi">4</span> <span class="o">-</span> <span class="n">memory_address_bytes</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="n">memory_size</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">memory_size_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_size: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_size</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="n">memory_size</span><span class="p">)[</span><span class="mi">4</span> <span class="o">-</span> <span class="n">memory_size_bytes</span><span class="p">:]</span>
+
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">REQUEST_DOWNLOAD</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">max_num_bytes_len</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">max_num_bytes_len</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">max_num_bytes_len</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="n">max_num_bytes</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">-</span> <span class="n">max_num_bytes_len</span><span class="p">))</span> <span class="o">+</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">max_num_bytes_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid max_num_bytes_len: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">max_num_bytes_len</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">max_num_bytes</span>  <span class="c1"># max number of bytes per transfer data request</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.request_upload">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.request_upload">[docs]</a>
+  <span class="k">def</span> <span class="nf">request_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_address</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">memory_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">memory_address_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">memory_size_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">data_format</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mh">0x00</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">data_format</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">memory_address_bytes</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">memory_address_bytes</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_address_bytes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_address_bytes</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">memory_size_bytes</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">memory_size_bytes</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_size_bytes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_size_bytes</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">+=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">memory_size_bytes</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="n">memory_address_bytes</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">memory_address</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">memory_address_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_address: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_address</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="n">memory_address</span><span class="p">)[</span><span class="mi">4</span> <span class="o">-</span> <span class="n">memory_address_bytes</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="n">memory_size</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">memory_size_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid memory_size: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">memory_size</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="n">memory_size</span><span class="p">)[</span><span class="mi">4</span> <span class="o">-</span> <span class="n">memory_size_bytes</span><span class="p">:]</span>
+
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">REQUEST_UPLOAD</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">max_num_bytes_len</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">max_num_bytes_len</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">max_num_bytes_len</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="n">max_num_bytes</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;!I&#39;</span><span class="p">,</span> <span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">-</span> <span class="n">max_num_bytes_len</span><span class="p">))</span> <span class="o">+</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">max_num_bytes_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid max_num_bytes_len: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">max_num_bytes_len</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">max_num_bytes</span>  <span class="c1"># max number of bytes per transfer data request</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.transfer_data">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.transfer_data">[docs]</a>
+  <span class="k">def</span> <span class="nf">transfer_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_sequence_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">block_sequence_count</span><span class="p">])</span> <span class="o">+</span> <span class="n">data</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">TRANSFER_DATA</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">resp_id</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">resp_id</span> <span class="o">!=</span> <span class="n">block_sequence_count</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid block_sequence_count: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp_id</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span></div>
+
+
+<div class="viewcode-block" id="UdsClient.request_transfer_exit">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.uds.UdsClient.request_transfer_exit">[docs]</a>
+  <span class="k">def</span> <span class="nf">request_transfer_exit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_uds_request</span><span class="p">(</span><span class="n">SERVICE_TYPE</span><span class="o">.</span><span class="n">REQUEST_TRANSFER_EXIT</span><span class="p">,</span> <span class="n">subfunction</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

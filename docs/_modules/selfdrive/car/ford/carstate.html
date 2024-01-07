@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.ford.carstate &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/ford/carstate.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.ford.carstate</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.ford.carstate</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">opendbc.can.can_define</span> <span class="kn">import</span> <span class="n">CANDefine</span>
+<span class="kn">from</span> <span class="nn">opendbc.can.parser</span> <span class="kn">import</span> <span class="n">CANParser</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.interfaces</span> <span class="kn">import</span> <span class="n">CarStateBase</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.ford.fordcan</span> <span class="kn">import</span> <span class="n">CanBus</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.ford.values</span> <span class="kn">import</span> <span class="n">CANFD_CAR</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="p">,</span> <span class="n">DBC</span>
+
+<span class="n">GearShifter</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">GearShifter</span>
+<span class="n">TransmissionType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">TransmissionType</span>
+
+
+<div class="viewcode-block" id="CarState">
+<a class="viewcode-back" href="../../../../selfdrive.car.ford.html#selfdrive.car.ford.carstate.CarState">[docs]</a>
+<span class="k">class</span> <span class="nc">CarState</span><span class="p">(</span><span class="n">CarStateBase</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+    <span class="n">can_define</span> <span class="o">=</span> <span class="n">CANDefine</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">automatic</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">shifter_values</span> <span class="o">=</span> <span class="n">can_define</span><span class="o">.</span><span class="n">dv</span><span class="p">[</span><span class="s2">&quot;Gear_Shift_by_Wire_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;TrnRng_D_RqGsm&quot;</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">vehicle_sensors_valid</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">unsupported_platform</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="CarState.update">
+<a class="viewcode-back" href="../../../../selfdrive.car.ford.html#selfdrive.car.ford.carstate.CarState.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="n">cp_cam</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+
+    <span class="c1"># Ford Q3 hybrid variants experience a bug where a message from the PCM sends invalid checksums,</span>
+    <span class="c1"># this must be root-caused before enabling support. Ford Q4 hybrids do not have this problem.</span>
+    <span class="c1"># TrnAin_Tq_Actl and its quality flag are only set on ICE platform variants</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">unsupported_platform</span> <span class="o">=</span> <span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;VehicleOperatingModes&quot;</span><span class="p">][</span><span class="s2">&quot;TrnAinTq_D_Qf&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">)</span>
+
+    <span class="c1"># Occasionally on startup, the ABS module recalibrates the steering pinion offset, so we need to block engagement</span>
+    <span class="c1"># The vehicle usually recovers out of this state within a minute of normal driving</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">vehicle_sensors_valid</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SteeringPinion_Data&quot;</span><span class="p">][</span><span class="s2">&quot;StePinCompAnEst_D_Qf&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="c1"># car speed</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BrakeSysFeatures&quot;</span><span class="p">][</span><span class="s2">&quot;Veh_V_ActlBrk&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">aEgo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_speed_kf</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">yawRate</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Yaw_Data_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;VehYaw_W_Actl&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;DesiredTorqBrk&quot;</span><span class="p">][</span><span class="s2">&quot;VehStop_D_Stat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="c1"># gas pedal</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EngVehicleSpThrottle&quot;</span><span class="p">][</span><span class="s2">&quot;ApedPos_Pc_ActlArb&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">100.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">gasPressed</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">&gt;</span> <span class="mf">1e-6</span>
+
+    <span class="c1"># brake pedal</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">brake</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BrakeSnData_4&quot;</span><span class="p">][</span><span class="s2">&quot;BrkTot_Tq_Actl&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">32756.</span>  <span class="c1"># torque in Nm</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">brakePressed</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EngBrakeData&quot;</span><span class="p">][</span><span class="s2">&quot;BpedDrvAppl_D_Actl&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">parkingBrake</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;DesiredTorqBrk&quot;</span><span class="p">][</span><span class="s2">&quot;PrkBrkStatus&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># steering wheel</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringAngleDeg</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SteeringPinion_Data&quot;</span><span class="p">][</span><span class="s2">&quot;StePinComp_An_Est&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringTorque</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EPAS_INFO&quot;</span><span class="p">][</span><span class="s2">&quot;SteeringColumnTorque&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringPressed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_steering_pressed</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">steeringTorque</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">STEER_DRIVER_ALLOWANCE</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerFaultTemporary</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EPAS_INFO&quot;</span><span class="p">][</span><span class="s2">&quot;EPAS_Failure&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerFaultPermanent</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EPAS_INFO&quot;</span><span class="p">][</span><span class="s2">&quot;EPAS_Failure&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="c1"># ret.espDisabled = False  # TODO: find traction control signal</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="c1"># this signal is always 0 on non-CAN FD cars</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerFaultTemporary</span> <span class="o">|=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Lane_Assist_Data3_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;LatCtlSte_D_Stat&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="c1"># cruise state</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EngBrakeData&quot;</span><span class="p">][</span><span class="s2">&quot;Veh_V_DsplyCcSet&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EngBrakeData&quot;</span><span class="p">][</span><span class="s2">&quot;CcStat_D_Actl&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">available</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EngBrakeData&quot;</span><span class="p">][</span><span class="s2">&quot;CcStat_D_Actl&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">nonAdaptive</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Cluster_Info1_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;AccEnbl_B_RqDrv&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EngBrakeData&quot;</span><span class="p">][</span><span class="s2">&quot;AccStopMde_D_Rq&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">accFaulted</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EngBrakeData&quot;</span><span class="p">][</span><span class="s2">&quot;CcStat_D_Actl&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">accFaulted</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">accFaulted</span> <span class="ow">or</span> <span class="n">cp_cam</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ACCDATA&quot;</span><span class="p">][</span><span class="s2">&quot;CmbbDeny_B_Actl&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="c1"># gear</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">automatic</span><span class="p">:</span>
+      <span class="n">gear</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shifter_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gear_Shift_by_Wire_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;TrnRng_D_RqGsm&quot;</span><span class="p">])</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_gear_shifter</span><span class="p">(</span><span class="n">gear</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">manual</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">clutchPressed</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Engine_Clutch_Data&quot;</span><span class="p">][</span><span class="s2">&quot;CluPdlPos_Pc_Meas&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+      <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BCM_Lamp_Stat_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;RvrseLghtOn_B_Stat&quot;</span><span class="p">]):</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">reverse</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">drive</span>
+
+    <span class="c1"># safety</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">stockFcw</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">cp_cam</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ACCDATA_3&quot;</span><span class="p">][</span><span class="s2">&quot;FcwVisblWarn_B_Rq&quot;</span><span class="p">])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">stockAeb</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">cp_cam</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ACCDATA_2&quot;</span><span class="p">][</span><span class="s2">&quot;CmbbBrkDecel_B_Rq&quot;</span><span class="p">])</span>
+
+    <span class="c1"># button presses</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">leftBlinker</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Steering_Data_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;TurnLghtSwtch_D_Stat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">rightBlinker</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Steering_Data_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;TurnLghtSwtch_D_Stat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="c1"># TODO: block this going to the camera otherwise it will enable stock TJA</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">genericToggle</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Steering_Data_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;TjaButtnOnOffPress&quot;</span><span class="p">])</span>
+
+    <span class="c1"># lock info</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">doorOpen</span> <span class="o">=</span> <span class="nb">any</span><span class="p">([</span><span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BodyInfo_3_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;DrStatDrv_B_Actl&quot;</span><span class="p">],</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BodyInfo_3_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;DrStatPsngr_B_Actl&quot;</span><span class="p">],</span>
+                        <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BodyInfo_3_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;DrStatRl_B_Actl&quot;</span><span class="p">],</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BodyInfo_3_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;DrStatRr_B_Actl&quot;</span><span class="p">]])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">seatbeltUnlatched</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;RCMStatusMessage2_FD1&quot;</span><span class="p">][</span><span class="s2">&quot;FirstRowBuckleDriver&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="c1"># blindspot sensors</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span><span class="p">:</span>
+      <span class="n">cp_bsm</span> <span class="o">=</span> <span class="n">cp_cam</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span> <span class="k">else</span> <span class="n">cp</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">leftBlindspot</span> <span class="o">=</span> <span class="n">cp_bsm</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Side_Detect_L_Stat&quot;</span><span class="p">][</span><span class="s2">&quot;SodDetctLeft_D_Stat&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">rightBlindspot</span> <span class="o">=</span> <span class="n">cp_bsm</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Side_Detect_R_Stat&quot;</span><span class="p">][</span><span class="s2">&quot;SodDetctRight_D_Stat&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+
+    <span class="c1"># Stock steering buttons so that we can passthru blinkers etc.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">buttons_stock_values</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Steering_Data_FD1&quot;</span><span class="p">]</span>
+    <span class="c1"># Stock values from IPMA so that we can retain some stock functionality</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">acc_tja_status_stock_values</span> <span class="o">=</span> <span class="n">cp_cam</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ACCDATA_3&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lkas_status_stock_values</span> <span class="o">=</span> <span class="n">cp_cam</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;IPMA_Data&quot;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="CarState.get_can_parser">
+<a class="viewcode-back" href="../../../../selfdrive.car.ford.html#selfdrive.car.ford.carstate.CarState.get_can_parser">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="c1"># sig_address, frequency</span>
+      <span class="p">(</span><span class="s2">&quot;VehicleOperatingModes&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;BrakeSysFeatures&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;Yaw_Data_FD1&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;DesiredTorqBrk&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;EngVehicleSpThrottle&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;BrakeSnData_4&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;EngBrakeData&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;Cluster_Info1_FD1&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;SteeringPinion_Data&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;EPAS_INFO&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;Steering_Data_FD1&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;BodyInfo_3_FD1&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;RCMStatusMessage2_FD1&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;Lane_Assist_Data3_FD1&quot;</span><span class="p">,</span> <span class="mi">33</span><span class="p">),</span>
+      <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">automatic</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;Gear_Shift_by_Wire_FD1&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+      <span class="p">]</span>
+    <span class="k">elif</span> <span class="n">CP</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">manual</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;Engine_Clutch_Data&quot;</span><span class="p">,</span> <span class="mi">33</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;BCM_Lamp_Stat_FD1&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+      <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span> <span class="ow">and</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;Side_Detect_L_Stat&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;Side_Detect_R_Stat&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+      <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="n">messages</span><span class="p">,</span> <span class="n">CanBus</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span><span class="o">.</span><span class="n">main</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarState.get_cam_can_parser">
+<a class="viewcode-back" href="../../../../selfdrive.car.ford.html#selfdrive.car.ford.carstate.CarState.get_cam_can_parser">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_cam_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="c1"># sig_address, frequency</span>
+      <span class="p">(</span><span class="s2">&quot;ACCDATA&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;ACCDATA_2&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;ACCDATA_3&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;IPMA_Data&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span> <span class="ow">and</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">CANFD_CAR</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;Side_Detect_L_Stat&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;Side_Detect_R_Stat&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+      <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="n">messages</span><span class="p">,</span> <span class="n">CanBus</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span><span class="o">.</span><span class="n">camera</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

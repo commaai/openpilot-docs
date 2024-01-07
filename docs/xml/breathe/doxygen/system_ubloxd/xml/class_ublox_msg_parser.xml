@@ -1,0 +1,409 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="class_ublox_msg_parser" kind="class" language="C++" prot="public">
+    <compoundname>UbloxMsgParser</compoundname>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_ublox_msg_parser_1a02884f0763d70133102b94602aeebb9b" prot="private" static="no" mutable="no">
+        <type>std::unordered_map&lt; int, std::unordered_map&lt; int, std::string &gt; &gt;</type>
+        <definition>std::unordered_map&lt;int, std::unordered_map&lt;int, std::string&gt; &gt; UbloxMsgParser::gps_subframes</definition>
+        <argsstring></argsstring>
+        <name>gps_subframes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="116" column="24" bodyfile="/tmp/openpilot/system/ubloxd/ublox_msg.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_ublox_msg_parser_1acc53fdb933a2128af22a4969955e65ab" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float UbloxMsgParser::last_log_time</definition>
+        <argsstring></argsstring>
+        <name>last_log_time</name>
+        <initializer>= 0.0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="118" column="11" bodyfile="/tmp/openpilot/system/ubloxd/ublox_msg.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_ublox_msg_parser_1a8271cf89fba861423ce72cdab8ed99ec" prot="private" static="no" mutable="no">
+        <type>size_t</type>
+        <definition>size_t UbloxMsgParser::bytes_in_parse_buf</definition>
+        <argsstring></argsstring>
+        <name>bytes_in_parse_buf</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="119" column="12" bodyfile="/tmp/openpilot/system/ubloxd/ublox_msg.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_ublox_msg_parser_1abe73caa8d403f567cc2fe68e2625034f" prot="private" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t UbloxMsgParser::msg_parse_buf[ublox::UBLOX_HEADER_SIZE+ublox::UBLOX_MAX_MSG_SIZE]</definition>
+        <argsstring>[ublox::UBLOX_HEADER_SIZE+ublox::UBLOX_MAX_MSG_SIZE]</argsstring>
+        <name>msg_parse_buf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="120" column="13" bodyfile="/tmp/openpilot/system/ubloxd/ublox_msg.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_ublox_msg_parser_1a9f45e17d592519f149c8bb181d7a9e73" prot="private" static="no" mutable="no">
+        <type>const std::unordered_map&lt; uint8_t, float &gt;</type>
+        <definition>const std::unordered_map&lt;uint8_t, float&gt; UbloxMsgParser::glonass_URA_lookup</definition>
+        <argsstring></argsstring>
+        <name>glonass_URA_lookup</name>
+        <initializer>=
+      {{ 0,  1}, { 1,   2}, { 2, 2.5}, { 3,   4}, { 4,  5}, {5, 7},
+       { 6, 10}, { 7,  12}, { 8,  14}, { 9,  16}, {10, 32},
+       {11, 64}, {12, 128}, {13, 256}, {14, 512}, {15, 1024}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="123" column="30" bodyfile="/tmp/openpilot/system/ubloxd/ublox_msg.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_ublox_msg_parser_1af1228bcfc023e881dfc5833de6416bf3" prot="private" static="no" mutable="no">
+        <type>std::unordered_map&lt; int, std::unordered_map&lt; int, std::string &gt; &gt;</type>
+        <definition>std::unordered_map&lt;int, std::unordered_map&lt;int, std::string&gt; &gt; UbloxMsgParser::glonass_strings</definition>
+        <argsstring></argsstring>
+        <name>glonass_strings</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="128" column="24" bodyfile="/tmp/openpilot/system/ubloxd/ublox_msg.h" bodystart="128" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_ublox_msg_parser_1ad3e1d777d07e3c0f6e6ae36216faf7a7" prot="private" static="no" mutable="no">
+        <type>std::unordered_map&lt; int, std::unordered_map&lt; int, long &gt; &gt;</type>
+        <definition>std::unordered_map&lt;int, std::unordered_map&lt;int, long&gt; &gt; UbloxMsgParser::glonass_string_times</definition>
+        <argsstring></argsstring>
+        <name>glonass_string_times</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="129" column="24" bodyfile="/tmp/openpilot/system/ubloxd/ublox_msg.h" bodystart="129" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_ublox_msg_parser_1a2944c461648a10a5dd1b0f46900d6de4" prot="private" static="no" mutable="no">
+        <type>std::unordered_map&lt; int, std::unordered_map&lt; int, int &gt; &gt;</type>
+        <definition>std::unordered_map&lt;int, std::unordered_map&lt;int, int&gt; &gt; UbloxMsgParser::glonass_string_superframes</definition>
+        <argsstring></argsstring>
+        <name>glonass_string_superframes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="130" column="24" bodyfile="/tmp/openpilot/system/ubloxd/ublox_msg.h" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_ublox_msg_parser_1aa4855007e85f3ac37fc834336804e040" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool UbloxMsgParser::add_data</definition>
+        <argsstring>(float log_time, const uint8_t *incoming_data, uint32_t incoming_data_len, size_t &amp;bytes_consumed)</argsstring>
+        <name>add_data</name>
+        <param>
+          <type>float</type>
+          <declname>log_time</declname>
+        </param>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>incoming_data</declname>
+        </param>
+        <param>
+          <type>uint32_t</type>
+          <declname>incoming_data_len</declname>
+        </param>
+        <param>
+          <type>size_t &amp;</type>
+          <declname>bytes_consumed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="95" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1ad0a4bd3b1c9e9dc1cd2e2b5f01eed3e4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void UbloxMsgParser::reset</definition>
+        <argsstring>()</argsstring>
+        <name>reset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="96" column="17" bodyfile="/tmp/openpilot/system/ubloxd/ublox_msg.h" bodystart="96" bodyend="96"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1a1aafe542fc7f9144232c60a47b84af08" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int UbloxMsgParser::needed_bytes</definition>
+        <argsstring>()</argsstring>
+        <name>needed_bytes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="97" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1a1adcba1cc2598e2fab14c57c3abed7a5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string UbloxMsgParser::data</definition>
+        <argsstring>()</argsstring>
+        <name>data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="98" column="24" bodyfile="/tmp/openpilot/system/ubloxd/ublox_msg.h" bodystart="98" bodyend="98"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1a68035b1e93808ccde0c07487b0a421ef" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::pair&lt; std::string, kj::Array&lt; capnp::word &gt; &gt;</type>
+        <definition>std::pair&lt;std::string, kj::Array&lt;capnp::word&gt; &gt; UbloxMsgParser::gen_msg</definition>
+        <argsstring>()</argsstring>
+        <name>gen_msg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="100" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1a2a54556d7ee5d9a27fe906467ed92dd0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>kj::Array&lt; capnp::word &gt;</type>
+        <definition>kj::Array&lt;capnp::word&gt; UbloxMsgParser::gen_nav_pvt</definition>
+        <argsstring>(ubx_t::nav_pvt_t *msg)</argsstring>
+        <name>gen_nav_pvt</name>
+        <param>
+          <type>ubx_t::nav_pvt_t *</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="101" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1ad8c0779ffde4aa9c0b91c7980d504b8b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>kj::Array&lt; capnp::word &gt;</type>
+        <definition>kj::Array&lt;capnp::word&gt; UbloxMsgParser::gen_rxm_sfrbx</definition>
+        <argsstring>(ubx_t::rxm_sfrbx_t *msg)</argsstring>
+        <name>gen_rxm_sfrbx</name>
+        <param>
+          <type>ubx_t::rxm_sfrbx_t *</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="102" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1a9c9bd85c2405127c42dd05d1bfde55cf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>kj::Array&lt; capnp::word &gt;</type>
+        <definition>kj::Array&lt;capnp::word&gt; UbloxMsgParser::gen_rxm_rawx</definition>
+        <argsstring>(ubx_t::rxm_rawx_t *msg)</argsstring>
+        <name>gen_rxm_rawx</name>
+        <param>
+          <type>ubx_t::rxm_rawx_t *</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="103" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1ade5f8a55fe41fd7b6b42ab72945ac3cb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>kj::Array&lt; capnp::word &gt;</type>
+        <definition>kj::Array&lt;capnp::word&gt; UbloxMsgParser::gen_mon_hw</definition>
+        <argsstring>(ubx_t::mon_hw_t *msg)</argsstring>
+        <name>gen_mon_hw</name>
+        <param>
+          <type>ubx_t::mon_hw_t *</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="104" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1a8c66b0fe5a4a7311b1fb687dcebd7a9f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>kj::Array&lt; capnp::word &gt;</type>
+        <definition>kj::Array&lt;capnp::word&gt; UbloxMsgParser::gen_mon_hw2</definition>
+        <argsstring>(ubx_t::mon_hw2_t *msg)</argsstring>
+        <name>gen_mon_hw2</name>
+        <param>
+          <type>ubx_t::mon_hw2_t *</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="105" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1a7d739172a28035719ee14ff034f59901" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>kj::Array&lt; capnp::word &gt;</type>
+        <definition>kj::Array&lt;capnp::word&gt; UbloxMsgParser::gen_nav_sat</definition>
+        <argsstring>(ubx_t::nav_sat_t *msg)</argsstring>
+        <name>gen_nav_sat</name>
+        <param>
+          <type>ubx_t::nav_sat_t *</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="106" column="15"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="class_ublox_msg_parser_1ab698fc6508be92715fa7a26b0d96fae0" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool UbloxMsgParser::valid_cheksum</definition>
+        <argsstring>()</argsstring>
+        <name>valid_cheksum</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="109" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1a390ca309a43dbe34e34f92d45e7b2aad" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool UbloxMsgParser::valid</definition>
+        <argsstring>()</argsstring>
+        <name>valid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="110" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1a513e495fc4ea1a78ea867bba55977ac8" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool UbloxMsgParser::valid_so_far</definition>
+        <argsstring>()</argsstring>
+        <name>valid_so_far</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="111" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1a15c53468c9de006eafad5e7b9deb98a0" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>kj::Array&lt; capnp::word &gt;</type>
+        <definition>kj::Array&lt;capnp::word&gt; UbloxMsgParser::parse_gps_ephemeris</definition>
+        <argsstring>(ubx_t::rxm_sfrbx_t *msg)</argsstring>
+        <name>parse_gps_ephemeris</name>
+        <param>
+          <type>ubx_t::rxm_sfrbx_t *</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="113" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="class_ublox_msg_parser_1af994c043a1ae337f8aa707f5cd2e85f0" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>kj::Array&lt; capnp::word &gt;</type>
+        <definition>kj::Array&lt;capnp::word&gt; UbloxMsgParser::parse_glonass_ephemeris</definition>
+        <argsstring>(ubx_t::rxm_sfrbx_t *msg)</argsstring>
+        <name>parse_glonass_ephemeris</name>
+        <param>
+          <type>ubx_t::rxm_sfrbx_t *</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="114" column="15"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/tmp/openpilot/system/ubloxd/ublox_msg.h" line="93" column="21" bodyfile="/tmp/openpilot/system/ubloxd/ublox_msg.h" bodystart="93" bodyend="131"/>
+    <listofallmembers>
+      <member refid="class_ublox_msg_parser_1aa4855007e85f3ac37fc834336804e040" prot="public" virt="non-virtual"><scope>UbloxMsgParser</scope><name>add_data</name></member>
+      <member refid="class_ublox_msg_parser_1a8271cf89fba861423ce72cdab8ed99ec" prot="private" virt="non-virtual"><scope>UbloxMsgParser</scope><name>bytes_in_parse_buf</name></member>
+      <member refid="class_ublox_msg_parser_1a1adcba1cc2598e2fab14c57c3abed7a5" prot="public" virt="non-virtual"><scope>UbloxMsgParser</scope><name>data</name></member>
+      <member refid="class_ublox_msg_parser_1ade5f8a55fe41fd7b6b42ab72945ac3cb" prot="public" virt="non-virtual"><scope>UbloxMsgParser</scope><name>gen_mon_hw</name></member>
+      <member refid="class_ublox_msg_parser_1a8c66b0fe5a4a7311b1fb687dcebd7a9f" prot="public" virt="non-virtual"><scope>UbloxMsgParser</scope><name>gen_mon_hw2</name></member>
+      <member refid="class_ublox_msg_parser_1a68035b1e93808ccde0c07487b0a421ef" prot="public" virt="non-virtual"><scope>UbloxMsgParser</scope><name>gen_msg</name></member>
+      <member refid="class_ublox_msg_parser_1a2a54556d7ee5d9a27fe906467ed92dd0" prot="public" virt="non-virtual"><scope>UbloxMsgParser</scope><name>gen_nav_pvt</name></member>
+      <member refid="class_ublox_msg_parser_1a7d739172a28035719ee14ff034f59901" prot="public" virt="non-virtual"><scope>UbloxMsgParser</scope><name>gen_nav_sat</name></member>
+      <member refid="class_ublox_msg_parser_1a9c9bd85c2405127c42dd05d1bfde55cf" prot="public" virt="non-virtual"><scope>UbloxMsgParser</scope><name>gen_rxm_rawx</name></member>
+      <member refid="class_ublox_msg_parser_1ad8c0779ffde4aa9c0b91c7980d504b8b" prot="public" virt="non-virtual"><scope>UbloxMsgParser</scope><name>gen_rxm_sfrbx</name></member>
+      <member refid="class_ublox_msg_parser_1a2944c461648a10a5dd1b0f46900d6de4" prot="private" virt="non-virtual"><scope>UbloxMsgParser</scope><name>glonass_string_superframes</name></member>
+      <member refid="class_ublox_msg_parser_1ad3e1d777d07e3c0f6e6ae36216faf7a7" prot="private" virt="non-virtual"><scope>UbloxMsgParser</scope><name>glonass_string_times</name></member>
+      <member refid="class_ublox_msg_parser_1af1228bcfc023e881dfc5833de6416bf3" prot="private" virt="non-virtual"><scope>UbloxMsgParser</scope><name>glonass_strings</name></member>
+      <member refid="class_ublox_msg_parser_1a9f45e17d592519f149c8bb181d7a9e73" prot="private" virt="non-virtual"><scope>UbloxMsgParser</scope><name>glonass_URA_lookup</name></member>
+      <member refid="class_ublox_msg_parser_1a02884f0763d70133102b94602aeebb9b" prot="private" virt="non-virtual"><scope>UbloxMsgParser</scope><name>gps_subframes</name></member>
+      <member refid="class_ublox_msg_parser_1acc53fdb933a2128af22a4969955e65ab" prot="private" virt="non-virtual"><scope>UbloxMsgParser</scope><name>last_log_time</name></member>
+      <member refid="class_ublox_msg_parser_1abe73caa8d403f567cc2fe68e2625034f" prot="private" virt="non-virtual"><scope>UbloxMsgParser</scope><name>msg_parse_buf</name></member>
+      <member refid="class_ublox_msg_parser_1a1aafe542fc7f9144232c60a47b84af08" prot="public" virt="non-virtual"><scope>UbloxMsgParser</scope><name>needed_bytes</name></member>
+      <member refid="class_ublox_msg_parser_1af994c043a1ae337f8aa707f5cd2e85f0" prot="private" virt="non-virtual"><scope>UbloxMsgParser</scope><name>parse_glonass_ephemeris</name></member>
+      <member refid="class_ublox_msg_parser_1a15c53468c9de006eafad5e7b9deb98a0" prot="private" virt="non-virtual"><scope>UbloxMsgParser</scope><name>parse_gps_ephemeris</name></member>
+      <member refid="class_ublox_msg_parser_1ad0a4bd3b1c9e9dc1cd2e2b5f01eed3e4" prot="public" virt="non-virtual"><scope>UbloxMsgParser</scope><name>reset</name></member>
+      <member refid="class_ublox_msg_parser_1a390ca309a43dbe34e34f92d45e7b2aad" prot="private" virt="non-virtual"><scope>UbloxMsgParser</scope><name>valid</name></member>
+      <member refid="class_ublox_msg_parser_1ab698fc6508be92715fa7a26b0d96fae0" prot="private" virt="non-virtual"><scope>UbloxMsgParser</scope><name>valid_cheksum</name></member>
+      <member refid="class_ublox_msg_parser_1a513e495fc4ea1a78ea867bba55977ac8" prot="private" virt="non-virtual"><scope>UbloxMsgParser</scope><name>valid_so_far</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

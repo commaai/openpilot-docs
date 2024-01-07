@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.interfaces &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/interfaces.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.interfaces</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.interfaces</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tomllib</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span><span class="p">,</span> <span class="n">ABC</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">StrEnum</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.basedir</span> <span class="kn">import</span> <span class="n">BASEDIR</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.simple_kalman</span> <span class="kn">import</span> <span class="n">KF1D</span><span class="p">,</span> <span class="n">get_kalman_gain</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.numpy_fast</span> <span class="kn">import</span> <span class="n">clip</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">DT_CTRL</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">apply_hysteresis</span><span class="p">,</span> <span class="n">gen_empty_fingerprint</span><span class="p">,</span> <span class="n">scale_rot_inertia</span><span class="p">,</span> <span class="n">scale_tire_stiffness</span><span class="p">,</span> <span class="n">STD_CARGO_KG</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.drive_helpers</span> <span class="kn">import</span> <span class="n">V_CRUISE_MAX</span><span class="p">,</span> <span class="n">get_friction</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.events</span> <span class="kn">import</span> <span class="n">Events</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.vehicle_model</span> <span class="kn">import</span> <span class="n">VehicleModel</span>
+
+<span class="n">ButtonType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">ButtonEvent</span><span class="o">.</span><span class="n">Type</span>
+<span class="n">GearShifter</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">GearShifter</span>
+<span class="n">EventName</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">EventName</span>
+<span class="n">TorqueFromLateralAccelCallbackType</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">,</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">LateralTorqueTuning</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span>
+
+<span class="n">MAX_CTRL_SPEED</span> <span class="o">=</span> <span class="p">(</span><span class="n">V_CRUISE_MAX</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span>
+<span class="n">ACCEL_MAX</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">ACCEL_MIN</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.5</span>
+<span class="n">FRICTION_THRESHOLD</span> <span class="o">=</span> <span class="mf">0.3</span>
+
+<span class="n">TORQUE_PARAMS_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="s1">&#39;selfdrive/car/torque_data/params.toml&#39;</span><span class="p">)</span>
+<span class="n">TORQUE_OVERRIDE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="s1">&#39;selfdrive/car/torque_data/override.toml&#39;</span><span class="p">)</span>
+<span class="n">TORQUE_SUBSTITUTE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="s1">&#39;selfdrive/car/torque_data/substitute.toml&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_torque_params">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.get_torque_params">[docs]</a>
+<span class="k">def</span> <span class="nf">get_torque_params</span><span class="p">(</span><span class="n">candidate</span><span class="p">):</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">TORQUE_SUBSTITUTE_PATH</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">sub</span> <span class="o">=</span> <span class="n">tomllib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">sub</span><span class="p">:</span>
+    <span class="n">candidate</span> <span class="o">=</span> <span class="n">sub</span><span class="p">[</span><span class="n">candidate</span><span class="p">]</span>
+
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">TORQUE_PARAMS_PATH</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">tomllib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">TORQUE_OVERRIDE_PATH</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">override</span> <span class="o">=</span> <span class="n">tomllib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+  <span class="c1"># Ensure no overlap</span>
+  <span class="k">if</span> <span class="nb">sum</span><span class="p">([</span><span class="n">candidate</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="n">sub</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">override</span><span class="p">]])</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">candidate</span><span class="si">}</span><span class="s1"> is defined twice in torque config&#39;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">override</span><span class="p">:</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">override</span><span class="p">[</span><span class="n">candidate</span><span class="p">]</span>
+  <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">candidate</span><span class="p">]</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Did not find torque params for </span><span class="si">{</span><span class="n">candidate</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;legend&#39;</span><span class="p">])}</span></div>
+
+
+
+<span class="c1"># generic car and radar interfaces</span>
+
+<div class="viewcode-block" id="CarInterfaceBase">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase">[docs]</a>
+<span class="k">class</span> <span class="nc">CarInterfaceBase</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">,</span> <span class="n">CarController</span><span class="p">,</span> <span class="n">CarState</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CP</span> <span class="o">=</span> <span class="n">CP</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">VM</span> <span class="o">=</span> <span class="n">VehicleModel</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">steering_unpressed</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">low_speed_alert</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">no_steer_warning</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">silent_steer_warning</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_ego_cluster_seen</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">CS</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">can_parsers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">CarState</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">CS</span> <span class="o">=</span> <span class="n">CarState</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">cp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">get_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cp_cam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">get_cam_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cp_adas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">get_adas_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cp_body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">get_body_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cp_loopback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">get_loopback_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">can_parsers</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_cam</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_adas</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_body</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_loopback</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">CC</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">CarController</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">CC</span> <span class="o">=</span> <span class="n">CarController</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="o">.</span><span class="n">dbc_name</span><span class="p">,</span> <span class="n">CP</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">VM</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CarInterfaceBase.get_pid_accel_limits">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase.get_pid_accel_limits">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_pid_accel_limits</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">current_speed</span><span class="p">,</span> <span class="n">cruise_speed</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">ACCEL_MIN</span><span class="p">,</span> <span class="n">ACCEL_MAX</span></div>
+
+
+<div class="viewcode-block" id="CarInterfaceBase.get_non_essential_params">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase.get_non_essential_params">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">get_non_essential_params</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">candidate</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameters essential to controlling the car may be incomplete or wrong without FW versions or fingerprints.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">gen_empty_fingerprint</span><span class="p">(),</span> <span class="nb">list</span><span class="p">(),</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarInterfaceBase.get_params">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase.get_params">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">candidate</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">car_fw</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">CarFw</span><span class="p">],</span> <span class="n">experimental_long</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">docs</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">get_std_params</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_get_params</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">,</span> <span class="n">car_fw</span><span class="p">,</span> <span class="n">experimental_long</span><span class="p">,</span> <span class="n">docs</span><span class="p">)</span>
+
+    <span class="c1"># Vehicle mass is published curb weight plus assumed payload such as a human driver; notCars have no assumed payload</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="o">.</span><span class="n">notCar</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">mass</span> <span class="o">+</span> <span class="n">STD_CARGO_KG</span>
+
+    <span class="c1"># Set params dependent on values set by the car interface</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">rotationalInertia</span> <span class="o">=</span> <span class="n">scale_rot_inertia</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">mass</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFront</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessRear</span> <span class="o">=</span> <span class="n">scale_tire_stiffness</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">mass</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">centerToFront</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+  <span class="nd">@staticmethod</span>
+  <span class="nd">@abstractmethod</span>
+  <span class="k">def</span> <span class="nf">_get_params</span><span class="p">(</span><span class="n">ret</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">candidate</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
+                  <span class="n">car_fw</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">CarFw</span><span class="p">],</span> <span class="n">experimental_long</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">docs</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="CarInterfaceBase.init">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase.init">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="CarInterfaceBase.get_steer_feedforward_default">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase.get_steer_feedforward_default">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_steer_feedforward_default</span><span class="p">(</span><span class="n">desired_angle</span><span class="p">,</span> <span class="n">v_ego</span><span class="p">):</span>
+    <span class="c1"># Proportional to realigning tire momentum: lateral acceleration.</span>
+    <span class="c1"># TODO: something with lateralPlan.curvatureRates</span>
+    <span class="k">return</span> <span class="n">desired_angle</span> <span class="o">*</span> <span class="p">(</span><span class="n">v_ego</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarInterfaceBase.get_steer_feedforward_function">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase.get_steer_feedforward_function">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_steer_feedforward_function</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_steer_feedforward_default</span></div>
+
+
+<div class="viewcode-block" id="CarInterfaceBase.torque_from_lateral_accel_linear">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase.torque_from_lateral_accel_linear">[docs]</a>
+  <span class="k">def</span> <span class="nf">torque_from_lateral_accel_linear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lateral_accel_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">torque_params</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">LateralTorqueTuning</span><span class="p">,</span>
+                                       <span class="n">lateral_accel_error</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">lateral_accel_deadzone</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">friction_compensation</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="c1"># The default is a linear relationship between torque and lateral acceleration (accounting for road roll and steering friction)</span>
+    <span class="n">friction</span> <span class="o">=</span> <span class="n">get_friction</span><span class="p">(</span><span class="n">lateral_accel_error</span><span class="p">,</span> <span class="n">lateral_accel_deadzone</span><span class="p">,</span> <span class="n">FRICTION_THRESHOLD</span><span class="p">,</span> <span class="n">torque_params</span><span class="p">,</span> <span class="n">friction_compensation</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">lateral_accel_value</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">torque_params</span><span class="o">.</span><span class="n">latAccelFactor</span><span class="p">))</span> <span class="o">+</span> <span class="n">friction</span></div>
+
+
+<div class="viewcode-block" id="CarInterfaceBase.torque_from_lateral_accel">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase.torque_from_lateral_accel">[docs]</a>
+  <span class="k">def</span> <span class="nf">torque_from_lateral_accel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TorqueFromLateralAccelCallbackType</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">torque_from_lateral_accel_linear</span></div>
+
+
+  <span class="c1"># returns a set of default params to avoid repetition in car specific params</span>
+<div class="viewcode-block" id="CarInterfaceBase.get_std_params">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase.get_std_params">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_std_params</span><span class="p">(</span><span class="n">candidate</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="o">=</span> <span class="n">candidate</span>
+
+    <span class="c1"># Car docs fields</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">maxLateralAccel</span> <span class="o">=</span> <span class="n">get_torque_params</span><span class="p">(</span><span class="n">candidate</span><span class="p">)[</span><span class="s1">&#39;MAX_LAT_ACCEL_MEASURED&#39;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">autoResumeSng</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># describes whether car can resume from a stop automatically</span>
+
+    <span class="c1"># standard ALC params</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">tireStiffnessFactor</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerControlType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SteerControlType</span><span class="o">.</span><span class="n">torque</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeedFactor</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">pcmCruise</span> <span class="o">=</span> <span class="kc">True</span>     <span class="c1"># openpilot&#39;s state is tied to the PCM&#39;s cruise state on most cars</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span> <span class="c1"># enable is done by stock ACC, so ignore this</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerRatioRear</span> <span class="o">=</span> <span class="mf">0.</span>  <span class="c1"># no rear steering, at least on the listed cars aboveA</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">stopAccel</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">stoppingDecelRate</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="c1"># brake_travel/s while trying to stop</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgoStopping</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgoStarting</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">stoppingControl</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">deadzoneBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">deadzoneV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="mf">1.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kpBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kiBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span><span class="p">]</span>
+    <span class="c1"># TODO estimate car specific lag, use .15s for now</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalActuatorDelayLowerBound</span> <span class="o">=</span> <span class="mf">0.15</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalActuatorDelayUpperBound</span> <span class="o">=</span> <span class="mf">0.15</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerLimitTimer</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="CarInterfaceBase.configure_torque_tune">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase.configure_torque_tune">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">tune</span><span class="p">,</span> <span class="n">steering_angle_deadzone_deg</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">use_steering_angle</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">get_torque_params</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+
+    <span class="n">tune</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s1">&#39;torque&#39;</span><span class="p">)</span>
+    <span class="n">tune</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">useSteeringAngle</span> <span class="o">=</span> <span class="n">use_steering_angle</span>
+    <span class="n">tune</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">kp</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">tune</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">tune</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">ki</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">tune</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">friction</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;FRICTION&#39;</span><span class="p">]</span>
+    <span class="n">tune</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">latAccelFactor</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;LAT_ACCEL_FACTOR&#39;</span><span class="p">]</span>
+    <span class="n">tune</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">latAccelOffset</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">tune</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">steeringAngleDeadzoneDeg</span> <span class="o">=</span> <span class="n">steering_angle_deadzone_deg</span></div>
+
+
+  <span class="nd">@abstractmethod</span>
+  <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<div class="viewcode-block" id="CarInterfaceBase.update">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="p">,</span> <span class="n">can_strings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="p">:</span>
+    <span class="c1"># parse can</span>
+    <span class="k">for</span> <span class="n">cp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_parsers</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">cp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cp</span><span class="o">.</span><span class="n">update_strings</span><span class="p">(</span><span class="n">can_strings</span><span class="p">)</span>
+
+    <span class="c1"># get CarState</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">canValid</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">can_valid</span> <span class="k">for</span> <span class="n">cp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_parsers</span> <span class="k">if</span> <span class="n">cp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">canTimeout</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">bus_timeout</span> <span class="k">for</span> <span class="n">cp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_parsers</span> <span class="k">if</span> <span class="n">cp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgoCluster</span> <span class="o">==</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_ego_cluster_seen</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">vEgoCluster</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">v_ego_cluster_seen</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Many cars apply hysteresis to the ego dash speed</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">vEgoCluster</span> <span class="o">=</span> <span class="n">apply_hysteresis</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">vEgoCluster</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">vEgoCluster</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">cluster_speed_hyst_gap</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">cluster_min_speed</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">vEgoCluster</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speedCluster</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speedCluster</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speed</span>
+
+    <span class="c1"># copy back for next iteration</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">as_reader</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">reader</span>
+
+    <span class="k">return</span> <span class="n">reader</span></div>
+
+
+<div class="viewcode-block" id="CarInterfaceBase.apply">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase.apply">[docs]</a>
+  <span class="nd">@abstractmethod</span>
+  <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="p">,</span> <span class="n">now_nanos</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">Actuators</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]:</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="CarInterfaceBase.create_common_events">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarInterfaceBase.create_common_events">[docs]</a>
+  <span class="k">def</span> <span class="nf">create_common_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cs_out</span><span class="p">,</span> <span class="n">extra_gears</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pcm_enable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">allow_enable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                           <span class="n">enable_buttons</span><span class="o">=</span><span class="p">(</span><span class="n">ButtonType</span><span class="o">.</span><span class="n">accelCruise</span><span class="p">,</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">decelCruise</span><span class="p">)):</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="n">Events</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">doorOpen</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">doorOpen</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">seatbeltUnlatched</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">seatbeltNotLatched</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">!=</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">drive</span> <span class="ow">and</span> <span class="p">(</span><span class="n">extra_gears</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span>
+       <span class="n">cs_out</span><span class="o">.</span><span class="n">gearShifter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">extra_gears</span><span class="p">):</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">wrongGear</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">==</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">reverse</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">reverseGear</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">available</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">wrongCarMode</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">espDisabled</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">espDisabled</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">stockFcw</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">stockFcw</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">stockAeb</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">stockAeb</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&gt;</span> <span class="n">MAX_CTRL_SPEED</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">speedTooHigh</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">nonAdaptive</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">wrongCruiseMode</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">brakeHoldActive</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">brakeHold</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">parkingBrake</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">parkBrake</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">accFaulted</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">accFaulted</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">steeringPressed</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">steerOverride</span><span class="p">)</span>
+
+    <span class="c1"># Handle button presses</span>
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">buttonEvents</span><span class="p">:</span>
+      <span class="c1"># Enable OP long on falling edge of enable buttons (defaults to accelCruise and decelCruise, overridable per-port)</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span> <span class="ow">and</span> <span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">enable_buttons</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">b</span><span class="o">.</span><span class="n">pressed</span><span class="p">):</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">buttonEnable</span><span class="p">)</span>
+      <span class="c1"># Disable on rising and falling edge of cancel for both stock and OP long</span>
+      <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">cancel</span><span class="p">:</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">buttonCancel</span><span class="p">)</span>
+
+    <span class="c1"># Handle permanent and temporary steering faults</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">steering_unpressed</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">steeringPressed</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">steering_unpressed</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">steerFaultTemporary</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">steeringPressed</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">steerFaultTemporary</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_steer_warning</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">no_steer_warning</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">no_steer_warning</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># if the user overrode recently, show a less harsh alert</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">silent_steer_warning</span> <span class="ow">or</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">standstill</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">steering_unpressed</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1.5</span> <span class="o">/</span> <span class="n">DT_CTRL</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">silent_steer_warning</span> <span class="o">=</span> <span class="kc">True</span>
+          <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">steerTempUnavailableSilent</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">steerTempUnavailable</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">no_steer_warning</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">silent_steer_warning</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">steerFaultPermanent</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">steerUnavailable</span><span class="p">)</span>
+
+    <span class="c1"># we engage when pcm is active (rising edge)</span>
+    <span class="c1"># enabling can optionally be blocked by the car interface</span>
+    <span class="k">if</span> <span class="n">pcm_enable</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">allow_enable</span><span class="p">:</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">pcmEnable</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="ow">not</span> <span class="n">cs_out</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">pcmDisable</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">events</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="RadarInterfaceBase">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.RadarInterfaceBase">[docs]</a>
+<span class="k">class</span> <span class="nc">RadarInterfaceBase</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rcp</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pts</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">delay</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">radar_ts</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">radarTimeStep</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">no_radar_sleep</span> <span class="o">=</span> <span class="s1">&#39;NO_RADAR_SLEEP&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
+
+<div class="viewcode-block" id="RadarInterfaceBase.update">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.RadarInterfaceBase.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">can_strings</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">RadarData</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_radar_sleep</span><span class="p">:</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radar_ts</span><span class="p">)</span>  <span class="c1"># radard runs on RI updates</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="CarStateBase">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarStateBase">[docs]</a>
+<span class="k">class</span> <span class="nc">CarStateBase</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CP</span> <span class="o">=</span> <span class="n">CP</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">car_fingerprint</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">cruise_buttons</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">left_blinker_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">right_blinker_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">steering_pressed_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">left_blinker_prev</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">right_blinker_prev</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cluster_speed_hyst_gap</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cluster_min_speed</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># min speed before dropping to 0</span>
+
+    <span class="n">Q</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">]]</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">DT_CTRL</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]]</span>
+    <span class="n">x0</span><span class="o">=</span><span class="p">[[</span><span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]]</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">get_kalman_gain</span><span class="p">(</span><span class="n">DT_CTRL</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">C</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Q</span><span class="p">),</span> <span class="n">R</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_ego_kf</span> <span class="o">=</span> <span class="n">KF1D</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="n">A</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">K</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CarStateBase.update_speed_kf">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarStateBase.update_speed_kf">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_speed_kf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v_ego_raw</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">v_ego_raw</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_ego_kf</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">2.0</span><span class="p">:</span>  <span class="c1"># Prevent large accelerations when car starts at non zero speed</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">v_ego_kf</span><span class="o">.</span><span class="n">set_x</span><span class="p">([[</span><span class="n">v_ego_raw</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]])</span>
+
+    <span class="n">v_ego_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_ego_kf</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">v_ego_raw</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">v_ego_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">v_ego_x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="CarStateBase.get_wheel_speeds">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarStateBase.get_wheel_speeds">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_wheel_speeds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fl</span><span class="p">,</span> <span class="n">fr</span><span class="p">,</span> <span class="n">rl</span><span class="p">,</span> <span class="n">rr</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span><span class="p">):</span>
+    <span class="n">factor</span> <span class="o">=</span> <span class="n">unit</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">wheelSpeedFactor</span>
+
+    <span class="n">wheelSpeeds</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">WheelSpeeds</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">fl</span> <span class="o">=</span> <span class="n">fl</span> <span class="o">*</span> <span class="n">factor</span>
+    <span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">fr</span> <span class="o">=</span> <span class="n">fr</span> <span class="o">*</span> <span class="n">factor</span>
+    <span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rl</span> <span class="o">=</span> <span class="n">rl</span> <span class="o">*</span> <span class="n">factor</span>
+    <span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rr</span> <span class="o">=</span> <span class="n">rr</span> <span class="o">*</span> <span class="n">factor</span>
+    <span class="k">return</span> <span class="n">wheelSpeeds</span></div>
+
+
+<div class="viewcode-block" id="CarStateBase.update_blinker_from_lamp">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarStateBase.update_blinker_from_lamp">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_blinker_from_lamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blinker_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">left_blinker_lamp</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">right_blinker_lamp</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update blinkers from lights. Enable output when light was seen within the last `blinker_time`</span>
+<span class="sd">    iterations&quot;&quot;&quot;</span>
+    <span class="c1"># TODO: Handle case when switching direction. Now both blinkers can be on at the same time</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">left_blinker_cnt</span> <span class="o">=</span> <span class="n">blinker_time</span> <span class="k">if</span> <span class="n">left_blinker_lamp</span> <span class="k">else</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_blinker_cnt</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">right_blinker_cnt</span> <span class="o">=</span> <span class="n">blinker_time</span> <span class="k">if</span> <span class="n">right_blinker_lamp</span> <span class="k">else</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_blinker_cnt</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_blinker_cnt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_blinker_cnt</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="CarStateBase.update_steering_pressed">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarStateBase.update_steering_pressed">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_steering_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">steering_pressed</span><span class="p">,</span> <span class="n">steering_pressed_min_count</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Applies filtering on steering pressed for noisy driver torque signals.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">steering_pressed_cnt</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">steering_pressed</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">steering_pressed_cnt</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">steering_pressed_cnt</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">steering_pressed_min_count</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">steering_pressed_cnt</span> <span class="o">&gt;</span> <span class="n">steering_pressed_min_count</span></div>
+
+
+<div class="viewcode-block" id="CarStateBase.update_blinker_from_stalk">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarStateBase.update_blinker_from_stalk">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_blinker_from_stalk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blinker_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">left_blinker_stalk</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">right_blinker_stalk</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update blinkers from stalk position. When stalk is seen the blinker will be on for at least blinker_time,</span>
+<span class="sd">    or until the stalk is turned off, whichever is longer. If the opposite stalk direction is seen the blinker</span>
+<span class="sd">    is forced to the other side. On a rising edge of the stalk the timeout is reset.&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">left_blinker_stalk</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">right_blinker_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_blinker_prev</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_blinker_cnt</span> <span class="o">=</span> <span class="n">blinker_time</span>
+
+    <span class="k">if</span> <span class="n">right_blinker_stalk</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">left_blinker_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_blinker_prev</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_blinker_cnt</span> <span class="o">=</span> <span class="n">blinker_time</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">left_blinker_cnt</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_blinker_cnt</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">right_blinker_cnt</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_blinker_cnt</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">left_blinker_prev</span> <span class="o">=</span> <span class="n">left_blinker_stalk</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">right_blinker_prev</span> <span class="o">=</span> <span class="n">right_blinker_stalk</span>
+
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">left_blinker_stalk</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_blinker_cnt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span> <span class="nb">bool</span><span class="p">(</span><span class="n">right_blinker_stalk</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_blinker_cnt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarStateBase.parse_gear_shifter">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarStateBase.parse_gear_shifter">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">parse_gear_shifter</span><span class="p">(</span><span class="n">gear</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">GearShifter</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">gear</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">unknown</span>
+
+    <span class="n">d</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">GearShifter</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s1">&#39;P&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">park</span><span class="p">,</span> <span class="s1">&#39;PARK&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">park</span><span class="p">,</span>
+      <span class="s1">&#39;R&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">reverse</span><span class="p">,</span> <span class="s1">&#39;REVERSE&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">reverse</span><span class="p">,</span>
+      <span class="s1">&#39;N&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">neutral</span><span class="p">,</span> <span class="s1">&#39;NEUTRAL&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">neutral</span><span class="p">,</span>
+      <span class="s1">&#39;E&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">eco</span><span class="p">,</span> <span class="s1">&#39;ECO&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">eco</span><span class="p">,</span>
+      <span class="s1">&#39;T&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">manumatic</span><span class="p">,</span> <span class="s1">&#39;MANUAL&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">manumatic</span><span class="p">,</span>
+      <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">drive</span><span class="p">,</span> <span class="s1">&#39;DRIVE&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">drive</span><span class="p">,</span>
+      <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">sport</span><span class="p">,</span> <span class="s1">&#39;SPORT&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">sport</span><span class="p">,</span>
+      <span class="s1">&#39;L&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">low</span><span class="p">,</span> <span class="s1">&#39;LOW&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">low</span><span class="p">,</span>
+      <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">brake</span><span class="p">,</span> <span class="s1">&#39;BRAKE&#39;</span><span class="p">:</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">brake</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">gear</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">unknown</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarStateBase.get_cam_can_parser">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarStateBase.get_cam_can_parser">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_cam_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="CarStateBase.get_adas_can_parser">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarStateBase.get_adas_can_parser">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_adas_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="CarStateBase.get_body_can_parser">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarStateBase.get_body_can_parser">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_body_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="CarStateBase.get_loopback_can_parser">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.CarStateBase.get_loopback_can_parser">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_loopback_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+</div>
+
+
+
+<span class="n">INTERFACE_ATTR_FILE</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;FINGERPRINTS&quot;</span><span class="p">:</span> <span class="s2">&quot;fingerprints&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;FW_VERSIONS&quot;</span><span class="p">:</span> <span class="s2">&quot;fingerprints&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># interface-specific helpers</span>
+
+<div class="viewcode-block" id="get_interface_attr">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.interfaces.get_interface_attr">[docs]</a>
+<span class="k">def</span> <span class="nf">get_interface_attr</span><span class="p">(</span><span class="n">attr</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">combine_brands</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">StrEnum</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+  <span class="c1"># read all the folders in selfdrive/car and return a dict where:</span>
+  <span class="c1"># - keys are all the car models or brand names</span>
+  <span class="c1"># - values are attr values from all car folders</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">for</span> <span class="n">car_folder</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">BASEDIR</span> <span class="o">+</span> <span class="s1">&#39;/selfdrive/car&#39;</span><span class="p">)]):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">brand_name</span> <span class="o">=</span> <span class="n">car_folder</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+      <span class="n">brand_values</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;openpilot.selfdrive.car.</span><span class="si">{</span><span class="n">brand_name</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">INTERFACE_ATTR_FILE</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;values&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="p">[</span><span class="n">attr</span><span class="p">])</span>
+      <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">brand_values</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">ignore_none</span><span class="p">:</span>
+        <span class="n">attr_data</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">brand_values</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+      <span class="k">if</span> <span class="n">combine_brands</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+          <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">attr_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">brand_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr_data</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">):</span>
+      <span class="k">pass</span>
+
+  <span class="k">return</span> <span class="n">result</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

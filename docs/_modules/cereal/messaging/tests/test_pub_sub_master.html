@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cereal.messaging.tests.test_pub_sub_master &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/cereal/messaging/tests/test_pub_sub_master.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../messaging.html">cereal.messaging</a></li>
+      <li class="breadcrumb-item active">cereal.messaging.tests.test_pub_sub_master</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cereal.messaging.tests.test_pub_sub_master</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sized</span><span class="p">,</span> <span class="n">cast</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">from</span> <span class="nn">cereal.messaging.tests.test_messaging</span> <span class="kn">import</span> <span class="n">events</span><span class="p">,</span> <span class="n">random_sock</span><span class="p">,</span> <span class="n">random_socks</span><span class="p">,</span> \
+                                                  <span class="n">random_bytes</span><span class="p">,</span> <span class="n">random_carstate</span><span class="p">,</span> <span class="n">assert_carstate</span><span class="p">,</span> \
+                                                  <span class="n">zmq_sleep</span>
+
+
+<div class="viewcode-block" id="TestSubMaster">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster">[docs]</a>
+<span class="k">class</span> <span class="nc">TestSubMaster</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestSubMaster.setUp">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.setUp">[docs]</a>
+  <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># ZMQ pub socket takes too long to die</span>
+    <span class="c1"># sleep to prevent multiple publishers error between tests</span>
+    <span class="n">zmq_sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestSubMaster.test_init">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_init">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">(</span><span class="n">events</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">rcv_time</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">rcv_frame</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">alive</span><span class="p">,</span>
+              <span class="n">sm</span><span class="o">.</span><span class="n">sock</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">freq</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">valid</span><span class="p">]:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cast</span><span class="p">(</span><span class="n">Sized</span><span class="p">,</span> <span class="n">p</span><span class="p">)),</span> <span class="nb">len</span><span class="p">(</span><span class="n">events</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestSubMaster.test_init_state">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_init_state">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">socks</span> <span class="o">=</span> <span class="n">random_socks</span><span class="p">()</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">(</span><span class="n">socks</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="mf">0.</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">sm</span><span class="o">.</span><span class="n">rcv_time</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">f</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">sm</span><span class="o">.</span><span class="n">rcv_frame</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">sm</span><span class="o">.</span><span class="n">logMonoTime</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">rcv_time</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">rcv_frame</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">alive</span><span class="p">,</span>
+              <span class="n">sm</span><span class="o">.</span><span class="n">sock</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">freq</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">valid</span><span class="p">]:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cast</span><span class="p">(</span><span class="n">Sized</span><span class="p">,</span> <span class="n">p</span><span class="p">)),</span> <span class="nb">len</span><span class="p">(</span><span class="n">socks</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestSubMaster.test_getitem">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_getitem">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_getitem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">sock</span> <span class="o">=</span> <span class="s2">&quot;carState&quot;</span>
+    <span class="n">pub_sock</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">pub_sock</span><span class="p">(</span><span class="n">sock</span><span class="p">)</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="n">sock</span><span class="p">,])</span>
+    <span class="n">zmq_sleep</span><span class="p">()</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">random_carstate</span><span class="p">()</span>
+    <span class="n">pub_sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">assert_carstate</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">carState</span><span class="p">,</span> <span class="n">sm</span><span class="p">[</span><span class="n">sock</span><span class="p">])</span></div>
+
+
+  <span class="c1"># TODO: break this test up to individually test SubMaster.update and SubMaster.update_msgs</span>
+<div class="viewcode-block" id="TestSubMaster.test_update">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_update">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">sock</span> <span class="o">=</span> <span class="s2">&quot;carState&quot;</span>
+    <span class="n">pub_sock</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">pub_sock</span><span class="p">(</span><span class="n">sock</span><span class="p">)</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="n">sock</span><span class="p">,])</span>
+    <span class="n">zmq_sleep</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="n">sock</span><span class="p">)</span>
+      <span class="n">pub_sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+      <span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span></div>
+
+
+<div class="viewcode-block" id="TestSubMaster.test_update_timeout">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_update_timeout">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_update_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">sock</span> <span class="o">=</span> <span class="n">random_sock</span><span class="p">()</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="n">sock</span><span class="p">,])</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+      <span class="n">timeout</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+      <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+      <span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+      <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertGreaterEqual</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">timeout</span><span class="o">/</span><span class="mf">1000.</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span></div>
+
+
+<div class="viewcode-block" id="TestSubMaster.test_alive">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_alive">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_alive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="TestSubMaster.test_ignore_alive">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_ignore_alive">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_ignore_alive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="TestSubMaster.test_valid">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_valid">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+  <span class="c1"># SubMaster should always conflate</span>
+<div class="viewcode-block" id="TestSubMaster.test_conflate">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_conflate">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_conflate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">sock</span> <span class="o">=</span> <span class="s2">&quot;carState&quot;</span>
+    <span class="n">pub_sock</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">pub_sock</span><span class="p">(</span><span class="n">sock</span><span class="p">)</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="n">sock</span><span class="p">,])</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="n">sock</span><span class="p">)</span>
+      <span class="n">msg</span><span class="o">.</span><span class="n">carState</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">=</span> <span class="n">i</span>
+      <span class="n">pub_sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="n">sock</span><span class="p">]</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TestPubMaster">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestPubMaster">[docs]</a>
+<span class="k">class</span> <span class="nc">TestPubMaster</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestPubMaster.setUp">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestPubMaster.setUp">[docs]</a>
+  <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># ZMQ pub socket takes too long to die</span>
+    <span class="c1"># sleep to prevent multiple publishers error between tests</span>
+    <span class="n">zmq_sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestPubMaster.test_init">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestPubMaster.test_init">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">(</span><span class="n">events</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestPubMaster.test_send">
+<a class="viewcode-back" href="../../../../cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestPubMaster.test_send">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_send</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">socks</span> <span class="o">=</span> <span class="n">random_socks</span><span class="p">()</span>
+    <span class="n">pm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">(</span><span class="n">socks</span><span class="p">)</span>
+    <span class="n">sub_socks</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">sub_sock</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">conflate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">socks</span><span class="p">}</span>
+    <span class="n">zmq_sleep</span><span class="p">()</span>
+
+    <span class="c1"># PubMaster accepts either a capnp msg builder or bytes</span>
+    <span class="k">for</span> <span class="n">capnp</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">sock</span> <span class="o">=</span> <span class="n">socks</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">socks</span><span class="p">)]</span>
+
+        <span class="k">if</span> <span class="n">capnp</span><span class="p">:</span>
+          <span class="k">try</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="n">sock</span><span class="p">)</span>
+          <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">msg</span> <span class="o">=</span> <span class="n">random_bytes</span><span class="p">()</span>
+
+        <span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="n">recvd</span> <span class="o">=</span> <span class="n">sub_socks</span><span class="p">[</span><span class="n">sock</span><span class="p">]</span><span class="o">.</span><span class="n">receive</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">capnp</span><span class="p">:</span>
+          <span class="n">msg</span><span class="o">.</span><span class="n">clear_write_flag</span><span class="p">()</span>
+          <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">recvd</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

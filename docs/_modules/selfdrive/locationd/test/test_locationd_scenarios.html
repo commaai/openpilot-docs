@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.locationd.test.test_locationd_scenarios &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/locationd/test/test_locationd_scenarios.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.locationd.test.test_locationd_scenarios</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.locationd.test.test_locationd_scenarios</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.openpilotci</span> <span class="kn">import</span> <span class="n">get_url</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.logreader</span> <span class="kn">import</span> <span class="n">LogReader</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.process_replay.process_replay</span> <span class="kn">import</span> <span class="n">replay_process_with_name</span>
+
+<span class="n">TEST_ROUTE</span><span class="p">,</span> <span class="n">TEST_SEG_NUM</span> <span class="o">=</span> <span class="s2">&quot;ff2bd20623fcaeaa|2023-09-05--10-14-54&quot;</span><span class="p">,</span> <span class="mi">4</span>
+<span class="n">GPS_MESSAGES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;gpsLocationExternal&#39;</span><span class="p">,</span> <span class="s1">&#39;gpsLocation&#39;</span><span class="p">]</span>
+<span class="n">SELECT_COMPARE_FIELDS</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;yaw_rate&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;angularVelocityCalibrated&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+  <span class="s1">&#39;roll&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;orientationNED&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+  <span class="s1">&#39;gps_flag&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;gpsOK&#39;</span><span class="p">],</span>
+  <span class="s1">&#39;inputs_flag&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;inputsOK&#39;</span><span class="p">],</span>
+  <span class="s1">&#39;sensors_flag&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;sensorsOK&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+<span class="n">JUNK_IDX</span> <span class="o">=</span> <span class="mi">100</span>
+
+
+<div class="viewcode-block" id="Scenario">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.Scenario">[docs]</a>
+<span class="k">class</span> <span class="nc">Scenario</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+  <span class="n">BASE</span> <span class="o">=</span> <span class="s1">&#39;base&#39;</span>
+  <span class="n">GPS_OFF</span> <span class="o">=</span> <span class="s1">&#39;gps_off&#39;</span>
+  <span class="n">GPS_OFF_MIDWAY</span> <span class="o">=</span> <span class="s1">&#39;gps_off_midway&#39;</span>
+  <span class="n">GPS_ON_MIDWAY</span> <span class="o">=</span> <span class="s1">&#39;gps_on_midway&#39;</span>
+  <span class="n">GPS_TUNNEL</span> <span class="o">=</span> <span class="s1">&#39;gps_tunnel&#39;</span>
+  <span class="n">GYRO_OFF</span> <span class="o">=</span> <span class="s1">&#39;gyro_off&#39;</span>
+  <span class="n">GYRO_SPIKE_MIDWAY</span> <span class="o">=</span> <span class="s1">&#39;gyro_spike_midway&#39;</span>
+  <span class="n">ACCEL_OFF</span> <span class="o">=</span> <span class="s1">&#39;accel_off&#39;</span>
+  <span class="n">ACCEL_SPIKE_MIDWAY</span> <span class="o">=</span> <span class="s1">&#39;accel_spike_midway&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="get_select_fields_data">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.get_select_fields_data">[docs]</a>
+<span class="k">def</span> <span class="nf">get_select_fields_data</span><span class="p">(</span><span class="n">logs</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">get_nested_keys</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+      <span class="n">val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">msg</span> <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">val</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">val</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">val</span>
+  <span class="n">llk</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">liveLocationKalman</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">]</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">llk</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">fields</span> <span class="ow">in</span> <span class="n">SELECT_COMPARE_FIELDS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_nested_keys</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">fields</span><span class="p">))</span>
+  <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">JUNK_IDX</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">data</span></div>
+
+
+
+<div class="viewcode-block" id="run_scenarios">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.run_scenarios">[docs]</a>
+<span class="k">def</span> <span class="nf">run_scenarios</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="n">logs</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">scenario</span> <span class="o">==</span> <span class="n">Scenario</span><span class="o">.</span><span class="n">BASE</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+  <span class="k">elif</span> <span class="n">scenario</span> <span class="o">==</span> <span class="n">Scenario</span><span class="o">.</span><span class="n">GPS_OFF</span><span class="p">:</span>
+    <span class="n">logs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">GPS_MESSAGES</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">)</span>
+
+  <span class="k">elif</span> <span class="n">scenario</span> <span class="o">==</span> <span class="n">Scenario</span><span class="o">.</span><span class="n">GPS_OFF_MIDWAY</span><span class="p">:</span>
+    <span class="n">non_gps</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">GPS_MESSAGES</span><span class="p">]</span>
+    <span class="n">gps</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">in</span> <span class="n">GPS_MESSAGES</span><span class="p">]</span>
+    <span class="n">logs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">non_gps</span> <span class="o">+</span> <span class="n">gps</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">gps</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">)</span>
+
+  <span class="k">elif</span> <span class="n">scenario</span> <span class="o">==</span> <span class="n">Scenario</span><span class="o">.</span><span class="n">GPS_ON_MIDWAY</span><span class="p">:</span>
+    <span class="n">non_gps</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">GPS_MESSAGES</span><span class="p">]</span>
+    <span class="n">gps</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">in</span> <span class="n">GPS_MESSAGES</span><span class="p">]</span>
+    <span class="n">logs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">non_gps</span> <span class="o">+</span> <span class="n">gps</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">gps</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">:],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">)</span>
+
+  <span class="k">elif</span> <span class="n">scenario</span> <span class="o">==</span> <span class="n">Scenario</span><span class="o">.</span><span class="n">GPS_TUNNEL</span><span class="p">:</span>
+    <span class="n">non_gps</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">GPS_MESSAGES</span><span class="p">]</span>
+    <span class="n">gps</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">in</span> <span class="n">GPS_MESSAGES</span><span class="p">]</span>
+    <span class="n">logs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">non_gps</span> <span class="o">+</span> <span class="n">gps</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">gps</span><span class="p">)</span> <span class="o">//</span> <span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="n">gps</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">gps</span><span class="p">)</span> <span class="o">//</span> <span class="mi">4</span><span class="p">:],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">)</span>
+
+  <span class="k">elif</span> <span class="n">scenario</span> <span class="o">==</span> <span class="n">Scenario</span><span class="o">.</span><span class="n">GYRO_OFF</span><span class="p">:</span>
+    <span class="n">logs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;gyroscope&#39;</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">)</span>
+
+  <span class="k">elif</span> <span class="n">scenario</span> <span class="o">==</span> <span class="n">Scenario</span><span class="o">.</span><span class="n">GYRO_SPIKE_MIDWAY</span><span class="p">:</span>
+    <span class="n">non_gyro</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s1">&#39;gyroscope&#39;</span><span class="p">]</span>
+    <span class="n">gyro</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">in</span> <span class="s1">&#39;gyroscope&#39;</span><span class="p">]</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">gyro</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">gyro</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span>
+    <span class="n">temp</span><span class="o">.</span><span class="n">gyroscope</span><span class="o">.</span><span class="n">gyroUncalibrated</span><span class="o">.</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">3.0</span>
+    <span class="n">gyro</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">gyro</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">as_reader</span><span class="p">()</span>
+    <span class="n">logs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">non_gyro</span> <span class="o">+</span> <span class="n">gyro</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">)</span>
+
+  <span class="k">elif</span> <span class="n">scenario</span> <span class="o">==</span> <span class="n">Scenario</span><span class="o">.</span><span class="n">ACCEL_OFF</span><span class="p">:</span>
+    <span class="n">logs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;accelerometer&#39;</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">)</span>
+
+  <span class="k">elif</span> <span class="n">scenario</span> <span class="o">==</span> <span class="n">Scenario</span><span class="o">.</span><span class="n">ACCEL_SPIKE_MIDWAY</span><span class="p">:</span>
+    <span class="n">non_accel</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s1">&#39;accelerometer&#39;</span><span class="p">]</span>
+    <span class="n">accel</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">in</span> <span class="s1">&#39;accelerometer&#39;</span><span class="p">]</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">accel</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">accel</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span>
+    <span class="n">temp</span><span class="o">.</span><span class="n">accelerometer</span><span class="o">.</span><span class="n">acceleration</span><span class="o">.</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">10.0</span>
+    <span class="n">accel</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">accel</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">as_reader</span><span class="p">()</span>
+    <span class="n">logs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">non_accel</span> <span class="o">+</span> <span class="n">accel</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">)</span>
+
+  <span class="n">replayed_logs</span> <span class="o">=</span> <span class="n">replay_process_with_name</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;locationd&#39;</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">logs</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">get_select_fields_data</span><span class="p">(</span><span class="n">logs</span><span class="p">),</span> <span class="n">get_select_fields_data</span><span class="p">(</span><span class="n">replayed_logs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TestLocationdScenarios">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.TestLocationdScenarios">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">xdist_group</span><span class="p">(</span><span class="s2">&quot;test_locationd_scenarios&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">TestLocationdScenarios</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Test locationd with different scenarios. In all these scenarios, we expect the following:</span>
+<span class="sd">    - locationd kalman filter should never go unstable (we care mostly about yaw_rate, roll, gpsOK, inputsOK, sensorsOK)</span>
+<span class="sd">    - faulty values should be ignored, with appropriate flags set</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TestLocationdScenarios.setUpClass">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.TestLocationdScenarios.setUpClass">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">setUpClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">logs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">LogReader</span><span class="p">(</span><span class="n">get_url</span><span class="p">(</span><span class="n">TEST_ROUTE</span><span class="p">,</span> <span class="n">TEST_SEG_NUM</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="TestLocationdScenarios.test_base">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.TestLocationdScenarios.test_base">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_base</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test: unchanged log</span>
+<span class="sd">    Expected Result:</span>
+<span class="sd">      - yaw_rate: unchanged</span>
+<span class="sd">      - roll: unchanged</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">orig_data</span><span class="p">,</span> <span class="n">replayed_data</span> <span class="o">=</span> <span class="n">run_scenarios</span><span class="p">(</span><span class="n">Scenario</span><span class="o">.</span><span class="n">BASE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="TestLocationdScenarios.test_gps_off">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.TestLocationdScenarios.test_gps_off">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_gps_off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test: no GPS message for the entire segment</span>
+<span class="sd">    Expected Result:</span>
+<span class="sd">      - yaw_rate: unchanged</span>
+<span class="sd">      - roll:</span>
+<span class="sd">      - gpsOK: False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">orig_data</span><span class="p">,</span> <span class="n">replayed_data</span> <span class="o">=</span> <span class="n">run_scenarios</span><span class="p">(</span><span class="n">Scenario</span><span class="o">.</span><span class="n">GPS_OFF</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;gps_flag&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestLocationdScenarios.test_gps_off_midway">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.TestLocationdScenarios.test_gps_off_midway">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_gps_off_midway</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test: no GPS message for the second half of the segment</span>
+<span class="sd">    Expected Result:</span>
+<span class="sd">      - yaw_rate: unchanged</span>
+<span class="sd">      - roll:</span>
+<span class="sd">      - gpsOK: True for the first half, False for the second half</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">orig_data</span><span class="p">,</span> <span class="n">replayed_data</span> <span class="o">=</span> <span class="n">run_scenarios</span><span class="p">(</span><span class="n">Scenario</span><span class="o">.</span><span class="n">GPS_OFF_MIDWAY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;gps_flag&#39;</span><span class="p">])[</span><span class="mi">512</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestLocationdScenarios.test_gps_on_midway">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.TestLocationdScenarios.test_gps_on_midway">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_gps_on_midway</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test: no GPS message for the first half of the segment</span>
+<span class="sd">    Expected Result:</span>
+<span class="sd">      - yaw_rate: unchanged</span>
+<span class="sd">      - roll:</span>
+<span class="sd">      - gpsOK: False for the first half, True for the second half</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">orig_data</span><span class="p">,</span> <span class="n">replayed_data</span> <span class="o">=</span> <span class="n">run_scenarios</span><span class="p">(</span><span class="n">Scenario</span><span class="o">.</span><span class="n">GPS_ON_MIDWAY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;gps_flag&#39;</span><span class="p">])[</span><span class="mi">505</span><span class="p">]</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestLocationdScenarios.test_gps_tunnel">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.TestLocationdScenarios.test_gps_tunnel">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_gps_tunnel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test: no GPS message for the middle section of the segment</span>
+<span class="sd">    Expected Result:</span>
+<span class="sd">      - yaw_rate: unchanged</span>
+<span class="sd">      - roll:</span>
+<span class="sd">      - gpsOK: False for the middle section, True for the rest</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">orig_data</span><span class="p">,</span> <span class="n">replayed_data</span> <span class="o">=</span> <span class="n">run_scenarios</span><span class="p">(</span><span class="n">Scenario</span><span class="o">.</span><span class="n">GPS_TUNNEL</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;gps_flag&#39;</span><span class="p">])[</span><span class="mi">213</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;gps_flag&#39;</span><span class="p">])[</span><span class="mi">805</span><span class="p">]</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestLocationdScenarios.test_gyro_off">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.TestLocationdScenarios.test_gyro_off">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_gyro_off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test: no gyroscope message for the entire segment</span>
+<span class="sd">    Expected Result:</span>
+<span class="sd">      - yaw_rate: 0</span>
+<span class="sd">      - roll: 0</span>
+<span class="sd">      - sensorsOK: False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">replayed_data</span> <span class="o">=</span> <span class="n">run_scenarios</span><span class="p">(</span><span class="n">Scenario</span><span class="o">.</span><span class="n">GYRO_OFF</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;sensors_flag&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestLocationdScenarios.test_gyro_spikes">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.TestLocationdScenarios.test_gyro_spikes">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_gyro_spikes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test: a gyroscope spike in the middle of the segment</span>
+<span class="sd">    Expected Result:</span>
+<span class="sd">      - yaw_rate: unchanged</span>
+<span class="sd">      - roll: unchanged</span>
+<span class="sd">      - inputsOK: False for some time after the spike, True for the rest</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">orig_data</span><span class="p">,</span> <span class="n">replayed_data</span> <span class="o">=</span> <span class="n">run_scenarios</span><span class="p">(</span><span class="n">Scenario</span><span class="o">.</span><span class="n">GYRO_SPIKE_MIDWAY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;inputs_flag&#39;</span><span class="p">])[</span><span class="mi">500</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;inputs_flag&#39;</span><span class="p">])[</span><span class="mi">694</span><span class="p">]</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestLocationdScenarios.test_accel_off">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.TestLocationdScenarios.test_accel_off">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_accel_off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test: no accelerometer message for the entire segment</span>
+<span class="sd">    Expected Result:</span>
+<span class="sd">      - yaw_rate: 0</span>
+<span class="sd">      - roll: 0</span>
+<span class="sd">      - sensorsOK: False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">replayed_data</span> <span class="o">=</span> <span class="n">run_scenarios</span><span class="p">(</span><span class="n">Scenario</span><span class="o">.</span><span class="n">ACCEL_OFF</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;sensors_flag&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestLocationdScenarios.test_accel_spikes">
+<a class="viewcode-back" href="../../../../selfdrive.locationd.test.html#selfdrive.locationd.test.test_locationd_scenarios.TestLocationdScenarios.test_accel_spikes">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_accel_spikes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ToDo:</span>
+<span class="sd">    Test: an accelerometer spike in the middle of the segment</span>
+<span class="sd">    Expected Result: Right now, the kalman filter is not robust to small spikes like it is to gyroscope spikes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">orig_data</span><span class="p">,</span> <span class="n">replayed_data</span> <span class="o">=</span> <span class="n">run_scenarios</span><span class="p">(</span><span class="n">Scenario</span><span class="o">.</span><span class="n">ACCEL_SPIKE_MIDWAY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">orig_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">replayed_data</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)))</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

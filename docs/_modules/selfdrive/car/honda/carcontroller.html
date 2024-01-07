@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.honda.carcontroller &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/honda/carcontroller.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.honda.carcontroller</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.honda.carcontroller</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.numpy_fast</span> <span class="kn">import</span> <span class="n">clip</span><span class="p">,</span> <span class="n">interp</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">DT_CTRL</span>
+<span class="kn">from</span> <span class="nn">opendbc.can.packer</span> <span class="kn">import</span> <span class="n">CANPacker</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">create_gas_interceptor_command</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.honda</span> <span class="kn">import</span> <span class="n">hondacan</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.honda.values</span> <span class="kn">import</span> <span class="n">CruiseButtons</span><span class="p">,</span> <span class="n">VISUAL_HUD</span><span class="p">,</span> <span class="n">HONDA_BOSCH</span><span class="p">,</span> <span class="n">HONDA_BOSCH_RADARLESS</span><span class="p">,</span> <span class="n">HONDA_NIDEC_ALT_PCM_ACCEL</span><span class="p">,</span> <span class="n">CarControllerParams</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.drive_helpers</span> <span class="kn">import</span> <span class="n">rate_limit</span>
+
+<span class="n">VisualAlert</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">HUDControl</span><span class="o">.</span><span class="n">VisualAlert</span>
+<span class="n">LongCtrlState</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">Actuators</span><span class="o">.</span><span class="n">LongControlState</span>
+
+
+<div class="viewcode-block" id="compute_gb_honda_bosch">
+<a class="viewcode-back" href="../../../../selfdrive.car.honda.html#selfdrive.car.honda.carcontroller.compute_gb_honda_bosch">[docs]</a>
+<span class="k">def</span> <span class="nf">compute_gb_honda_bosch</span><span class="p">(</span><span class="n">accel</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+  <span class="c1"># TODO returns 0s, is unused</span>
+  <span class="k">return</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span></div>
+
+
+
+<div class="viewcode-block" id="compute_gb_honda_nidec">
+<a class="viewcode-back" href="../../../../selfdrive.car.honda.html#selfdrive.car.honda.carcontroller.compute_gb_honda_nidec">[docs]</a>
+<span class="k">def</span> <span class="nf">compute_gb_honda_nidec</span><span class="p">(</span><span class="n">accel</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+  <span class="n">creep_brake</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="n">creep_speed</span> <span class="o">=</span> <span class="mf">2.3</span>
+  <span class="n">creep_brake_value</span> <span class="o">=</span> <span class="mf">0.15</span>
+  <span class="k">if</span> <span class="n">speed</span> <span class="o">&lt;</span> <span class="n">creep_speed</span><span class="p">:</span>
+    <span class="n">creep_brake</span> <span class="o">=</span> <span class="p">(</span><span class="n">creep_speed</span> <span class="o">-</span> <span class="n">speed</span><span class="p">)</span> <span class="o">/</span> <span class="n">creep_speed</span> <span class="o">*</span> <span class="n">creep_brake_value</span>
+  <span class="n">gb</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">accel</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.8</span> <span class="o">-</span> <span class="n">creep_brake</span>
+  <span class="k">return</span> <span class="n">clip</span><span class="p">(</span><span class="n">gb</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">clip</span><span class="p">(</span><span class="o">-</span><span class="n">gb</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="compute_gas_brake">
+<a class="viewcode-back" href="../../../../selfdrive.car.honda.html#selfdrive.car.honda.carcontroller.compute_gas_brake">[docs]</a>
+<span class="k">def</span> <span class="nf">compute_gas_brake</span><span class="p">(</span><span class="n">accel</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">fingerprint</span> <span class="ow">in</span> <span class="n">HONDA_BOSCH</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">compute_gb_honda_bosch</span><span class="p">(</span><span class="n">accel</span><span class="p">,</span> <span class="n">speed</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">compute_gb_honda_nidec</span><span class="p">(</span><span class="n">accel</span><span class="p">,</span> <span class="n">speed</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># TODO not clear this does anything useful</span>
+<div class="viewcode-block" id="actuator_hysteresis">
+<a class="viewcode-back" href="../../../../selfdrive.car.honda.html#selfdrive.car.honda.carcontroller.actuator_hysteresis">[docs]</a>
+<span class="k">def</span> <span class="nf">actuator_hysteresis</span><span class="p">(</span><span class="n">brake</span><span class="p">,</span> <span class="n">braking</span><span class="p">,</span> <span class="n">brake_steady</span><span class="p">,</span> <span class="n">v_ego</span><span class="p">,</span> <span class="n">car_fingerprint</span><span class="p">):</span>
+  <span class="c1"># hyst params</span>
+  <span class="n">brake_hyst_on</span> <span class="o">=</span> <span class="mf">0.02</span>    <span class="c1"># to activate brakes exceed this value</span>
+  <span class="n">brake_hyst_off</span> <span class="o">=</span> <span class="mf">0.005</span>  <span class="c1"># to deactivate brakes below this value</span>
+  <span class="n">brake_hyst_gap</span> <span class="o">=</span> <span class="mf">0.01</span>   <span class="c1"># don&#39;t change brake command for small oscillations within this value</span>
+
+  <span class="c1"># *** hysteresis logic to avoid brake blinking. go above 0.1 to trigger</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">brake</span> <span class="o">&lt;</span> <span class="n">brake_hyst_on</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">braking</span><span class="p">)</span> <span class="ow">or</span> <span class="n">brake</span> <span class="o">&lt;</span> <span class="n">brake_hyst_off</span><span class="p">:</span>
+    <span class="n">brake</span> <span class="o">=</span> <span class="mf">0.</span>
+  <span class="n">braking</span> <span class="o">=</span> <span class="n">brake</span> <span class="o">&gt;</span> <span class="mf">0.</span>
+
+  <span class="c1"># for small brake oscillations within brake_hyst_gap, don&#39;t change the brake command</span>
+  <span class="k">if</span> <span class="n">brake</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">:</span>
+    <span class="n">brake_steady</span> <span class="o">=</span> <span class="mf">0.</span>
+  <span class="k">elif</span> <span class="n">brake</span> <span class="o">&gt;</span> <span class="n">brake_steady</span> <span class="o">+</span> <span class="n">brake_hyst_gap</span><span class="p">:</span>
+    <span class="n">brake_steady</span> <span class="o">=</span> <span class="n">brake</span> <span class="o">-</span> <span class="n">brake_hyst_gap</span>
+  <span class="k">elif</span> <span class="n">brake</span> <span class="o">&lt;</span> <span class="n">brake_steady</span> <span class="o">-</span> <span class="n">brake_hyst_gap</span><span class="p">:</span>
+    <span class="n">brake_steady</span> <span class="o">=</span> <span class="n">brake</span> <span class="o">+</span> <span class="n">brake_hyst_gap</span>
+  <span class="n">brake</span> <span class="o">=</span> <span class="n">brake_steady</span>
+
+  <span class="k">return</span> <span class="n">brake</span><span class="p">,</span> <span class="n">braking</span><span class="p">,</span> <span class="n">brake_steady</span></div>
+
+
+
+<div class="viewcode-block" id="brake_pump_hysteresis">
+<a class="viewcode-back" href="../../../../selfdrive.car.honda.html#selfdrive.car.honda.carcontroller.brake_pump_hysteresis">[docs]</a>
+<span class="k">def</span> <span class="nf">brake_pump_hysteresis</span><span class="p">(</span><span class="n">apply_brake</span><span class="p">,</span> <span class="n">apply_brake_last</span><span class="p">,</span> <span class="n">last_pump_ts</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+  <span class="n">pump_on</span> <span class="o">=</span> <span class="kc">False</span>
+
+  <span class="c1"># reset pump timer if:</span>
+  <span class="c1"># - there is an increment in brake request</span>
+  <span class="c1"># - we are applying steady state brakes and we haven&#39;t been running the pump</span>
+  <span class="c1">#   for more than 20s (to prevent pressure bleeding)</span>
+  <span class="k">if</span> <span class="n">apply_brake</span> <span class="o">&gt;</span> <span class="n">apply_brake_last</span> <span class="ow">or</span> <span class="p">(</span><span class="n">ts</span> <span class="o">-</span> <span class="n">last_pump_ts</span> <span class="o">&gt;</span> <span class="mf">20.</span> <span class="ow">and</span> <span class="n">apply_brake</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="n">last_pump_ts</span> <span class="o">=</span> <span class="n">ts</span>
+
+  <span class="c1"># once the pump is on, run it for at least 0.2s</span>
+  <span class="k">if</span> <span class="n">ts</span> <span class="o">-</span> <span class="n">last_pump_ts</span> <span class="o">&lt;</span> <span class="mf">0.2</span> <span class="ow">and</span> <span class="n">apply_brake</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">pump_on</span> <span class="o">=</span> <span class="kc">True</span>
+
+  <span class="k">return</span> <span class="n">pump_on</span><span class="p">,</span> <span class="n">last_pump_ts</span></div>
+
+
+
+<div class="viewcode-block" id="process_hud_alert">
+<a class="viewcode-back" href="../../../../selfdrive.car.honda.html#selfdrive.car.honda.carcontroller.process_hud_alert">[docs]</a>
+<span class="k">def</span> <span class="nf">process_hud_alert</span><span class="p">(</span><span class="n">hud_alert</span><span class="p">):</span>
+  <span class="c1"># initialize to no alert</span>
+  <span class="n">fcw_display</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">steer_required</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">acc_alert</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="c1"># priority is: FCW, steer required, all others</span>
+  <span class="k">if</span> <span class="n">hud_alert</span> <span class="o">==</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">fcw</span><span class="p">:</span>
+    <span class="n">fcw_display</span> <span class="o">=</span> <span class="n">VISUAL_HUD</span><span class="p">[</span><span class="n">hud_alert</span><span class="o">.</span><span class="n">raw</span><span class="p">]</span>
+  <span class="k">elif</span> <span class="n">hud_alert</span> <span class="ow">in</span> <span class="p">(</span><span class="n">VisualAlert</span><span class="o">.</span><span class="n">steerRequired</span><span class="p">,</span> <span class="n">VisualAlert</span><span class="o">.</span><span class="n">ldw</span><span class="p">):</span>
+    <span class="n">steer_required</span> <span class="o">=</span> <span class="n">VISUAL_HUD</span><span class="p">[</span><span class="n">hud_alert</span><span class="o">.</span><span class="n">raw</span><span class="p">]</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">acc_alert</span> <span class="o">=</span> <span class="n">VISUAL_HUD</span><span class="p">[</span><span class="n">hud_alert</span><span class="o">.</span><span class="n">raw</span><span class="p">]</span>
+
+  <span class="k">return</span> <span class="n">fcw_display</span><span class="p">,</span> <span class="n">steer_required</span><span class="p">,</span> <span class="n">acc_alert</span></div>
+
+
+
+<span class="n">HUDData</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;HUDData&quot;</span><span class="p">,</span>
+                     <span class="p">[</span><span class="s2">&quot;pcm_accel&quot;</span><span class="p">,</span> <span class="s2">&quot;v_cruise&quot;</span><span class="p">,</span> <span class="s2">&quot;lead_visible&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;lanes_visible&quot;</span><span class="p">,</span> <span class="s2">&quot;fcw&quot;</span><span class="p">,</span> <span class="s2">&quot;acc_alert&quot;</span><span class="p">,</span> <span class="s2">&quot;steer_required&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="rate_limit_steer">
+<a class="viewcode-back" href="../../../../selfdrive.car.honda.html#selfdrive.car.honda.carcontroller.rate_limit_steer">[docs]</a>
+<span class="k">def</span> <span class="nf">rate_limit_steer</span><span class="p">(</span><span class="n">new_steer</span><span class="p">,</span> <span class="n">last_steer</span><span class="p">):</span>
+  <span class="c1"># TODO just hardcoded ramp to min/max in 0.33s for all Honda</span>
+  <span class="n">MAX_DELTA</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">DT_CTRL</span>
+  <span class="k">return</span> <span class="n">clip</span><span class="p">(</span><span class="n">new_steer</span><span class="p">,</span> <span class="n">last_steer</span> <span class="o">-</span> <span class="n">MAX_DELTA</span><span class="p">,</span> <span class="n">last_steer</span> <span class="o">+</span> <span class="n">MAX_DELTA</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="CarController">
+<a class="viewcode-back" href="../../../../selfdrive.car.honda.html#selfdrive.car.honda.carcontroller.CarController">[docs]</a>
+<span class="k">class</span> <span class="nc">CarController</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbc_name</span><span class="p">,</span> <span class="n">CP</span><span class="p">,</span> <span class="n">VM</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CP</span> <span class="o">=</span> <span class="n">CP</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">packer</span> <span class="o">=</span> <span class="n">CANPacker</span><span class="p">(</span><span class="n">dbc_name</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">CarControllerParams</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">braking</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">brake_steady</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">brake_last</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">apply_brake_last</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_pump_ts</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">stopping_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">accel</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">brake</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_steer</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<div class="viewcode-block" id="CarController.update">
+<a class="viewcode-back" href="../../../../selfdrive.car.honda.html#selfdrive.car.honda.carcontroller.CarController.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CC</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="n">now_nanos</span><span class="p">):</span>
+    <span class="n">actuators</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">actuators</span>
+    <span class="n">hud_control</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">hudControl</span>
+    <span class="n">conversion</span> <span class="o">=</span> <span class="n">hondacan</span><span class="o">.</span><span class="n">get_cruise_speed_conversion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">is_metric</span><span class="p">)</span>
+    <span class="n">hud_v_cruise</span> <span class="o">=</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">setSpeed</span> <span class="o">/</span> <span class="n">conversion</span> <span class="k">if</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">speedVisible</span> <span class="k">else</span> <span class="mi">255</span>
+    <span class="n">pcm_cancel_cmd</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">cruiseControl</span><span class="o">.</span><span class="n">cancel</span>
+
+    <span class="k">if</span> <span class="n">CC</span><span class="o">.</span><span class="n">longActive</span><span class="p">:</span>
+      <span class="n">accel</span> <span class="o">=</span> <span class="n">actuators</span><span class="o">.</span><span class="n">accel</span>
+      <span class="n">gas</span><span class="p">,</span> <span class="n">brake</span> <span class="o">=</span> <span class="n">compute_gas_brake</span><span class="p">(</span><span class="n">actuators</span><span class="o">.</span><span class="n">accel</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">accel</span> <span class="o">=</span> <span class="mf">0.0</span>
+      <span class="n">gas</span><span class="p">,</span> <span class="n">brake</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+
+    <span class="c1"># *** rate limit steer ***</span>
+    <span class="n">limited_steer</span> <span class="o">=</span> <span class="n">rate_limit_steer</span><span class="p">(</span><span class="n">actuators</span><span class="o">.</span><span class="n">steer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_steer</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_steer</span> <span class="o">=</span> <span class="n">limited_steer</span>
+
+    <span class="c1"># *** apply brake hysteresis ***</span>
+    <span class="n">pre_limit_brake</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">braking</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">brake_steady</span> <span class="o">=</span> <span class="n">actuator_hysteresis</span><span class="p">(</span><span class="n">brake</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">braking</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">brake_steady</span><span class="p">,</span>
+                                                                           <span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">)</span>
+
+    <span class="c1"># *** rate limit after the enable check ***</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">brake_last</span> <span class="o">=</span> <span class="n">rate_limit</span><span class="p">(</span><span class="n">pre_limit_brake</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">brake_last</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.</span><span class="p">,</span> <span class="n">DT_CTRL</span><span class="p">)</span>
+
+    <span class="c1"># vehicle hud display, wait for one update from 10Hz 0x304 msg</span>
+    <span class="n">fcw_display</span><span class="p">,</span> <span class="n">steer_required</span><span class="p">,</span> <span class="n">acc_alert</span> <span class="o">=</span> <span class="n">process_hud_alert</span><span class="p">(</span><span class="n">hud_control</span><span class="o">.</span><span class="n">visualAlert</span><span class="p">)</span>
+
+    <span class="c1"># **** process the car messages ****</span>
+
+    <span class="c1"># steer torque is converted back to CAN reference (positive when steering right)</span>
+    <span class="n">apply_steer</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">interp</span><span class="p">(</span><span class="o">-</span><span class="n">limited_steer</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">STEER_MAX</span><span class="p">,</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">STEER_LOOKUP_BP</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">STEER_LOOKUP_V</span><span class="p">))</span>
+
+    <span class="c1"># Send CAN commands</span>
+    <span class="n">can_sends</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># tester present - w/ no response (keeps radar disabled)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="p">(</span><span class="n">HONDA_BOSCH</span> <span class="o">-</span> <span class="n">HONDA_BOSCH_RADARLESS</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mh">0x18DAB0F1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x02\x3E\x80\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="c1"># Send steering command.</span>
+    <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hondacan</span><span class="o">.</span><span class="n">create_steering_control</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="n">apply_steer</span><span class="p">,</span> <span class="n">CC</span><span class="o">.</span><span class="n">latActive</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">,</span>
+                                                      <span class="n">CS</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">))</span>
+
+    <span class="c1"># wind brake from air resistance decel at high speed</span>
+    <span class="n">wind_brake</span> <span class="o">=</span> <span class="n">interp</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">35.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">])</span>
+    <span class="c1"># all of this is only relevant for HONDA NIDEC</span>
+    <span class="n">max_accel</span> <span class="o">=</span> <span class="n">interp</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">NIDEC_MAX_ACCEL_BP</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">NIDEC_MAX_ACCEL_V</span><span class="p">)</span>
+    <span class="c1"># TODO this 1.44 is just to maintain previous behavior</span>
+    <span class="n">pcm_speed_BP</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">wind_brake</span><span class="p">,</span>
+                    <span class="o">-</span><span class="n">wind_brake</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span>
+                    <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="mf">0.5</span><span class="p">]</span>
+    <span class="c1"># The Honda ODYSSEY seems to have different PCM_ACCEL</span>
+    <span class="c1"># msgs, is it other cars too?</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">enableGasInterceptor</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">CC</span><span class="o">.</span><span class="n">longActive</span><span class="p">:</span>
+      <span class="n">pcm_speed</span> <span class="o">=</span> <span class="mf">0.0</span>
+      <span class="n">pcm_accel</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">HONDA_NIDEC_ALT_PCM_ACCEL</span><span class="p">:</span>
+      <span class="n">pcm_speed_V</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span>
+                     <span class="n">clip</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">-</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">),</span>
+                     <span class="n">clip</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">+</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">),</span>
+                     <span class="n">clip</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">+</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">)]</span>
+      <span class="n">pcm_speed</span> <span class="o">=</span> <span class="n">interp</span><span class="p">(</span><span class="n">gas</span> <span class="o">-</span> <span class="n">brake</span><span class="p">,</span> <span class="n">pcm_speed_BP</span><span class="p">,</span> <span class="n">pcm_speed_V</span><span class="p">)</span>
+      <span class="n">pcm_accel</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">NIDEC_GAS_MAX</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">pcm_speed_V</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span>
+                     <span class="n">clip</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">),</span>
+                     <span class="n">clip</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">+</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">),</span>
+                     <span class="n">clip</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">+</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">)]</span>
+      <span class="n">pcm_speed</span> <span class="o">=</span> <span class="n">interp</span><span class="p">(</span><span class="n">gas</span> <span class="o">-</span> <span class="n">brake</span><span class="p">,</span> <span class="n">pcm_speed_BP</span><span class="p">,</span> <span class="n">pcm_speed_V</span><span class="p">)</span>
+      <span class="n">pcm_accel</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">clip</span><span class="p">((</span><span class="n">accel</span> <span class="o">/</span> <span class="mf">1.44</span><span class="p">)</span> <span class="o">/</span> <span class="n">max_accel</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">NIDEC_GAS_MAX</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">HONDA_BOSCH_RADARLESS</span><span class="p">:</span>  <span class="c1"># radarless cars don&#39;t have supplemental message</span>
+        <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hondacan</span><span class="o">.</span><span class="n">create_bosch_supplemental_1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">))</span>
+      <span class="c1"># If using stock ACC, spam cancel command to kill gas when OP disengages.</span>
+      <span class="k">if</span> <span class="n">pcm_cancel_cmd</span><span class="p">:</span>
+        <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hondacan</span><span class="o">.</span><span class="n">spam_buttons_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="n">CruiseButtons</span><span class="o">.</span><span class="n">CANCEL</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">))</span>
+      <span class="k">elif</span> <span class="n">CC</span><span class="o">.</span><span class="n">cruiseControl</span><span class="o">.</span><span class="n">resume</span><span class="p">:</span>
+        <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hondacan</span><span class="o">.</span><span class="n">spam_buttons_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="n">CruiseButtons</span><span class="o">.</span><span class="n">RES_ACCEL</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">))</span>
+
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># Send gas and brake commands.</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">*</span> <span class="n">DT_CTRL</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">HONDA_BOSCH</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">accel</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">accel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">BOSCH_ACCEL_MIN</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">BOSCH_ACCEL_MAX</span><span class="p">)</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="n">interp</span><span class="p">(</span><span class="n">accel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">BOSCH_GAS_LOOKUP_BP</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">BOSCH_GAS_LOOKUP_V</span><span class="p">)</span>
+
+          <span class="n">stopping</span> <span class="o">=</span> <span class="n">actuators</span><span class="o">.</span><span class="n">longControlState</span> <span class="o">==</span> <span class="n">LongCtrlState</span><span class="o">.</span><span class="n">stopping</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">stopping_counter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopping_counter</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">stopping</span> <span class="k">else</span> <span class="mi">0</span>
+          <span class="n">can_sends</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">hondacan</span><span class="o">.</span><span class="n">create_acc_commands</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="n">CC</span><span class="o">.</span><span class="n">enabled</span><span class="p">,</span> <span class="n">CC</span><span class="o">.</span><span class="n">longActive</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">accel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gas</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">stopping_counter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">apply_brake</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">brake_last</span> <span class="o">-</span> <span class="n">wind_brake</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+          <span class="n">apply_brake</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">clip</span><span class="p">(</span><span class="n">apply_brake</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">NIDEC_BRAKE_MAX</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">NIDEC_BRAKE_MAX</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+          <span class="n">pump_on</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_pump_ts</span> <span class="o">=</span> <span class="n">brake_pump_hysteresis</span><span class="p">(</span><span class="n">apply_brake</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_brake_last</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_pump_ts</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span>
+
+          <span class="n">pcm_override</span> <span class="o">=</span> <span class="kc">True</span>
+          <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hondacan</span><span class="o">.</span><span class="n">create_brake_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="n">apply_brake</span><span class="p">,</span> <span class="n">pump_on</span><span class="p">,</span>
+                                                         <span class="n">pcm_override</span><span class="p">,</span> <span class="n">pcm_cancel_cmd</span><span class="p">,</span> <span class="n">fcw_display</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">stock_brake</span><span class="p">))</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">apply_brake_last</span> <span class="o">=</span> <span class="n">apply_brake</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">brake</span> <span class="o">=</span> <span class="n">apply_brake</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">NIDEC_BRAKE_MAX</span>
+
+          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">enableGasInterceptor</span><span class="p">:</span>
+            <span class="c1"># way too aggressive at low speed without this</span>
+            <span class="n">gas_mult</span> <span class="o">=</span> <span class="n">interp</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+            <span class="c1"># send exactly zero if apply_gas is zero. Interceptor will send the max between read value and apply_gas.</span>
+            <span class="c1"># This prevents unexpected pedal range rescaling</span>
+            <span class="c1"># Sending non-zero gas when OP is not enabled will cause the PCM not to respond to throttle as expected</span>
+            <span class="c1"># when you do enable.</span>
+            <span class="k">if</span> <span class="n">CC</span><span class="o">.</span><span class="n">longActive</span><span class="p">:</span>
+              <span class="bp">self</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">gas_mult</span> <span class="o">*</span> <span class="p">(</span><span class="n">gas</span> <span class="o">-</span> <span class="n">brake</span> <span class="o">+</span> <span class="n">wind_brake</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+              <span class="bp">self</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="n">can_sends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">create_gas_interceptor_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gas</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">//</span> <span class="mi">2</span><span class="p">))</span>
+
+    <span class="c1"># Send dashboard UI commands.</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">hud</span> <span class="o">=</span> <span class="n">HUDData</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">pcm_accel</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">hud_v_cruise</span><span class="p">)),</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">leadVisible</span><span class="p">,</span>
+                    <span class="n">hud_control</span><span class="o">.</span><span class="n">lanesVisible</span><span class="p">,</span> <span class="n">fcw_display</span><span class="p">,</span> <span class="n">acc_alert</span><span class="p">,</span> <span class="n">steer_required</span><span class="p">)</span>
+      <span class="n">can_sends</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">hondacan</span><span class="o">.</span><span class="n">create_ui_commands</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="p">,</span> <span class="n">CC</span><span class="o">.</span><span class="n">enabled</span><span class="p">,</span> <span class="n">pcm_speed</span><span class="p">,</span> <span class="n">hud</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">is_metric</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">acc_hud</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">lkas_hud</span><span class="p">))</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">HONDA_BOSCH</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">pcm_speed</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">enableGasInterceptor</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="n">pcm_accel</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">NIDEC_GAS_MAX</span>
+
+    <span class="n">new_actuators</span> <span class="o">=</span> <span class="n">actuators</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">new_actuators</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span>
+    <span class="n">new_actuators</span><span class="o">.</span><span class="n">accel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">accel</span>
+    <span class="n">new_actuators</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gas</span>
+    <span class="n">new_actuators</span><span class="o">.</span><span class="n">brake</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">brake</span>
+    <span class="n">new_actuators</span><span class="o">.</span><span class="n">steer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_steer</span>
+    <span class="n">new_actuators</span><span class="o">.</span><span class="n">steerOutputCan</span> <span class="o">=</span> <span class="n">apply_steer</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">new_actuators</span><span class="p">,</span> <span class="n">can_sends</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.navd.navd &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/navd/navd.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.navd.navd</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.navd.navd</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.api</span> <span class="kn">import</span> <span class="n">Api</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">Ratekeeper</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.navd.helpers</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Coordinate</span><span class="p">,</span> <span class="n">coordinate_from_param</span><span class="p">,</span>
+                                    <span class="n">distance_along_geometry</span><span class="p">,</span> <span class="n">maxspeed_to_ms</span><span class="p">,</span>
+                                    <span class="n">minimum_distance</span><span class="p">,</span>
+                                    <span class="n">parse_banner_instructions</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+
+<span class="n">REROUTE_DISTANCE</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">MANEUVER_TRANSITION_THRESHOLD</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">REROUTE_COUNTER_MIN</span> <span class="o">=</span> <span class="mi">3</span>
+
+
+<div class="viewcode-block" id="RouteEngine">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.navd.RouteEngine">[docs]</a>
+<span class="k">class</span> <span class="nc">RouteEngine</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sm</span><span class="p">,</span> <span class="n">pm</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sm</span> <span class="o">=</span> <span class="n">sm</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pm</span> <span class="o">=</span> <span class="n">pm</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+
+    <span class="c1"># Get last gps position from params</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_position</span> <span class="o">=</span> <span class="n">coordinate_from_param</span><span class="p">(</span><span class="s2">&quot;LastGPSPosition&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_bearing</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">gps_ok</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">localizer_valid</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">nav_destination</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">route</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">route_geometry</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">recompute_backoff</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">recompute_countdown</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">ui_pid</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">reroute_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="s2">&quot;MAPBOX_TOKEN&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">mapbox_token</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MAPBOX_TOKEN&quot;</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">mapbox_host</span> <span class="o">=</span> <span class="s2">&quot;https://api.mapbox.com&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapbox_token</span> <span class="o">=</span> <span class="n">Api</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DongleId&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">get_token</span><span class="p">(</span><span class="n">expiry_hours</span><span class="o">=</span><span class="mi">4</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">24</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Failed to generate mapbox token due to missing private key. Ensure device is registered.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapbox_token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">mapbox_host</span> <span class="o">=</span> <span class="s2">&quot;https://maps.comma.ai&quot;</span>
+
+<div class="viewcode-block" id="RouteEngine.update">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.navd.RouteEngine.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="p">[</span><span class="s2">&quot;managerState&quot;</span><span class="p">]:</span>
+      <span class="n">ui_pid</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">pid</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s2">&quot;managerState&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">processes</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;ui&quot;</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">running</span><span class="p">]</span>
+      <span class="k">if</span> <span class="n">ui_pid</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui_pid</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui_pid</span> <span class="o">!=</span> <span class="n">ui_pid</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;UI restarting, sending route&quot;</span><span class="p">)</span>
+          <span class="n">threading</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_route</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui_pid</span> <span class="o">=</span> <span class="n">ui_pid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_location</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">recompute_route</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">send_instruction</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="RouteEngine.update_location">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.navd.RouteEngine.update_location">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_location</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">gps_ok</span> <span class="o">=</span> <span class="n">location</span><span class="o">.</span><span class="n">gpsOK</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">localizer_valid</span> <span class="o">=</span> <span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">log</span><span class="o">.</span><span class="n">LiveLocationKalman</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">valid</span><span class="p">)</span> <span class="ow">and</span> <span class="n">location</span><span class="o">.</span><span class="n">positionGeodetic</span><span class="o">.</span><span class="n">valid</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">localizer_valid</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">last_bearing</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">calibratedOrientationNED</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">last_position</span> <span class="o">=</span> <span class="n">Coordinate</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">positionGeodetic</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">location</span><span class="o">.</span><span class="n">positionGeodetic</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="RouteEngine.recompute_route">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.navd.RouteEngine.recompute_route">[docs]</a>
+  <span class="k">def</span> <span class="nf">recompute_route</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_position</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span>
+
+    <span class="n">new_destination</span> <span class="o">=</span> <span class="n">coordinate_from_param</span><span class="p">(</span><span class="s2">&quot;NavDestination&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_destination</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">clear_route</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">reset_recompute_limits</span><span class="p">()</span>
+      <span class="k">return</span>
+
+    <span class="n">should_recompute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">should_recompute</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">new_destination</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nav_destination</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Got new destination from NavDestination param </span><span class="si">{</span><span class="n">new_destination</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">should_recompute</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Don&#39;t recompute when GPS drifts in tunnels</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">gps_ok</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recompute_countdown</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">should_recompute</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">recompute_countdown</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">recompute_backoff</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">recompute_backoff</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recompute_backoff</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">calculate_route</span><span class="p">(</span><span class="n">new_destination</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">reroute_counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">recompute_countdown</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recompute_countdown</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RouteEngine.calculate_route">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.navd.RouteEngine.calculate_route">[docs]</a>
+  <span class="k">def</span> <span class="nf">calculate_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calculating route </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last_position</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">destination</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">nav_destination</span> <span class="o">=</span> <span class="n">destination</span>
+
+    <span class="n">lang</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;LanguageSetting&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lang</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">lang</span> <span class="o">=</span> <span class="n">lang</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;main_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s1">&#39;access_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapbox_token</span><span class="p">,</span>
+      <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="s1">&#39;maxspeed&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;geometries&#39;</span><span class="p">:</span> <span class="s1">&#39;geojson&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;overview&#39;</span><span class="p">:</span> <span class="s1">&#39;full&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;steps&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;banner_instructions&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;alternatives&#39;</span><span class="p">:</span> <span class="s1">&#39;false&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;language&#39;</span><span class="p">:</span> <span class="n">lang</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># TODO: move waypoints into NavDestination param?</span>
+    <span class="n">waypoints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;NavDestinationWaypoints&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+    <span class="n">waypoint_coords</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">waypoints</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">waypoints</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">waypoint_coords</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">waypoints</span><span class="p">)</span>
+
+    <span class="n">coords</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_position</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_position</span><span class="o">.</span><span class="n">latitude</span><span class="p">),</span>
+      <span class="o">*</span><span class="n">waypoint_coords</span><span class="p">,</span>
+      <span class="p">(</span><span class="n">destination</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">destination</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">params</span><span class="p">[</span><span class="s1">&#39;waypoints&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;0;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_bearing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">params</span><span class="p">[</span><span class="s1">&#39;bearings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_bearing</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">360</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">360</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">,90&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">coords_str</span> <span class="o">=</span> <span class="s1">&#39;;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">lon</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">lat</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">])</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapbox_host</span> <span class="o">+</span> <span class="s1">&#39;/directions/v5/mapbox/driving-traffic/&#39;</span> <span class="o">+</span> <span class="n">coords_str</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;API request failed&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+      <span class="n">r</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;routes&#39;</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">route</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;routes&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;legs&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;steps&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">route_geometry</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">maxspeed_idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">maxspeeds</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;routes&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;legs&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;annotation&#39;</span><span class="p">][</span><span class="s1">&#39;maxspeed&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Convert coordinates</span>
+        <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">:</span>
+          <span class="n">coords</span> <span class="o">=</span> <span class="p">[]</span>
+
+          <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">step</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="s1">&#39;coordinates&#39;</span><span class="p">]:</span>
+            <span class="n">coord</span> <span class="o">=</span> <span class="n">Coordinate</span><span class="o">.</span><span class="n">from_mapbox_tuple</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+            <span class="c1"># Last step does not have maxspeed</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">maxspeed_idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">maxspeeds</span><span class="p">)):</span>
+              <span class="n">maxspeed</span> <span class="o">=</span> <span class="n">maxspeeds</span><span class="p">[</span><span class="n">maxspeed_idx</span><span class="p">]</span>
+              <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;unknown&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">maxspeed</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39;none&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">maxspeed</span><span class="p">):</span>
+                <span class="n">coord</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="s1">&#39;maxspeed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">maxspeed_to_ms</span><span class="p">(</span><span class="n">maxspeed</span><span class="p">)</span>
+
+            <span class="n">coords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
+            <span class="n">maxspeed_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+          <span class="bp">self</span><span class="o">.</span><span class="n">route_geometry</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+          <span class="n">maxspeed_idx</span> <span class="o">-=</span> <span class="mi">1</span>  <span class="c1"># Every segment ends with the same coordinate as the start of the next</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Got empty route response&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_route</span><span class="p">()</span>
+
+      <span class="c1"># clear waypoints to avoid a re-route including past waypoints</span>
+      <span class="c1"># TODO: only clear once we&#39;re past a waypoint</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;NavDestinationWaypoints&#39;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;failed to get route&quot;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">clear_route</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">send_route</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="RouteEngine.send_instruction">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.navd.RouteEngine.send_instruction">[docs]</a>
+  <span class="k">def</span> <span class="nf">send_instruction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;navInstruction&#39;</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">msg</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;navInstruction&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+      <span class="k">return</span>
+
+    <span class="n">step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span><span class="p">]</span>
+    <span class="n">geometry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">route_geometry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span><span class="p">]</span>
+    <span class="n">along_geometry</span> <span class="o">=</span> <span class="n">distance_along_geometry</span><span class="p">(</span><span class="n">geometry</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_position</span><span class="p">)</span>
+    <span class="n">distance_to_maneuver_along_geometry</span> <span class="o">=</span> <span class="n">step</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">along_geometry</span>
+
+    <span class="c1"># Banner instructions are for the following maneuver step, don&#39;t use empty last step</span>
+    <span class="n">banner_step</span> <span class="o">=</span> <span class="n">step</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">banner_step</span><span class="p">[</span><span class="s1">&#39;bannerInstructions&#39;</span><span class="p">])</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="n">banner_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+
+    <span class="c1"># Current instruction</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">navInstruction</span><span class="o">.</span><span class="n">maneuverDistance</span> <span class="o">=</span> <span class="n">distance_to_maneuver_along_geometry</span>
+    <span class="n">instruction</span> <span class="o">=</span> <span class="n">parse_banner_instructions</span><span class="p">(</span><span class="n">banner_step</span><span class="p">[</span><span class="s1">&#39;bannerInstructions&#39;</span><span class="p">],</span> <span class="n">distance_to_maneuver_along_geometry</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">instruction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">instruction</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">navInstruction</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+    <span class="c1"># All instructions</span>
+    <span class="n">maneuvers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">step_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span><span class="p">:</span>
+        <span class="n">distance_to_maneuver</span> <span class="o">=</span> <span class="o">-</span><span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span><span class="p">))</span> <span class="o">-</span> <span class="n">along_geometry</span>
+      <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span><span class="p">:</span>
+        <span class="n">distance_to_maneuver</span> <span class="o">=</span> <span class="n">distance_to_maneuver_along_geometry</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">distance_to_maneuver</span> <span class="o">=</span> <span class="n">distance_to_maneuver_along_geometry</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+      <span class="n">instruction</span> <span class="o">=</span> <span class="n">parse_banner_instructions</span><span class="p">(</span><span class="n">step_i</span><span class="p">[</span><span class="s1">&#39;bannerInstructions&#39;</span><span class="p">],</span> <span class="n">distance_to_maneuver</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">instruction</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">continue</span>
+      <span class="n">maneuver</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;distance&#39;</span><span class="p">:</span> <span class="n">distance_to_maneuver</span><span class="p">}</span>
+      <span class="k">if</span> <span class="s1">&#39;maneuverType&#39;</span> <span class="ow">in</span> <span class="n">instruction</span><span class="p">:</span>
+        <span class="n">maneuver</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">instruction</span><span class="p">[</span><span class="s1">&#39;maneuverType&#39;</span><span class="p">]</span>
+      <span class="k">if</span> <span class="s1">&#39;maneuverModifier&#39;</span> <span class="ow">in</span> <span class="n">instruction</span><span class="p">:</span>
+        <span class="n">maneuver</span><span class="p">[</span><span class="s1">&#39;modifier&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">instruction</span><span class="p">[</span><span class="s1">&#39;maneuverModifier&#39;</span><span class="p">]</span>
+      <span class="n">maneuvers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">maneuver</span><span class="p">)</span>
+
+    <span class="n">msg</span><span class="o">.</span><span class="n">navInstruction</span><span class="o">.</span><span class="n">allManeuvers</span> <span class="o">=</span> <span class="n">maneuvers</span>
+
+    <span class="c1"># Compute total remaining time and distance</span>
+    <span class="n">remaining</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">along_geometry</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">step</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">total_distance</span> <span class="o">=</span> <span class="n">step</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">remaining</span>
+    <span class="n">total_time</span> <span class="o">=</span> <span class="n">step</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">remaining</span>
+
+    <span class="k">if</span> <span class="n">step</span><span class="p">[</span><span class="s1">&#39;duration_typical&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">total_time_typical</span> <span class="o">=</span> <span class="n">total_time</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">total_time_typical</span> <span class="o">=</span> <span class="n">step</span><span class="p">[</span><span class="s1">&#39;duration_typical&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">remaining</span>
+
+    <span class="c1"># Add up totals for future steps</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">)):</span>
+      <span class="n">total_distance</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span>
+      <span class="n">total_time</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span>
+      <span class="n">total_time_typical</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;duration_typical&#39;</span><span class="p">]</span>
+
+    <span class="n">msg</span><span class="o">.</span><span class="n">navInstruction</span><span class="o">.</span><span class="n">distanceRemaining</span> <span class="o">=</span> <span class="n">total_distance</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">navInstruction</span><span class="o">.</span><span class="n">timeRemaining</span> <span class="o">=</span> <span class="n">total_time</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">navInstruction</span><span class="o">.</span><span class="n">timeRemainingTypical</span> <span class="o">=</span> <span class="n">total_time_typical</span>
+
+    <span class="c1"># Speed limit</span>
+    <span class="n">closest_idx</span><span class="p">,</span> <span class="n">closest</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">geometry</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_position</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">closest_idx</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="c1"># If we are not past the closest point, show previous</span>
+      <span class="k">if</span> <span class="n">along_geometry</span> <span class="o">&lt;</span> <span class="n">distance_along_geometry</span><span class="p">(</span><span class="n">geometry</span><span class="p">,</span> <span class="n">geometry</span><span class="p">[</span><span class="n">closest_idx</span><span class="p">]):</span>
+        <span class="n">closest</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">[</span><span class="n">closest_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;maxspeed&#39;</span> <span class="ow">in</span> <span class="n">closest</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">localizer_valid</span><span class="p">:</span>
+      <span class="n">msg</span><span class="o">.</span><span class="n">navInstruction</span><span class="o">.</span><span class="n">speedLimit</span> <span class="o">=</span> <span class="n">closest</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="s1">&#39;maxspeed&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Speed limit sign type</span>
+    <span class="k">if</span> <span class="s1">&#39;speedLimitSign&#39;</span> <span class="ow">in</span> <span class="n">step</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">step</span><span class="p">[</span><span class="s1">&#39;speedLimitSign&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;mutcd&#39;</span><span class="p">:</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">navInstruction</span><span class="o">.</span><span class="n">speedLimitSign</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">NavInstruction</span><span class="o">.</span><span class="n">SpeedLimitSign</span><span class="o">.</span><span class="n">mutcd</span>
+      <span class="k">elif</span> <span class="n">step</span><span class="p">[</span><span class="s1">&#39;speedLimitSign&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;vienna&#39;</span><span class="p">:</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">navInstruction</span><span class="o">.</span><span class="n">speedLimitSign</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">NavInstruction</span><span class="o">.</span><span class="n">SpeedLimitSign</span><span class="o">.</span><span class="n">vienna</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;navInstruction&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+
+    <span class="c1"># Transition to next route segment</span>
+    <span class="k">if</span> <span class="n">distance_to_maneuver_along_geometry</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">MANEUVER_TRANSITION_THRESHOLD</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_recompute_limits</span><span class="p">()</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Destination reached&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Clear route if driving away from destination</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nav_destination</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_position</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dist</span> <span class="o">&gt;</span> <span class="n">REROUTE_DISTANCE</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;NavDestination&quot;</span><span class="p">)</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">clear_route</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="RouteEngine.send_route">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.navd.RouteEngine.send_route">[docs]</a>
+  <span class="k">def</span> <span class="nf">send_route</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">route_geometry</span><span class="p">:</span>
+        <span class="n">coords</span> <span class="o">+=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">path</span><span class="p">]</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;navRoute&#39;</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">navRoute</span><span class="o">.</span><span class="n">coordinates</span> <span class="o">=</span> <span class="n">coords</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;navRoute&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RouteEngine.clear_route">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.navd.RouteEngine.clear_route">[docs]</a>
+  <span class="k">def</span> <span class="nf">clear_route</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">route</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">route_geometry</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">nav_destination</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="RouteEngine.reset_recompute_limits">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.navd.RouteEngine.reset_recompute_limits">[docs]</a>
+  <span class="k">def</span> <span class="nf">reset_recompute_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">recompute_backoff</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">recompute_countdown</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="RouteEngine.should_recompute">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.navd.RouteEngine.should_recompute">[docs]</a>
+  <span class="k">def</span> <span class="nf">should_recompute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># Don&#39;t recompute in last segment, assume destination is reached</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># Compute closest distance to all line segments in the current path</span>
+    <span class="n">min_d</span> <span class="o">=</span> <span class="n">REROUTE_DISTANCE</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">route_geometry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">step_idx</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+      <span class="n">a</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+      <span class="n">b</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+      <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+      <span class="n">min_d</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_d</span><span class="p">,</span> <span class="n">minimum_distance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_position</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">min_d</span> <span class="o">&gt;</span> <span class="n">REROUTE_DISTANCE</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">reroute_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">reroute_counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reroute_counter</span> <span class="o">&gt;</span> <span class="n">REROUTE_COUNTER_MIN</span></div>
+</div>
+
+    <span class="c1"># TODO: Check for going wrong way in segment</span>
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.navd.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+  <span class="n">pm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">([</span><span class="s1">&#39;navInstruction&#39;</span><span class="p">,</span> <span class="s1">&#39;navRoute&#39;</span><span class="p">])</span>
+  <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">,</span> <span class="s1">&#39;managerState&#39;</span><span class="p">])</span>
+
+  <span class="n">rk</span> <span class="o">=</span> <span class="n">Ratekeeper</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+  <span class="n">route_engine</span> <span class="o">=</span> <span class="n">RouteEngine</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="n">pm</span><span class="p">)</span>
+  <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">route_engine</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+    <span class="n">rk</span><span class="o">.</span><span class="n">keep_time</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

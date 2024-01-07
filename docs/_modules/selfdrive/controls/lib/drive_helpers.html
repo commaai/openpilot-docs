@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.controls.lib.drive_helpers &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/controls/lib/drive_helpers.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.controls.lib.drive_helpers</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.controls.lib.drive_helpers</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span><span class="p">,</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.numpy_fast</span> <span class="kn">import</span> <span class="n">clip</span><span class="p">,</span> <span class="n">interp</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">DT_MDL</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.modeld.constants</span> <span class="kn">import</span> <span class="n">ModelConstants</span>
+
+<span class="c1"># WARNING: this value was determined based on the model&#39;s training distribution,</span>
+<span class="c1">#          model predictions above this speed can be unpredictable</span>
+<span class="c1"># V_CRUISE&#39;s are in kph</span>
+<span class="n">V_CRUISE_MIN</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">V_CRUISE_MAX</span> <span class="o">=</span> <span class="mi">145</span>
+<span class="n">V_CRUISE_UNSET</span> <span class="o">=</span> <span class="mi">255</span>
+<span class="n">V_CRUISE_INITIAL</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">V_CRUISE_INITIAL_EXPERIMENTAL_MODE</span> <span class="o">=</span> <span class="mi">105</span>
+<span class="n">IMPERIAL_INCREMENT</span> <span class="o">=</span> <span class="mf">1.6</span>  <span class="c1"># should be CV.MPH_TO_KPH, but this causes rounding errors</span>
+
+<span class="n">MIN_SPEED</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">CONTROL_N</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">CAR_ROTATION_RADIUS</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="c1"># EU guidelines</span>
+<span class="n">MAX_LATERAL_JERK</span> <span class="o">=</span> <span class="mf">5.0</span>
+
+<span class="n">MAX_VEL_ERR</span> <span class="o">=</span> <span class="mf">5.0</span>
+
+<span class="n">ButtonEvent</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">ButtonEvent</span>
+<span class="n">ButtonType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">ButtonEvent</span><span class="o">.</span><span class="n">Type</span>
+<span class="n">CRUISE_LONG_PRESS</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">CRUISE_NEAREST_FUNC</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">ButtonType</span><span class="o">.</span><span class="n">accelCruise</span><span class="p">:</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">,</span>
+  <span class="n">ButtonType</span><span class="o">.</span><span class="n">decelCruise</span><span class="p">:</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">CRUISE_INTERVAL_SIGN</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">ButtonType</span><span class="o">.</span><span class="n">accelCruise</span><span class="p">:</span> <span class="o">+</span><span class="mi">1</span><span class="p">,</span>
+  <span class="n">ButtonType</span><span class="o">.</span><span class="n">decelCruise</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="VCruiseHelper">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.drive_helpers.VCruiseHelper">[docs]</a>
+<span class="k">class</span> <span class="nc">VCruiseHelper</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CP</span> <span class="o">=</span> <span class="n">CP</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">=</span> <span class="n">V_CRUISE_UNSET</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_cluster_kph</span> <span class="o">=</span> <span class="n">V_CRUISE_UNSET</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph_last</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">button_timers</span> <span class="o">=</span> <span class="p">{</span><span class="n">ButtonType</span><span class="o">.</span><span class="n">decelCruise</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">accelCruise</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">button_change_states</span> <span class="o">=</span> <span class="p">{</span><span class="n">btn</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;standstill&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span> <span class="k">for</span> <span class="n">btn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_timers</span><span class="p">}</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">v_cruise_initialized</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">!=</span> <span class="n">V_CRUISE_UNSET</span>
+
+<div class="viewcode-block" id="VCruiseHelper.update_v_cruise">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.drive_helpers.VCruiseHelper.update_v_cruise">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_v_cruise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="n">enabled</span><span class="p">,</span> <span class="n">is_metric</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph_last</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span>
+
+    <span class="k">if</span> <span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">available</span><span class="p">:</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span><span class="p">:</span>
+        <span class="c1"># if stock cruise is completely disabled, then we can use our own set speed logic</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_v_cruise_non_pcm</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">enabled</span><span class="p">,</span> <span class="n">is_metric</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_cluster_kph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_button_timers</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">enabled</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speed</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MS_TO_KPH</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_cluster_kph</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speedCluster</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MS_TO_KPH</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">=</span> <span class="n">V_CRUISE_UNSET</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_cluster_kph</span> <span class="o">=</span> <span class="n">V_CRUISE_UNSET</span></div>
+
+
+  <span class="k">def</span> <span class="nf">_update_v_cruise_non_pcm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="n">enabled</span><span class="p">,</span> <span class="n">is_metric</span><span class="p">):</span>
+    <span class="c1"># handle button presses. TODO: this should be in state_control, but a decelCruise press</span>
+    <span class="c1"># would have the effect of both enabling and changing speed is checked after the state transition</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">enabled</span><span class="p">:</span>
+      <span class="k">return</span>
+
+    <span class="n">long_press</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">button_type</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">v_cruise_delta</span> <span class="o">=</span> <span class="mf">1.</span> <span class="k">if</span> <span class="n">is_metric</span> <span class="k">else</span> <span class="n">IMPERIAL_INCREMENT</span>
+
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">CS</span><span class="o">.</span><span class="n">buttonEvents</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">raw</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_timers</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">b</span><span class="o">.</span><span class="n">pressed</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_timers</span><span class="p">[</span><span class="n">b</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">raw</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">CRUISE_LONG_PRESS</span><span class="p">:</span>
+          <span class="k">return</span>  <span class="c1"># end long press</span>
+        <span class="n">button_type</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">raw</span>
+        <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_timers</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_timers</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_timers</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">%</span> <span class="n">CRUISE_LONG_PRESS</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="n">button_type</span> <span class="o">=</span> <span class="n">k</span>
+          <span class="n">long_press</span> <span class="o">=</span> <span class="kc">True</span>
+          <span class="k">break</span>
+
+    <span class="k">if</span> <span class="n">button_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span>
+
+    <span class="c1"># Don&#39;t adjust speed when pressing resume to exit standstill</span>
+    <span class="n">cruise_standstill</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_change_states</span><span class="p">[</span><span class="n">button_type</span><span class="p">][</span><span class="s2">&quot;standstill&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">standstill</span>
+    <span class="k">if</span> <span class="n">button_type</span> <span class="o">==</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">accelCruise</span> <span class="ow">and</span> <span class="n">cruise_standstill</span><span class="p">:</span>
+      <span class="k">return</span>
+
+    <span class="c1"># Don&#39;t adjust speed if we&#39;ve enabled since the button was depressed (some ports enable on rising edge)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_change_states</span><span class="p">[</span><span class="n">button_type</span><span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]:</span>
+      <span class="k">return</span>
+
+    <span class="n">v_cruise_delta</span> <span class="o">=</span> <span class="n">v_cruise_delta</span> <span class="o">*</span> <span class="p">(</span><span class="mi">5</span> <span class="k">if</span> <span class="n">long_press</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">long_press</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">%</span> <span class="n">v_cruise_delta</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># partial interval</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">=</span> <span class="n">CRUISE_NEAREST_FUNC</span><span class="p">[</span><span class="n">button_type</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">/</span> <span class="n">v_cruise_delta</span><span class="p">)</span> <span class="o">*</span> <span class="n">v_cruise_delta</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">+=</span> <span class="n">v_cruise_delta</span> <span class="o">*</span> <span class="n">CRUISE_INTERVAL_SIGN</span><span class="p">[</span><span class="n">button_type</span><span class="p">]</span>
+
+    <span class="c1"># If set is pressed while overriding, clip cruise speed to minimum of vEgo</span>
+    <span class="k">if</span> <span class="n">CS</span><span class="o">.</span><span class="n">gasPressed</span> <span class="ow">and</span> <span class="n">button_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ButtonType</span><span class="o">.</span><span class="n">decelCruise</span><span class="p">,</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">setCruise</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MS_TO_KPH</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">V_CRUISE_MIN</span><span class="p">,</span> <span class="n">V_CRUISE_MAX</span><span class="p">)</span>
+
+<div class="viewcode-block" id="VCruiseHelper.update_button_timers">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.drive_helpers.VCruiseHelper.update_button_timers">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_button_timers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+    <span class="c1"># increment timer for buttons still pressed</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_timers</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_timers</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_timers</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">CS</span><span class="o">.</span><span class="n">buttonEvents</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">raw</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_timers</span><span class="p">:</span>
+        <span class="c1"># Start/end timer and store current state on change of button pressed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_timers</span><span class="p">[</span><span class="n">b</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">raw</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">pressed</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_change_states</span><span class="p">[</span><span class="n">b</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">raw</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;standstill&quot;</span><span class="p">:</span> <span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">standstill</span><span class="p">,</span> <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">enabled</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="VCruiseHelper.initialize_v_cruise">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.drive_helpers.VCruiseHelper.initialize_v_cruise">[docs]</a>
+  <span class="k">def</span> <span class="nf">initialize_v_cruise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="n">experimental_mode</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># initializing is handled by the PCM</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span><span class="p">:</span>
+      <span class="k">return</span>
+
+    <span class="n">initial</span> <span class="o">=</span> <span class="n">V_CRUISE_INITIAL_EXPERIMENTAL_MODE</span> <span class="k">if</span> <span class="n">experimental_mode</span> <span class="k">else</span> <span class="n">V_CRUISE_INITIAL</span>
+
+    <span class="c1"># 250kph or above probably means we never had a set speed</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ButtonType</span><span class="o">.</span><span class="n">accelCruise</span><span class="p">,</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">resumeCruise</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">CS</span><span class="o">.</span><span class="n">buttonEvents</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph_last</span> <span class="o">&lt;</span> <span class="mi">250</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph_last</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">clip</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MS_TO_KPH</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">V_CRUISE_MAX</span><span class="p">)))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_cluster_kph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_kph</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="apply_deadzone">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.drive_helpers.apply_deadzone">[docs]</a>
+<span class="k">def</span> <span class="nf">apply_deadzone</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">deadzone</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">error</span> <span class="o">&gt;</span> <span class="n">deadzone</span><span class="p">:</span>
+    <span class="n">error</span> <span class="o">-=</span> <span class="n">deadzone</span>
+  <span class="k">elif</span> <span class="n">error</span> <span class="o">&lt;</span> <span class="o">-</span> <span class="n">deadzone</span><span class="p">:</span>
+    <span class="n">error</span> <span class="o">+=</span> <span class="n">deadzone</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="mf">0.</span>
+  <span class="k">return</span> <span class="n">error</span></div>
+
+
+
+<div class="viewcode-block" id="apply_center_deadzone">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.drive_helpers.apply_center_deadzone">[docs]</a>
+<span class="k">def</span> <span class="nf">apply_center_deadzone</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">deadzone</span><span class="p">):</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="o">&gt;</span> <span class="o">-</span> <span class="n">deadzone</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">error</span> <span class="o">&lt;</span> <span class="n">deadzone</span><span class="p">):</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="mf">0.</span>
+  <span class="k">return</span> <span class="n">error</span></div>
+
+
+
+<div class="viewcode-block" id="rate_limit">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.drive_helpers.rate_limit">[docs]</a>
+<span class="k">def</span> <span class="nf">rate_limit</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="n">last_value</span><span class="p">,</span> <span class="n">dw_step</span><span class="p">,</span> <span class="n">up_step</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">clip</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="n">last_value</span> <span class="o">+</span> <span class="n">dw_step</span><span class="p">,</span> <span class="n">last_value</span> <span class="o">+</span> <span class="n">up_step</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_lag_adjusted_curvature">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.drive_helpers.get_lag_adjusted_curvature">[docs]</a>
+<span class="k">def</span> <span class="nf">get_lag_adjusted_curvature</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">v_ego</span><span class="p">,</span> <span class="n">psis</span><span class="p">,</span> <span class="n">curvatures</span><span class="p">,</span> <span class="n">curvature_rates</span><span class="p">):</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">psis</span><span class="p">)</span> <span class="o">!=</span> <span class="n">CONTROL_N</span><span class="p">:</span>
+    <span class="n">psis</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span><span class="o">*</span><span class="n">CONTROL_N</span>
+    <span class="n">curvatures</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span><span class="o">*</span><span class="n">CONTROL_N</span>
+    <span class="n">curvature_rates</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span><span class="o">*</span><span class="n">CONTROL_N</span>
+  <span class="n">v_ego</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">MIN_SPEED</span><span class="p">,</span> <span class="n">v_ego</span><span class="p">)</span>
+
+  <span class="c1"># TODO this needs more thought, use .2s extra for now to estimate other delays</span>
+  <span class="n">delay</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">+</span> <span class="mf">.2</span>
+
+  <span class="c1"># MPC can plan to turn the wheel and turn back before t_delay. This means</span>
+  <span class="c1"># in high delay cases some corrections never even get commanded. So just use</span>
+  <span class="c1"># psi to calculate a simple linearization of desired curvature</span>
+  <span class="n">current_curvature_desired</span> <span class="o">=</span> <span class="n">curvatures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">psi</span> <span class="o">=</span> <span class="n">interp</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="n">ModelConstants</span><span class="o">.</span><span class="n">T_IDXS</span><span class="p">[:</span><span class="n">CONTROL_N</span><span class="p">],</span> <span class="n">psis</span><span class="p">)</span>
+  <span class="n">average_curvature_desired</span> <span class="o">=</span> <span class="n">psi</span> <span class="o">/</span> <span class="p">(</span><span class="n">v_ego</span> <span class="o">*</span> <span class="n">delay</span><span class="p">)</span>
+  <span class="n">desired_curvature</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">average_curvature_desired</span> <span class="o">-</span> <span class="n">current_curvature_desired</span>
+
+  <span class="c1"># This is the &quot;desired rate of the setpoint&quot; not an actual desired rate</span>
+  <span class="n">desired_curvature_rate</span> <span class="o">=</span> <span class="n">curvature_rates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">max_curvature_rate</span> <span class="o">=</span> <span class="n">MAX_LATERAL_JERK</span> <span class="o">/</span> <span class="p">(</span><span class="n">v_ego</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># inexact calculation, check https://github.com/commaai/openpilot/pull/24755</span>
+  <span class="n">safe_desired_curvature_rate</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">desired_curvature_rate</span><span class="p">,</span>
+                                     <span class="o">-</span><span class="n">max_curvature_rate</span><span class="p">,</span>
+                                     <span class="n">max_curvature_rate</span><span class="p">)</span>
+  <span class="n">safe_desired_curvature</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">desired_curvature</span><span class="p">,</span>
+                                <span class="n">current_curvature_desired</span> <span class="o">-</span> <span class="n">max_curvature_rate</span> <span class="o">*</span> <span class="n">DT_MDL</span><span class="p">,</span>
+                                <span class="n">current_curvature_desired</span> <span class="o">+</span> <span class="n">max_curvature_rate</span> <span class="o">*</span> <span class="n">DT_MDL</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">safe_desired_curvature</span><span class="p">,</span> <span class="n">safe_desired_curvature_rate</span></div>
+
+
+
+<div class="viewcode-block" id="get_friction">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.drive_helpers.get_friction">[docs]</a>
+<span class="k">def</span> <span class="nf">get_friction</span><span class="p">(</span><span class="n">lateral_accel_error</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">lateral_accel_deadzone</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">friction_threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                 <span class="n">torque_params</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">LateralTorqueTuning</span><span class="p">,</span> <span class="n">friction_compensation</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+  <span class="n">friction_interp</span> <span class="o">=</span> <span class="n">interp</span><span class="p">(</span>
+    <span class="n">apply_center_deadzone</span><span class="p">(</span><span class="n">lateral_accel_error</span><span class="p">,</span> <span class="n">lateral_accel_deadzone</span><span class="p">),</span>
+    <span class="p">[</span><span class="o">-</span><span class="n">friction_threshold</span><span class="p">,</span> <span class="n">friction_threshold</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="n">torque_params</span><span class="o">.</span><span class="n">friction</span><span class="p">,</span> <span class="n">torque_params</span><span class="o">.</span><span class="n">friction</span><span class="p">]</span>
+  <span class="p">)</span>
+  <span class="n">friction</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">friction_interp</span><span class="p">)</span> <span class="k">if</span> <span class="n">friction_compensation</span> <span class="k">else</span> <span class="mf">0.0</span>
+  <span class="k">return</span> <span class="n">friction</span></div>
+
+
+
+<div class="viewcode-block" id="get_speed_error">
+<a class="viewcode-back" href="../../../../selfdrive.controls.lib.html#selfdrive.controls.lib.drive_helpers.get_speed_error">[docs]</a>
+<span class="k">def</span> <span class="nf">get_speed_error</span><span class="p">(</span><span class="n">modelV2</span><span class="p">:</span> <span class="n">log</span><span class="o">.</span><span class="n">ModelDataV2</span><span class="p">,</span> <span class="n">v_ego</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+  <span class="c1"># ToDo: Try relative error, and absolute speed</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">modelV2</span><span class="o">.</span><span class="n">temporalPose</span><span class="o">.</span><span class="n">trans</span><span class="p">):</span>
+    <span class="n">vel_err</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">modelV2</span><span class="o">.</span><span class="n">temporalPose</span><span class="o">.</span><span class="n">trans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">v_ego</span><span class="p">,</span> <span class="o">-</span><span class="n">MAX_VEL_ERR</span><span class="p">,</span> <span class="n">MAX_VEL_ERR</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">vel_err</span><span class="p">)</span>
+  <span class="k">return</span> <span class="mf">0.0</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.toyota.values &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/toyota/values.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.toyota.values</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.toyota.values</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">IntFlag</span><span class="p">,</span> <span class="n">StrEnum</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">AngleRateLimit</span><span class="p">,</span> <span class="n">dbc_dict</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.docs_definitions</span> <span class="kn">import</span> <span class="n">CarFootnote</span><span class="p">,</span> <span class="n">CarInfo</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">CarParts</span><span class="p">,</span> <span class="n">CarHarness</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.fw_query_definitions</span> <span class="kn">import</span> <span class="n">FwQueryConfig</span><span class="p">,</span> <span class="n">Request</span><span class="p">,</span> <span class="n">StdQueries</span>
+
+<span class="n">Ecu</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">Ecu</span>
+<span class="n">MIN_ACC_SPEED</span> <span class="o">=</span> <span class="mf">19.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span>
+<span class="n">PEDAL_TRANSITION</span> <span class="o">=</span> <span class="mf">10.</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span>
+
+
+<div class="viewcode-block" id="CarControllerParams">
+<a class="viewcode-back" href="../../../../selfdrive.car.toyota.html#selfdrive.car.toyota.values.CarControllerParams">[docs]</a>
+<span class="k">class</span> <span class="nc">CarControllerParams</span><span class="p">:</span>
+  <span class="n">ACCEL_MAX</span> <span class="o">=</span> <span class="mf">1.5</span>  <span class="c1"># m/s2, lower than allowed 2.0 m/s2 for tuning reasons</span>
+  <span class="n">ACCEL_MIN</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.5</span>  <span class="c1"># m/s2</span>
+
+  <span class="n">STEER_STEP</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">STEER_MAX</span> <span class="o">=</span> <span class="mi">1500</span>
+  <span class="n">STEER_ERROR_MAX</span> <span class="o">=</span> <span class="mi">350</span>     <span class="c1"># max delta between torque cmd and torque motor</span>
+
+  <span class="c1"># Lane Tracing Assist (LTA) control limits</span>
+  <span class="c1"># Assuming a steering ratio of 13.7:</span>
+  <span class="c1"># Limit to ~2.0 m/s^3 up (7.5 deg/s), ~3.5 m/s^3 down (13 deg/s) at 75 mph</span>
+  <span class="c1"># Worst case, the low speed limits will allow ~4.0 m/s^3 up (15 deg/s) and ~4.9 m/s^3 down (18 deg/s) at 75 mph,</span>
+  <span class="c1"># however the EPS has its own internal limits at all speeds which are less than that:</span>
+  <span class="c1"># Observed internal torque rate limit on TSS 2.5 Camry and RAV4 is ~1500 units/sec up and down when using LTA</span>
+  <span class="n">ANGLE_RATE_LIMIT_UP</span> <span class="o">=</span> <span class="n">AngleRateLimit</span><span class="p">(</span><span class="n">speed_bp</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span> <span class="n">angle_v</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">])</span>
+  <span class="n">ANGLE_RATE_LIMIT_DOWN</span> <span class="o">=</span> <span class="n">AngleRateLimit</span><span class="p">(</span><span class="n">speed_bp</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span> <span class="n">angle_v</span><span class="o">=</span><span class="p">[</span><span class="mf">0.36</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">])</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">which</span> <span class="o">==</span> <span class="s1">&#39;torque&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DELTA_UP</span> <span class="o">=</span> <span class="mi">15</span>       <span class="c1"># 1.0s time to peak torque</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DELTA_DOWN</span> <span class="o">=</span> <span class="mi">25</span>     <span class="c1"># always lower than 45 otherwise the Rav4 faults (Prius seems ok with 50)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DELTA_UP</span> <span class="o">=</span> <span class="mi">10</span>       <span class="c1"># 1.5s time to peak torque</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">STEER_DELTA_DOWN</span> <span class="o">=</span> <span class="mi">25</span>     <span class="c1"># always lower than 45 otherwise the Rav4 faults (Prius seems ok with 50)</span></div>
+
+
+
+<div class="viewcode-block" id="ToyotaFlags">
+<a class="viewcode-back" href="../../../../selfdrive.car.toyota.html#selfdrive.car.toyota.values.ToyotaFlags">[docs]</a>
+<span class="k">class</span> <span class="nc">ToyotaFlags</span><span class="p">(</span><span class="n">IntFlag</span><span class="p">):</span>
+  <span class="n">HYBRID</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">SMART_DSU</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">DISABLE_RADAR</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+
+
+<div class="viewcode-block" id="CAR">
+<a class="viewcode-back" href="../../../../selfdrive.car.toyota.html#selfdrive.car.toyota.values.CAR">[docs]</a>
+<span class="k">class</span> <span class="nc">CAR</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+  <span class="c1"># Toyota</span>
+  <span class="n">ALPHARD_TSS2</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA ALPHARD 2020&quot;</span>
+  <span class="n">AVALON</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA AVALON 2016&quot;</span>
+  <span class="n">AVALON_2019</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA AVALON 2019&quot;</span>
+  <span class="n">AVALON_TSS2</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA AVALON 2022&quot;</span>  <span class="c1"># TSS 2.5</span>
+  <span class="n">CAMRY</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA CAMRY 2018&quot;</span>
+  <span class="n">CAMRY_TSS2</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA CAMRY 2021&quot;</span>  <span class="c1"># TSS 2.5</span>
+  <span class="n">CHR</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA C-HR 2018&quot;</span>
+  <span class="n">CHR_TSS2</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA C-HR 2021&quot;</span>
+  <span class="n">COROLLA</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA COROLLA 2017&quot;</span>
+  <span class="c1"># LSS2 Lexus UX Hybrid is same as a TSS2 Corolla Hybrid</span>
+  <span class="n">COROLLA_TSS2</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA COROLLA TSS2 2019&quot;</span>
+  <span class="n">HIGHLANDER</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA HIGHLANDER 2017&quot;</span>
+  <span class="n">HIGHLANDER_TSS2</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA HIGHLANDER 2020&quot;</span>
+  <span class="n">HIGHLANDERH</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA HIGHLANDER HYBRID 2018&quot;</span>
+  <span class="n">PRIUS</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA PRIUS 2017&quot;</span>
+  <span class="n">PRIUS_V</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA PRIUS v 2017&quot;</span>
+  <span class="n">PRIUS_TSS2</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA PRIUS TSS2 2021&quot;</span>
+  <span class="n">RAV4</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA RAV4 2017&quot;</span>
+  <span class="n">RAV4H</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA RAV4 HYBRID 2017&quot;</span>
+  <span class="n">RAV4_TSS2</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA RAV4 2019&quot;</span>
+  <span class="n">RAV4_TSS2_2022</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA RAV4 2022&quot;</span>
+  <span class="n">RAV4_TSS2_2023</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA RAV4 2023&quot;</span>
+  <span class="n">MIRAI</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA MIRAI 2021&quot;</span>  <span class="c1"># TSS 2.5</span>
+  <span class="n">SIENNA</span> <span class="o">=</span> <span class="s2">&quot;TOYOTA SIENNA 2018&quot;</span>
+
+  <span class="c1"># Lexus</span>
+  <span class="n">LEXUS_CTH</span> <span class="o">=</span> <span class="s2">&quot;LEXUS CT HYBRID 2018&quot;</span>
+  <span class="n">LEXUS_ES</span> <span class="o">=</span> <span class="s2">&quot;LEXUS ES 2018&quot;</span>
+  <span class="n">LEXUS_ESH</span> <span class="o">=</span> <span class="s2">&quot;LEXUS ES HYBRID 2018&quot;</span>
+  <span class="n">LEXUS_ES_TSS2</span> <span class="o">=</span> <span class="s2">&quot;LEXUS ES 2019&quot;</span>
+  <span class="n">LEXUS_IS</span> <span class="o">=</span> <span class="s2">&quot;LEXUS IS 2018&quot;</span>
+  <span class="n">LEXUS_IS_TSS2</span> <span class="o">=</span> <span class="s2">&quot;LEXUS IS 2023&quot;</span>
+  <span class="n">LEXUS_NX</span> <span class="o">=</span> <span class="s2">&quot;LEXUS NX 2018&quot;</span>
+  <span class="n">LEXUS_NX_TSS2</span> <span class="o">=</span> <span class="s2">&quot;LEXUS NX 2020&quot;</span>
+  <span class="n">LEXUS_RC</span> <span class="o">=</span> <span class="s2">&quot;LEXUS RC 2020&quot;</span>
+  <span class="n">LEXUS_RX</span> <span class="o">=</span> <span class="s2">&quot;LEXUS RX 2016&quot;</span>
+  <span class="n">LEXUS_RXH</span> <span class="o">=</span> <span class="s2">&quot;LEXUS RX HYBRID 2017&quot;</span>
+  <span class="n">LEXUS_RX_TSS2</span> <span class="o">=</span> <span class="s2">&quot;LEXUS RX 2020&quot;</span>
+  <span class="n">LEXUS_GS_F</span> <span class="o">=</span> <span class="s2">&quot;LEXUS GS F 2016&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="Footnote">
+<a class="viewcode-back" href="../../../../selfdrive.car.toyota.html#selfdrive.car.toyota.values.Footnote">[docs]</a>
+<span class="k">class</span> <span class="nc">Footnote</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+  <span class="n">CAMRY</span> <span class="o">=</span> <span class="n">CarFootnote</span><span class="p">(</span>
+    <span class="s2">&quot;openpilot operates above 28mph for Camry 4CYL L, 4CYL LE and 4CYL SE which don&#39;t have Full-Speed Range Dynamic Radar Cruise Control.&quot;</span><span class="p">,</span>
+    <span class="n">Column</span><span class="o">.</span><span class="n">FSR_LONGITUDINAL</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ToyotaCarInfo">
+<a class="viewcode-back" href="../../../../selfdrive.car.toyota.html#selfdrive.car.toyota.values.ToyotaCarInfo">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">ToyotaCarInfo</span><span class="p">(</span><span class="n">CarInfo</span><span class="p">):</span>
+  <span class="n">package</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;All&quot;</span>
+  <span class="n">car_parts</span><span class="p">:</span> <span class="n">CarParts</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">CarParts</span><span class="o">.</span><span class="n">common</span><span class="p">([</span><span class="n">CarHarness</span><span class="o">.</span><span class="n">toyota_a</span><span class="p">]))</span></div>
+
+
+
+<span class="n">CAR_INFO</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">ToyotaCarInfo</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">ToyotaCarInfo</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="c1"># Toyota</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">ALPHARD_TSS2</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Alphard 2019-20&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Alphard Hybrid 2021&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Avalon 2016&quot;</span><span class="p">,</span> <span class="s2">&quot;Toyota Safety Sense P&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Avalon 2017-18&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON_2019</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Avalon 2019-21&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Avalon Hybrid 2019-21&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON_TSS2</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Avalon 2022&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Avalon Hybrid 2022&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">CAMRY</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Camry 2018-20&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=fkcjviZY9CM&quot;</span><span class="p">,</span> <span class="n">footnotes</span><span class="o">=</span><span class="p">[</span><span class="n">Footnote</span><span class="o">.</span><span class="n">CAMRY</span><span class="p">]),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Camry Hybrid 2018-20&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=Q2DYY0AWKgk&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">CAMRY_TSS2</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Camry 2021-24&quot;</span><span class="p">,</span> <span class="n">footnotes</span><span class="o">=</span><span class="p">[</span><span class="n">Footnote</span><span class="o">.</span><span class="n">CAMRY</span><span class="p">]),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Camry Hybrid 2021-24&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">CHR</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota C-HR 2017-20&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota C-HR Hybrid 2017-20&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">CHR_TSS2</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota C-HR 2021&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota C-HR Hybrid 2021-22&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">:</span> <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Corolla 2017-19&quot;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA_TSS2</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Corolla 2020-22&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=_66pXk0CBYA&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Corolla Cross (Non-US only) 2020-23&quot;</span><span class="p">,</span> <span class="n">min_enable_speed</span><span class="o">=</span><span class="mf">7.5</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Corolla Hatchback 2019-22&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=_66pXk0CBYA&quot;</span><span class="p">),</span>
+    <span class="c1"># Hybrid platforms</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Corolla Hybrid 2020-22&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Corolla Hybrid (Non-US only) 2020-23&quot;</span><span class="p">,</span> <span class="n">min_enable_speed</span><span class="o">=</span><span class="mf">7.5</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Corolla Cross Hybrid (Non-US only) 2020-22&quot;</span><span class="p">,</span> <span class="n">min_enable_speed</span><span class="o">=</span><span class="mf">7.5</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus UX Hybrid 2019-23&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">:</span> <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Highlander 2017-19&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=0wS0wXSLzoo&quot;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER_TSS2</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Highlander 2020-23&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Highlander Hybrid 2020-23&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">:</span> <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Highlander Hybrid 2017-19&quot;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Prius 2016&quot;</span><span class="p">,</span> <span class="s2">&quot;Toyota Safety Sense P&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=8zopPJI8XQ0&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Prius 2017-20&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=8zopPJI8XQ0&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Prius Prime 2017-20&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=8zopPJI8XQ0&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">:</span> <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Prius v 2017&quot;</span><span class="p">,</span> <span class="s2">&quot;Toyota Safety Sense P&quot;</span><span class="p">,</span> <span class="n">min_enable_speed</span><span class="o">=</span><span class="n">MIN_ACC_SPEED</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_TSS2</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Prius 2021-22&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=J58TvCpUd4U&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Prius Prime 2021-22&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=J58TvCpUd4U&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota RAV4 2016&quot;</span><span class="p">,</span> <span class="s2">&quot;Toyota Safety Sense P&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota RAV4 2017-18&quot;</span><span class="p">)</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota RAV4 Hybrid 2016&quot;</span><span class="p">,</span> <span class="s2">&quot;Toyota Safety Sense P&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://youtu.be/LhT5VzJVfNI?t=26&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota RAV4 Hybrid 2017-18&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://youtu.be/LhT5VzJVfNI?t=26&quot;</span><span class="p">)</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota RAV4 2019-21&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=wJxjDd42gGA&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota RAV4 Hybrid 2019-21&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2_2022</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota RAV4 2022&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota RAV4 Hybrid 2022&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://youtu.be/U0nH9cnrFB0&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2_2023</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota RAV4 2023&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota RAV4 Hybrid 2023-24&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">MIRAI</span><span class="p">:</span> <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Mirai 2021&quot;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">:</span> <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Toyota Sienna 2018-20&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/watch?v=q1UPOo4Sh68&quot;</span><span class="p">,</span> <span class="n">min_enable_speed</span><span class="o">=</span><span class="n">MIN_ACC_SPEED</span><span class="p">),</span>
+
+  <span class="c1"># Lexus</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">:</span> <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus CT Hybrid 2017-18&quot;</span><span class="p">,</span> <span class="s2">&quot;Lexus Safety System+&quot;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">:</span> <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus ES 2017-18&quot;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">:</span> <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus ES Hybrid 2017-18&quot;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES_TSS2</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus ES 2019-24&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus ES Hybrid 2019-23&quot;</span><span class="p">,</span> <span class="n">video_link</span><span class="o">=</span><span class="s2">&quot;https://youtu.be/BZ29osRVJeg?t=12&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_IS</span><span class="p">:</span> <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus IS 2017-19&quot;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_IS_TSS2</span><span class="p">:</span> <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus IS 2022-23&quot;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_GS_F</span><span class="p">:</span> <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus GS F 2016&quot;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus NX 2018-19&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus NX Hybrid 2018-19&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX_TSS2</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus NX 2020-21&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus NX Hybrid 2020-21&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RC</span><span class="p">:</span> <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus RC 2018-20&quot;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus RX 2016&quot;</span><span class="p">,</span> <span class="s2">&quot;Lexus Safety System+&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus RX 2017-19&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus RX Hybrid 2016&quot;</span><span class="p">,</span> <span class="s2">&quot;Lexus Safety System+&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus RX Hybrid 2017-19&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX_TSS2</span><span class="p">:</span> <span class="p">[</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus RX 2020-22&quot;</span><span class="p">),</span>
+    <span class="n">ToyotaCarInfo</span><span class="p">(</span><span class="s2">&quot;Lexus RX Hybrid 2020-22&quot;</span><span class="p">),</span>
+  <span class="p">],</span>
+<span class="p">}</span>
+
+<span class="c1"># (addr, cars, bus, 1/freq*100, vl)</span>
+<span class="n">STATIC_DSU_MSGS</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">(</span><span class="mh">0x128</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span>   <span class="mi">3</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xf4\x01\x90\x83\x00\x37</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x128</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span>   <span class="mi">3</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x03\x00\x20\x00\x00\x52</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x141</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON</span><span class="p">,</span>
+           <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span>   <span class="mi">2</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x46</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x160</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON</span><span class="p">,</span>
+           <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span>   <span class="mi">7</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x08\x12\x01\x31\x9c\x51</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x161</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">),</span>
+                                                                                               <span class="mi">1</span><span class="p">,</span>   <span class="mi">7</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x1e\x00\x00\x00\x80\x07</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0X161</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x1e\x00\xd4\x00\x00\x5b</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x283</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON</span><span class="p">,</span>
+           <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span>   <span class="mi">3</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00\x00\x00\x8c</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x2E6</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span>   <span class="mi">3</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xf8\x00\x08\x7f\xe0\x00\x4e</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x2E7</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span>   <span class="mi">3</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xa8\x9c\x31\x9c\x00\x00\x00\x02</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x33E</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">20</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x0f\xff\x26\x40\x00\x1f\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x344</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON</span><span class="p">,</span>
+           <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span>   <span class="mi">5</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x01\x00\x00\x00\x00\x50</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x365</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">20</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x80\x03\x00\x08</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x365</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">RAV4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">,</span>
+           <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">20</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x80\xfc\x00\x08</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x366</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">20</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x4d\x82\x40\x02\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x366</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">RAV4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">),</span>
+          <span class="mi">0</span><span class="p">,</span>  <span class="mi">20</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x72\x07\xff\x09\xfe\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x366</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,),</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">20</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x95\x07\xfe\x08\x05\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x470</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x02\x7a</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x470</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">100</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x01\x79</span><span class="s1">&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mh">0x4CB</span><span class="p">,</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON</span><span class="p">,</span>
+           <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x0c\x00\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="get_platform_codes">
+<a class="viewcode-back" href="../../../../selfdrive.car.toyota.html#selfdrive.car.toyota.values.get_platform_codes">[docs]</a>
+<span class="k">def</span> <span class="nf">get_platform_codes</span><span class="p">(</span><span class="n">fw_versions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Set</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]:</span>
+  <span class="c1"># Returns sub versions in a dict so comparisons can be made within part-platform-major_version combos</span>
+  <span class="n">codes</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>  <span class="c1"># Optional[part]-platform-major_version: set of sub_version</span>
+  <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">fw_versions</span><span class="p">:</span>
+    <span class="c1"># FW versions returned from UDS queries can return multiple fields/chunks of data (different ECU calibrations, different data?)</span>
+    <span class="c1">#  and are prefixed with a byte that describes how many chunks of data there are.</span>
+    <span class="c1"># But FW returned from KWP requires querying of each sub-data id and does not have a length prefix.</span>
+
+    <span class="n">length_code</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">length_code_match</span> <span class="o">=</span> <span class="n">FW_LEN_CODE</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">fw</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">length_code_match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">length_code</span> <span class="o">=</span> <span class="n">length_code_match</span><span class="o">.</span><span class="n">group</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="n">fw</span> <span class="o">=</span> <span class="n">fw</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="c1"># fw length should be multiple of 16 bytes (per chunk, even if no length code), skip parsing if unexpected length</span>
+    <span class="k">if</span> <span class="n">length_code</span> <span class="o">*</span> <span class="n">FW_CHUNK_LEN</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fw</span><span class="p">):</span>
+      <span class="k">continue</span>
+
+    <span class="n">chunks</span> <span class="o">=</span> <span class="p">[</span><span class="n">fw</span><span class="p">[</span><span class="n">FW_CHUNK_LEN</span> <span class="o">*</span> <span class="n">i</span><span class="p">:</span><span class="n">FW_CHUNK_LEN</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">FW_CHUNK_LEN</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1"> &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length_code</span><span class="p">)]</span>
+
+    <span class="c1"># only first is considered for now since second is commonly shared (TODO: understand that)</span>
+    <span class="n">first_chunk</span> <span class="o">=</span> <span class="n">chunks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">first_chunk</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+      <span class="c1"># TODO: no part number, but some short chunks have it in subsequent chunks</span>
+      <span class="n">fw_match</span> <span class="o">=</span> <span class="n">SHORT_FW_PATTERN</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">first_chunk</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">fw_match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">platform</span><span class="p">,</span> <span class="n">major_version</span><span class="p">,</span> <span class="n">sub_version</span> <span class="o">=</span> <span class="n">fw_match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+        <span class="n">codes</span><span class="p">[</span><span class="sa">b</span><span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">platform</span><span class="p">,</span> <span class="n">major_version</span><span class="p">))]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sub_version</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">first_chunk</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+      <span class="n">fw_match</span> <span class="o">=</span> <span class="n">MEDIUM_FW_PATTERN</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">first_chunk</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">fw_match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">part</span><span class="p">,</span> <span class="n">platform</span><span class="p">,</span> <span class="n">major_version</span><span class="p">,</span> <span class="n">sub_version</span> <span class="o">=</span> <span class="n">fw_match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+        <span class="n">codes</span><span class="p">[</span><span class="sa">b</span><span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">part</span><span class="p">,</span> <span class="n">platform</span><span class="p">,</span> <span class="n">major_version</span><span class="p">))]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sub_version</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">first_chunk</span><span class="p">)</span> <span class="o">==</span> <span class="mi">12</span><span class="p">:</span>
+      <span class="n">fw_match</span> <span class="o">=</span> <span class="n">LONG_FW_PATTERN</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">first_chunk</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">fw_match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">part</span><span class="p">,</span> <span class="n">platform</span><span class="p">,</span> <span class="n">major_version</span><span class="p">,</span> <span class="n">sub_version</span> <span class="o">=</span> <span class="n">fw_match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+        <span class="n">codes</span><span class="p">[</span><span class="sa">b</span><span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">part</span><span class="p">,</span> <span class="n">platform</span><span class="p">,</span> <span class="n">major_version</span><span class="p">))]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sub_version</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">codes</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="match_fw_to_car_fuzzy">
+<a class="viewcode-back" href="../../../../selfdrive.car.toyota.html#selfdrive.car.toyota.values.match_fw_to_car_fuzzy">[docs]</a>
+<span class="k">def</span> <span class="nf">match_fw_to_car_fuzzy</span><span class="p">(</span><span class="n">live_fw_versions</span><span class="p">,</span> <span class="n">offline_fw_versions</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+  <span class="n">candidates</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+  <span class="k">for</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">fws</span> <span class="ow">in</span> <span class="n">offline_fw_versions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="c1"># Keep track of ECUs which pass all checks (platform codes, within sub-version range)</span>
+    <span class="n">valid_found_ecus</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">valid_expected_ecus</span> <span class="o">=</span> <span class="p">{</span><span class="n">ecu</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">ecu</span> <span class="ow">in</span> <span class="n">fws</span> <span class="k">if</span> <span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">PLATFORM_CODE_ECUS</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">ecu</span><span class="p">,</span> <span class="n">expected_versions</span> <span class="ow">in</span> <span class="n">fws</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">addr</span> <span class="o">=</span> <span class="n">ecu</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+      <span class="c1"># Only check ECUs expected to have platform codes</span>
+      <span class="k">if</span> <span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">PLATFORM_CODE_ECUS</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+      <span class="c1"># Expected platform codes &amp; versions</span>
+      <span class="n">expected_platform_codes</span> <span class="o">=</span> <span class="n">get_platform_codes</span><span class="p">(</span><span class="n">expected_versions</span><span class="p">)</span>
+
+      <span class="c1"># Found platform codes &amp; versions</span>
+      <span class="n">found_platform_codes</span> <span class="o">=</span> <span class="n">get_platform_codes</span><span class="p">(</span><span class="n">live_fw_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="nb">set</span><span class="p">()))</span>
+
+      <span class="c1"># Check part number + platform code + major version matches for any found versions</span>
+      <span class="c1"># Platform codes and major versions change for different physical parts, generation, API, etc.</span>
+      <span class="c1"># Sub-versions are incremented for minor recalls, do not need to be checked.</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">found_platform_code</span> <span class="ow">in</span> <span class="n">expected_platform_codes</span> <span class="k">for</span> <span class="n">found_platform_code</span> <span class="ow">in</span> <span class="n">found_platform_codes</span><span class="p">):</span>
+        <span class="k">break</span>
+
+      <span class="n">valid_found_ecus</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+
+    <span class="c1"># If all live ECUs pass all checks for candidate, add it as a match</span>
+    <span class="k">if</span> <span class="n">valid_expected_ecus</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">valid_found_ecus</span><span class="p">):</span>
+      <span class="n">candidates</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="n">candidates</span> <span class="o">-</span> <span class="n">FUZZY_EXCLUDED_PLATFORMS</span><span class="p">)}</span></div>
+
+
+
+<span class="c1"># Regex patterns for parsing more general platform-specific identifiers from FW versions.</span>
+<span class="c1"># - Part number: Toyota part number (usually last character needs to be ignored to find a match).</span>
+<span class="c1">#    Each ECU address has just one part number.</span>
+<span class="c1"># - Platform: usually multiple codes per an openpilot platform, however this is the least variable and</span>
+<span class="c1">#    is usually shared across ECUs and model years signifying this describes something about the specific platform.</span>
+<span class="c1">#    This describes more generational changes (TSS-P vs TSS2), or manufacture region.</span>
+<span class="c1"># - Major version: second least variable part of the FW version. Seen splitting cars by model year/API such as</span>
+<span class="c1">#    RAV4 2022/2023 and Avalon. Used to differentiate cars where API has changed slightly, but is not a generational change.</span>
+<span class="c1">#    It is important to note that these aren&#39;t always consecutive, for example:</span>
+<span class="c1">#    Avalon 2016-18&#39;s fwdCamera has these major versions: 01, 03 while 2019 has: 02</span>
+<span class="c1"># - Sub version: exclusive to major version, but shared with other cars. Should only be used for further filtering.</span>
+<span class="c1">#    Seen bumped in TSB FW updates, and describes other minor differences.</span>
+<span class="n">SHORT_FW_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;[A-Z0-9](?P&lt;platform&gt;[A-Z0-9]</span><span class="si">{2}</span><span class="s1">)(?P&lt;major_version&gt;[A-Z0-9]</span><span class="si">{2}</span><span class="s1">)(?P&lt;sub_version&gt;[A-Z0-9]</span><span class="si">{3}</span><span class="s1">)&#39;</span><span class="p">)</span>
+<span class="n">MEDIUM_FW_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;(?P&lt;part&gt;[A-Z0-9]</span><span class="si">{5}</span><span class="s1">)(?P&lt;platform&gt;[A-Z0-9]</span><span class="si">{2}</span><span class="s1">)(?P&lt;major_version&gt;[A-Z0-9]</span><span class="si">{1}</span><span class="s1">)(?P&lt;sub_version&gt;[A-Z0-9]</span><span class="si">{2}</span><span class="s1">)&#39;</span><span class="p">)</span>
+<span class="n">LONG_FW_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;(?P&lt;part&gt;[A-Z0-9]</span><span class="si">{5}</span><span class="s1">)(?P&lt;platform&gt;[A-Z0-9]</span><span class="si">{2}</span><span class="s1">)(?P&lt;major_version&gt;[A-Z0-9]</span><span class="si">{2}</span><span class="s1">)(?P&lt;sub_version&gt;[A-Z0-9]</span><span class="si">{3}</span><span class="s1">)&#39;</span><span class="p">)</span>
+<span class="n">FW_LEN_CODE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;^[</span><span class="se">\x01</span><span class="s1">-</span><span class="se">\x03</span><span class="s1">]&#39;</span><span class="p">)</span>  <span class="c1"># highest seen is 3 chunks, 16 bytes each</span>
+<span class="n">FW_CHUNK_LEN</span> <span class="o">=</span> <span class="mi">16</span>
+
+<span class="c1"># List of ECUs that are most unique across openpilot platforms</span>
+<span class="c1"># TODO: use hybrid ECU, splits similar ICE and hybrid variants</span>
+<span class="c1"># - fwdCamera: describes actual features related to ADAS. For example, on the Avalon it describes</span>
+<span class="c1">#    when TSS-P became standard, whether the car supports stop and go, and whether it&#39;s TSS2.</span>
+<span class="c1">#    On the RAV4, it describes the move to the radar doing ACC, and the use of LTA for lane keeping.</span>
+<span class="c1"># - abs: differentiates hybrid/ICE on most cars (Corolla TSS2 is an exception)</span>
+<span class="c1"># - eps: describes lateral API changes for the EPS, such as using LTA for lane keeping and rejecting LKA messages</span>
+<span class="n">PLATFORM_CODE_ECUS</span> <span class="o">=</span> <span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">abs</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">eps</span><span class="p">]</span>
+
+<span class="c1"># These platforms have at least one platform code for all ECUs shared with another platform.</span>
+<span class="n">FUZZY_EXCLUDED_PLATFORMS</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">CAR</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+<span class="c1"># Some ECUs that use KWP2000 have their FW versions on non-standard data identifiers.</span>
+<span class="c1"># Toyota diagnostic software first gets the supported data ids, then queries them one by one.</span>
+<span class="c1"># For example, sends: 0x1a8800, receives: 0x1a8800010203, queries: 0x1a8801, 0x1a8802, 0x1a8803</span>
+<span class="n">TOYOTA_VERSION_REQUEST_KWP</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x1a\x88\x01</span><span class="s1">&#39;</span>
+<span class="n">TOYOTA_VERSION_RESPONSE_KWP</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x5a\x88\x01</span><span class="s1">&#39;</span>
+
+<span class="n">FW_QUERY_CONFIG</span> <span class="o">=</span> <span class="n">FwQueryConfig</span><span class="p">(</span>
+  <span class="c1"># TODO: look at data to whitelist new ECUs effectively</span>
+  <span class="n">requests</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">Request</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">StdQueries</span><span class="o">.</span><span class="n">SHORT_TESTER_PRESENT_REQUEST</span><span class="p">,</span> <span class="n">TOYOTA_VERSION_REQUEST_KWP</span><span class="p">],</span>
+      <span class="p">[</span><span class="n">StdQueries</span><span class="o">.</span><span class="n">SHORT_TESTER_PRESENT_RESPONSE</span><span class="p">,</span> <span class="n">TOYOTA_VERSION_RESPONSE_KWP</span><span class="p">],</span>
+      <span class="n">whitelist_ecus</span><span class="o">=</span><span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">fwdRadar</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">dsu</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">abs</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">epb</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">telematics</span><span class="p">,</span>
+                      <span class="n">Ecu</span><span class="o">.</span><span class="n">srs</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">combinationMeter</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">transmission</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">gateway</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">hvac</span><span class="p">],</span>
+      <span class="n">bus</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">Request</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">StdQueries</span><span class="o">.</span><span class="n">SHORT_TESTER_PRESENT_REQUEST</span><span class="p">,</span> <span class="n">StdQueries</span><span class="o">.</span><span class="n">OBD_VERSION_REQUEST</span><span class="p">],</span>
+      <span class="p">[</span><span class="n">StdQueries</span><span class="o">.</span><span class="n">SHORT_TESTER_PRESENT_RESPONSE</span><span class="p">,</span> <span class="n">StdQueries</span><span class="o">.</span><span class="n">OBD_VERSION_RESPONSE</span><span class="p">],</span>
+      <span class="n">whitelist_ecus</span><span class="o">=</span><span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">epb</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">telematics</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">hybrid</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">srs</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">combinationMeter</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">transmission</span><span class="p">,</span>
+                      <span class="n">Ecu</span><span class="o">.</span><span class="n">gateway</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">hvac</span><span class="p">],</span>
+      <span class="n">bus</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">Request</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">StdQueries</span><span class="o">.</span><span class="n">TESTER_PRESENT_REQUEST</span><span class="p">,</span> <span class="n">StdQueries</span><span class="o">.</span><span class="n">DEFAULT_DIAGNOSTIC_REQUEST</span><span class="p">,</span> <span class="n">StdQueries</span><span class="o">.</span><span class="n">EXTENDED_DIAGNOSTIC_REQUEST</span><span class="p">,</span> <span class="n">StdQueries</span><span class="o">.</span><span class="n">UDS_VERSION_REQUEST</span><span class="p">],</span>
+      <span class="p">[</span><span class="n">StdQueries</span><span class="o">.</span><span class="n">TESTER_PRESENT_RESPONSE</span><span class="p">,</span> <span class="n">StdQueries</span><span class="o">.</span><span class="n">DEFAULT_DIAGNOSTIC_RESPONSE</span><span class="p">,</span> <span class="n">StdQueries</span><span class="o">.</span><span class="n">EXTENDED_DIAGNOSTIC_RESPONSE</span><span class="p">,</span> <span class="n">StdQueries</span><span class="o">.</span><span class="n">UDS_VERSION_RESPONSE</span><span class="p">],</span>
+      <span class="n">whitelist_ecus</span><span class="o">=</span><span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">fwdRadar</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">abs</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">epb</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">telematics</span><span class="p">,</span>
+                      <span class="n">Ecu</span><span class="o">.</span><span class="n">hybrid</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">srs</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">combinationMeter</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">transmission</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">gateway</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">hvac</span><span class="p">],</span>
+      <span class="n">bus</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">non_essential_ecus</span><span class="o">=</span><span class="p">{</span>
+    <span class="c1"># FIXME: On some models, abs can sometimes be missing</span>
+    <span class="n">Ecu</span><span class="o">.</span><span class="n">abs</span><span class="p">:</span> <span class="p">[</span><span class="n">CAR</span><span class="o">.</span><span class="n">RAV4</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_IS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ALPHARD_TSS2</span><span class="p">],</span>
+    <span class="c1"># On some models, the engine can show on two different addresses</span>
+    <span class="n">Ecu</span><span class="o">.</span><span class="n">engine</span><span class="p">:</span> <span class="p">[</span><span class="n">CAR</span><span class="o">.</span><span class="n">CAMRY</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHR</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHR_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_IS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RC</span><span class="p">,</span>
+                 <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX_TSS2</span><span class="p">],</span>
+  <span class="p">},</span>
+  <span class="n">extra_ecus</span><span class="o">=</span><span class="p">[</span>
+    <span class="c1"># All known ECUs on a late-model Toyota vehicle not queried here:</span>
+    <span class="c1"># Responds to UDS:</span>
+    <span class="c1"># - HV Battery (0x713, 0x747)</span>
+    <span class="c1"># - Motor Generator (0x716, 0x724)</span>
+    <span class="c1"># - 2nd ABS &quot;Brake/EPB&quot; (0x730)</span>
+    <span class="c1"># Responds to KWP (0x1a8801):</span>
+    <span class="c1"># - Steering Angle Sensor (0x7b3)</span>
+    <span class="c1"># - EPS/EMPS (0x7a0, 0x7a1)</span>
+    <span class="c1"># Responds to KWP (0x1a8881):</span>
+    <span class="c1"># - Body Control Module ((0x750, 0x40))</span>
+
+    <span class="c1"># Hybrid control computer can be on 0x7e2 (KWP) or 0x7d2 (UDS) depending on platform</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">hybrid</span><span class="p">,</span> <span class="mh">0x7e2</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>  <span class="c1"># Hybrid Control Assembly &amp; Computer</span>
+    <span class="c1"># TODO: if these duplicate ECUs always exist together, remove one</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">srs</span><span class="p">,</span> <span class="mh">0x780</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>     <span class="c1"># SRS Airbag</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">srs</span><span class="p">,</span> <span class="mh">0x784</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>     <span class="c1"># SRS Airbag 2</span>
+    <span class="c1"># Likely only exists on cars where EPB isn&#39;t standard (e.g. Camry, Avalon (/Hybrid))</span>
+    <span class="c1"># On some cars, EPB is controlled by the ABS module</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">epb</span><span class="p">,</span> <span class="mh">0x750</span><span class="p">,</span> <span class="mh">0x2c</span><span class="p">),</span>     <span class="c1"># Electronic Parking Brake</span>
+    <span class="c1"># This isn&#39;t accessible on all cars</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">gateway</span><span class="p">,</span> <span class="mh">0x750</span><span class="p">,</span> <span class="mh">0x5f</span><span class="p">),</span>
+    <span class="c1"># On some cars, this only responds to b&#39;\x1a\x88\x81&#39;, which is reflected by the b&#39;\x1a\x88\x00&#39; query</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">telematics</span><span class="p">,</span> <span class="mh">0x750</span><span class="p">,</span> <span class="mh">0xc7</span><span class="p">),</span>
+    <span class="c1"># Transmission is combined with engine on some platforms, such as TSS-P RAV4</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">transmission</span><span class="p">,</span> <span class="mh">0x701</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+    <span class="c1"># A few platforms have a tester present response on this address, add to log</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">transmission</span><span class="p">,</span> <span class="mh">0x7e1</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+    <span class="c1"># On some cars, this only responds to b&#39;\x1a\x88\x80&#39;</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">combinationMeter</span><span class="p">,</span> <span class="mh">0x7c0</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">hvac</span><span class="p">,</span> <span class="mh">0x7c4</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="n">match_fw_to_car_fuzzy</span><span class="o">=</span><span class="n">match_fw_to_car_fuzzy</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">STEER_THRESHOLD</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">DBC</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_tnga_k_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_new_mc_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_new_mc_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_new_mc_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RC</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_tnga_k_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_tnga_k_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RXH</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_tnga_k_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX_TSS2</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_tss2_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">CHR</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">CHR_TSS2</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">CAMRY</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">CAMRY_TSS2</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_tss2_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_tnga_k_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER_TSS2</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_tss2_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_tnga_k_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_tnga_k_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON_2019</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON_TSS2</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_tss2_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_tss2_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2_2022</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2_2023</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA_TSS2</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_tss2_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_new_mc_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES_TSS2</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_tss2_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_new_mc_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_tnga_k_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_IS</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_tnga_k_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_IS_TSS2</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_tss2_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_new_mc_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_tnga_k_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX_TSS2</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_tss2_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_TSS2</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_tss2_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">MIRAI</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_tss2_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">ALPHARD_TSS2</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_nodsu_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_tss2_adas&#39;</span><span class="p">),</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_GS_F</span><span class="p">:</span> <span class="n">dbc_dict</span><span class="p">(</span><span class="s1">&#39;toyota_new_mc_pt_generated&#39;</span><span class="p">,</span> <span class="s1">&#39;toyota_adas&#39;</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="c1"># These cars have non-standard EPS torque scale factors. All others are 73</span>
+<span class="n">EPS_SCALE</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="mi">73</span><span class="p">,</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS</span><span class="p">:</span> <span class="mi">66</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA</span><span class="p">:</span> <span class="mi">88</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_IS</span><span class="p">:</span> <span class="mi">77</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RC</span><span class="p">:</span> <span class="mi">77</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">:</span> <span class="mi">100</span><span class="p">})</span>
+
+<span class="c1"># Toyota/Lexus Safety Sense 2.0 and 2.5</span>
+<span class="n">TSS2_CAR</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2_2023</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">COROLLA_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ES_TSS2</span><span class="p">,</span>
+            <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RX_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CAMRY_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_IS_TSS2</span><span class="p">,</span>
+            <span class="n">CAR</span><span class="o">.</span><span class="n">MIRAI</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_NX_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ALPHARD_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">AVALON_TSS2</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHR_TSS2</span><span class="p">}</span>
+
+<span class="n">NO_DSU_CAR</span> <span class="o">=</span> <span class="n">TSS2_CAR</span> <span class="o">|</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">CHR</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CAMRY</span><span class="p">}</span>
+
+<span class="c1"># the DSU uses the AEB message for longitudinal on these cars</span>
+<span class="n">UNSUPPORTED_DSU_CAR</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_IS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_RC</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_GS_F</span><span class="p">}</span>
+
+<span class="c1"># these cars have a radar which sends ACC messages instead of the camera</span>
+<span class="n">RADAR_ACC_CAR</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2_2022</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2_2023</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHR_TSS2</span><span class="p">}</span>
+
+<span class="c1"># these cars use the Lane Tracing Assist (LTA) message for lateral control</span>
+<span class="n">ANGLE_CONTROL_CAR</span> <span class="o">=</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">RAV4_TSS2_2023</span><span class="p">}</span>
+
+<span class="c1"># no resume button press required</span>
+<span class="n">NO_STOP_TIMER_CAR</span> <span class="o">=</span> <span class="n">TSS2_CAR</span> <span class="o">|</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">PRIUS_V</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAV4H</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDERH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HIGHLANDER</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">SIENNA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_ESH</span><span class="p">}</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

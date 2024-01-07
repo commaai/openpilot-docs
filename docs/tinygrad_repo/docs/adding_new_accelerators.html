@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="openpilot docs" name="description" />
+<meta content="op, openpilot, docs, documentation" name="keywords" />
+<meta content="all,follow" name="robots" />
+<meta content="index,follow,snippet,archive" name="googlebot" />
+<meta content="en_US" property="og:locale" />
+<meta content="docs.comma.ai" property="og:site_name" />
+<meta content="https://docs.comma.ai" property="og:url" />
+<meta content="openpilot Documentation" property="og:title" />
+<meta content="website" property="og:type" />
+<meta content="image/jpeg" property="og:image:type" />
+<meta content="400" property="og:image:width" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image:url" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image:secure_url" />
+<meta content="openpilot Documentation" property="og:description" />
+<meta content="summary_large_image" property="twitter:card" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="twitter:logo" />
+<meta content="openpilot Documentation" property="twitter:title" />
+<meta content="openpilot Documentation" property="twitter:description" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adding a new accelerator to tinygrad &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/tinygrad_repo/docs/adding_new_accelerators.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Adding a new accelerator to tinygrad</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/tinygrad_repo/docs/adding_new_accelerators.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="adding-a-new-accelerator-to-tinygrad">
+<h1>Adding a new accelerator to tinygrad<a class="headerlink" href="#adding-a-new-accelerator-to-tinygrad" title="Link to this heading"></a></h1>
+<p>It’s pretty easy to add a new accelerator to tinygrad. All you need to do is implement a total of 27 (optionally 28) low level ops. Then tinygrad takes care of the rest, handling derivatives and syntactic sugar.</p>
+<section id="llops">
+<h2>llops<a class="headerlink" href="#llops" title="Link to this heading"></a></h2>
+<p>These are the ops that you must implement for your accelerator of choice. Compiled Accelerators do not need to implement movement_ops, as they are handled by the ShapeTracker.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Buffer</span>                                                       <span class="c1"># class of memory on this device</span>
+<span class="n">unary_op</span>  <span class="p">(</span><span class="n">NOOP</span><span class="p">,</span> <span class="n">EXP2</span><span class="p">,</span> <span class="n">LOG2</span><span class="p">,</span> <span class="n">CAST</span><span class="p">,</span> <span class="n">SIN</span><span class="p">,</span> <span class="n">SQRT</span><span class="p">)</span>                <span class="c1"># A -&gt; A</span>
+<span class="n">reduce_op</span> <span class="p">(</span><span class="n">SUM</span><span class="p">,</span> <span class="n">MAX</span><span class="p">)</span>                                         <span class="c1"># A -&gt; B (smaller size, B has 1 in shape)</span>
+<span class="n">binary_op</span> <span class="p">(</span><span class="n">ADD</span><span class="p">,</span> <span class="n">SUB</span><span class="p">,</span> <span class="n">MUL</span><span class="p">,</span> <span class="n">DIV</span><span class="p">,</span> <span class="n">CMPEQ</span><span class="p">,</span> <span class="n">MAX</span><span class="p">)</span>                   <span class="c1"># A + A -&gt; A (all the same size)</span>
+<span class="n">movement_op</span> <span class="p">(</span><span class="n">EXPAND</span><span class="p">,</span> <span class="n">RESHAPE</span><span class="p">,</span> <span class="n">PERMUTE</span><span class="p">,</span> <span class="n">PAD</span><span class="p">,</span> <span class="n">SHRINK</span><span class="p">,</span> <span class="n">STRIDE</span><span class="p">)</span>  <span class="c1"># A -&gt; B (different size)</span>
+<span class="n">load_op</span>   <span class="p">(</span><span class="n">EMPTY</span><span class="p">,</span> <span class="n">RAND</span><span class="p">,</span> <span class="n">CONST</span><span class="p">,</span> <span class="n">FROM</span><span class="p">,</span> <span class="n">CONTIGUOUS</span><span class="p">,</span> <span class="n">CUSTOM</span><span class="p">)</span>     <span class="c1"># -&gt; A   (initialize data on device)</span>
+<span class="n">ternary_op</span> <span class="p">(</span><span class="n">WHERE</span><span class="p">)</span>                                           <span class="c1"># A, A, A -&gt; A</span>
+<span class="n">ternary_op</span> <span class="p">[[</span><span class="n">optional</span><span class="p">]]</span> <span class="p">(</span><span class="n">MULACC</span><span class="p">)</span>                             <span class="c1"># A * A -&gt; B</span>
+</pre></div>
+</div>
+</section>
+<section id="mlops">
+<h2>mlops<a class="headerlink" href="#mlops" title="Link to this heading"></a></h2>
+<p>These are the mid level ops that handle the derivatives.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Relu</span><span class="p">,</span> <span class="n">Log</span><span class="p">,</span> <span class="n">Exp</span><span class="p">,</span> <span class="n">Sin</span>                            <span class="c1"># unary ops</span>
+<span class="n">Sum</span><span class="p">,</span> <span class="n">Max</span>                                       <span class="c1"># reduce ops (with axis argument)</span>
+<span class="n">Maximum</span><span class="p">,</span> <span class="n">Add</span><span class="p">,</span> <span class="n">Sub</span><span class="p">,</span> <span class="n">Mul</span><span class="p">,</span> <span class="n">Pow</span><span class="p">,</span> <span class="n">Div</span><span class="p">,</span> <span class="n">Equal</span>        <span class="c1"># binary ops (no broadcasting, use expand)</span>
+<span class="n">Expand</span><span class="p">,</span> <span class="n">Reshape</span><span class="p">,</span> <span class="n">Permute</span><span class="p">,</span> <span class="n">Pad</span><span class="p">,</span> <span class="n">Shrink</span><span class="p">,</span> <span class="n">Flip</span>    <span class="c1"># movement ops</span>
+<span class="n">Where</span>                                          <span class="c1"># ternary ops</span>
+</pre></div>
+</div>
+<p>These are implemented in <a class="reference internal" href="#/tinygrad/mlops.py"><span class="xref myst">mlops.py</span></a>.</p>
+</section>
+<section id="hlops">
+<h2>hlops<a class="headerlink" href="#hlops" title="Link to this heading"></a></h2>
+<p>These are the syntax sugar. They are built on top of the mlops and support most of the things that you could expect from a tensor library.</p>
+<p>These are implemented in <a class="reference internal" href="#/tinygrad/tensor.py"><span class="xref myst">tensor.py</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

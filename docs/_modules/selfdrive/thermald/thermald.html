@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.thermald.thermald &mdash; openpilot docs 0.9.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/thermald/thermald.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=564a08b9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">274 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.thermald.thermald</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.thermald.thermald</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">queue</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">namedtuple</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span> <span class="nn">psutil</span>
+
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">cereal.services</span> <span class="kn">import</span> <span class="n">SERVICE_LIST</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.dict_helpers</span> <span class="kn">import</span> <span class="n">strip_deprecated_keys</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.time</span> <span class="kn">import</span> <span class="n">MIN_DATE</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.filter_simple</span> <span class="kn">import</span> <span class="n">FirstOrderFilter</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">DT_TRML</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.alertmanager</span> <span class="kn">import</span> <span class="n">set_offroad_alert</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware</span> <span class="kn">import</span> <span class="n">HARDWARE</span><span class="p">,</span> <span class="n">TICI</span><span class="p">,</span> <span class="n">AGNOS</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.loggerd.config</span> <span class="kn">import</span> <span class="n">get_available_percent</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.statsd</span> <span class="kn">import</span> <span class="n">statlog</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.thermald.power_monitoring</span> <span class="kn">import</span> <span class="n">PowerMonitoring</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.thermald.fan_controller</span> <span class="kn">import</span> <span class="n">TiciFanController</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.version</span> <span class="kn">import</span> <span class="n">terms_version</span><span class="p">,</span> <span class="n">training_version</span>
+
+<span class="n">ThermalStatus</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">DeviceState</span><span class="o">.</span><span class="n">ThermalStatus</span>
+<span class="n">NetworkType</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">DeviceState</span><span class="o">.</span><span class="n">NetworkType</span>
+<span class="n">NetworkStrength</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">DeviceState</span><span class="o">.</span><span class="n">NetworkStrength</span>
+<span class="n">CURRENT_TAU</span> <span class="o">=</span> <span class="mf">15.</span>   <span class="c1"># 15s time constant</span>
+<span class="n">TEMP_TAU</span> <span class="o">=</span> <span class="mf">5.</span>   <span class="c1"># 5s time constant</span>
+<span class="n">DISCONNECT_TIMEOUT</span> <span class="o">=</span> <span class="mf">5.</span>  <span class="c1"># wait 5 seconds before going offroad after disconnect so you get an alert</span>
+<span class="n">PANDA_STATES_TIMEOUT</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mi">1000</span> <span class="o">/</span> <span class="n">SERVICE_LIST</span><span class="p">[</span><span class="s1">&#39;pandaStates&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">frequency</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">)</span>  <span class="c1"># 1.5x the expected pandaState frequency</span>
+
+<span class="n">ThermalBand</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;ThermalBand&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;min_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;max_temp&#39;</span><span class="p">])</span>
+<span class="n">HardwareState</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;HardwareState&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;network_type&#39;</span><span class="p">,</span> <span class="s1">&#39;network_info&#39;</span><span class="p">,</span> <span class="s1">&#39;network_strength&#39;</span><span class="p">,</span> <span class="s1">&#39;network_stats&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;network_metered&#39;</span><span class="p">,</span> <span class="s1">&#39;nvme_temps&#39;</span><span class="p">,</span> <span class="s1">&#39;modem_temps&#39;</span><span class="p">])</span>
+
+<span class="c1"># List of thermal bands. We will stay within this region as long as we are within the bounds.</span>
+<span class="c1"># When exiting the bounds, we&#39;ll jump to the lower or higher band. Bands are ordered in the dict.</span>
+<span class="n">THERMAL_BANDS</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">({</span>
+  <span class="n">ThermalStatus</span><span class="o">.</span><span class="n">green</span><span class="p">:</span> <span class="n">ThermalBand</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mf">80.0</span><span class="p">),</span>
+  <span class="n">ThermalStatus</span><span class="o">.</span><span class="n">yellow</span><span class="p">:</span> <span class="n">ThermalBand</span><span class="p">(</span><span class="mf">75.0</span><span class="p">,</span> <span class="mf">96.0</span><span class="p">),</span>
+  <span class="n">ThermalStatus</span><span class="o">.</span><span class="n">red</span><span class="p">:</span> <span class="n">ThermalBand</span><span class="p">(</span><span class="mf">88.0</span><span class="p">,</span> <span class="mf">107.</span><span class="p">),</span>
+  <span class="n">ThermalStatus</span><span class="o">.</span><span class="n">danger</span><span class="p">:</span> <span class="n">ThermalBand</span><span class="p">(</span><span class="mf">94.0</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="p">})</span>
+
+<span class="c1"># Override to highest thermal band when offroad and above this temp</span>
+<span class="n">OFFROAD_DANGER_TEMP</span> <span class="o">=</span> <span class="mi">75</span>
+
+<span class="n">prev_offroad_states</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">tz_by_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<div class="viewcode-block" id="populate_tz_by_type">
+<a class="viewcode-back" href="../../../selfdrive.thermald.html#selfdrive.thermald.thermald.populate_tz_by_type">[docs]</a>
+<span class="k">def</span> <span class="nf">populate_tz_by_type</span><span class="p">():</span>
+  <span class="k">global</span> <span class="n">tz_by_type</span>
+  <span class="n">tz_by_type</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;/sys/devices/virtual/thermal&quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;thermal_zone&quot;</span><span class="p">):</span>
+      <span class="k">continue</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;/sys/devices/virtual/thermal&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">tz_by_type</span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">removeprefix</span><span class="p">(</span><span class="s2">&quot;thermal_zone&quot;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="read_tz">
+<a class="viewcode-back" href="../../../selfdrive.thermald.html#selfdrive.thermald.thermald.read_tz">[docs]</a>
+<span class="k">def</span> <span class="nf">read_tz</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mi">0</span>
+
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">tz_by_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">populate_tz_by_type</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">tz_by_type</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/sys/devices/virtual/thermal/thermal_zone</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">/temp&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+  <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="read_thermal">
+<a class="viewcode-back" href="../../../selfdrive.thermald.html#selfdrive.thermald.thermald.read_thermal">[docs]</a>
+<span class="k">def</span> <span class="nf">read_thermal</span><span class="p">(</span><span class="n">thermal_config</span><span class="p">):</span>
+  <span class="n">dat</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;deviceState&#39;</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">dat</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">cpuTempC</span> <span class="o">=</span> <span class="p">[</span><span class="n">read_tz</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="n">thermal_config</span><span class="o">.</span><span class="n">cpu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">thermal_config</span><span class="o">.</span><span class="n">cpu</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+  <span class="n">dat</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">gpuTempC</span> <span class="o">=</span> <span class="p">[</span><span class="n">read_tz</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="n">thermal_config</span><span class="o">.</span><span class="n">gpu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">thermal_config</span><span class="o">.</span><span class="n">gpu</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+  <span class="n">dat</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">memoryTempC</span> <span class="o">=</span> <span class="n">read_tz</span><span class="p">(</span><span class="n">thermal_config</span><span class="o">.</span><span class="n">mem</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">thermal_config</span><span class="o">.</span><span class="n">mem</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">dat</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">ambientTempC</span> <span class="o">=</span> <span class="n">read_tz</span><span class="p">(</span><span class="n">thermal_config</span><span class="o">.</span><span class="n">ambient</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">thermal_config</span><span class="o">.</span><span class="n">ambient</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">dat</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">pmicTempC</span> <span class="o">=</span> <span class="p">[</span><span class="n">read_tz</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="n">thermal_config</span><span class="o">.</span><span class="n">pmic</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">thermal_config</span><span class="o">.</span><span class="n">pmic</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+  <span class="k">return</span> <span class="n">dat</span></div>
+
+
+
+<div class="viewcode-block" id="set_offroad_alert_if_changed">
+<a class="viewcode-back" href="../../../selfdrive.thermald.html#selfdrive.thermald.thermald.set_offroad_alert_if_changed">[docs]</a>
+<span class="k">def</span> <span class="nf">set_offroad_alert_if_changed</span><span class="p">(</span><span class="n">offroad_alert</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">show_alert</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">extra_text</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">prev_offroad_states</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">offroad_alert</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">show_alert</span><span class="p">,</span> <span class="n">extra_text</span><span class="p">):</span>
+    <span class="k">return</span>
+  <span class="n">prev_offroad_states</span><span class="p">[</span><span class="n">offroad_alert</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">show_alert</span><span class="p">,</span> <span class="n">extra_text</span><span class="p">)</span>
+  <span class="n">set_offroad_alert</span><span class="p">(</span><span class="n">offroad_alert</span><span class="p">,</span> <span class="n">show_alert</span><span class="p">,</span> <span class="n">extra_text</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="hw_state_thread">
+<a class="viewcode-back" href="../../../selfdrive.thermald.html#selfdrive.thermald.thermald.hw_state_thread">[docs]</a>
+<span class="k">def</span> <span class="nf">hw_state_thread</span><span class="p">(</span><span class="n">end_event</span><span class="p">,</span> <span class="n">hw_queue</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Handles non critical hardware state, and sends over queue&quot;&quot;&quot;</span>
+  <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">prev_hw_state</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="n">modem_version</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">modem_nv</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">modem_configured</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">modem_restarted</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">modem_missing_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+    <span class="c1"># these are expensive calls. update every 10s</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="mf">10.</span> <span class="o">/</span> <span class="n">DT_TRML</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">network_type</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_network_type</span><span class="p">()</span>
+        <span class="n">modem_temps</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_modem_temperatures</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">modem_temps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">prev_hw_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+          <span class="n">modem_temps</span> <span class="o">=</span> <span class="n">prev_hw_state</span><span class="o">.</span><span class="n">modem_temps</span>
+
+        <span class="c1"># Log modem version once</span>
+        <span class="k">if</span> <span class="n">AGNOS</span> <span class="ow">and</span> <span class="p">((</span><span class="n">modem_version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">modem_nv</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)):</span>
+          <span class="n">modem_version</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_modem_version</span><span class="p">()</span>
+          <span class="n">modem_nv</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_modem_nv</span><span class="p">()</span>
+
+          <span class="k">if</span> <span class="p">(</span><span class="n">modem_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">modem_nv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;modem version&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">modem_version</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="n">modem_nv</span><span class="p">)</span>
+          <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">modem_restarted</span><span class="p">:</span>
+              <span class="c1"># TODO: we may be able to remove this with a MM update</span>
+              <span class="c1"># ModemManager&#39;s probing on startup can fail</span>
+              <span class="c1"># rarely, restart the service to probe again.</span>
+              <span class="n">modem_missing_count</span> <span class="o">+=</span> <span class="mi">1</span>
+              <span class="k">if</span> <span class="n">modem_missing_count</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">modem_restarted</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;restarting ModemManager&quot;</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;sudo systemctl restart --no-block ModemManager&quot;</span><span class="p">)</span>
+
+        <span class="n">tx</span><span class="p">,</span> <span class="n">rx</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_modem_data_usage</span><span class="p">()</span>
+
+        <span class="n">hw_state</span> <span class="o">=</span> <span class="n">HardwareState</span><span class="p">(</span>
+          <span class="n">network_type</span><span class="o">=</span><span class="n">network_type</span><span class="p">,</span>
+          <span class="n">network_info</span><span class="o">=</span><span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_network_info</span><span class="p">(),</span>
+          <span class="n">network_strength</span><span class="o">=</span><span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_network_strength</span><span class="p">(</span><span class="n">network_type</span><span class="p">),</span>
+          <span class="n">network_stats</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;wwanTx&#39;</span><span class="p">:</span> <span class="n">tx</span><span class="p">,</span> <span class="s1">&#39;wwanRx&#39;</span><span class="p">:</span> <span class="n">rx</span><span class="p">},</span>
+          <span class="n">network_metered</span><span class="o">=</span><span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_network_metered</span><span class="p">(</span><span class="n">network_type</span><span class="p">),</span>
+          <span class="n">nvme_temps</span><span class="o">=</span><span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_nvme_temperatures</span><span class="p">(),</span>
+          <span class="n">modem_temps</span><span class="o">=</span><span class="n">modem_temps</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+          <span class="n">hw_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">hw_state</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Full</span><span class="p">:</span>
+          <span class="k">pass</span>
+
+        <span class="c1"># TODO: remove this once the config is in AGNOS</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">modem_configured</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_sim_info</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sim_id&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;configuring modem&quot;</span><span class="p">)</span>
+          <span class="n">HARDWARE</span><span class="o">.</span><span class="n">configure_modem</span><span class="p">()</span>
+          <span class="n">modem_configured</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">prev_hw_state</span> <span class="o">=</span> <span class="n">hw_state</span>
+      <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Error getting hardware state&quot;</span><span class="p">)</span>
+
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">DT_TRML</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="thermald_thread">
+<a class="viewcode-back" href="../../../selfdrive.thermald.html#selfdrive.thermald.thermald.thermald_thread">[docs]</a>
+<span class="k">def</span> <span class="nf">thermald_thread</span><span class="p">(</span><span class="n">end_event</span><span class="p">,</span> <span class="n">hw_queue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">pm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">([</span><span class="s1">&#39;deviceState&#39;</span><span class="p">])</span>
+  <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="s2">&quot;peripheralState&quot;</span><span class="p">,</span> <span class="s2">&quot;gpsLocationExternal&quot;</span><span class="p">,</span> <span class="s2">&quot;controlsState&quot;</span><span class="p">,</span> <span class="s2">&quot;pandaStates&quot;</span><span class="p">],</span> <span class="n">poll</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pandaStates&quot;</span><span class="p">])</span>
+
+  <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="n">onroad_conditions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ignition&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+  <span class="p">}</span>
+  <span class="n">startup_conditions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="n">startup_conditions_prev</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+  <span class="n">off_ts</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">started_ts</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">started_seen</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">startup_blocked_ts</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">thermal_status</span> <span class="o">=</span> <span class="n">ThermalStatus</span><span class="o">.</span><span class="n">yellow</span>
+
+  <span class="n">last_hw_state</span> <span class="o">=</span> <span class="n">HardwareState</span><span class="p">(</span>
+    <span class="n">network_type</span><span class="o">=</span><span class="n">NetworkType</span><span class="o">.</span><span class="n">none</span><span class="p">,</span>
+    <span class="n">network_info</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">network_metered</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">network_strength</span><span class="o">=</span><span class="n">NetworkStrength</span><span class="o">.</span><span class="n">unknown</span><span class="p">,</span>
+    <span class="n">network_stats</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;wwanTx&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;wwanRx&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span>
+    <span class="n">nvme_temps</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">modem_temps</span><span class="o">=</span><span class="p">[],</span>
+  <span class="p">)</span>
+
+  <span class="n">all_temp_filter</span> <span class="o">=</span> <span class="n">FirstOrderFilter</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">TEMP_TAU</span><span class="p">,</span> <span class="n">DT_TRML</span><span class="p">,</span> <span class="n">initialized</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+  <span class="n">offroad_temp_filter</span> <span class="o">=</span> <span class="n">FirstOrderFilter</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">TEMP_TAU</span><span class="p">,</span> <span class="n">DT_TRML</span><span class="p">,</span> <span class="n">initialized</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+  <span class="n">should_start_prev</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">in_car</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">engaged_prev</span> <span class="o">=</span> <span class="kc">False</span>
+
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+  <span class="n">power_monitor</span> <span class="o">=</span> <span class="n">PowerMonitoring</span><span class="p">()</span>
+
+  <span class="n">HARDWARE</span><span class="o">.</span><span class="n">initialize_hardware</span><span class="p">()</span>
+  <span class="n">thermal_config</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_thermal_config</span><span class="p">()</span>
+
+  <span class="n">fan_controller</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">PANDA_STATES_TIMEOUT</span><span class="p">)</span>
+
+    <span class="c1"># Run at 2Hz</span>
+    <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="nb">round</span><span class="p">(</span><span class="n">SERVICE_LIST</span><span class="p">[</span><span class="s1">&#39;pandaStates&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">frequency</span> <span class="o">*</span> <span class="n">DT_TRML</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">continue</span>
+
+    <span class="n">pandaStates</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;pandaStates&#39;</span><span class="p">]</span>
+    <span class="n">peripheralState</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;peripheralState&#39;</span><span class="p">]</span>
+    <span class="n">peripheral_panda_present</span> <span class="o">=</span> <span class="n">peripheralState</span><span class="o">.</span><span class="n">pandaType</span> <span class="o">!=</span> <span class="n">log</span><span class="o">.</span><span class="n">PandaState</span><span class="o">.</span><span class="n">PandaType</span><span class="o">.</span><span class="n">unknown</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">read_thermal</span><span class="p">(</span><span class="n">thermal_config</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="p">[</span><span class="s1">&#39;pandaStates&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">pandaStates</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+      <span class="c1"># Set ignition based on any panda connected</span>
+      <span class="n">onroad_conditions</span><span class="p">[</span><span class="s2">&quot;ignition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">ps</span><span class="o">.</span><span class="n">ignitionLine</span> <span class="ow">or</span> <span class="n">ps</span><span class="o">.</span><span class="n">ignitionCan</span> <span class="k">for</span> <span class="n">ps</span> <span class="ow">in</span> <span class="n">pandaStates</span> <span class="k">if</span> <span class="n">ps</span><span class="o">.</span><span class="n">pandaType</span> <span class="o">!=</span> <span class="n">log</span><span class="o">.</span><span class="n">PandaState</span><span class="o">.</span><span class="n">PandaType</span><span class="o">.</span><span class="n">unknown</span><span class="p">)</span>
+
+      <span class="n">pandaState</span> <span class="o">=</span> <span class="n">pandaStates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+      <span class="n">in_car</span> <span class="o">=</span> <span class="n">pandaState</span><span class="o">.</span><span class="n">harnessStatus</span> <span class="o">!=</span> <span class="n">log</span><span class="o">.</span><span class="n">PandaState</span><span class="o">.</span><span class="n">HarnessStatus</span><span class="o">.</span><span class="n">notConnected</span>
+
+      <span class="c1"># Setup fan handler on first connect to panda</span>
+      <span class="k">if</span> <span class="n">fan_controller</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">peripheral_panda_present</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">TICI</span><span class="p">:</span>
+          <span class="n">fan_controller</span> <span class="o">=</span> <span class="n">TiciFanController</span><span class="p">()</span>
+
+    <span class="k">elif</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">sm</span><span class="o">.</span><span class="n">rcv_time</span><span class="p">[</span><span class="s1">&#39;pandaStates&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">DISCONNECT_TIMEOUT</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">onroad_conditions</span><span class="p">[</span><span class="s2">&quot;ignition&quot;</span><span class="p">]:</span>
+        <span class="n">onroad_conditions</span><span class="p">[</span><span class="s2">&quot;ignition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;panda timed out onroad&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">last_hw_state</span> <span class="o">=</span> <span class="n">hw_queue</span><span class="o">.</span><span class="n">get_nowait</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+      <span class="k">pass</span>
+
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">freeSpacePercent</span> <span class="o">=</span> <span class="n">get_available_percent</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">100.0</span><span class="p">)</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">memoryUsagePercent</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">psutil</span><span class="o">.</span><span class="n">virtual_memory</span><span class="p">()</span><span class="o">.</span><span class="n">percent</span><span class="p">))</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">cpuUsagePercent</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">psutil</span><span class="o">.</span><span class="n">cpu_percent</span><span class="p">(</span><span class="n">percpu</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">gpuUsagePercent</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_gpu_usage_percent</span><span class="p">()))</span>
+
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">networkType</span> <span class="o">=</span> <span class="n">last_hw_state</span><span class="o">.</span><span class="n">network_type</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">networkMetered</span> <span class="o">=</span> <span class="n">last_hw_state</span><span class="o">.</span><span class="n">network_metered</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">networkStrength</span> <span class="o">=</span> <span class="n">last_hw_state</span><span class="o">.</span><span class="n">network_strength</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">networkStats</span> <span class="o">=</span> <span class="n">last_hw_state</span><span class="o">.</span><span class="n">network_stats</span>
+    <span class="k">if</span> <span class="n">last_hw_state</span><span class="o">.</span><span class="n">network_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">networkInfo</span> <span class="o">=</span> <span class="n">last_hw_state</span><span class="o">.</span><span class="n">network_info</span>
+
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">nvmeTempC</span> <span class="o">=</span> <span class="n">last_hw_state</span><span class="o">.</span><span class="n">nvme_temps</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">modemTempC</span> <span class="o">=</span> <span class="n">last_hw_state</span><span class="o">.</span><span class="n">modem_temps</span>
+
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">screenBrightnessPercent</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_screen_brightness</span><span class="p">()</span>
+
+    <span class="c1"># this subset is only used for offroad</span>
+    <span class="n">temp_sources</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">memoryTempC</span><span class="p">,</span>
+      <span class="nb">max</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">cpuTempC</span><span class="p">),</span>
+      <span class="nb">max</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">gpuTempC</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="n">offroad_comp_temp</span> <span class="o">=</span> <span class="n">offroad_temp_filter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">temp_sources</span><span class="p">))</span>
+
+    <span class="c1"># this drives the thermal status while onroad</span>
+    <span class="n">temp_sources</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">pmicTempC</span><span class="p">))</span>
+    <span class="n">all_comp_temp</span> <span class="o">=</span> <span class="n">all_temp_filter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">temp_sources</span><span class="p">))</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">maxTempC</span> <span class="o">=</span> <span class="n">all_comp_temp</span>
+
+    <span class="k">if</span> <span class="n">fan_controller</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">fanSpeedPercentDesired</span> <span class="o">=</span> <span class="n">fan_controller</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">all_comp_temp</span><span class="p">,</span> <span class="n">onroad_conditions</span><span class="p">[</span><span class="s2">&quot;ignition&quot;</span><span class="p">])</span>
+
+    <span class="n">is_offroad_for_5_min</span> <span class="o">=</span> <span class="p">(</span><span class="n">started_ts</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">((</span><span class="ow">not</span> <span class="n">started_seen</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">off_ts</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">off_ts</span> <span class="o">&gt;</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">is_offroad_for_5_min</span> <span class="ow">and</span> <span class="n">offroad_comp_temp</span> <span class="o">&gt;</span> <span class="n">OFFROAD_DANGER_TEMP</span><span class="p">:</span>
+      <span class="c1"># if device is offroad and already hot without the extra onroad load,</span>
+      <span class="c1"># we want to cool down first before increasing load</span>
+      <span class="n">thermal_status</span> <span class="o">=</span> <span class="n">ThermalStatus</span><span class="o">.</span><span class="n">danger</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">current_band</span> <span class="o">=</span> <span class="n">THERMAL_BANDS</span><span class="p">[</span><span class="n">thermal_status</span><span class="p">]</span>
+      <span class="n">band_idx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">THERMAL_BANDS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">thermal_status</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">current_band</span><span class="o">.</span><span class="n">min_temp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">all_comp_temp</span> <span class="o">&lt;</span> <span class="n">current_band</span><span class="o">.</span><span class="n">min_temp</span><span class="p">:</span>
+        <span class="n">thermal_status</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">THERMAL_BANDS</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="n">band_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+      <span class="k">elif</span> <span class="n">current_band</span><span class="o">.</span><span class="n">max_temp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">all_comp_temp</span> <span class="o">&gt;</span> <span class="n">current_band</span><span class="o">.</span><span class="n">max_temp</span><span class="p">:</span>
+        <span class="n">thermal_status</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">THERMAL_BANDS</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="n">band_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># **** starting logic ****</span>
+
+    <span class="c1"># Ensure date/time are valid</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+    <span class="n">startup_conditions</span><span class="p">[</span><span class="s2">&quot;time_valid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">now</span> <span class="o">&gt;</span> <span class="n">MIN_DATE</span>
+    <span class="n">set_offroad_alert_if_changed</span><span class="p">(</span><span class="s2">&quot;Offroad_InvalidTime&quot;</span><span class="p">,</span> <span class="p">(</span><span class="ow">not</span> <span class="n">startup_conditions</span><span class="p">[</span><span class="s2">&quot;time_valid&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="n">peripheral_panda_present</span><span class="p">)</span>
+
+    <span class="n">startup_conditions</span><span class="p">[</span><span class="s2">&quot;up_to_date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Offroad_ConnectivityNeeded&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;DisableUpdates&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;SnoozeUpdate&quot;</span><span class="p">)</span>
+    <span class="n">startup_conditions</span><span class="p">[</span><span class="s2">&quot;not_uninstalling&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;DoUninstall&quot;</span><span class="p">)</span>
+    <span class="n">startup_conditions</span><span class="p">[</span><span class="s2">&quot;accepted_terms&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HasAcceptedTerms&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">terms_version</span>
+
+    <span class="c1"># with 2% left, we killall, otherwise the phone will take a long time to boot</span>
+    <span class="n">startup_conditions</span><span class="p">[</span><span class="s2">&quot;free_space&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">freeSpacePercent</span> <span class="o">&gt;</span> <span class="mi">2</span>
+    <span class="n">startup_conditions</span><span class="p">[</span><span class="s2">&quot;completed_training&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CompletedTrainingVersion&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">training_version</span> <span class="ow">or</span> \
+                                               <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;Passive&quot;</span><span class="p">)</span>
+    <span class="n">startup_conditions</span><span class="p">[</span><span class="s2">&quot;not_driver_view&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;IsDriverViewEnabled&quot;</span><span class="p">)</span>
+    <span class="n">startup_conditions</span><span class="p">[</span><span class="s2">&quot;not_taking_snapshot&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;IsTakingSnapshot&quot;</span><span class="p">)</span>
+
+    <span class="c1"># must be at an engageable thermal band to go onroad</span>
+    <span class="n">startup_conditions</span><span class="p">[</span><span class="s2">&quot;device_temp_engageable&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">thermal_status</span> <span class="o">&lt;</span> <span class="n">ThermalStatus</span><span class="o">.</span><span class="n">red</span>
+
+    <span class="c1"># if the temperature enters the danger zone, go offroad to cool down</span>
+    <span class="n">onroad_conditions</span><span class="p">[</span><span class="s2">&quot;device_temp_good&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">thermal_status</span> <span class="o">&lt;</span> <span class="n">ThermalStatus</span><span class="o">.</span><span class="n">danger</span>
+    <span class="n">extra_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">offroad_comp_temp</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">C&quot;</span>
+    <span class="n">show_alert</span> <span class="o">=</span> <span class="p">(</span><span class="ow">not</span> <span class="n">onroad_conditions</span><span class="p">[</span><span class="s2">&quot;device_temp_good&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">startup_conditions</span><span class="p">[</span><span class="s2">&quot;device_temp_engageable&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="n">onroad_conditions</span><span class="p">[</span><span class="s2">&quot;ignition&quot;</span><span class="p">]</span>
+    <span class="n">set_offroad_alert_if_changed</span><span class="p">(</span><span class="s2">&quot;Offroad_TemperatureTooHigh&quot;</span><span class="p">,</span> <span class="n">show_alert</span><span class="p">,</span> <span class="n">extra_text</span><span class="o">=</span><span class="n">extra_text</span><span class="p">)</span>
+
+    <span class="c1"># TODO: this should move to TICI.initialize_hardware, but we currently can&#39;t import params there</span>
+    <span class="k">if</span> <span class="n">TICI</span><span class="p">:</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;/persist/comma/living-in-the-moment&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/data/media&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_mount</span><span class="p">():</span>
+          <span class="n">set_offroad_alert_if_changed</span><span class="p">(</span><span class="s2">&quot;Offroad_StorageMissing&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="c1"># check for bad NVMe</span>
+          <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/sys/block/nvme0n1/device/model&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+              <span class="n">model</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Samsung SSD 980&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Offroad_BadNvme&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+              <span class="n">set_offroad_alert_if_changed</span><span class="p">(</span><span class="s2">&quot;Offroad_BadNvme&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+              <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;Unsupported NVMe&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+          <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="c1"># Handle offroad/onroad transition</span>
+    <span class="n">should_start</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">onroad_conditions</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">started_ts</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">should_start</span> <span class="o">=</span> <span class="n">should_start</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">startup_conditions</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="n">should_start</span> <span class="o">!=</span> <span class="n">should_start_prev</span> <span class="ow">or</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+      <span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;IsEngaged&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+      <span class="n">engaged_prev</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="n">HARDWARE</span><span class="o">.</span><span class="n">set_power_save</span><span class="p">(</span><span class="ow">not</span> <span class="n">should_start</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="p">[</span><span class="s1">&#39;controlsState&#39;</span><span class="p">]:</span>
+      <span class="n">engaged</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;controlsState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">enabled</span>
+      <span class="k">if</span> <span class="n">engaged</span> <span class="o">!=</span> <span class="n">engaged_prev</span><span class="p">:</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;IsEngaged&quot;</span><span class="p">,</span> <span class="n">engaged</span><span class="p">)</span>
+        <span class="n">engaged_prev</span> <span class="o">=</span> <span class="n">engaged</span>
+
+      <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/dev/kmsg&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">kmsg</span><span class="p">:</span>
+          <span class="n">kmsg</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;3&gt;[thermald] engaged: </span><span class="si">{</span><span class="n">engaged</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">if</span> <span class="n">should_start</span><span class="p">:</span>
+      <span class="n">off_ts</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="k">if</span> <span class="n">started_ts</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">started_ts</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+        <span class="n">started_seen</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">startup_blocked_ts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;Startup after block&quot;</span><span class="p">,</span> <span class="n">block_duration</span><span class="o">=</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">startup_blocked_ts</span><span class="p">),</span>
+                         <span class="n">startup_conditions</span><span class="o">=</span><span class="n">startup_conditions</span><span class="p">,</span> <span class="n">onroad_conditions</span><span class="o">=</span><span class="n">onroad_conditions</span><span class="p">,</span>
+                         <span class="n">startup_conditions_prev</span><span class="o">=</span><span class="n">startup_conditions_prev</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="n">startup_blocked_ts</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">onroad_conditions</span><span class="p">[</span><span class="s2">&quot;ignition&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="p">(</span><span class="n">startup_conditions</span> <span class="o">!=</span> <span class="n">startup_conditions_prev</span><span class="p">):</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;Startup blocked&quot;</span><span class="p">,</span> <span class="n">startup_conditions</span><span class="o">=</span><span class="n">startup_conditions</span><span class="p">,</span> <span class="n">onroad_conditions</span><span class="o">=</span><span class="n">onroad_conditions</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">startup_conditions_prev</span> <span class="o">=</span> <span class="n">startup_conditions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">startup_blocked_ts</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+
+      <span class="n">started_ts</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="k">if</span> <span class="n">off_ts</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">off_ts</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+
+    <span class="c1"># Offroad power monitoring</span>
+    <span class="n">voltage</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">peripheralState</span><span class="o">.</span><span class="n">pandaType</span> <span class="o">==</span> <span class="n">log</span><span class="o">.</span><span class="n">PandaState</span><span class="o">.</span><span class="n">PandaType</span><span class="o">.</span><span class="n">unknown</span> <span class="k">else</span> <span class="n">peripheralState</span><span class="o">.</span><span class="n">voltage</span>
+    <span class="n">power_monitor</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">voltage</span><span class="p">,</span> <span class="n">onroad_conditions</span><span class="p">[</span><span class="s2">&quot;ignition&quot;</span><span class="p">])</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">offroadPowerUsageUwh</span> <span class="o">=</span> <span class="n">power_monitor</span><span class="o">.</span><span class="n">get_power_used</span><span class="p">()</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">carBatteryCapacityUwh</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">power_monitor</span><span class="o">.</span><span class="n">get_car_battery_capacity</span><span class="p">())</span>
+    <span class="n">current_power_draw</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_current_power_draw</span><span class="p">()</span>
+    <span class="n">statlog</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">&quot;power_draw&quot;</span><span class="p">,</span> <span class="n">current_power_draw</span><span class="p">)</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">powerDrawW</span> <span class="o">=</span> <span class="n">current_power_draw</span>
+
+    <span class="n">som_power_draw</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_som_power_draw</span><span class="p">()</span>
+    <span class="n">statlog</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">&quot;som_power_draw&quot;</span><span class="p">,</span> <span class="n">som_power_draw</span><span class="p">)</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">somPowerDrawW</span> <span class="o">=</span> <span class="n">som_power_draw</span>
+
+    <span class="c1"># Check if we need to shut down</span>
+    <span class="k">if</span> <span class="n">power_monitor</span><span class="o">.</span><span class="n">should_shutdown</span><span class="p">(</span><span class="n">onroad_conditions</span><span class="p">[</span><span class="s2">&quot;ignition&quot;</span><span class="p">],</span> <span class="n">in_car</span><span class="p">,</span> <span class="n">off_ts</span><span class="p">,</span> <span class="n">started_seen</span><span class="p">):</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;shutting device down, offroad since </span><span class="si">{</span><span class="n">off_ts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;DoShutdown&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">started</span> <span class="o">=</span> <span class="n">started_ts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">startedMonoTime</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e9</span><span class="o">*</span><span class="p">(</span><span class="n">started_ts</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="n">last_ping</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;LastAthenaPingTime&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">last_ping</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">lastAthenaPingTime</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">last_ping</span><span class="p">)</span>
+
+    <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">thermalStatus</span> <span class="o">=</span> <span class="n">thermal_status</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;deviceState&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+
+    <span class="c1"># Log to statsd</span>
+    <span class="n">statlog</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;free_space_percent&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">freeSpacePercent</span><span class="p">)</span>
+    <span class="n">statlog</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;gpu_usage_percent&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">gpuUsagePercent</span><span class="p">)</span>
+    <span class="n">statlog</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;memory_usage_percent&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">memoryUsagePercent</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">usage</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">cpuUsagePercent</span><span class="p">):</span>
+      <span class="n">statlog</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cpu</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_usage_percent&quot;</span><span class="p">,</span> <span class="n">usage</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">cpuTempC</span><span class="p">):</span>
+      <span class="n">statlog</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cpu</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_temperature&quot;</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">gpuTempC</span><span class="p">):</span>
+      <span class="n">statlog</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;gpu</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_temperature&quot;</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+    <span class="n">statlog</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;memory_temperature&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">memoryTempC</span><span class="p">)</span>
+    <span class="n">statlog</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;ambient_temperature&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">ambientTempC</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">pmicTempC</span><span class="p">):</span>
+      <span class="n">statlog</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pmic</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_temperature&quot;</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">last_hw_state</span><span class="o">.</span><span class="n">nvme_temps</span><span class="p">):</span>
+      <span class="n">statlog</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;nvme_temperature</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">last_hw_state</span><span class="o">.</span><span class="n">modem_temps</span><span class="p">):</span>
+      <span class="n">statlog</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;modem_temperature</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+    <span class="n">statlog</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;fan_speed_percent_desired&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">fanSpeedPercentDesired</span><span class="p">)</span>
+    <span class="n">statlog</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;screen_brightness_percent&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">screenBrightnessPercent</span><span class="p">)</span>
+
+    <span class="c1"># report to server once every 10 minutes</span>
+    <span class="n">rising_edge_started</span> <span class="o">=</span> <span class="n">should_start</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">should_start_prev</span>
+    <span class="k">if</span> <span class="n">rising_edge_started</span> <span class="ow">or</span> <span class="p">(</span><span class="n">count</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="mf">600.</span> <span class="o">/</span> <span class="n">DT_TRML</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">dat</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="n">count</span><span class="p">,</span>
+        <span class="s1">&#39;pandaStates&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">strip_deprecated_keys</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pandaStates</span><span class="p">],</span>
+        <span class="s1">&#39;peripheralState&#39;</span><span class="p">:</span> <span class="n">strip_deprecated_keys</span><span class="p">(</span><span class="n">peripheralState</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()),</span>
+        <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">strip_deprecated_keys</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s2">&quot;gpsLocationExternal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span> <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">alive</span><span class="p">[</span><span class="s2">&quot;gpsLocationExternal&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="s1">&#39;deviceState&#39;</span><span class="p">:</span> <span class="n">strip_deprecated_keys</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+      <span class="p">}</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;STATUS_PACKET&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">dat</span><span class="p">)</span>
+
+      <span class="c1"># save last one before going onroad</span>
+      <span class="k">if</span> <span class="n">rising_edge_started</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+          <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;LastOffroadStatusPacket&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dat</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;failed to save offroad status&quot;</span><span class="p">)</span>
+
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">should_start_prev</span> <span class="o">=</span> <span class="n">should_start</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../selfdrive.thermald.html#selfdrive.thermald.thermald.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+  <span class="n">hw_queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">end_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+
+  <span class="n">threads</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">hw_state_thread</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">end_event</span><span class="p">,</span> <span class="n">hw_queue</span><span class="p">)),</span>
+    <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">thermald_thread</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">end_event</span><span class="p">,</span> <span class="n">hw_queue</span><span class="p">)),</span>
+  <span class="p">]</span>
+
+  <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">):</span>
+        <span class="k">break</span>
+  <span class="k">finally</span><span class="p">:</span>
+    <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+
+  <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
