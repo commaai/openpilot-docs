@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.tests.test_fw_fingerprint &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/tests/test_fw_fingerprint.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.tests.test_fw_fingerprint</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.tests.test_fw_fingerprint</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">parameterized</span> <span class="kn">import</span> <span class="n">parameterized</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">mock</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.car_helpers</span> <span class="kn">import</span> <span class="n">interfaces</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.fingerprints</span> <span class="kn">import</span> <span class="n">FW_VERSIONS</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.fw_versions</span> <span class="kn">import</span> <span class="n">FW_QUERY_CONFIGS</span><span class="p">,</span> <span class="n">FUZZY_EXCLUDE_ECUS</span><span class="p">,</span> <span class="n">VERSIONS</span><span class="p">,</span> <span class="n">build_fw_dict</span><span class="p">,</span> \
+                                                <span class="n">match_fw_to_car</span><span class="p">,</span> <span class="n">get_brand_ecu_matches</span><span class="p">,</span> <span class="n">get_fw_versions</span><span class="p">,</span> <span class="n">get_present_ecus</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.vin</span> <span class="kn">import</span> <span class="n">get_vin</span>
+
+<span class="n">CarFw</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">CarFw</span>
+<span class="n">Ecu</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">Ecu</span>
+
+<span class="n">ECU_NAME</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">enumerants</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+
+<div class="viewcode-block" id="FakeSocket">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.FakeSocket">[docs]</a>
+<span class="k">class</span> <span class="nc">FakeSocket</span><span class="p">:</span>
+<div class="viewcode-block" id="FakeSocket.receive">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.FakeSocket.receive">[docs]</a>
+  <span class="k">def</span> <span class="nf">receive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">non_blocking</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="FakeSocket.send">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.FakeSocket.send">[docs]</a>
+  <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TestFwFingerprint">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprint">[docs]</a>
+<span class="k">class</span> <span class="nc">TestFwFingerprint</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestFwFingerprint.assertFingerprints">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprint.assertFingerprints">[docs]</a>
+  <span class="k">def</span> <span class="nf">assertFingerprints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+    <span class="n">candidates</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;got more than one candidate: </span><span class="si">{</span><span class="n">candidates</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">expected</span><span class="p">)</span></div>
+
+
+  <span class="nd">@parameterized</span><span class="o">.</span><span class="n">expand</span><span class="p">([(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">e</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)])</span>
+  <span class="k">def</span> <span class="nf">test_exact_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brand</span><span class="p">,</span> <span class="n">car_model</span><span class="p">,</span> <span class="n">ecus</span><span class="p">,</span> <span class="n">test_non_essential</span><span class="p">):</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">FW_QUERY_CONFIGS</span><span class="p">[</span><span class="n">brand</span><span class="p">]</span>
+    <span class="n">CP</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+      <span class="n">fw</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">for</span> <span class="n">ecu</span><span class="p">,</span> <span class="n">fw_versions</span> <span class="ow">in</span> <span class="n">ecus</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># Assume non-essential ECUs apply to all cars, so we catch cases where Car A with</span>
+        <span class="c1"># missing ECUs won&#39;t match to Car B where only Car B has labeled non-essential ECUs</span>
+        <span class="k">if</span> <span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">non_essential_ecus</span> <span class="ow">and</span> <span class="n">test_non_essential</span><span class="p">:</span>
+          <span class="k">continue</span>
+
+        <span class="n">ecu_name</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span> <span class="o">=</span> <span class="n">ecu</span>
+        <span class="n">fw</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;ecu&quot;</span><span class="p">:</span> <span class="n">ecu_name</span><span class="p">,</span> <span class="s2">&quot;fwVersion&quot;</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">fw_versions</span><span class="p">),</span> <span class="s1">&#39;brand&#39;</span><span class="p">:</span> <span class="n">brand</span><span class="p">,</span>
+                   <span class="s2">&quot;address&quot;</span><span class="p">:</span> <span class="n">addr</span><span class="p">,</span> <span class="s2">&quot;subAddress&quot;</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">sub_addr</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">sub_addr</span><span class="p">})</span>
+      <span class="n">CP</span><span class="o">.</span><span class="n">carFw</span> <span class="o">=</span> <span class="n">fw</span>
+      <span class="n">_</span><span class="p">,</span> <span class="n">matches</span> <span class="o">=</span> <span class="n">match_fw_to_car</span><span class="p">(</span><span class="n">CP</span><span class="o">.</span><span class="n">carFw</span><span class="p">,</span> <span class="n">allow_fuzzy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">test_non_essential</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFingerprints</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">car_model</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># if we&#39;re removing ECUs we expect some match loss, but it shouldn&#39;t mismatch</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertFingerprints</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">car_model</span><span class="p">)</span>
+
+  <span class="nd">@parameterized</span><span class="o">.</span><span class="n">expand</span><span class="p">([(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">e</span><span class="p">])</span>
+  <span class="k">def</span> <span class="nf">test_custom_fuzzy_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brand</span><span class="p">,</span> <span class="n">car_model</span><span class="p">,</span> <span class="n">ecus</span><span class="p">):</span>
+    <span class="c1"># Assert brand-specific fuzzy fingerprinting function doesn&#39;t disagree with standard fuzzy function</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">FW_QUERY_CONFIGS</span><span class="p">[</span><span class="n">brand</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">match_fw_to_car_fuzzy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="n">unittest</span><span class="o">.</span><span class="n">SkipTest</span><span class="p">(</span><span class="s2">&quot;Brand does not implement custom fuzzy fingerprinting function&quot;</span><span class="p">)</span>
+
+    <span class="n">CP</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+      <span class="n">fw</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">for</span> <span class="n">ecu</span><span class="p">,</span> <span class="n">fw_versions</span> <span class="ow">in</span> <span class="n">ecus</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">ecu_name</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span> <span class="o">=</span> <span class="n">ecu</span>
+        <span class="n">fw</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;ecu&quot;</span><span class="p">:</span> <span class="n">ecu_name</span><span class="p">,</span> <span class="s2">&quot;fwVersion&quot;</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">fw_versions</span><span class="p">),</span> <span class="s1">&#39;brand&#39;</span><span class="p">:</span> <span class="n">brand</span><span class="p">,</span>
+                   <span class="s2">&quot;address&quot;</span><span class="p">:</span> <span class="n">addr</span><span class="p">,</span> <span class="s2">&quot;subAddress&quot;</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">sub_addr</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">sub_addr</span><span class="p">})</span>
+      <span class="n">CP</span><span class="o">.</span><span class="n">carFw</span> <span class="o">=</span> <span class="n">fw</span>
+      <span class="n">_</span><span class="p">,</span> <span class="n">matches</span> <span class="o">=</span> <span class="n">match_fw_to_car</span><span class="p">(</span><span class="n">CP</span><span class="o">.</span><span class="n">carFw</span><span class="p">,</span> <span class="n">allow_exact</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      <span class="n">brand_matches</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">match_fw_to_car_fuzzy</span><span class="p">(</span><span class="n">build_fw_dict</span><span class="p">(</span><span class="n">CP</span><span class="o">.</span><span class="n">carFw</span><span class="p">),</span> <span class="n">VERSIONS</span><span class="p">[</span><span class="n">brand</span><span class="p">])</span>
+
+      <span class="c1"># If both have matches, they must agree</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">brand_matches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">brand_matches</span><span class="p">)</span>
+
+  <span class="nd">@parameterized</span><span class="o">.</span><span class="n">expand</span><span class="p">([(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">e</span><span class="p">])</span>
+  <span class="k">def</span> <span class="nf">test_fuzzy_match_ecu_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brand</span><span class="p">,</span> <span class="n">car_model</span><span class="p">,</span> <span class="n">ecus</span><span class="p">):</span>
+    <span class="c1"># Asserts that fuzzy matching does not count matching FW, but ECU address keys</span>
+    <span class="n">valid_ecus</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">ecus</span> <span class="k">if</span> <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">FUZZY_EXCLUDE_ECUS</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_ecus</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="n">unittest</span><span class="o">.</span><span class="n">SkipTest</span><span class="p">(</span><span class="s2">&quot;Car model has no compatible ECUs for fuzzy matching&quot;</span><span class="p">)</span>
+
+    <span class="n">fw</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ecu</span> <span class="ow">in</span> <span class="n">valid_ecus</span><span class="p">:</span>
+      <span class="n">ecu_name</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span> <span class="o">=</span> <span class="n">ecu</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="c1"># Add multiple FW versions to simulate ECU returning to multiple queries in a brand</span>
+        <span class="n">fw</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;ecu&quot;</span><span class="p">:</span> <span class="n">ecu_name</span><span class="p">,</span> <span class="s2">&quot;fwVersion&quot;</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ecus</span><span class="p">[</span><span class="n">ecu</span><span class="p">]),</span> <span class="s1">&#39;brand&#39;</span><span class="p">:</span> <span class="n">brand</span><span class="p">,</span>
+                   <span class="s2">&quot;address&quot;</span><span class="p">:</span> <span class="n">addr</span><span class="p">,</span> <span class="s2">&quot;subAddress&quot;</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">sub_addr</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">sub_addr</span><span class="p">})</span>
+      <span class="n">CP</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="n">carFw</span><span class="o">=</span><span class="n">fw</span><span class="p">)</span>
+      <span class="n">_</span><span class="p">,</span> <span class="n">matches</span> <span class="o">=</span> <span class="n">match_fw_to_car</span><span class="p">(</span><span class="n">CP</span><span class="o">.</span><span class="n">carFw</span><span class="p">,</span> <span class="n">allow_exact</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+      <span class="c1"># Assert no match if there are not enough unique ECUs</span>
+      <span class="n">unique_ecus</span> <span class="o">=</span> <span class="p">{(</span><span class="n">f</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;subAddress&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fw</span><span class="p">}</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_ecus</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">car_model</span><span class="p">)</span>
+      <span class="c1"># There won&#39;t always be a match due to shared FW, but if there is it should be correct</span>
+      <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFingerprints</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">car_model</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TestFwFingerprint.test_fw_version_lists">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprint.test_fw_version_lists">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_fw_version_lists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">car_model</span><span class="p">,</span> <span class="n">ecus</span> <span class="ow">in</span> <span class="n">FW_VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">car_model</span><span class="o">=</span><span class="n">car_model</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">ecu</span><span class="p">,</span> <span class="n">ecu_fw</span> <span class="ow">in</span> <span class="n">ecus</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+          <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">ecu</span><span class="p">):</span>
+            <span class="n">duplicates</span> <span class="o">=</span> <span class="p">{</span><span class="n">fw</span> <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">ecu_fw</span> <span class="k">if</span> <span class="n">ecu_fw</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">fw</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">duplicates</span><span class="p">),</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">car_model</span><span class="si">}</span><span class="s1">: Duplicate FW versions: Ecu.</span><span class="si">{</span><span class="n">ECU_NAME</span><span class="p">[</span><span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">duplicates</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ecu_fw</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">car_model</span><span class="si">}</span><span class="s1">: No FW versions: Ecu.</span><span class="si">{</span><span class="n">ECU_NAME</span><span class="p">[</span><span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestFwFingerprint.test_all_addrs_map_to_one_ecu">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprint.test_all_addrs_map_to_one_ecu">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_all_addrs_map_to_one_ecu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">cars</span> <span class="ow">in</span> <span class="n">VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">addr_to_ecu</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">ecus</span> <span class="ow">in</span> <span class="n">cars</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">ecu_type</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span> <span class="ow">in</span> <span class="n">ecus</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+          <span class="n">addr_to_ecu</span><span class="p">[(</span><span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">)]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ecu_type</span><span class="p">)</span>
+          <span class="n">ecus_for_addr</span> <span class="o">=</span> <span class="n">addr_to_ecu</span><span class="p">[(</span><span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span><span class="p">)]</span>
+          <span class="n">ecu_strings</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;Ecu.</span><span class="si">{</span><span class="n">ECU_NAME</span><span class="p">[</span><span class="n">ecu</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">ecu</span> <span class="ow">in</span> <span class="n">ecus_for_addr</span><span class="p">])</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertLessEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ecus_for_addr</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">brand</span><span class="si">}</span><span class="s2"> has multiple ECUs that map to one address: </span><span class="si">{</span><span class="n">ecu_strings</span><span class="si">}</span><span class="s2"> -&gt; (</span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">sub_addr</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestFwFingerprint.test_data_collection_ecus">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprint.test_data_collection_ecus">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_data_collection_ecus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Asserts no extra ECUs are in the fingerprinting database</span>
+    <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">FW_QUERY_CONFIGS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">for</span> <span class="n">car_model</span><span class="p">,</span> <span class="n">ecus</span> <span class="ow">in</span> <span class="n">VERSIONS</span><span class="p">[</span><span class="n">brand</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">bad_ecus</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">ecus</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">extra_ecus</span><span class="p">)</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">car_model</span><span class="o">=</span><span class="n">car_model</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bad_ecus</span><span class="p">),</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">car_model</span><span class="si">}</span><span class="s1">: Fingerprints contain ECUs added for data collection: </span><span class="si">{</span><span class="n">bad_ecus</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestFwFingerprint.test_blacklisted_ecus">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprint.test_blacklisted_ecus">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_blacklisted_ecus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">blacklisted_addrs</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x7c4</span><span class="p">,</span> <span class="mh">0x7d0</span><span class="p">)</span>  <span class="c1"># includes A/C ecu and an unknown ecu</span>
+    <span class="k">for</span> <span class="n">car_model</span><span class="p">,</span> <span class="n">ecus</span> <span class="ow">in</span> <span class="n">FW_VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">car_model</span><span class="o">=</span><span class="n">car_model</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+        <span class="n">CP</span> <span class="o">=</span> <span class="n">interfaces</span><span class="p">[</span><span class="n">car_model</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_non_essential_params</span><span class="p">(</span><span class="n">car_model</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carName</span> <span class="o">==</span> <span class="s1">&#39;subaru&#39;</span><span class="p">:</span>
+          <span class="k">for</span> <span class="n">ecu</span> <span class="ow">in</span> <span class="n">ecus</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotIn</span><span class="p">(</span><span class="n">ecu</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">blacklisted_addrs</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">car_model</span><span class="si">}</span><span class="s1">: Blacklisted ecu: (Ecu.</span><span class="si">{</span><span class="n">ECU_NAME</span><span class="p">[</span><span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">ecu</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">CP</span><span class="o">.</span><span class="n">carName</span> <span class="o">==</span> <span class="s2">&quot;chrysler&quot;</span><span class="p">:</span>
+          <span class="c1"># Some HD trucks have a combined TCM and ECM</span>
+          <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;RAM HD&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">ecu</span> <span class="ow">in</span> <span class="n">ecus</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+              <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">transmission</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">car_model</span><span class="si">}</span><span class="s2">: Blacklisted ecu: (Ecu.</span><span class="si">{</span><span class="n">ECU_NAME</span><span class="p">[</span><span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">ecu</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestFwFingerprint.test_missing_versions_and_configs">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprint.test_missing_versions_and_configs">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_missing_versions_and_configs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">brand_versions</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">VERSIONS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">brand_configs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">FW_QUERY_CONFIGS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">brand_configs</span> <span class="o">-</span> <span class="n">brand_versions</span><span class="p">):</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Brands do not implement FW_VERSIONS: </span><span class="si">{</span><span class="n">brand_configs</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">brand_versions</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">brand_versions</span> <span class="o">-</span> <span class="n">brand_configs</span><span class="p">):</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Brands do not implement FW_QUERY_CONFIG: </span><span class="si">{</span><span class="n">brand_versions</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">brand_configs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Ensure each brand has at least 1 ECU to query, and extra ECU retrieval</span>
+    <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">FW_QUERY_CONFIGS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get_all_ecus</span><span class="p">({},</span> <span class="n">include_extra_ecus</span><span class="o">=</span><span class="kc">False</span><span class="p">)),</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get_all_ecus</span><span class="p">({}),</span> <span class="nb">set</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">extra_ecus</span><span class="p">))</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get_all_ecus</span><span class="p">(</span><span class="n">VERSIONS</span><span class="p">[</span><span class="n">brand</span><span class="p">])),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestFwFingerprint.test_fw_request_ecu_whitelist">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprint.test_fw_request_ecu_whitelist">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_fw_request_ecu_whitelist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">FW_QUERY_CONFIGS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">brand</span><span class="o">=</span><span class="n">brand</span><span class="p">):</span>
+        <span class="n">whitelisted_ecus</span> <span class="o">=</span> <span class="p">{</span><span class="n">ecu</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">requests</span> <span class="k">for</span> <span class="n">ecu</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">whitelist_ecus</span><span class="p">}</span>
+        <span class="n">brand_ecus</span> <span class="o">=</span> <span class="p">{</span><span class="n">fw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">car_fw</span> <span class="ow">in</span> <span class="n">VERSIONS</span><span class="p">[</span><span class="n">brand</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">car_fw</span><span class="p">}</span>
+        <span class="n">brand_ecus</span> <span class="o">|=</span> <span class="p">{</span><span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">ecu</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">extra_ecus</span><span class="p">}</span>
+
+        <span class="c1"># each ecu in brand&#39;s fw versions + extra ecus needs to be whitelisted at least once</span>
+        <span class="n">ecus_not_whitelisted</span> <span class="o">=</span> <span class="n">brand_ecus</span> <span class="o">-</span> <span class="n">whitelisted_ecus</span>
+
+        <span class="n">ecu_strings</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;Ecu.</span><span class="si">{</span><span class="n">ECU_NAME</span><span class="p">[</span><span class="n">ecu</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">ecu</span> <span class="ow">in</span> <span class="n">ecus_not_whitelisted</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">whitelisted_ecus</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">ecus_not_whitelisted</span><span class="p">),</span>
+                         <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">brand</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s1">: ECUs not in any FW query whitelists: </span><span class="si">{</span><span class="n">ecu_strings</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestFwFingerprint.test_fw_requests">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprint.test_fw_requests">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_fw_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Asserts equal length request and response lists</span>
+    <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">FW_QUERY_CONFIGS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">brand</span><span class="o">=</span><span class="n">brand</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">request_obj</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">requests</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">request_obj</span><span class="o">.</span><span class="n">request</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">request_obj</span><span class="o">.</span><span class="n">response</span><span class="p">))</span>
+
+          <span class="c1"># No request on the OBD port (bus 1, multiplexed) should be run on an aux panda</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">request_obj</span><span class="o">.</span><span class="n">auxiliary</span> <span class="ow">and</span> <span class="n">request_obj</span><span class="o">.</span><span class="n">bus</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">request_obj</span><span class="o">.</span><span class="n">obd_multiplexing</span><span class="p">,</span>
+                           <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">brand</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s2">: OBD multiplexed request is marked auxiliary: </span><span class="si">{</span><span class="n">request_obj</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestFwFingerprint.test_brand_ecu_matches">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprint.test_brand_ecu_matches">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_brand_ecu_matches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">empty_response</span> <span class="o">=</span> <span class="p">{</span><span class="n">brand</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">brand</span> <span class="ow">in</span> <span class="n">FW_QUERY_CONFIGS</span><span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_brand_ecu_matches</span><span class="p">(</span><span class="nb">set</span><span class="p">()),</span> <span class="n">empty_response</span><span class="p">)</span>
+
+    <span class="c1"># we ignore bus</span>
+    <span class="n">expected_response</span> <span class="o">=</span> <span class="n">empty_response</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;toyota&#39;</span><span class="p">:</span> <span class="p">{(</span><span class="mh">0x750</span><span class="p">,</span> <span class="mh">0xf</span><span class="p">)}}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_brand_ecu_matches</span><span class="p">({(</span><span class="mh">0x758</span><span class="p">,</span> <span class="mh">0xf</span><span class="p">,</span> <span class="mi">99</span><span class="p">)}),</span> <span class="n">expected_response</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TestFwFingerprintTiming">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprintTiming">[docs]</a>
+<span class="k">class</span> <span class="nc">TestFwFingerprintTiming</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+  <span class="n">N</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
+  <span class="n">TOL</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+  <span class="c1"># for patched functions</span>
+  <span class="n">current_obd_multiplexing</span><span class="p">:</span> <span class="nb">bool</span>
+  <span class="n">total_time</span><span class="p">:</span> <span class="nb">float</span>
+
+<div class="viewcode-block" id="TestFwFingerprintTiming.fake_set_obd_multiplexing">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprintTiming.fake_set_obd_multiplexing">[docs]</a>
+  <span class="k">def</span> <span class="nf">fake_set_obd_multiplexing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">obd_multiplexing</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The 10Hz blocking params loop adds on average 50ms to the query time for each OBD multiplexing change&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">obd_multiplexing</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_obd_multiplexing</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">current_obd_multiplexing</span> <span class="o">=</span> <span class="n">obd_multiplexing</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">+=</span> <span class="mf">0.1</span> <span class="o">/</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="TestFwFingerprintTiming.fake_get_data">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprintTiming.fake_get_data">[docs]</a>
+  <span class="k">def</span> <span class="nf">fake_get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">+=</span> <span class="n">timeout</span>
+    <span class="k">return</span> <span class="p">{}</span></div>
+
+
+  <span class="k">def</span> <span class="nf">_benchmark_brand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brand</span><span class="p">,</span> <span class="n">num_pandas</span><span class="p">):</span>
+    <span class="n">fake_socket</span> <span class="o">=</span> <span class="n">FakeSocket</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">with</span> <span class="p">(</span><span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s2">&quot;openpilot.selfdrive.car.fw_versions.set_obd_multiplexing&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fake_set_obd_multiplexing</span><span class="p">),</span>
+          <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s2">&quot;openpilot.selfdrive.car.isotp_parallel_query.IsoTpParallelQuery.get_data&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fake_get_data</span><span class="p">)):</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">):</span>
+        <span class="c1"># Treat each brand as the most likely (aka, the first) brand with OBD multiplexing initially on</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_obd_multiplexing</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">get_fw_versions</span><span class="p">(</span><span class="n">fake_socket</span><span class="p">,</span> <span class="n">fake_socket</span><span class="p">,</span> <span class="n">brand</span><span class="p">,</span> <span class="n">num_pandas</span><span class="o">=</span><span class="n">num_pandas</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">+=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span>
+
+  <span class="k">def</span> <span class="nf">_assert_timing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avg_time</span><span class="p">,</span> <span class="n">ref_time</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="n">avg_time</span><span class="p">,</span> <span class="n">ref_time</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">TOL</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">avg_time</span><span class="p">,</span> <span class="n">ref_time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">TOL</span><span class="p">,</span> <span class="s2">&quot;Performance seems to have improved, update test refs.&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TestFwFingerprintTiming.test_startup_timing">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprintTiming.test_startup_timing">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_startup_timing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Tests worse-case VIN query time and typical present ECU query time</span>
+    <span class="n">vin_ref_times</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;worst&#39;</span><span class="p">:</span> <span class="mf">1.2</span><span class="p">,</span> <span class="s1">&#39;best&#39;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">}</span>  <span class="c1"># best assumes we go through all queries to get a match</span>
+    <span class="n">present_ecu_ref_time</span> <span class="o">=</span> <span class="mf">0.75</span>
+
+    <span class="k">def</span> <span class="nf">fake_get_ecu_addrs</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">+=</span> <span class="n">timeout</span>
+      <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="n">fake_socket</span> <span class="o">=</span> <span class="n">FakeSocket</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">with</span> <span class="p">(</span><span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s2">&quot;openpilot.selfdrive.car.fw_versions.set_obd_multiplexing&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fake_set_obd_multiplexing</span><span class="p">),</span>
+          <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s2">&quot;openpilot.selfdrive.car.fw_versions.get_ecu_addrs&quot;</span><span class="p">,</span> <span class="n">fake_get_ecu_addrs</span><span class="p">)):</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_obd_multiplexing</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">get_present_ecus</span><span class="p">(</span><span class="n">fake_socket</span><span class="p">,</span> <span class="n">fake_socket</span><span class="p">,</span> <span class="n">num_pandas</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_assert_timing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">present_ecu_ref_time</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;get_present_ecus, query time=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">total_time</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="si">}</span><span class="s1"> seconds&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">args</span> <span class="ow">in</span> <span class="p">((</span><span class="s1">&#39;worst&#39;</span><span class="p">,</span> <span class="p">{}),</span> <span class="p">(</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;retry&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})):</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">with</span> <span class="p">(</span><span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s2">&quot;openpilot.selfdrive.car.isotp_parallel_query.IsoTpParallelQuery.get_data&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fake_get_data</span><span class="p">)):</span>
+          <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">get_vin</span><span class="p">(</span><span class="n">fake_socket</span><span class="p">,</span> <span class="n">fake_socket</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_assert_timing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">vin_ref_times</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;get_vin </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1"> case, query time=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">total_time</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="si">}</span><span class="s1"> seconds&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestFwFingerprintTiming.test_fw_query_timing">
+<a class="viewcode-back" href="../../../../selfdrive.car.tests.html#selfdrive.car.tests.test_fw_fingerprint.TestFwFingerprintTiming.test_fw_query_timing">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_fw_query_timing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">total_ref_time</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mf">8.1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mf">8.7</span><span class="p">}</span>
+    <span class="n">brand_ref_times</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="mi">1</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;gm&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="s1">&#39;chrysler&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+        <span class="s1">&#39;ford&#39;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
+        <span class="s1">&#39;honda&#39;</span><span class="p">:</span> <span class="mf">0.45</span><span class="p">,</span>
+        <span class="s1">&#39;hyundai&#39;</span><span class="p">:</span> <span class="mf">0.65</span><span class="p">,</span>
+        <span class="s1">&#39;mazda&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="s1">&#39;nissan&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+        <span class="s1">&#39;subaru&#39;</span><span class="p">:</span> <span class="mf">0.65</span><span class="p">,</span>
+        <span class="s1">&#39;tesla&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+        <span class="s1">&#39;toyota&#39;</span><span class="p">:</span> <span class="mf">1.6</span><span class="p">,</span>
+        <span class="s1">&#39;volkswagen&#39;</span><span class="p">:</span> <span class="mf">0.65</span><span class="p">,</span>
+      <span class="p">},</span>
+      <span class="mi">2</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;ford&#39;</span><span class="p">:</span> <span class="mf">1.6</span><span class="p">,</span>
+        <span class="s1">&#39;hyundai&#39;</span><span class="p">:</span> <span class="mf">1.15</span><span class="p">,</span>
+        <span class="s1">&#39;tesla&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">total_times</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">num_pandas</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">brand</span><span class="p">,</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">FW_QUERY_CONFIGS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">brand</span><span class="o">=</span><span class="n">brand</span><span class="p">,</span> <span class="n">num_pandas</span><span class="o">=</span><span class="n">num_pandas</span><span class="p">):</span>
+          <span class="n">avg_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_benchmark_brand</span><span class="p">(</span><span class="n">brand</span><span class="p">,</span> <span class="n">num_pandas</span><span class="p">)</span>
+          <span class="n">total_times</span><span class="p">[</span><span class="n">num_pandas</span><span class="p">]</span> <span class="o">+=</span> <span class="n">avg_time</span>
+          <span class="n">avg_time</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">avg_time</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+          <span class="n">ref_time</span> <span class="o">=</span> <span class="n">brand_ref_times</span><span class="p">[</span><span class="n">num_pandas</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">brand</span><span class="p">)</span>
+          <span class="k">if</span> <span class="n">ref_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># ref time should be same as 1 panda if no aux queries</span>
+            <span class="n">ref_time</span> <span class="o">=</span> <span class="n">brand_ref_times</span><span class="p">[</span><span class="n">num_pandas</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">brand</span><span class="p">]</span>
+
+          <span class="bp">self</span><span class="o">.</span><span class="n">_assert_timing</span><span class="p">(</span><span class="n">avg_time</span><span class="p">,</span> <span class="n">ref_time</span><span class="p">)</span>
+          <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">brand</span><span class="si">=}</span><span class="s1">, </span><span class="si">{</span><span class="n">num_pandas</span><span class="si">=}</span><span class="s1">, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">requests</span><span class="p">)</span><span class="si">=}</span><span class="s1">, avg FW query time=</span><span class="si">{</span><span class="n">avg_time</span><span class="si">}</span><span class="s1"> seconds&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">num_pandas</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">brand</span><span class="o">=</span><span class="s1">&#39;all_brands&#39;</span><span class="p">,</span> <span class="n">num_pandas</span><span class="o">=</span><span class="n">num_pandas</span><span class="p">):</span>
+        <span class="n">total_time</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">total_times</span><span class="p">[</span><span class="n">num_pandas</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_assert_timing</span><span class="p">(</span><span class="n">total_time</span><span class="p">,</span> <span class="n">total_ref_time</span><span class="p">[</span><span class="n">num_pandas</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;all brands, total FW query time=</span><span class="si">{</span><span class="n">total_time</span><span class="si">}</span><span class="s1"> seconds&#39;</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

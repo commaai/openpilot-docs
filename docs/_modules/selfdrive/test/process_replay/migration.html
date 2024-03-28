@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.test.process_replay.migration &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/test/process_replay/migration.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.test.process_replay.migration</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.test.process_replay.migration</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">messaging</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.fingerprints</span> <span class="kn">import</span> <span class="n">MIGRATION</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.process_replay.vision_meta</span> <span class="kn">import</span> <span class="n">meta_from_encode_index</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.toyota.values</span> <span class="kn">import</span> <span class="n">EPS_SCALE</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.manager.process_config</span> <span class="kn">import</span> <span class="n">managed_processes</span>
+<span class="kn">from</span> <span class="nn">panda</span> <span class="kn">import</span> <span class="n">Panda</span>
+
+
+<span class="c1"># TODO: message migration should happen in-place</span>
+<div class="viewcode-block" id="migrate_all">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.migration.migrate_all">[docs]</a>
+<span class="k">def</span> <span class="nf">migrate_all</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">old_logtime</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">manager_states</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">panda_states</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">camera_states</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+  <span class="n">msgs</span> <span class="o">=</span> <span class="n">migrate_sensorEvents</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">old_logtime</span><span class="p">)</span>
+  <span class="n">msgs</span> <span class="o">=</span> <span class="n">migrate_carParams</span><span class="p">(</span><span class="n">msgs</span><span class="p">,</span> <span class="n">old_logtime</span><span class="p">)</span>
+  <span class="n">msgs</span> <span class="o">=</span> <span class="n">migrate_gpsLocation</span><span class="p">(</span><span class="n">msgs</span><span class="p">)</span>
+  <span class="n">msgs</span> <span class="o">=</span> <span class="n">migrate_deviceState</span><span class="p">(</span><span class="n">msgs</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">manager_states</span><span class="p">:</span>
+    <span class="n">msgs</span> <span class="o">=</span> <span class="n">migrate_managerState</span><span class="p">(</span><span class="n">msgs</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">panda_states</span><span class="p">:</span>
+    <span class="n">msgs</span> <span class="o">=</span> <span class="n">migrate_pandaStates</span><span class="p">(</span><span class="n">msgs</span><span class="p">)</span>
+    <span class="n">msgs</span> <span class="o">=</span> <span class="n">migrate_peripheralState</span><span class="p">(</span><span class="n">msgs</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">camera_states</span><span class="p">:</span>
+    <span class="n">msgs</span> <span class="o">=</span> <span class="n">migrate_cameraStates</span><span class="p">(</span><span class="n">msgs</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">msgs</span></div>
+
+
+
+<div class="viewcode-block" id="migrate_managerState">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.migration.migrate_managerState">[docs]</a>
+<span class="k">def</span> <span class="nf">migrate_managerState</span><span class="p">(</span><span class="n">lr</span><span class="p">):</span>
+  <span class="n">all_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;managerState&quot;</span><span class="p">:</span>
+      <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+      <span class="k">continue</span>
+
+    <span class="n">new_msg</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span>
+    <span class="n">new_msg</span><span class="o">.</span><span class="n">managerState</span><span class="o">.</span><span class="n">processes</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s1">&#39;running&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">managed_processes</span><span class="p">]</span>
+    <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_msg</span><span class="o">.</span><span class="n">as_reader</span><span class="p">())</span>
+
+  <span class="k">return</span> <span class="n">all_msgs</span></div>
+
+
+
+<div class="viewcode-block" id="migrate_gpsLocation">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.migration.migrate_gpsLocation">[docs]</a>
+<span class="k">def</span> <span class="nf">migrate_gpsLocation</span><span class="p">(</span><span class="n">lr</span><span class="p">):</span>
+  <span class="n">all_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;gpsLocation&#39;</span><span class="p">,</span> <span class="s1">&#39;gpsLocationExternal&#39;</span><span class="p">):</span>
+      <span class="n">new_msg</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span>
+      <span class="n">g</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">new_msg</span><span class="p">,</span> <span class="n">new_msg</span><span class="o">.</span><span class="n">which</span><span class="p">())</span>
+      <span class="c1"># hasFix is a newer field</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">g</span><span class="o">.</span><span class="n">hasFix</span> <span class="ow">and</span> <span class="n">g</span><span class="o">.</span><span class="n">flags</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">hasFix</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_msg</span><span class="o">.</span><span class="n">as_reader</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">all_msgs</span></div>
+
+
+
+<div class="viewcode-block" id="migrate_deviceState">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.migration.migrate_deviceState">[docs]</a>
+<span class="k">def</span> <span class="nf">migrate_deviceState</span><span class="p">(</span><span class="n">lr</span><span class="p">):</span>
+  <span class="n">all_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">dt</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;initData&#39;</span><span class="p">:</span>
+      <span class="n">dt</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">initData</span><span class="o">.</span><span class="n">deviceType</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;deviceState&#39;</span><span class="p">:</span>
+      <span class="n">n</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span>
+      <span class="n">n</span><span class="o">.</span><span class="n">deviceState</span><span class="o">.</span><span class="n">deviceType</span> <span class="o">=</span> <span class="n">dt</span>
+      <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">as_reader</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">all_msgs</span></div>
+
+
+
+<div class="viewcode-block" id="migrate_pandaStates">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.migration.migrate_pandaStates">[docs]</a>
+<span class="k">def</span> <span class="nf">migrate_pandaStates</span><span class="p">(</span><span class="n">lr</span><span class="p">):</span>
+  <span class="n">all_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="c1"># TODO: safety param migration should be handled automatically</span>
+  <span class="n">safety_param_migration</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;TOYOTA_PRIUS&quot;</span><span class="p">:</span> <span class="n">EPS_SCALE</span><span class="p">[</span><span class="s2">&quot;TOYOTA_PRIUS&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_TOYOTA_STOCK_LONGITUDINAL</span><span class="p">,</span>
+    <span class="s2">&quot;TOYOTA_RAV4&quot;</span><span class="p">:</span> <span class="n">EPS_SCALE</span><span class="p">[</span><span class="s2">&quot;TOYOTA_RAV4&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_TOYOTA_ALT_BRAKE</span><span class="p">,</span>
+    <span class="s2">&quot;KIA_EV6&quot;</span><span class="p">:</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HYUNDAI_EV_GAS</span> <span class="o">|</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HYUNDAI_CANFD_HDA2</span><span class="p">,</span>
+  <span class="p">}</span>
+
+  <span class="c1"># Migrate safety param base on carState</span>
+  <span class="n">CP</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">m</span><span class="o">.</span><span class="n">carParams</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">lr</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;carParams&#39;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+  <span class="k">assert</span> <span class="n">CP</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;carParams message not found&quot;</span>
+  <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">safety_param_migration</span><span class="p">:</span>
+    <span class="n">safety_param</span> <span class="o">=</span> <span class="n">safety_param_migration</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">]</span>
+  <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">CP</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">):</span>
+    <span class="n">safety_param</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParamDEPRECATED</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">safety_param</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParamDEPRECATED</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">safety_param</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">safetyParamDEPRECATED</span>
+
+  <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;pandaStateDEPRECATED&#39;</span><span class="p">:</span>
+      <span class="n">new_msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;pandaStates&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="n">new_msg</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">valid</span>
+      <span class="n">new_msg</span><span class="o">.</span><span class="n">logMonoTime</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">logMonoTime</span>
+      <span class="n">new_msg</span><span class="o">.</span><span class="n">pandaStates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">pandaStateDEPRECATED</span>
+      <span class="n">new_msg</span><span class="o">.</span><span class="n">pandaStates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">=</span> <span class="n">safety_param</span>
+      <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_msg</span><span class="o">.</span><span class="n">as_reader</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;pandaStates&#39;</span><span class="p">:</span>
+      <span class="n">new_msg</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span>
+      <span class="n">new_msg</span><span class="o">.</span><span class="n">pandaStates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">=</span> <span class="n">safety_param</span>
+      <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_msg</span><span class="o">.</span><span class="n">as_reader</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">all_msgs</span></div>
+
+
+
+<div class="viewcode-block" id="migrate_peripheralState">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.migration.migrate_peripheralState">[docs]</a>
+<span class="k">def</span> <span class="nf">migrate_peripheralState</span><span class="p">(</span><span class="n">lr</span><span class="p">):</span>
+  <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;peripheralState&quot;</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">lr</span>
+
+  <span class="n">all_msg</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span><span class="p">:</span>
+    <span class="n">all_msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;pandaStates&quot;</span><span class="p">,</span> <span class="s2">&quot;pandaStateDEPRECATED&quot;</span><span class="p">]:</span>
+      <span class="k">continue</span>
+
+    <span class="n">new_msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s2">&quot;peripheralState&quot;</span><span class="p">)</span>
+    <span class="n">new_msg</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">valid</span>
+    <span class="n">new_msg</span><span class="o">.</span><span class="n">logMonoTime</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">logMonoTime</span>
+    <span class="n">all_msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_msg</span><span class="o">.</span><span class="n">as_reader</span><span class="p">())</span>
+
+  <span class="k">return</span> <span class="n">all_msg</span></div>
+
+
+
+<div class="viewcode-block" id="migrate_cameraStates">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.migration.migrate_cameraStates">[docs]</a>
+<span class="k">def</span> <span class="nf">migrate_cameraStates</span><span class="p">(</span><span class="n">lr</span><span class="p">):</span>
+  <span class="n">all_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">frame_to_encode_id</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+  <span class="c1"># just for encodeId fallback mechanism</span>
+  <span class="n">min_frame_id</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">))</span>
+
+  <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;roadEncodeIdx&quot;</span><span class="p">,</span> <span class="s2">&quot;wideRoadEncodeIdx&quot;</span><span class="p">,</span> <span class="s2">&quot;driverEncodeIdx&quot;</span><span class="p">]:</span>
+      <span class="k">continue</span>
+
+    <span class="n">encode_index</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">())</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">meta_from_encode_index</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">())</span>
+
+    <span class="k">assert</span> <span class="n">encode_index</span><span class="o">.</span><span class="n">segmentId</span> <span class="o">&lt;</span> <span class="mi">1200</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Encoder index segmentId greater that 1200: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">encode_index</span><span class="o">.</span><span class="n">segmentId</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">frame_to_encode_id</span><span class="p">[</span><span class="n">meta</span><span class="o">.</span><span class="n">camera_state</span><span class="p">][</span><span class="n">encode_index</span><span class="o">.</span><span class="n">frameId</span><span class="p">]</span> <span class="o">=</span> <span class="n">encode_index</span><span class="o">.</span><span class="n">segmentId</span>
+
+  <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;roadCameraState&quot;</span><span class="p">,</span> <span class="s2">&quot;wideRoadCameraState&quot;</span><span class="p">,</span> <span class="s2">&quot;driverCameraState&quot;</span><span class="p">]:</span>
+      <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+      <span class="k">continue</span>
+
+    <span class="n">camera_state</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">())</span>
+    <span class="n">min_frame_id</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_frame_id</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()],</span> <span class="n">camera_state</span><span class="o">.</span><span class="n">frameId</span><span class="p">)</span>
+
+    <span class="n">encode_id</span> <span class="o">=</span> <span class="n">frame_to_encode_id</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">camera_state</span><span class="o">.</span><span class="n">frameId</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">encode_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing encoded frame for camera feed </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span><span class="si">}</span><span class="s2"> with frameId: </span><span class="si">{</span><span class="n">camera_state</span><span class="o">.</span><span class="n">frameId</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame_to_encode_id</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()])</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+      <span class="c1"># fallback mechanism for logs without encodeIdx (e.g. logs from before 2022 with dcamera recording disabled)</span>
+      <span class="c1"># try to fake encode_id by subtracting lowest frameId</span>
+      <span class="n">encode_id</span> <span class="o">=</span> <span class="n">camera_state</span><span class="o">.</span><span class="n">frameId</span> <span class="o">-</span> <span class="n">min_frame_id</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()]</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Faking encodeId to </span><span class="si">{</span><span class="n">encode_id</span><span class="si">}</span><span class="s2"> for camera feed </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span><span class="si">}</span><span class="s2"> with frameId: </span><span class="si">{</span><span class="n">camera_state</span><span class="o">.</span><span class="n">frameId</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">new_msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">())</span>
+    <span class="n">new_camera_state</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">new_msg</span><span class="p">,</span> <span class="n">new_msg</span><span class="o">.</span><span class="n">which</span><span class="p">())</span>
+    <span class="n">new_camera_state</span><span class="o">.</span><span class="n">frameId</span> <span class="o">=</span> <span class="n">encode_id</span>
+    <span class="n">new_camera_state</span><span class="o">.</span><span class="n">encodeId</span> <span class="o">=</span> <span class="n">encode_id</span>
+    <span class="c1"># timestampSof was added later so it might be missing on some old segments</span>
+    <span class="k">if</span> <span class="n">camera_state</span><span class="o">.</span><span class="n">timestampSof</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">camera_state</span><span class="o">.</span><span class="n">timestampEof</span> <span class="o">&gt;</span> <span class="mi">25000000</span><span class="p">:</span>
+      <span class="n">new_camera_state</span><span class="o">.</span><span class="n">timestampSof</span> <span class="o">=</span> <span class="n">camera_state</span><span class="o">.</span><span class="n">timestampEof</span> <span class="o">-</span> <span class="mi">18000000</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">new_camera_state</span><span class="o">.</span><span class="n">timestampSof</span> <span class="o">=</span> <span class="n">camera_state</span><span class="o">.</span><span class="n">timestampSof</span>
+    <span class="n">new_camera_state</span><span class="o">.</span><span class="n">timestampEof</span> <span class="o">=</span> <span class="n">camera_state</span><span class="o">.</span><span class="n">timestampEof</span>
+    <span class="n">new_msg</span><span class="o">.</span><span class="n">logMonoTime</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">logMonoTime</span>
+    <span class="n">new_msg</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">valid</span>
+
+    <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_msg</span><span class="o">.</span><span class="n">as_reader</span><span class="p">())</span>
+
+  <span class="k">return</span> <span class="n">all_msgs</span></div>
+
+
+
+<div class="viewcode-block" id="migrate_carParams">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.migration.migrate_carParams">[docs]</a>
+<span class="k">def</span> <span class="nf">migrate_carParams</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">old_logtime</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+  <span class="n">all_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;carParams&#39;</span><span class="p">:</span>
+      <span class="n">CP</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;carParams&#39;</span><span class="p">)</span>
+      <span class="n">CP</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">CP</span><span class="o">.</span><span class="n">carParams</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">carParams</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span>
+      <span class="n">CP</span><span class="o">.</span><span class="n">carParams</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="o">=</span> <span class="n">MIGRATION</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CP</span><span class="o">.</span><span class="n">carParams</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">,</span> <span class="n">CP</span><span class="o">.</span><span class="n">carParams</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">car_fw</span> <span class="ow">in</span> <span class="n">CP</span><span class="o">.</span><span class="n">carParams</span><span class="o">.</span><span class="n">carFw</span><span class="p">:</span>
+        <span class="n">car_fw</span><span class="o">.</span><span class="n">brand</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">carParams</span><span class="o">.</span><span class="n">carName</span>
+      <span class="k">if</span> <span class="n">old_logtime</span><span class="p">:</span>
+        <span class="n">CP</span><span class="o">.</span><span class="n">logMonoTime</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">logMonoTime</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">as_reader</span><span class="p">()</span>
+    <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">all_msgs</span></div>
+
+
+
+<div class="viewcode-block" id="migrate_sensorEvents">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.migration.migrate_sensorEvents">[docs]</a>
+<span class="k">def</span> <span class="nf">migrate_sensorEvents</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">old_logtime</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+  <span class="n">all_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;sensorEventsDEPRECATED&#39;</span><span class="p">:</span>
+      <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+      <span class="k">continue</span>
+
+    <span class="c1"># migrate to split sensor events</span>
+    <span class="k">for</span> <span class="n">evt</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">sensorEventsDEPRECATED</span><span class="p">:</span>
+      <span class="c1"># build new message for each sensor type</span>
+      <span class="n">sensor_service</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+      <span class="k">if</span> <span class="n">evt</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;acceleration&#39;</span><span class="p">:</span>
+        <span class="n">sensor_service</span> <span class="o">=</span> <span class="s1">&#39;accelerometer&#39;</span>
+      <span class="k">elif</span> <span class="n">evt</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;gyro&#39;</span> <span class="ow">or</span> <span class="n">evt</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;gyroUncalibrated&#39;</span><span class="p">:</span>
+        <span class="n">sensor_service</span> <span class="o">=</span> <span class="s1">&#39;gyroscope&#39;</span>
+      <span class="k">elif</span> <span class="n">evt</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;light&#39;</span> <span class="ow">or</span> <span class="n">evt</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;proximity&#39;</span><span class="p">:</span>
+        <span class="n">sensor_service</span> <span class="o">=</span> <span class="s1">&#39;lightSensor&#39;</span>
+      <span class="k">elif</span> <span class="n">evt</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;magnetic&#39;</span> <span class="ow">or</span> <span class="n">evt</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;magneticUncalibrated&#39;</span><span class="p">:</span>
+        <span class="n">sensor_service</span> <span class="o">=</span> <span class="s1">&#39;magnetometer&#39;</span>
+      <span class="k">elif</span> <span class="n">evt</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;temperature&#39;</span><span class="p">:</span>
+        <span class="n">sensor_service</span> <span class="o">=</span> <span class="s1">&#39;temperatureSensor&#39;</span>
+
+      <span class="n">m</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="n">sensor_service</span><span class="p">)</span>
+      <span class="n">m</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="k">if</span> <span class="n">old_logtime</span><span class="p">:</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">logMonoTime</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">logMonoTime</span>
+
+      <span class="n">m_dat</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">sensor_service</span><span class="p">)</span>
+      <span class="n">m_dat</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">evt</span><span class="o">.</span><span class="n">version</span>
+      <span class="n">m_dat</span><span class="o">.</span><span class="n">sensor</span> <span class="o">=</span> <span class="n">evt</span><span class="o">.</span><span class="n">sensor</span>
+      <span class="n">m_dat</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">evt</span><span class="o">.</span><span class="n">type</span>
+      <span class="n">m_dat</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">evt</span><span class="o">.</span><span class="n">source</span>
+      <span class="k">if</span> <span class="n">old_logtime</span><span class="p">:</span>
+        <span class="n">m_dat</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">evt</span><span class="o">.</span><span class="n">timestamp</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="n">m_dat</span><span class="p">,</span> <span class="n">evt</span><span class="o">.</span><span class="n">which</span><span class="p">(),</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">evt</span><span class="p">,</span> <span class="n">evt</span><span class="o">.</span><span class="n">which</span><span class="p">()))</span>
+
+      <span class="n">all_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">as_reader</span><span class="p">())</span>
+
+  <span class="k">return</span> <span class="n">all_msgs</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

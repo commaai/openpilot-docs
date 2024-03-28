@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.volkswagen.interface &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/volkswagen/interface.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.volkswagen.interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.volkswagen.interface</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">panda</span> <span class="kn">import</span> <span class="n">Panda</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">get_safety_config</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.interfaces</span> <span class="kn">import</span> <span class="n">CarInterfaceBase</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.volkswagen.values</span> <span class="kn">import</span> <span class="n">CAR</span><span class="p">,</span> <span class="n">CANBUS</span><span class="p">,</span> <span class="n">NetworkLocation</span><span class="p">,</span> <span class="n">TransmissionType</span><span class="p">,</span> <span class="n">GearShifter</span><span class="p">,</span> <span class="n">VolkswagenFlags</span>
+
+<span class="n">ButtonType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">ButtonEvent</span><span class="o">.</span><span class="n">Type</span>
+<span class="n">EventName</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">EventName</span>
+
+
+<div class="viewcode-block" id="CarInterface">
+<a class="viewcode-back" href="../../../../selfdrive.car.volkswagen.html#selfdrive.car.volkswagen.interface.CarInterface">[docs]</a>
+<span class="k">class</span> <span class="nc">CarInterface</span><span class="p">(</span><span class="n">CarInterfaceBase</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">,</span> <span class="n">CarController</span><span class="p">,</span> <span class="n">CarState</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">CarController</span><span class="p">,</span> <span class="n">CarState</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">ext_bus</span> <span class="o">=</span> <span class="n">CANBUS</span><span class="o">.</span><span class="n">pt</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cp_ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">ext_bus</span> <span class="o">=</span> <span class="n">CANBUS</span><span class="o">.</span><span class="n">cam</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cp_ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_cam</span>
+
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">_get_params</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">candidate</span><span class="p">:</span> <span class="n">CAR</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">,</span> <span class="n">car_fw</span><span class="p">,</span> <span class="n">experimental_long</span><span class="p">,</span> <span class="n">docs</span><span class="p">):</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">carName</span> <span class="o">=</span> <span class="s2">&quot;volkswagen&quot;</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">radarUnavailable</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">VolkswagenFlags</span><span class="o">.</span><span class="n">PQ</span><span class="p">:</span>
+      <span class="c1"># Set global PQ35/PQ46/NMS parameters</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_safety_config</span><span class="p">(</span><span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SafetyModel</span><span class="o">.</span><span class="n">volkswagenPq</span><span class="p">)]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">enableBsm</span> <span class="o">=</span> <span class="mh">0x3BA</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># SWA_1</span>
+
+      <span class="k">if</span> <span class="mh">0x440</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="n">docs</span><span class="p">:</span>  <span class="c1"># Getriebe_1</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">=</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">automatic</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">=</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">manual</span>
+
+      <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">msg</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="p">(</span><span class="mh">0x1A0</span><span class="p">,</span> <span class="mh">0xC2</span><span class="p">)):</span>  <span class="c1"># Bremse_1, Lenkwinkel_1</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">=</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">gateway</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">=</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span>
+
+      <span class="c1"># The PQ port is in dashcam-only mode due to a fixed six-minute maximum timer on HCA steering. An unsupported</span>
+      <span class="c1"># EPS flash update to work around this timer, and enable steering down to zero, is available from:</span>
+      <span class="c1">#   https://github.com/pd0wm/pq-flasher</span>
+      <span class="c1"># It is documented in a four-part blog series:</span>
+      <span class="c1">#   https://blog.willemmelching.nl/carhacking/2022/01/02/vw-part1/</span>
+      <span class="c1"># Panda ALLOW_DEBUG firmware required.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">dashcamOnly</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># Set global MQB parameters</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_safety_config</span><span class="p">(</span><span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SafetyModel</span><span class="o">.</span><span class="n">volkswagen</span><span class="p">)]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">enableBsm</span> <span class="o">=</span> <span class="mh">0x30F</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># SWA_01</span>
+
+      <span class="k">if</span> <span class="mh">0xAD</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="n">docs</span><span class="p">:</span>  <span class="c1"># Getriebe_11</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">=</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">automatic</span>
+      <span class="k">elif</span> <span class="mh">0x187</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>  <span class="c1"># EV_Gearshift</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">=</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">direct</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">=</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">manual</span>
+
+      <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">msg</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="p">(</span><span class="mh">0x40</span><span class="p">,</span> <span class="mh">0x86</span><span class="p">,</span> <span class="mh">0xB2</span><span class="p">,</span> <span class="mh">0xFD</span><span class="p">)):</span>  <span class="c1"># Airbag_01, LWI_01, ESP_19, ESP_21</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">=</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">gateway</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">=</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span>
+
+      <span class="k">if</span> <span class="mh">0x126</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>  <span class="c1"># HCA_01</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">VolkswagenFlags</span><span class="o">.</span><span class="n">STOCK_HCA_PRESENT</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="c1"># Global lateral tuning defaults, can be overridden per-vehicle</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerLimitTimer</span> <span class="o">=</span> <span class="mf">0.4</span>
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">VolkswagenFlags</span><span class="o">.</span><span class="n">PQ</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.2</span>
+      <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.1</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="mf">0.00006</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">]</span>
+
+    <span class="c1"># Global longitudinal tuning defaults, can be overridden per-vehicle</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">experimentalLongitudinalAvailable</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">gateway</span> <span class="ow">or</span> <span class="n">docs</span>
+    <span class="k">if</span> <span class="n">experimental_long</span><span class="p">:</span>
+      <span class="c1"># Proof-of-concept, prep for E2E only. No radar points available. Panda ALLOW_DEBUG firmware required.</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_VOLKSWAGEN_LONG_CONTROL</span>
+      <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">manual</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">=</span> <span class="mf">4.5</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">pcmCruise</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">stoppingControl</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">stopAccel</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.55</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgoStarting</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgoStopping</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">autoResumeSng</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">ret</span>
+
+  <span class="c1"># returns a car.CarState</span>
+  <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_cam</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_ext</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">transmissionType</span><span class="p">)</span>
+
+    <span class="n">events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_common_events</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">extra_gears</span><span class="o">=</span><span class="p">[</span><span class="n">GearShifter</span><span class="o">.</span><span class="n">eco</span><span class="p">,</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">sport</span><span class="p">,</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">manumatic</span><span class="p">],</span>
+                                       <span class="n">pcm_enable</span><span class="o">=</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">,</span>
+                                       <span class="n">enable_buttons</span><span class="o">=</span><span class="p">(</span><span class="n">ButtonType</span><span class="o">.</span><span class="n">setCruise</span><span class="p">,</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">resumeCruise</span><span class="p">))</span>
+
+    <span class="c1"># Low speed steer alert hysteresis logic</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">&gt;</span> <span class="mf">0.</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&lt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">+</span> <span class="mf">1.</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">low_speed_alert</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&gt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">+</span> <span class="mf">2.</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">low_speed_alert</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">low_speed_alert</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">belowSteerSpeed</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">:</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">belowEngageSpeed</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minEnableSpeed</span><span class="p">:</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">speedTooLow</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CC</span><span class="o">.</span><span class="n">eps_timer_soft_disable_alert</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">steerTimeLimit</span><span class="p">)</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">to_msg</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

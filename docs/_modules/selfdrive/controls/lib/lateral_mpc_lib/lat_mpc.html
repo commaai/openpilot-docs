@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.controls.lib.lateral_mpc_lib.lat_mpc &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/controls/lib/lateral_mpc_lib/lat_mpc.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.controls.lib.lateral_mpc_lib.lat_mpc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.controls.lib.lateral_mpc_lib.lat_mpc</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">casadi</span> <span class="kn">import</span> <span class="n">SX</span><span class="p">,</span> <span class="n">vertcat</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span>
+<span class="c1"># WARNING: imports outside of constants will not trigger a rebuild</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.modeld.constants</span> <span class="kn">import</span> <span class="n">ModelConstants</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>  <span class="c1"># generating code</span>
+  <span class="kn">from</span> <span class="nn">openpilot.third_party.acados.acados_template</span> <span class="kn">import</span> <span class="n">AcadosModel</span><span class="p">,</span> <span class="n">AcadosOcp</span><span class="p">,</span> <span class="n">AcadosOcpSolver</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.lateral_mpc_lib.c_generated_code.acados_ocp_solver_pyx</span> <span class="kn">import</span> <span class="n">AcadosOcpSolverCython</span>
+
+<span class="n">LAT_MPC_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="n">EXPORT_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">LAT_MPC_DIR</span><span class="p">,</span> <span class="s2">&quot;c_generated_code&quot;</span><span class="p">)</span>
+<span class="n">JSON_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">LAT_MPC_DIR</span><span class="p">,</span> <span class="s2">&quot;acados_ocp_lat.json&quot;</span><span class="p">)</span>
+<span class="n">X_DIM</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">P_DIM</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">COST_E_DIM</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">COST_DIM</span> <span class="o">=</span> <span class="n">COST_E_DIM</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="n">SPEED_OFFSET</span> <span class="o">=</span> <span class="mf">10.0</span>
+<span class="n">MODEL_NAME</span> <span class="o">=</span> <span class="s1">&#39;lat&#39;</span>
+<span class="n">ACADOS_SOLVER_TYPE</span> <span class="o">=</span> <span class="s1">&#39;SQP_RTI&#39;</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">32</span>
+
+<div class="viewcode-block" id="gen_lat_model">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.lateral_mpc_lib.html#selfdrive.controls.lib.lateral_mpc_lib.lat_mpc.gen_lat_model">[docs]</a>
+<span class="k">def</span> <span class="nf">gen_lat_model</span><span class="p">():</span>
+  <span class="n">model</span> <span class="o">=</span> <span class="n">AcadosModel</span><span class="p">()</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">MODEL_NAME</span>
+
+  <span class="c1"># set up states &amp; controls</span>
+  <span class="n">x_ego</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;x_ego&#39;</span><span class="p">)</span>
+  <span class="n">y_ego</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;y_ego&#39;</span><span class="p">)</span>
+  <span class="n">psi_ego</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;psi_ego&#39;</span><span class="p">)</span>
+  <span class="n">psi_rate_ego</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;psi_rate_ego&#39;</span><span class="p">)</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="n">x_ego</span><span class="p">,</span> <span class="n">y_ego</span><span class="p">,</span> <span class="n">psi_ego</span><span class="p">,</span> <span class="n">psi_rate_ego</span><span class="p">)</span>
+
+  <span class="c1"># parameters</span>
+  <span class="n">v_ego</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;v_ego&#39;</span><span class="p">)</span>
+  <span class="n">rotation_radius</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;rotation_radius&#39;</span><span class="p">)</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="n">v_ego</span><span class="p">,</span> <span class="n">rotation_radius</span><span class="p">)</span>
+
+  <span class="c1"># controls</span>
+  <span class="n">psi_accel_ego</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;psi_accel_ego&#39;</span><span class="p">)</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="n">psi_accel_ego</span><span class="p">)</span>
+
+  <span class="c1"># xdot</span>
+  <span class="n">x_ego_dot</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;x_ego_dot&#39;</span><span class="p">)</span>
+  <span class="n">y_ego_dot</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;y_ego_dot&#39;</span><span class="p">)</span>
+  <span class="n">psi_ego_dot</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;psi_ego_dot&#39;</span><span class="p">)</span>
+  <span class="n">psi_rate_ego_dot</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">&#39;psi_rate_ego_dot&#39;</span><span class="p">)</span>
+
+  <span class="n">model</span><span class="o">.</span><span class="n">xdot</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="n">x_ego_dot</span><span class="p">,</span> <span class="n">y_ego_dot</span><span class="p">,</span> <span class="n">psi_ego_dot</span><span class="p">,</span> <span class="n">psi_rate_ego_dot</span><span class="p">)</span>
+
+  <span class="c1"># dynamics model</span>
+  <span class="n">f_expl</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="n">v_ego</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">psi_ego</span><span class="p">)</span> <span class="o">-</span> <span class="n">rotation_radius</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">psi_ego</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi_rate_ego</span><span class="p">,</span>
+                   <span class="n">v_ego</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">psi_ego</span><span class="p">)</span> <span class="o">+</span> <span class="n">rotation_radius</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">psi_ego</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi_rate_ego</span><span class="p">,</span>
+                   <span class="n">psi_rate_ego</span><span class="p">,</span>
+                   <span class="n">psi_accel_ego</span><span class="p">)</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">f_impl_expr</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">xdot</span> <span class="o">-</span> <span class="n">f_expl</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">f_expl_expr</span> <span class="o">=</span> <span class="n">f_expl</span>
+  <span class="k">return</span> <span class="n">model</span></div>
+
+
+
+<div class="viewcode-block" id="gen_lat_ocp">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.lateral_mpc_lib.html#selfdrive.controls.lib.lateral_mpc_lib.lat_mpc.gen_lat_ocp">[docs]</a>
+<span class="k">def</span> <span class="nf">gen_lat_ocp</span><span class="p">():</span>
+  <span class="n">ocp</span> <span class="o">=</span> <span class="n">AcadosOcp</span><span class="p">()</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">gen_lat_model</span><span class="p">()</span>
+
+  <span class="n">Tf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ModelConstants</span><span class="o">.</span><span class="n">T_IDXS</span><span class="p">)[</span><span class="n">N</span><span class="p">]</span>
+
+  <span class="c1"># set dimensions</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">dims</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="n">N</span>
+
+  <span class="c1"># set cost module</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">cost_type</span> <span class="o">=</span> <span class="s1">&#39;NONLINEAR_LS&#39;</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">cost_type_e</span> <span class="o">=</span> <span class="s1">&#39;NONLINEAR_LS&#39;</span>
+
+  <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">COST_E_DIM</span><span class="p">))</span>
+  <span class="n">QR</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">COST_DIM</span><span class="p">))</span>
+
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">QR</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">W_e</span> <span class="o">=</span> <span class="n">Q</span>
+
+  <span class="n">y_ego</span><span class="p">,</span> <span class="n">psi_ego</span><span class="p">,</span> <span class="n">psi_rate_ego</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+  <span class="n">psi_rate_ego_dot</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">v_ego</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+  <span class="n">ocp</span><span class="o">.</span><span class="n">parameter_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">P_DIM</span><span class="p">,</span> <span class="p">))</span>
+
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">yref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">COST_DIM</span><span class="p">,</span> <span class="p">))</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">yref_e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">COST_E_DIM</span><span class="p">,</span> <span class="p">))</span>
+  <span class="c1"># Add offset to smooth out low speed control</span>
+  <span class="c1"># TODO unclear if this right solution long term</span>
+  <span class="n">v_ego_offset</span> <span class="o">=</span> <span class="n">v_ego</span> <span class="o">+</span> <span class="n">SPEED_OFFSET</span>
+  <span class="c1"># TODO there are two costs on psi_rate_ego_dot, one</span>
+  <span class="c1"># is correlated to jerk the other to steering wheel movement</span>
+  <span class="c1"># the steering wheel movement cost is added to prevent excessive</span>
+  <span class="c1"># wheel movements</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cost_y_expr</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="n">y_ego</span><span class="p">,</span>
+                                  <span class="n">v_ego_offset</span> <span class="o">*</span> <span class="n">psi_ego</span><span class="p">,</span>
+                                  <span class="n">v_ego_offset</span> <span class="o">*</span> <span class="n">psi_rate_ego</span><span class="p">,</span>
+                                  <span class="n">v_ego_offset</span> <span class="o">*</span> <span class="n">psi_rate_ego_dot</span><span class="p">,</span>
+                                  <span class="n">psi_rate_ego_dot</span> <span class="o">/</span> <span class="p">(</span><span class="n">v_ego</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">))</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cost_y_expr_e</span> <span class="o">=</span> <span class="n">vertcat</span><span class="p">(</span><span class="n">y_ego</span><span class="p">,</span>
+                                   <span class="n">v_ego_offset</span> <span class="o">*</span> <span class="n">psi_ego</span><span class="p">,</span>
+                                   <span class="n">v_ego_offset</span> <span class="o">*</span> <span class="n">psi_rate_ego</span><span class="p">)</span>
+
+  <span class="c1"># set constraints</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">constr_type</span> <span class="o">=</span> <span class="s1">&#39;BGH&#39;</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">idxbx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">ubx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">50</span><span class="p">)])</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">lbx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">50</span><span class="p">)])</span>
+  <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X_DIM</span><span class="p">,))</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">x0</span> <span class="o">=</span> <span class="n">x0</span>
+
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">qp_solver</span> <span class="o">=</span> <span class="s1">&#39;PARTIAL_CONDENSING_HPIPM&#39;</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">hessian_approx</span> <span class="o">=</span> <span class="s1">&#39;GAUSS_NEWTON&#39;</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">integrator_type</span> <span class="o">=</span> <span class="s1">&#39;ERK&#39;</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">nlp_solver_type</span> <span class="o">=</span> <span class="n">ACADOS_SOLVER_TYPE</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">qp_solver_iter_max</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">qp_solver_cond_N</span> <span class="o">=</span> <span class="mi">1</span>
+
+  <span class="c1"># set prediction horizon</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">tf</span> <span class="o">=</span> <span class="n">Tf</span>
+  <span class="n">ocp</span><span class="o">.</span><span class="n">solver_options</span><span class="o">.</span><span class="n">shooting_nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ModelConstants</span><span class="o">.</span><span class="n">T_IDXS</span><span class="p">)[:</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+
+  <span class="n">ocp</span><span class="o">.</span><span class="n">code_export_directory</span> <span class="o">=</span> <span class="n">EXPORT_DIR</span>
+  <span class="k">return</span> <span class="n">ocp</span></div>
+
+
+
+<div class="viewcode-block" id="LateralMpc">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.lateral_mpc_lib.html#selfdrive.controls.lib.lateral_mpc_lib.lat_mpc.LateralMpc">[docs]</a>
+<span class="k">class</span> <span class="nc">LateralMpc</span><span class="p">():</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X_DIM</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">AcadosOcpSolverCython</span><span class="p">(</span><span class="n">MODEL_NAME</span><span class="p">,</span> <span class="n">ACADOS_SOLVER_TYPE</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LateralMpc.reset">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.lateral_mpc_lib.html#selfdrive.controls.lib.lateral_mpc_lib.lat_mpc.LateralMpc.reset">[docs]</a>
+  <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X_DIM</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x_sol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">X_DIM</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">u_sol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">yref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">COST_DIM</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">cost_set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;yref&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">cost_set</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="s2">&quot;yref&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[</span><span class="n">N</span><span class="p">][:</span><span class="n">COST_E_DIM</span><span class="p">])</span>
+
+    <span class="c1"># Somehow needed for stable init</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X_DIM</span><span class="p">))</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">P_DIM</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">constraints_set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;lbx&quot;</span><span class="p">,</span> <span class="n">x0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">constraints_set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ubx&quot;</span><span class="p">,</span> <span class="n">x0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solution_status</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solve_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cost</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="LateralMpc.set_weights">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.lateral_mpc_lib.html#selfdrive.controls.lib.lateral_mpc_lib.lat_mpc.LateralMpc.set_weights">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_weight</span><span class="p">,</span> <span class="n">heading_weight</span><span class="p">,</span>
+                  <span class="n">lat_accel_weight</span><span class="p">,</span> <span class="n">lat_jerk_weight</span><span class="p">,</span>
+                  <span class="n">steering_rate_weight</span><span class="p">):</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="n">path_weight</span><span class="p">,</span> <span class="n">heading_weight</span><span class="p">,</span>
+                                   <span class="n">lat_accel_weight</span><span class="p">,</span> <span class="n">lat_jerk_weight</span><span class="p">,</span>
+                                   <span class="n">steering_rate_weight</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">cost_set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">cost_set</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">,</span> <span class="n">W</span><span class="p">[:</span><span class="n">COST_E_DIM</span><span class="p">,:</span><span class="n">COST_E_DIM</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="LateralMpc.run">
+<a class="viewcode-back" href="../../../../../selfdrive.controls.lib.lateral_mpc_lib.html#selfdrive.controls.lib.lateral_mpc_lib.lat_mpc.LateralMpc.run">[docs]</a>
+  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">y_pts</span><span class="p">,</span> <span class="n">heading_pts</span><span class="p">,</span> <span class="n">yaw_rate_pts</span><span class="p">):</span>
+    <span class="n">x0_cp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+    <span class="n">p_cp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">constraints_set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;lbx&quot;</span><span class="p">,</span> <span class="n">x0_cp</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">constraints_set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ubx&quot;</span><span class="p">,</span> <span class="n">x0_cp</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pts</span>
+    <span class="n">v_ego</span> <span class="o">=</span> <span class="n">p_cp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># rotation_radius = p_cp[1]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">heading_pts</span> <span class="o">*</span> <span class="p">(</span><span class="n">v_ego</span> <span class="o">+</span> <span class="n">SPEED_OFFSET</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">yaw_rate_pts</span> <span class="o">*</span> <span class="p">(</span><span class="n">v_ego</span> <span class="o">+</span> <span class="n">SPEED_OFFSET</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">cost_set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;yref&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="n">p_cp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="n">p_cp</span><span class="p">[</span><span class="n">N</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">cost_set</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="s2">&quot;yref&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yref</span><span class="p">[</span><span class="n">N</span><span class="p">][:</span><span class="n">COST_E_DIM</span><span class="p">])</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solution_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">solve_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">x_sol</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">u_sol</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">get_cost</span><span class="p">()</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">ocp</span> <span class="o">=</span> <span class="n">gen_lat_ocp</span><span class="p">()</span>
+  <span class="n">AcadosOcpSolver</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">ocp</span><span class="p">,</span> <span class="n">json_file</span><span class="o">=</span><span class="n">JSON_FILE</span><span class="p">)</span>
+  <span class="c1"># AcadosOcpSolver.build(ocp.code_export_directory, with_cython=True)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

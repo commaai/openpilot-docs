@@ -1,0 +1,967 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="class_localizer" kind="class" language="C++" prot="public">
+    <compoundname>Localizer</compoundname>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_localizer_1a3b0472530456169525d4b1029981368b" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; LiveKalman &gt;</type>
+        <definition>std::unique_ptr&lt;LiveKalman&gt; Localizer::kf</definition>
+        <argsstring></argsstring>
+        <name>kf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="68" column="19" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1adf7aaf103cb0c1b63db64fb5271b6390" prot="private" static="no" mutable="no">
+        <type>Eigen::VectorXd</type>
+        <definition>Eigen::VectorXd Localizer::calib</definition>
+        <argsstring></argsstring>
+        <name>calib</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="70" column="19" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1a4d77ed15e7b1f89803f669abd6158016" prot="private" static="no" mutable="no">
+        <type>MatrixXdr</type>
+        <definition>MatrixXdr Localizer::device_from_calib</definition>
+        <argsstring></argsstring>
+        <name>device_from_calib</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="71" column="13" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1a71464c91b7db2c373838562c50ee344c" prot="private" static="no" mutable="no">
+        <type>MatrixXdr</type>
+        <definition>MatrixXdr Localizer::calib_from_device</definition>
+        <argsstring></argsstring>
+        <name>calib_from_device</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="72" column="13" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1a977296758a59a9a3b9ef37f5db1e23e8" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool Localizer::calibrated</definition>
+        <argsstring></argsstring>
+        <name>calibrated</name>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="73" column="8" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1a516a1c244366b82610433b9e2558ee72" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double Localizer::car_speed</definition>
+        <argsstring></argsstring>
+        <name>car_speed</name>
+        <initializer>= 0.0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="75" column="10" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1ae1e637bb6370b16552c83c4b9c1652ad" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double Localizer::last_reset_time</definition>
+        <argsstring></argsstring>
+        <name>last_reset_time</name>
+        <initializer>= NAN</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="76" column="10" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1a5f2203ee0db9d196e80ca50a0f635bda" prot="private" static="no" mutable="no">
+        <type>std::deque&lt; double &gt;</type>
+        <definition>std::deque&lt;double&gt; Localizer::posenet_stds</definition>
+        <argsstring></argsstring>
+        <name>posenet_stds</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="77" column="14" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1ab3b5729f5bf99606450fe7a65a25b493" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; LocalCoord &gt;</type>
+        <definition>std::unique_ptr&lt;LocalCoord&gt; Localizer::converter</definition>
+        <argsstring></argsstring>
+        <name>converter</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="79" column="19" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1ac530d5ce4caace05999ffc05030092ad" prot="private" static="no" mutable="no">
+        <type>int64_t</type>
+        <definition>int64_t Localizer::unix_timestamp_millis</definition>
+        <argsstring></argsstring>
+        <name>unix_timestamp_millis</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="81" column="11" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1ade6874f4fdd774ce1b904fe61bfe302d" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double Localizer::reset_tracker</definition>
+        <argsstring></argsstring>
+        <name>reset_tracker</name>
+        <initializer>= 0.0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="82" column="10" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1ae4cdc7049e14f6108c7104c561c1f4d6" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool Localizer::device_fell</definition>
+        <argsstring></argsstring>
+        <name>device_fell</name>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="83" column="8" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1a159b04b7d611ecf0ed36105ef41c4ca3" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool Localizer::gps_mode</definition>
+        <argsstring></argsstring>
+        <name>gps_mode</name>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="84" column="8" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1afa163ca61397c89a05fe1e9ba8910fce" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double Localizer::first_valid_log_time</definition>
+        <argsstring></argsstring>
+        <name>first_valid_log_time</name>
+        <initializer>= NAN</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="85" column="10" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1a1b7d800f13d38ee557572323fa6eba9f" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double Localizer::ttff</definition>
+        <argsstring></argsstring>
+        <name>ttff</name>
+        <initializer>= NAN</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="86" column="10" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1aa0c068ecab6469438b545e796e2136da" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double Localizer::last_gps_msg</definition>
+        <argsstring></argsstring>
+        <name>last_gps_msg</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="87" column="10" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1ade1fe4798234e8c4aa789317ee363676" prot="private" static="no" mutable="no">
+        <type>LocalizerGnssSource</type>
+        <definition>LocalizerGnssSource Localizer::gnss_source</definition>
+        <argsstring></argsstring>
+        <name>gnss_source</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="88" column="23" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1aec1a1518128b7a0c86fd961cc8e845ca" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool Localizer::observation_timings_invalid</definition>
+        <argsstring></argsstring>
+        <name>observation_timings_invalid</name>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="89" column="8" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1a1bb55a7b44cc5c888ea6ac1d7c9d2995" prot="private" static="no" mutable="no">
+        <type>std::map&lt; std::string, double &gt;</type>
+        <definition>std::map&lt;std::string, double&gt; Localizer::observation_values_invalid</definition>
+        <argsstring></argsstring>
+        <name>observation_values_invalid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="90" column="12" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1a3d1a7f50e05c63b269fbfbd3dd652f38" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool Localizer::standstill</definition>
+        <argsstring></argsstring>
+        <name>standstill</name>
+        <initializer>= true</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="91" column="8" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1af7dab9b9a18e5a22e0f87056aaae43b4" prot="private" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t Localizer::orientation_reset_count</definition>
+        <argsstring></argsstring>
+        <name>orientation_reset_count</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="92" column="11" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1ad815364b63fd934af46582195269c633" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float Localizer::gps_std_factor</definition>
+        <argsstring></argsstring>
+        <name>gps_std_factor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="93" column="9" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1a1fae89afeca90b5ff1260ff28c78bc78" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float Localizer::gps_variance_factor</definition>
+        <argsstring></argsstring>
+        <name>gps_variance_factor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="94" column="9" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1af18df80b6bcfa743be1f280e0e402880" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float Localizer::gps_vertical_variance_factor</definition>
+        <argsstring></argsstring>
+        <name>gps_vertical_variance_factor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="95" column="9" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1a41d59725f93b54baa527751631010057" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double Localizer::gps_time_offset</definition>
+        <argsstring></argsstring>
+        <name>gps_time_offset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="96" column="10" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_localizer_1a014223d24b74d3dd4b0e668a079779e2" prot="private" static="no" mutable="no">
+        <type>Eigen::VectorXd</type>
+        <definition>Eigen::VectorXd Localizer::camodo_yawrate_distribution</definition>
+        <argsstring></argsstring>
+        <name>camodo_yawrate_distribution</name>
+        <initializer>= Eigen::Vector2d(0.0, 10.0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="97" column="19" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_localizer_1a6f7ddc9e15af17a440d07a42b25ae451" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>Localizer::Localizer</definition>
+        <argsstring>(LocalizerGnssSource gnss_source=LocalizerGnssSource::UBLOX)</argsstring>
+        <name>Localizer</name>
+        <param>
+          <type>LocalizerGnssSource</type>
+          <declname>gnss_source</declname>
+          <defval>LocalizerGnssSource::UBLOX</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="31" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a133626f43486d037411b3c06d30d4c54" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int Localizer::locationd_thread</definition>
+        <argsstring>()</argsstring>
+        <name>locationd_thread</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="33" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1aae8f8c412f9c1b6164552e86e2ef8e87" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::reset_kalman</definition>
+        <argsstring>(double current_time=NAN)</argsstring>
+        <name>reset_kalman</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+          <defval>NAN</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="35" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a83e98268d4410bbd75d0a87e73800b46" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::reset_kalman</definition>
+        <argsstring>(double current_time, const Eigen::VectorXd &amp;init_orient, const Eigen::VectorXd &amp;init_pos, const Eigen::VectorXd &amp;init_vel, const MatrixXdr &amp;init_pos_R, const MatrixXdr &amp;init_vel_R)</argsstring>
+        <name>reset_kalman</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+        </param>
+        <param>
+          <type>const Eigen::VectorXd &amp;</type>
+          <declname>init_orient</declname>
+        </param>
+        <param>
+          <type>const Eigen::VectorXd &amp;</type>
+          <declname>init_pos</declname>
+        </param>
+        <param>
+          <type>const Eigen::VectorXd &amp;</type>
+          <declname>init_vel</declname>
+        </param>
+        <param>
+          <type>const MatrixXdr &amp;</type>
+          <declname>init_pos_R</declname>
+        </param>
+        <param>
+          <type>const MatrixXdr &amp;</type>
+          <declname>init_vel_R</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="36" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1afb409f1d82dac8d7b94a7a1b86e9b569" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::reset_kalman</definition>
+        <argsstring>(double current_time, const Eigen::VectorXd &amp;init_x, const MatrixXdr &amp;init_P)</argsstring>
+        <name>reset_kalman</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+        </param>
+        <param>
+          <type>const Eigen::VectorXd &amp;</type>
+          <declname>init_x</declname>
+        </param>
+        <param>
+          <type>const MatrixXdr &amp;</type>
+          <declname>init_P</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="37" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a1df75b82c3f2fc7578d786e884aa8f2f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::finite_check</definition>
+        <argsstring>(double current_time=NAN)</argsstring>
+        <name>finite_check</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+          <defval>NAN</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="38" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1ac5a2d43f2e058ccb98e1207913a3b3f2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::time_check</definition>
+        <argsstring>(double current_time=NAN)</argsstring>
+        <name>time_check</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+          <defval>NAN</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="39" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a96c3f4ce3f2050eb0e45dd32033fb3a7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::update_reset_tracker</definition>
+        <argsstring>()</argsstring>
+        <name>update_reset_tracker</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="40" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a9abe0e899503809ae7d674e8ffaeeb99" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Localizer::is_gps_ok</definition>
+        <argsstring>()</argsstring>
+        <name>is_gps_ok</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="41" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1add6c16f7f0b8f39b9f7c8faafa3544fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Localizer::critical_services_valid</definition>
+        <argsstring>(const std::map&lt; std::string, double &gt; &amp;critical_services)</argsstring>
+        <name>critical_services_valid</name>
+        <param>
+          <type>const std::map&lt; std::string, double &gt; &amp;</type>
+          <declname>critical_services</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="42" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a38080359e530fa8e5496e4c4089abbbb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Localizer::is_timestamp_valid</definition>
+        <argsstring>(double current_time)</argsstring>
+        <name>is_timestamp_valid</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="43" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a02c75a2636d89d45e4e41c20593486b3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::determine_gps_mode</definition>
+        <argsstring>(double current_time)</argsstring>
+        <name>determine_gps_mode</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="44" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a04bd0c6f12d69aba08f38edfe3c042b7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Localizer::are_inputs_ok</definition>
+        <argsstring>()</argsstring>
+        <name>are_inputs_ok</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="45" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a283d79d5224dcd5d1e8812302b7f09df" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::observation_timings_invalid_reset</definition>
+        <argsstring>()</argsstring>
+        <name>observation_timings_invalid_reset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="46" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a9b772e32108dda599f01bc2120fd2466" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>kj::ArrayPtr&lt; capnp::byte &gt;</type>
+        <definition>kj::ArrayPtr&lt;capnp::byte&gt; Localizer::get_message_bytes</definition>
+        <argsstring>(MessageBuilder &amp;msg_builder, bool inputsOK, bool sensorsOK, bool gpsOK, bool msgValid)</argsstring>
+        <name>get_message_bytes</name>
+        <param>
+          <type>MessageBuilder &amp;</type>
+          <declname>msg_builder</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>inputsOK</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>sensorsOK</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>gpsOK</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>msgValid</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="48" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a26596e3da5f23a4e83509b70f4c1de27" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::build_live_location</definition>
+        <argsstring>(cereal::LiveLocationKalman::Builder &amp;fix)</argsstring>
+        <name>build_live_location</name>
+        <param>
+          <type>cereal::LiveLocationKalman::Builder &amp;</type>
+          <declname>fix</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="50" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1aa0c7dd83a4829eafe0e0e1071475e884" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Eigen::VectorXd</type>
+        <definition>Eigen::VectorXd Localizer::get_position_geodetic</definition>
+        <argsstring>()</argsstring>
+        <name>get_position_geodetic</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="52" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a712242093276ef61878ec6e7e7c23bd2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Eigen::VectorXd</type>
+        <definition>Eigen::VectorXd Localizer::get_state</definition>
+        <argsstring>()</argsstring>
+        <name>get_state</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="53" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a801f6c0a5f514497faa3090997b30ecd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Eigen::VectorXd</type>
+        <definition>Eigen::VectorXd Localizer::get_stdev</definition>
+        <argsstring>()</argsstring>
+        <name>get_stdev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="54" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a64564cbb2d50272fdf6d3f1f144b2e0d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::handle_msg_bytes</definition>
+        <argsstring>(const char *data, const size_t size)</argsstring>
+        <name>handle_msg_bytes</name>
+        <param>
+          <type>const char *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>const size_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="56" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a9b062c7f8382f11984b0ebe276052f98" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::handle_msg</definition>
+        <argsstring>(const cereal::Event::Reader &amp;log)</argsstring>
+        <name>handle_msg</name>
+        <param>
+          <type>const cereal::Event::Reader &amp;</type>
+          <declname>log</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="57" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a4d3b170db4be8d235fc4195577f5afc6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::handle_sensor</definition>
+        <argsstring>(double current_time, const cereal::SensorEventData::Reader &amp;log)</argsstring>
+        <name>handle_sensor</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+        </param>
+        <param>
+          <type>const cereal::SensorEventData::Reader &amp;</type>
+          <declname>log</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="58" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a27bb5f3e4051a4e730c78701a5177c6e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::handle_gps</definition>
+        <argsstring>(double current_time, const cereal::GpsLocationData::Reader &amp;log, const double sensor_time_offset)</argsstring>
+        <name>handle_gps</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+        </param>
+        <param>
+          <type>const cereal::GpsLocationData::Reader &amp;</type>
+          <declname>log</declname>
+        </param>
+        <param>
+          <type>const double</type>
+          <declname>sensor_time_offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="59" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a177dc63395c2e0bd9da8e890b5003f0a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::handle_gnss</definition>
+        <argsstring>(double current_time, const cereal::GnssMeasurements::Reader &amp;log)</argsstring>
+        <name>handle_gnss</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+        </param>
+        <param>
+          <type>const cereal::GnssMeasurements::Reader &amp;</type>
+          <declname>log</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="60" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a9ab1aa2bcdb2b94e6ca38ea5bb56e492" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::handle_car_state</definition>
+        <argsstring>(double current_time, const cereal::CarState::Reader &amp;log)</argsstring>
+        <name>handle_car_state</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+        </param>
+        <param>
+          <type>const cereal::CarState::Reader &amp;</type>
+          <declname>log</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="61" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a35d9dbd92287590dc49205107836722b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::handle_cam_odo</definition>
+        <argsstring>(double current_time, const cereal::CameraOdometry::Reader &amp;log)</argsstring>
+        <name>handle_cam_odo</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+        </param>
+        <param>
+          <type>const cereal::CameraOdometry::Reader &amp;</type>
+          <declname>log</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="62" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a4b7f3ec635e1609917948cdf88bf489e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::handle_live_calib</definition>
+        <argsstring>(double current_time, const cereal::LiveCalibrationData::Reader &amp;log)</argsstring>
+        <name>handle_live_calib</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+        </param>
+        <param>
+          <type>const cereal::LiveCalibrationData::Reader &amp;</type>
+          <declname>log</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="63" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_localizer_1a8b5b82f94aa851987970df50da31b42e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::input_fake_gps_observations</definition>
+        <argsstring>(double current_time)</argsstring>
+        <name>input_fake_gps_observations</name>
+        <param>
+          <type>double</type>
+          <declname>current_time</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="65" column="8"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="class_localizer_1ad2e06ebce9d71d80767a581c32c83cb8" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Localizer::configure_gnss_source</definition>
+        <argsstring>(const LocalizerGnssSource &amp;source)</argsstring>
+        <name>configure_gnss_source</name>
+        <param>
+          <type>const LocalizerGnssSource &amp;</type>
+          <declname>source</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="99" column="8"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/tmp/openpilot/selfdrive/locationd/locationd.h" line="29" column="16" bodyfile="/tmp/openpilot/selfdrive/locationd/locationd.h" bodystart="29" bodyend="100"/>
+    <listofallmembers>
+      <member refid="class_localizer_1a04bd0c6f12d69aba08f38edfe3c042b7" prot="public" virt="non-virtual"><scope>Localizer</scope><name>are_inputs_ok</name></member>
+      <member refid="class_localizer_1a26596e3da5f23a4e83509b70f4c1de27" prot="public" virt="non-virtual"><scope>Localizer</scope><name>build_live_location</name></member>
+      <member refid="class_localizer_1adf7aaf103cb0c1b63db64fb5271b6390" prot="private" virt="non-virtual"><scope>Localizer</scope><name>calib</name></member>
+      <member refid="class_localizer_1a71464c91b7db2c373838562c50ee344c" prot="private" virt="non-virtual"><scope>Localizer</scope><name>calib_from_device</name></member>
+      <member refid="class_localizer_1a977296758a59a9a3b9ef37f5db1e23e8" prot="private" virt="non-virtual"><scope>Localizer</scope><name>calibrated</name></member>
+      <member refid="class_localizer_1a014223d24b74d3dd4b0e668a079779e2" prot="private" virt="non-virtual"><scope>Localizer</scope><name>camodo_yawrate_distribution</name></member>
+      <member refid="class_localizer_1a516a1c244366b82610433b9e2558ee72" prot="private" virt="non-virtual"><scope>Localizer</scope><name>car_speed</name></member>
+      <member refid="class_localizer_1ad2e06ebce9d71d80767a581c32c83cb8" prot="private" virt="non-virtual"><scope>Localizer</scope><name>configure_gnss_source</name></member>
+      <member refid="class_localizer_1ab3b5729f5bf99606450fe7a65a25b493" prot="private" virt="non-virtual"><scope>Localizer</scope><name>converter</name></member>
+      <member refid="class_localizer_1add6c16f7f0b8f39b9f7c8faafa3544fe" prot="public" virt="non-virtual"><scope>Localizer</scope><name>critical_services_valid</name></member>
+      <member refid="class_localizer_1a02c75a2636d89d45e4e41c20593486b3" prot="public" virt="non-virtual"><scope>Localizer</scope><name>determine_gps_mode</name></member>
+      <member refid="class_localizer_1ae4cdc7049e14f6108c7104c561c1f4d6" prot="private" virt="non-virtual"><scope>Localizer</scope><name>device_fell</name></member>
+      <member refid="class_localizer_1a4d77ed15e7b1f89803f669abd6158016" prot="private" virt="non-virtual"><scope>Localizer</scope><name>device_from_calib</name></member>
+      <member refid="class_localizer_1a1df75b82c3f2fc7578d786e884aa8f2f" prot="public" virt="non-virtual"><scope>Localizer</scope><name>finite_check</name></member>
+      <member refid="class_localizer_1afa163ca61397c89a05fe1e9ba8910fce" prot="private" virt="non-virtual"><scope>Localizer</scope><name>first_valid_log_time</name></member>
+      <member refid="class_localizer_1a9b772e32108dda599f01bc2120fd2466" prot="public" virt="non-virtual"><scope>Localizer</scope><name>get_message_bytes</name></member>
+      <member refid="class_localizer_1aa0c7dd83a4829eafe0e0e1071475e884" prot="public" virt="non-virtual"><scope>Localizer</scope><name>get_position_geodetic</name></member>
+      <member refid="class_localizer_1a712242093276ef61878ec6e7e7c23bd2" prot="public" virt="non-virtual"><scope>Localizer</scope><name>get_state</name></member>
+      <member refid="class_localizer_1a801f6c0a5f514497faa3090997b30ecd" prot="public" virt="non-virtual"><scope>Localizer</scope><name>get_stdev</name></member>
+      <member refid="class_localizer_1ade1fe4798234e8c4aa789317ee363676" prot="private" virt="non-virtual"><scope>Localizer</scope><name>gnss_source</name></member>
+      <member refid="class_localizer_1a159b04b7d611ecf0ed36105ef41c4ca3" prot="private" virt="non-virtual"><scope>Localizer</scope><name>gps_mode</name></member>
+      <member refid="class_localizer_1ad815364b63fd934af46582195269c633" prot="private" virt="non-virtual"><scope>Localizer</scope><name>gps_std_factor</name></member>
+      <member refid="class_localizer_1a41d59725f93b54baa527751631010057" prot="private" virt="non-virtual"><scope>Localizer</scope><name>gps_time_offset</name></member>
+      <member refid="class_localizer_1a1fae89afeca90b5ff1260ff28c78bc78" prot="private" virt="non-virtual"><scope>Localizer</scope><name>gps_variance_factor</name></member>
+      <member refid="class_localizer_1af18df80b6bcfa743be1f280e0e402880" prot="private" virt="non-virtual"><scope>Localizer</scope><name>gps_vertical_variance_factor</name></member>
+      <member refid="class_localizer_1a35d9dbd92287590dc49205107836722b" prot="public" virt="non-virtual"><scope>Localizer</scope><name>handle_cam_odo</name></member>
+      <member refid="class_localizer_1a9ab1aa2bcdb2b94e6ca38ea5bb56e492" prot="public" virt="non-virtual"><scope>Localizer</scope><name>handle_car_state</name></member>
+      <member refid="class_localizer_1a177dc63395c2e0bd9da8e890b5003f0a" prot="public" virt="non-virtual"><scope>Localizer</scope><name>handle_gnss</name></member>
+      <member refid="class_localizer_1a27bb5f3e4051a4e730c78701a5177c6e" prot="public" virt="non-virtual"><scope>Localizer</scope><name>handle_gps</name></member>
+      <member refid="class_localizer_1a4b7f3ec635e1609917948cdf88bf489e" prot="public" virt="non-virtual"><scope>Localizer</scope><name>handle_live_calib</name></member>
+      <member refid="class_localizer_1a9b062c7f8382f11984b0ebe276052f98" prot="public" virt="non-virtual"><scope>Localizer</scope><name>handle_msg</name></member>
+      <member refid="class_localizer_1a64564cbb2d50272fdf6d3f1f144b2e0d" prot="public" virt="non-virtual"><scope>Localizer</scope><name>handle_msg_bytes</name></member>
+      <member refid="class_localizer_1a4d3b170db4be8d235fc4195577f5afc6" prot="public" virt="non-virtual"><scope>Localizer</scope><name>handle_sensor</name></member>
+      <member refid="class_localizer_1a8b5b82f94aa851987970df50da31b42e" prot="public" virt="non-virtual"><scope>Localizer</scope><name>input_fake_gps_observations</name></member>
+      <member refid="class_localizer_1a9abe0e899503809ae7d674e8ffaeeb99" prot="public" virt="non-virtual"><scope>Localizer</scope><name>is_gps_ok</name></member>
+      <member refid="class_localizer_1a38080359e530fa8e5496e4c4089abbbb" prot="public" virt="non-virtual"><scope>Localizer</scope><name>is_timestamp_valid</name></member>
+      <member refid="class_localizer_1a3b0472530456169525d4b1029981368b" prot="private" virt="non-virtual"><scope>Localizer</scope><name>kf</name></member>
+      <member refid="class_localizer_1aa0c068ecab6469438b545e796e2136da" prot="private" virt="non-virtual"><scope>Localizer</scope><name>last_gps_msg</name></member>
+      <member refid="class_localizer_1ae1e637bb6370b16552c83c4b9c1652ad" prot="private" virt="non-virtual"><scope>Localizer</scope><name>last_reset_time</name></member>
+      <member refid="class_localizer_1a6f7ddc9e15af17a440d07a42b25ae451" prot="public" virt="non-virtual"><scope>Localizer</scope><name>Localizer</name></member>
+      <member refid="class_localizer_1a133626f43486d037411b3c06d30d4c54" prot="public" virt="non-virtual"><scope>Localizer</scope><name>locationd_thread</name></member>
+      <member refid="class_localizer_1aec1a1518128b7a0c86fd961cc8e845ca" prot="private" virt="non-virtual"><scope>Localizer</scope><name>observation_timings_invalid</name></member>
+      <member refid="class_localizer_1a283d79d5224dcd5d1e8812302b7f09df" prot="public" virt="non-virtual"><scope>Localizer</scope><name>observation_timings_invalid_reset</name></member>
+      <member refid="class_localizer_1a1bb55a7b44cc5c888ea6ac1d7c9d2995" prot="private" virt="non-virtual"><scope>Localizer</scope><name>observation_values_invalid</name></member>
+      <member refid="class_localizer_1af7dab9b9a18e5a22e0f87056aaae43b4" prot="private" virt="non-virtual"><scope>Localizer</scope><name>orientation_reset_count</name></member>
+      <member refid="class_localizer_1a5f2203ee0db9d196e80ca50a0f635bda" prot="private" virt="non-virtual"><scope>Localizer</scope><name>posenet_stds</name></member>
+      <member refid="class_localizer_1aae8f8c412f9c1b6164552e86e2ef8e87" prot="public" virt="non-virtual"><scope>Localizer</scope><name>reset_kalman</name></member>
+      <member refid="class_localizer_1a83e98268d4410bbd75d0a87e73800b46" prot="public" virt="non-virtual"><scope>Localizer</scope><name>reset_kalman</name></member>
+      <member refid="class_localizer_1afb409f1d82dac8d7b94a7a1b86e9b569" prot="public" virt="non-virtual"><scope>Localizer</scope><name>reset_kalman</name></member>
+      <member refid="class_localizer_1ade6874f4fdd774ce1b904fe61bfe302d" prot="private" virt="non-virtual"><scope>Localizer</scope><name>reset_tracker</name></member>
+      <member refid="class_localizer_1a3d1a7f50e05c63b269fbfbd3dd652f38" prot="private" virt="non-virtual"><scope>Localizer</scope><name>standstill</name></member>
+      <member refid="class_localizer_1ac5a2d43f2e058ccb98e1207913a3b3f2" prot="public" virt="non-virtual"><scope>Localizer</scope><name>time_check</name></member>
+      <member refid="class_localizer_1a1b7d800f13d38ee557572323fa6eba9f" prot="private" virt="non-virtual"><scope>Localizer</scope><name>ttff</name></member>
+      <member refid="class_localizer_1ac530d5ce4caace05999ffc05030092ad" prot="private" virt="non-virtual"><scope>Localizer</scope><name>unix_timestamp_millis</name></member>
+      <member refid="class_localizer_1a96c3f4ce3f2050eb0e45dd32033fb3a7" prot="public" virt="non-virtual"><scope>Localizer</scope><name>update_reset_tracker</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

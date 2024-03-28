@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="openpilot docs" name="description" />
+<meta content="op, openpilot, docs, documentation" name="keywords" />
+<meta content="all,follow" name="robots" />
+<meta content="index,follow,snippet,archive" name="googlebot" />
+<meta content="en_US" property="og:locale" />
+<meta content="docs.comma.ai" property="og:site_name" />
+<meta content="https://docs.comma.ai" property="og:url" />
+<meta content="openpilot Documentation" property="og:title" />
+<meta content="website" property="og:type" />
+<meta content="image/jpeg" property="og:image:type" />
+<meta content="400" property="og:image:width" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image:url" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image:secure_url" />
+<meta content="openpilot Documentation" property="og:description" />
+<meta content="summary_large_image" property="twitter:card" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="twitter:logo" />
+<meta content="openpilot Documentation" property="twitter:title" />
+<meta content="openpilot Documentation" property="twitter:description" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>debug scripts &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/selfdrive/debug/README.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="loggerd" href="../../system/loggerd/README.html" />
+    <link rel="prev" title="openpilot" href="../../overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../overview.html">openpilot</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Debugging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#can-printer-py"><span class="xref myst">can_printer.py</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dump-py"><span class="xref myst">dump.py</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vw-mqb-config-py"><span class="xref myst">vw_mqb_config.py</span></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/loggerd/README.html">loggerd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../monitoring/README.html">Driver Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../test/process_replay/README.html">Process Replay</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../overview.html">openpilot</a></li>
+      <li class="breadcrumb-item active">debug scripts</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/selfdrive/debug/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="debug-scripts">
+<h1>debug scripts<a class="headerlink" href="#debug-scripts" title="Link to this heading"></a></h1>
+<section id="can-printer-py">
+<h2><a class="reference internal" href="#can_printer.py"><span class="xref myst">can_printer.py</span></a><a class="headerlink" href="#can-printer-py" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">can_printer</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">bus</span> <span class="n">BUS</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">max_msg</span> <span class="n">MAX_MSG</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">addr</span> <span class="n">ADDR</span><span class="p">]</span>
+
+<span class="n">simple</span> <span class="n">CAN</span> <span class="n">data</span> <span class="n">viewer</span>
+
+<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>         <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+  <span class="o">--</span><span class="n">bus</span> <span class="n">BUS</span>          <span class="n">CAN</span> <span class="n">bus</span> <span class="n">to</span> <span class="nb">print</span> <span class="n">out</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">max_msg</span> <span class="n">MAX_MSG</span>  <span class="nb">max</span> <span class="n">addr</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">addr</span> <span class="n">ADDR</span>
+</pre></div>
+</div>
+</section>
+<section id="dump-py">
+<h2><a class="reference internal" href="#dump.py"><span class="xref myst">dump.py</span></a><a class="headerlink" href="#dump-py" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">dump</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">pipe</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">raw</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">json</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dump</span><span class="o">-</span><span class="n">json</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="nb">print</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">addr</span> <span class="n">ADDR</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">values</span> <span class="n">VALUES</span><span class="p">]</span> <span class="p">[</span><span class="n">socket</span> <span class="p">[</span><span class="n">socket</span> <span class="o">...</span><span class="p">]]</span>
+
+<span class="n">Dump</span> <span class="n">communication</span> <span class="n">sockets</span><span class="o">.</span> <span class="n">See</span> <span class="n">cereal</span><span class="o">/</span><span class="n">services</span><span class="o">.</span><span class="n">py</span> <span class="k">for</span> <span class="n">a</span> <span class="n">complete</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">available</span> <span class="n">sockets</span><span class="o">.</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="n">socket</span>           <span class="n">socket</span> <span class="n">names</span> <span class="n">to</span> <span class="n">dump</span><span class="o">.</span> <span class="n">defaults</span> <span class="n">to</span> <span class="nb">all</span> <span class="n">services</span> <span class="n">defined</span> <span class="ow">in</span> <span class="n">cereal</span>
+
+<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>       <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+  <span class="o">--</span><span class="n">pipe</span>
+  <span class="o">--</span><span class="n">raw</span>
+  <span class="o">--</span><span class="n">json</span>
+  <span class="o">--</span><span class="n">dump</span><span class="o">-</span><span class="n">json</span>
+  <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="nb">print</span>
+  <span class="o">--</span><span class="n">addr</span> <span class="n">ADDR</span>
+  <span class="o">--</span><span class="n">values</span> <span class="n">VALUES</span>  <span class="n">values</span> <span class="n">to</span> <span class="n">monitor</span> <span class="p">(</span><span class="n">instead</span> <span class="n">of</span> <span class="n">entire</span> <span class="n">event</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="vw-mqb-config-py">
+<h2><a class="reference internal" href="#vw_mqb_config.py"><span class="xref myst">vw_mqb_config.py</span></a><a class="headerlink" href="#vw-mqb-config-py" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">vw_mqb_config</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">debug</span><span class="p">]</span> <span class="p">{</span><span class="n">enable</span><span class="p">,</span><span class="n">show</span><span class="p">,</span><span class="n">disable</span><span class="p">}</span>
+
+<span class="n">Shows</span> <span class="n">Volkswagen</span> <span class="n">EPS</span> <span class="n">software</span> <span class="ow">and</span> <span class="n">coding</span> <span class="n">info</span><span class="p">,</span> <span class="ow">and</span> <span class="n">enables</span> <span class="ow">or</span> <span class="n">disables</span> <span class="n">Heading</span> <span class="n">Control</span>
+<span class="n">Assist</span> <span class="p">(</span><span class="n">Lane</span> <span class="n">Assist</span><span class="p">)</span><span class="o">.</span> <span class="n">Useful</span> <span class="k">for</span> <span class="n">enabling</span> <span class="n">HCA</span> <span class="n">on</span> <span class="n">cars</span> <span class="n">without</span> <span class="n">factory</span> <span class="n">Lane</span> <span class="n">Assist</span> <span class="n">that</span> <span class="n">want</span>
+<span class="n">to</span> <span class="n">use</span> <span class="n">openpilot</span> <span class="n">integrated</span> <span class="n">at</span> <span class="n">the</span> <span class="n">CAN</span> <span class="n">gateway</span> <span class="p">(</span><span class="n">J533</span><span class="p">)</span><span class="o">.</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="p">{</span><span class="n">enable</span><span class="p">,</span><span class="n">show</span><span class="p">,</span><span class="n">disable</span><span class="p">}</span>
+                        <span class="n">show</span> <span class="ow">or</span> <span class="n">modify</span> <span class="n">current</span> <span class="n">EPS</span> <span class="n">HCA</span> <span class="n">config</span>
+
+<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+  <span class="o">--</span><span class="n">debug</span>               <span class="n">enable</span> <span class="n">ISO</span><span class="o">-</span><span class="n">TP</span><span class="o">/</span><span class="n">UDS</span> <span class="n">stack</span> <span class="n">debugging</span> <span class="n">output</span>
+
+<span class="n">This</span> <span class="n">tool</span> <span class="ow">is</span> <span class="n">meant</span> <span class="n">to</span> <span class="n">run</span> <span class="n">directly</span> <span class="n">on</span> <span class="n">a</span> <span class="n">vehicle</span><span class="o">-</span><span class="n">installed</span> <span class="n">comma</span> <span class="n">three</span><span class="p">,</span> <span class="k">with</span>
+<span class="n">the</span> <span class="n">openpilot</span><span class="o">/</span><span class="n">tmux</span> <span class="n">processes</span> <span class="n">stopped</span><span class="o">.</span> <span class="n">It</span> <span class="n">should</span> <span class="n">also</span> <span class="n">work</span> <span class="n">on</span> <span class="n">a</span> <span class="n">separate</span> <span class="n">PC</span> <span class="k">with</span> <span class="n">a</span> <span class="n">USB</span><span class="o">-</span>
+<span class="n">attached</span> <span class="n">comma</span> <span class="n">panda</span><span class="o">.</span> <span class="n">Vehicle</span> <span class="n">ignition</span> <span class="n">must</span> <span class="n">be</span> <span class="n">on</span><span class="o">.</span> <span class="n">Recommend</span> <span class="n">engine</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">running</span> <span class="n">when</span>
+<span class="n">making</span> <span class="n">changes</span><span class="o">.</span> <span class="n">Must</span> <span class="n">turn</span> <span class="n">ignition</span> <span class="n">off</span> <span class="ow">and</span> <span class="n">on</span> <span class="n">again</span> <span class="k">for</span> <span class="nb">any</span> <span class="n">changes</span> <span class="n">to</span> <span class="n">take</span> <span class="n">effect</span><span class="o">.</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../overview.html" class="btn btn-neutral float-left" title="openpilot" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../system/loggerd/README.html" class="btn btn-neutral float-right" title="loggerd" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

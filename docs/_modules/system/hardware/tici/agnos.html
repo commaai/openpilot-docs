@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>system.hardware.tici.agnos &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/system/hardware/tici/agnos.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">system.hardware.tici.agnos</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for system.hardware.tici.agnos</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">lzma</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Generator</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">import</span> <span class="nn">openpilot.system.hardware.tici.casync</span> <span class="k">as</span> <span class="nn">casync</span>
+
+<span class="n">SPARSE_CHUNK_FMT</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="s1">&#39;H2xI4x&#39;</span><span class="p">)</span>
+<span class="n">CAIBX_URL</span> <span class="o">=</span> <span class="s2">&quot;https://commadist.azureedge.net/agnosupdate/&quot;</span>
+
+
+<div class="viewcode-block" id="StreamingDecompressor">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.StreamingDecompressor">[docs]</a>
+<span class="k">class</span> <span class="nc">StreamingDecompressor</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">buf</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept-Encoding&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">it</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">req</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">decompressor</span> <span class="o">=</span> <span class="n">lzma</span><span class="o">.</span><span class="n">LZMADecompressor</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="n">lzma</span><span class="o">.</span><span class="n">FORMAT_AUTO</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">eof</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sha256</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
+
+<div class="viewcode-block" id="StreamingDecompressor.read">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.StreamingDecompressor.read">[docs]</a>
+  <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">req</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">compressed</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">it</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eof</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">break</span>
+      <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decompressor</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">compressed</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">buf</span> <span class="o">+=</span> <span class="n">out</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">[:</span><span class="n">length</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">buf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">[</span><span class="n">length</span><span class="p">:]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">sha256</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="unsparsify">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.unsparsify">[docs]</a>
+<span class="k">def</span> <span class="nf">unsparsify</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">StreamingDecompressor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+  <span class="c1"># https://source.android.com/devices/bootloader/images#sparse-format</span>
+  <span class="n">magic</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">magic</span> <span class="o">==</span> <span class="mh">0xed26ff3a</span><span class="p">)</span>
+
+  <span class="c1"># Version</span>
+  <span class="n">major</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">minor</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">major</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">minor</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+  <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># file header size</span>
+  <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># chunk header size</span>
+
+  <span class="n">block_sz</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>  <span class="c1"># total blocks</span>
+  <span class="n">num_chunks</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>  <span class="c1"># crc checksum</span>
+
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">):</span>
+    <span class="n">chunk_type</span><span class="p">,</span> <span class="n">out_blocks</span> <span class="o">=</span> <span class="n">SPARSE_CHUNK_FMT</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">12</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">chunk_type</span> <span class="o">==</span> <span class="mh">0xcac1</span><span class="p">:</span>  <span class="c1"># Raw</span>
+      <span class="c1"># TODO: yield in smaller chunks. Yielding only block_sz is too slow. Largest observed data chunk is 252 MB.</span>
+      <span class="k">yield</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">out_blocks</span> <span class="o">*</span> <span class="n">block_sz</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">chunk_type</span> <span class="o">==</span> <span class="mh">0xcac2</span><span class="p">:</span>  <span class="c1"># Fill</span>
+      <span class="n">filler</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">block_sz</span> <span class="o">//</span> <span class="mi">4</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">out_blocks</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">filler</span>
+    <span class="k">elif</span> <span class="n">chunk_type</span> <span class="o">==</span> <span class="mh">0xcac3</span><span class="p">:</span>  <span class="c1"># Don&#39;t care</span>
+      <span class="k">yield</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unhandled sparse chunk type&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># noop wrapper with same API as unsparsify() for non sparse images</span>
+<div class="viewcode-block" id="noop">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.noop">[docs]</a>
+<span class="k">def</span> <span class="nf">noop</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">StreamingDecompressor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">f</span><span class="o">.</span><span class="n">eof</span><span class="p">:</span>
+    <span class="k">yield</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_target_slot_number">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.get_target_slot_number">[docs]</a>
+<span class="k">def</span> <span class="nf">get_target_slot_number</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+  <span class="n">current_slot</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s2">&quot;abctl&quot;</span><span class="p">,</span> <span class="s2">&quot;--boot_slot&quot;</span><span class="p">],</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+  <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">current_slot</span> <span class="o">==</span> <span class="s2">&quot;_a&quot;</span> <span class="k">else</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="slot_number_to_suffix">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.slot_number_to_suffix">[docs]</a>
+<span class="k">def</span> <span class="nf">slot_number_to_suffix</span><span class="p">(</span><span class="n">slot_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">assert</span> <span class="n">slot_number</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="k">return</span> <span class="s1">&#39;_a&#39;</span> <span class="k">if</span> <span class="n">slot_number</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;_b&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="get_partition_path">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.get_partition_path">[docs]</a>
+<span class="k">def</span> <span class="nf">get_partition_path</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">partition</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/dev/disk/by-partlabel/</span><span class="si">{</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+
+  <span class="k">if</span> <span class="n">partition</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;has_ab&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="n">path</span> <span class="o">+=</span> <span class="n">slot_number_to_suffix</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">path</span></div>
+
+
+
+<div class="viewcode-block" id="get_raw_hash">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.get_raw_hash">[docs]</a>
+<span class="k">def</span> <span class="nf">get_raw_hash</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">partition_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="n">raw_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
+  <span class="n">pos</span><span class="p">,</span> <span class="n">chunk_size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span>
+
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
+    <span class="k">while</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="n">partition_size</span><span class="p">:</span>
+      <span class="n">n</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">partition_size</span> <span class="o">-</span> <span class="n">pos</span><span class="p">)</span>
+      <span class="n">raw_hash</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+      <span class="n">pos</span> <span class="o">+=</span> <span class="n">n</span>
+
+  <span class="k">return</span> <span class="n">raw_hash</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="verify_partition">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.verify_partition">[docs]</a>
+<span class="k">def</span> <span class="nf">verify_partition</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">partition</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">],</span> <span class="n">force_full_check</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="n">full_check</span> <span class="o">=</span> <span class="n">partition</span><span class="p">[</span><span class="s1">&#39;full_check&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">force_full_check</span>
+  <span class="n">path</span> <span class="o">=</span> <span class="n">get_partition_path</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">,</span> <span class="n">partition</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+  <span class="n">partition_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">partition</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span>
+
+  <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;hash_raw&#39;</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+  <span class="n">partition_hash</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">partition</span><span class="p">[</span><span class="s1">&#39;hash_raw&#39;</span><span class="p">]</span>
+
+  <span class="k">if</span> <span class="n">full_check</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">get_raw_hash</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">partition_size</span><span class="p">)</span> <span class="o">==</span> <span class="n">partition_hash</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
+      <span class="n">out</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">partition_size</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="o">==</span> <span class="n">partition_hash</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="clear_partition_hash">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.clear_partition_hash">[docs]</a>
+<span class="k">def</span> <span class="nf">clear_partition_hash</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">partition</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">path</span> <span class="o">=</span> <span class="n">get_partition_path</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">,</span> <span class="n">partition</span><span class="p">)</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;wb+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
+    <span class="n">partition_size</span> <span class="o">=</span> <span class="n">partition</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span>
+
+    <span class="n">out</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">partition_size</span><span class="p">)</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="mi">64</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="extract_compressed_image">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.extract_compressed_image">[docs]</a>
+<span class="k">def</span> <span class="nf">extract_compressed_image</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">partition</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">cloudlog</span><span class="p">):</span>
+  <span class="n">path</span> <span class="o">=</span> <span class="n">get_partition_path</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">,</span> <span class="n">partition</span><span class="p">)</span>
+  <span class="n">downloader</span> <span class="o">=</span> <span class="n">StreamingDecompressor</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">])</span>
+
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;wb+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
+    <span class="c1"># Flash partition</span>
+    <span class="n">last_p</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">raw_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">unsparsify</span> <span class="k">if</span> <span class="n">partition</span><span class="p">[</span><span class="s1">&#39;sparse&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="n">noop</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">f</span><span class="p">(</span><span class="n">downloader</span><span class="p">):</span>
+      <span class="n">raw_hash</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+      <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+      <span class="n">p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span> <span class="o">/</span> <span class="n">partition</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">last_p</span><span class="p">:</span>
+        <span class="n">last_p</span> <span class="o">=</span> <span class="n">p</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Installing </span><span class="si">{</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">raw_hash</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="n">partition</span><span class="p">[</span><span class="s1">&#39;hash_raw&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Raw hash mismatch &#39;</span><span class="si">{</span><span class="n">raw_hash</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">downloader</span><span class="o">.</span><span class="n">sha256</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="n">partition</span><span class="p">[</span><span class="s1">&#39;hash&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Uncompressed hash mismatch&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">out</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span> <span class="o">!=</span> <span class="n">partition</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]:</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Uncompressed size mismatch&quot;</span><span class="p">)</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="extract_casync_image">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.extract_casync_image">[docs]</a>
+<span class="k">def</span> <span class="nf">extract_casync_image</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">partition</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">cloudlog</span><span class="p">):</span>
+  <span class="n">path</span> <span class="o">=</span> <span class="n">get_partition_path</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">,</span> <span class="n">partition</span><span class="p">)</span>
+  <span class="n">seed_path</span> <span class="o">=</span> <span class="n">path</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span> <span class="k">if</span> <span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;a&#39;</span> <span class="k">else</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+
+  <span class="n">target</span> <span class="o">=</span> <span class="n">casync</span><span class="o">.</span><span class="n">parse_caibx</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;casync_caibx&#39;</span><span class="p">])</span>
+
+  <span class="n">sources</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">casync</span><span class="o">.</span><span class="n">ChunkReader</span><span class="p">,</span> <span class="n">casync</span><span class="o">.</span><span class="n">ChunkDict</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="c1"># First source is the current partition.</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">raw_hash</span> <span class="o">=</span> <span class="n">get_raw_hash</span><span class="p">(</span><span class="n">seed_path</span><span class="p">,</span> <span class="n">partition</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">])</span>
+    <span class="n">caibx_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">CAIBX_URL</span><span class="si">}{</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">raw_hash</span><span class="si">}</span><span class="s2">.caibx&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;casync fetching </span><span class="si">{</span><span class="n">caibx_url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">sources</span> <span class="o">+=</span> <span class="p">[(</span><span class="s1">&#39;seed&#39;</span><span class="p">,</span> <span class="n">casync</span><span class="o">.</span><span class="n">FileChunkReader</span><span class="p">(</span><span class="n">seed_path</span><span class="p">),</span> <span class="n">casync</span><span class="o">.</span><span class="n">build_chunk_dict</span><span class="p">(</span><span class="n">casync</span><span class="o">.</span><span class="n">parse_caibx</span><span class="p">(</span><span class="n">caibx_url</span><span class="p">)))]</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">RequestException</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;casync failed to load </span><span class="si">{</span><span class="n">caibx_url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;casync failed to hash seed partition&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Second source is the target partition, this allows for resuming</span>
+  <span class="n">sources</span> <span class="o">+=</span> <span class="p">[(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">casync</span><span class="o">.</span><span class="n">FileChunkReader</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">casync</span><span class="o">.</span><span class="n">build_chunk_dict</span><span class="p">(</span><span class="n">target</span><span class="p">))]</span>
+
+  <span class="c1"># Finally we add the remote source to download any missing chunks</span>
+  <span class="n">sources</span> <span class="o">+=</span> <span class="p">[(</span><span class="s1">&#39;remote&#39;</span><span class="p">,</span> <span class="n">casync</span><span class="o">.</span><span class="n">RemoteChunkReader</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;casync_store&#39;</span><span class="p">]),</span> <span class="n">casync</span><span class="o">.</span><span class="n">build_chunk_dict</span><span class="p">(</span><span class="n">target</span><span class="p">))]</span>
+
+  <span class="n">last_p</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="k">def</span> <span class="nf">progress</span><span class="p">(</span><span class="n">cur</span><span class="p">):</span>
+    <span class="k">nonlocal</span> <span class="n">last_p</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cur</span> <span class="o">/</span> <span class="n">partition</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">last_p</span><span class="p">:</span>
+      <span class="n">last_p</span> <span class="o">=</span> <span class="n">p</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Installing </span><span class="si">{</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+  <span class="n">stats</span> <span class="o">=</span> <span class="n">casync</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">sources</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">progress</span><span class="p">)</span>
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;casync done </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+  <span class="n">os</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">verify_partition</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span> <span class="n">force_full_check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Raw hash mismatch &#39;</span><span class="si">{</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;hash_raw&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="flash_partition">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.flash_partition">[docs]</a>
+<span class="k">def</span> <span class="nf">flash_partition</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">partition</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">cloudlog</span><span class="p">,</span> <span class="n">standalone</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Downloading and writing </span><span class="si">{</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">verify_partition</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Already flashed </span><span class="si">{</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+
+  <span class="c1"># Clear hash before flashing in case we get interrupted</span>
+  <span class="n">full_check</span> <span class="o">=</span> <span class="n">partition</span><span class="p">[</span><span class="s1">&#39;full_check&#39;</span><span class="p">]</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">full_check</span><span class="p">:</span>
+    <span class="n">clear_partition_hash</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">,</span> <span class="n">partition</span><span class="p">)</span>
+
+  <span class="n">path</span> <span class="o">=</span> <span class="n">get_partition_path</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">,</span> <span class="n">partition</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;casync_caibx&#39;</span> <span class="ow">in</span> <span class="n">partition</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">standalone</span><span class="p">:</span>
+    <span class="n">extract_casync_image</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span> <span class="n">cloudlog</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">extract_compressed_image</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span> <span class="n">cloudlog</span><span class="p">)</span>
+
+  <span class="c1"># Write hash after successful flash</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">full_check</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;wb+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
+      <span class="n">out</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">])</span>
+      <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;hash_raw&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="swap">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.swap">[docs]</a>
+<span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">manifest_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_slot_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">cloudlog</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">update</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">manifest_path</span><span class="p">))</span>
+  <span class="k">for</span> <span class="n">partition</span> <span class="ow">in</span> <span class="n">update</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">partition</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;full_check&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+      <span class="n">clear_partition_hash</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">,</span> <span class="n">partition</span><span class="p">)</span>
+
+  <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;abctl --set_active </span><span class="si">{</span><span class="n">target_slot_number</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;No such file or directory&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">out</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;lun as boot lun&quot;</span> <span class="ow">in</span> <span class="n">out</span><span class="p">):</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Swap successful </span><span class="si">{</span><span class="n">out</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Swap failed </span><span class="si">{</span><span class="n">out</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="flash_agnos_update">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.flash_agnos_update">[docs]</a>
+<span class="k">def</span> <span class="nf">flash_agnos_update</span><span class="p">(</span><span class="n">manifest_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_slot_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">cloudlog</span><span class="p">,</span> <span class="n">standalone</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">update</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">manifest_path</span><span class="p">))</span>
+
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Target slot </span><span class="si">{</span><span class="n">target_slot_number</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="c1"># set target slot as unbootable</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;abctl --set_unbootable </span><span class="si">{</span><span class="n">target_slot_number</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">partition</span> <span class="ow">in</span> <span class="n">update</span><span class="p">:</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">for</span> <span class="n">retries</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">flash_partition</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span> <span class="n">cloudlog</span><span class="p">,</span> <span class="n">standalone</span><span class="p">)</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">break</span>
+
+      <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Failed&quot;</span><span class="p">)</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to download </span><span class="si">{</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, retrying (</span><span class="si">{</span><span class="n">retries</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to flash </span><span class="si">{</span><span class="n">partition</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, aborting&quot;</span><span class="p">)</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Maximum retries exceeded&quot;</span><span class="p">)</span>
+
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AGNOS ready on slot </span><span class="si">{</span><span class="n">target_slot_number</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="verify_agnos_update">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.agnos.verify_agnos_update">[docs]</a>
+<span class="k">def</span> <span class="nf">verify_agnos_update</span><span class="p">(</span><span class="n">manifest_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_slot_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="n">update</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">manifest_path</span><span class="p">))</span>
+  <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">verify_partition</span><span class="p">(</span><span class="n">target_slot_number</span><span class="p">,</span> <span class="n">partition</span><span class="p">)</span> <span class="k">for</span> <span class="n">partition</span> <span class="ow">in</span> <span class="n">update</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">argparse</span>
+  <span class="kn">import</span> <span class="nn">logging</span>
+
+  <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Flash and verify AGNOS update&quot;</span><span class="p">,</span>
+                                   <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">)</span>
+
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--verify&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Verify and perform swap if update ready&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--swap&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Verify and perform swap, downloads if necessary&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;manifest&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Manifest json&quot;</span><span class="p">)</span>
+  <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+  <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+  <span class="n">target_slot_number</span> <span class="o">=</span> <span class="n">get_target_slot_number</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">verify</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">verify_agnos_update</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">manifest</span><span class="p">,</span> <span class="n">target_slot_number</span><span class="p">):</span>
+      <span class="n">swap</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">manifest</span><span class="p">,</span> <span class="n">target_slot_number</span><span class="p">,</span> <span class="n">logging</span><span class="p">)</span>
+      <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">swap</span><span class="p">:</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">verify_agnos_update</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">manifest</span><span class="p">,</span> <span class="n">target_slot_number</span><span class="p">):</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Verification failed. Flashing AGNOS&quot;</span><span class="p">)</span>
+      <span class="n">flash_agnos_update</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">manifest</span><span class="p">,</span> <span class="n">target_slot_number</span><span class="p">,</span> <span class="n">logging</span><span class="p">,</span> <span class="n">standalone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Verification succeeded. Swapping to slot </span><span class="si">{</span><span class="n">target_slot_number</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">swap</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">manifest</span><span class="p">,</span> <span class="n">target_slot_number</span><span class="p">,</span> <span class="n">logging</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">flash_agnos_update</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">manifest</span><span class="p">,</span> <span class="n">target_slot_number</span><span class="p">,</span> <span class="n">logging</span><span class="p">,</span> <span class="n">standalone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tools.lib.kbhit &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/tools/lib/kbhit.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tools.lib.kbhit</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tools.lib.kbhit</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">termios</span>
+<span class="kn">import</span> <span class="nn">atexit</span>
+<span class="kn">from</span> <span class="nn">select</span> <span class="kn">import</span> <span class="n">select</span>
+
+<span class="n">STDIN_FD</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
+
+<div class="viewcode-block" id="KBHit">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.kbhit.KBHit">[docs]</a>
+<span class="k">class</span> <span class="nc">KBHit</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Creates a KBHit object that you can call to do various keyboard things.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_kbhit_terminal</span><span class="p">()</span>
+
+<div class="viewcode-block" id="KBHit.set_kbhit_terminal">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.kbhit.KBHit.set_kbhit_terminal">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_kbhit_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Save old terminal settings for closure, remove ICANON &amp; ECHO flags.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># Save the terminal settings</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">old_term</span> <span class="o">=</span> <span class="n">termios</span><span class="o">.</span><span class="n">tcgetattr</span><span class="p">(</span><span class="n">STDIN_FD</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">new_term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">old_term</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># New terminal setting unbuffered</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">new_term</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="n">termios</span><span class="o">.</span><span class="n">ICANON</span> <span class="o">|</span> <span class="n">termios</span><span class="o">.</span><span class="n">ECHO</span><span class="p">)</span>
+    <span class="n">termios</span><span class="o">.</span><span class="n">tcsetattr</span><span class="p">(</span><span class="n">STDIN_FD</span><span class="p">,</span> <span class="n">termios</span><span class="o">.</span><span class="n">TCSAFLUSH</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_term</span><span class="p">)</span>
+
+    <span class="c1"># Support normal-terminal reset at exit</span>
+    <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">set_normal_term</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="KBHit.set_normal_term">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.kbhit.KBHit.set_normal_term">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_normal_term</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Resets to normal terminal. On Windows this is a no-op.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">termios</span><span class="o">.</span><span class="n">tcsetattr</span><span class="p">(</span><span class="n">STDIN_FD</span><span class="p">,</span> <span class="n">termios</span><span class="o">.</span><span class="n">TCSAFLUSH</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">old_term</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="KBHit.getch">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.kbhit.KBHit.getch">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">getch</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Returns a keyboard character after kbhit() has been called.</span>
+<span class="sd">      Should not be called in the same program as getarrow().</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="KBHit.getarrow">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.kbhit.KBHit.getarrow">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">getarrow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Returns an arrow-key code after kbhit() has been called. Codes are</span>
+<span class="sd">    0 : up</span>
+<span class="sd">    1 : right</span>
+<span class="sd">    2 : down</span>
+<span class="sd">    3 : left</span>
+<span class="sd">    Should not be called in the same program as getch().</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">c</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">3</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="mi">65</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">68</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">vals</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="KBHit.kbhit">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.kbhit.KBHit.kbhit">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">kbhit</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Returns True if keyboard character was hit, False otherwise.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">select</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="p">[]</span></div>
+</div>
+
+
+
+<span class="c1"># Test</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+  <span class="n">kb</span> <span class="o">=</span> <span class="n">KBHit</span><span class="p">()</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hit any key, or ESC to exit&#39;</span><span class="p">)</span>
+
+  <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+
+    <span class="k">if</span> <span class="n">kb</span><span class="o">.</span><span class="n">kbhit</span><span class="p">():</span>
+      <span class="n">c</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">getch</span><span class="p">()</span>
+      <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\x1b</span><span class="s1">&#39;</span><span class="p">:</span>  <span class="c1"># ESC</span>
+        <span class="k">break</span>
+      <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+  <span class="n">kb</span><span class="o">.</span><span class="n">set_normal_term</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

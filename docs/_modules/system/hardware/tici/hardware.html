@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>system.hardware.tici.hardware &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/system/hardware/tici/hardware.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">system.hardware.tici.hardware</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for system.hardware.tici.hardware</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">lru_cache</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.gpio</span> <span class="kn">import</span> <span class="n">gpio_set</span><span class="p">,</span> <span class="n">gpio_init</span><span class="p">,</span> <span class="n">get_irqs_for_action</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware.base</span> <span class="kn">import</span> <span class="n">HardwareBase</span><span class="p">,</span> <span class="n">ThermalConfig</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware.tici</span> <span class="kn">import</span> <span class="n">iwlist</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware.tici.pins</span> <span class="kn">import</span> <span class="n">GPIO</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware.tici.amplifier</span> <span class="kn">import</span> <span class="n">Amplifier</span>
+
+<span class="n">NM</span> <span class="o">=</span> <span class="s1">&#39;org.freedesktop.NetworkManager&#39;</span>
+<span class="n">NM_CON_ACT</span> <span class="o">=</span> <span class="n">NM</span> <span class="o">+</span> <span class="s1">&#39;.Connection.Active&#39;</span>
+<span class="n">NM_DEV</span> <span class="o">=</span> <span class="n">NM</span> <span class="o">+</span> <span class="s1">&#39;.Device&#39;</span>
+<span class="n">NM_DEV_WL</span> <span class="o">=</span> <span class="n">NM</span> <span class="o">+</span> <span class="s1">&#39;.Device.Wireless&#39;</span>
+<span class="n">NM_DEV_STATS</span> <span class="o">=</span> <span class="n">NM</span> <span class="o">+</span> <span class="s1">&#39;.Device.Statistics&#39;</span>
+<span class="n">NM_AP</span> <span class="o">=</span> <span class="n">NM</span> <span class="o">+</span> <span class="s1">&#39;.AccessPoint&#39;</span>
+<span class="n">DBUS_PROPS</span> <span class="o">=</span> <span class="s1">&#39;org.freedesktop.DBus.Properties&#39;</span>
+
+<span class="n">MM</span> <span class="o">=</span> <span class="s1">&#39;org.freedesktop.ModemManager1&#39;</span>
+<span class="n">MM_MODEM</span> <span class="o">=</span> <span class="n">MM</span> <span class="o">+</span> <span class="s2">&quot;.Modem&quot;</span>
+<span class="n">MM_MODEM_SIMPLE</span> <span class="o">=</span> <span class="n">MM</span> <span class="o">+</span> <span class="s2">&quot;.Modem.Simple&quot;</span>
+<span class="n">MM_SIM</span> <span class="o">=</span> <span class="n">MM</span> <span class="o">+</span> <span class="s2">&quot;.Sim&quot;</span>
+
+<div class="viewcode-block" id="MM_MODEM_STATE">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.MM_MODEM_STATE">[docs]</a>
+<span class="k">class</span> <span class="nc">MM_MODEM_STATE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">FAILED</span>        <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+  <span class="n">UNKNOWN</span>       <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">INITIALIZING</span>  <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">LOCKED</span>        <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">DISABLED</span>      <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">DISABLING</span>     <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">ENABLING</span>      <span class="o">=</span> <span class="mi">5</span>
+  <span class="n">ENABLED</span>       <span class="o">=</span> <span class="mi">6</span>
+  <span class="n">SEARCHING</span>     <span class="o">=</span> <span class="mi">7</span>
+  <span class="n">REGISTERED</span>    <span class="o">=</span> <span class="mi">8</span>
+  <span class="n">DISCONNECTING</span> <span class="o">=</span> <span class="mi">9</span>
+  <span class="n">CONNECTING</span>    <span class="o">=</span> <span class="mi">10</span>
+  <span class="n">CONNECTED</span>     <span class="o">=</span> <span class="mi">11</span></div>
+
+
+<div class="viewcode-block" id="NMMetered">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.NMMetered">[docs]</a>
+<span class="k">class</span> <span class="nc">NMMetered</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">NM_METERED_UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">NM_METERED_YES</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">NM_METERED_NO</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">NM_METERED_GUESS_YES</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">NM_METERED_GUESS_NO</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+
+<span class="n">TIMEOUT</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">REFRESH_RATE_MS</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="n">NetworkType</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">DeviceState</span><span class="o">.</span><span class="n">NetworkType</span>
+<span class="n">NetworkStrength</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">DeviceState</span><span class="o">.</span><span class="n">NetworkStrength</span>
+
+<span class="c1"># https://developer.gnome.org/ModemManager/unstable/ModemManager-Flags-and-Enumerations.html#MMModemAccessTechnology</span>
+<span class="n">MM_MODEM_ACCESS_TECHNOLOGY_UMTS</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span>
+<span class="n">MM_MODEM_ACCESS_TECHNOLOGY_LTE</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">14</span>
+
+
+<div class="viewcode-block" id="sudo_write">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.sudo_write">[docs]</a>
+<span class="k">def</span> <span class="nf">sudo_write</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+  <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sudo chmod a+w </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
+      <span class="c1"># fallback for debugfs files</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sudo su -c &#39;echo </span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2"> &gt; </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="sudo_read">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.sudo_read">[docs]</a>
+<span class="k">def</span> <span class="nf">sudo_read</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sudo cat </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+  <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="affine_irq">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.affine_irq">[docs]</a>
+<span class="k">def</span> <span class="nf">affine_irq</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+  <span class="n">irqs</span> <span class="o">=</span> <span class="n">get_irqs_for_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">irqs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No IRQs found for &#39;</span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">irqs</span><span class="p">:</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;/proc/irq/</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">/smp_affinity_list&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_device_type">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.get_device_type">[docs]</a>
+<span class="nd">@lru_cache</span>
+<span class="k">def</span> <span class="nf">get_device_type</span><span class="p">():</span>
+  <span class="c1"># lru_cache and cache can cause memory leaks when used in classes</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/sys/firmware/devicetree/base/model&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;comma &#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Tici">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici">[docs]</a>
+<span class="k">class</span> <span class="nc">Tici</span><span class="p">(</span><span class="n">HardwareBase</span><span class="p">):</span>
+  <span class="nd">@cached_property</span>
+  <span class="k">def</span> <span class="nf">bus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">dbus</span>
+    <span class="k">return</span> <span class="n">dbus</span><span class="o">.</span><span class="n">SystemBus</span><span class="p">()</span>
+
+  <span class="nd">@cached_property</span>
+  <span class="k">def</span> <span class="nf">nm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">NM</span><span class="p">,</span> <span class="s1">&#39;/org/freedesktop/NetworkManager&#39;</span><span class="p">)</span>
+
+  <span class="nd">@property</span> <span class="c1"># this should not be cached, in case the modemmanager restarts</span>
+  <span class="k">def</span> <span class="nf">mm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">MM</span><span class="p">,</span> <span class="s1">&#39;/org/freedesktop/ModemManager1&#39;</span><span class="p">)</span>
+
+  <span class="nd">@cached_property</span>
+  <span class="k">def</span> <span class="nf">amplifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_device_type</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;mici&quot;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">Amplifier</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Tici.get_os_version">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_os_version">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_os_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/VERSION&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_device_type">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_device_type">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_device_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">get_device_type</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_sound_card_online">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_sound_card_online">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_sound_card_online</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s1">&#39;/proc/asound/card0/state&#39;</span><span class="p">):</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/proc/asound/card0/state&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;ONLINE&#39;</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="Tici.reboot">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.reboot">[docs]</a>
+  <span class="k">def</span> <span class="nf">reboot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s2">&quot;sudo&quot;</span><span class="p">,</span> <span class="s2">&quot;reboot&quot;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="Tici.uninstall">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.uninstall">[docs]</a>
+  <span class="k">def</span> <span class="nf">uninstall</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/data/__system_reset__&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">touch</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">reboot</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_serial">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_serial">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_serial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cmdline</span><span class="p">()[</span><span class="s1">&#39;androidboot.serialno&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_network_type">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_network_type">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_network_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">primary_connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nm</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">NM</span><span class="p">,</span> <span class="s1">&#39;PrimaryConnection&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+      <span class="n">primary_connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">NM</span><span class="p">,</span> <span class="n">primary_connection</span><span class="p">)</span>
+      <span class="n">primary_type</span> <span class="o">=</span> <span class="n">primary_connection</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">NM_CON_ACT</span><span class="p">,</span> <span class="s1">&#39;Type&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="n">primary_type</span> <span class="o">==</span> <span class="s1">&#39;802-3-ethernet&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">ethernet</span>
+      <span class="k">elif</span> <span class="n">primary_type</span> <span class="o">==</span> <span class="s1">&#39;802-11-wireless&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">wifi</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">active_connections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nm</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">NM</span><span class="p">,</span> <span class="s1">&#39;ActiveConnections&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">conn</span> <span class="ow">in</span> <span class="n">active_connections</span><span class="p">:</span>
+          <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">NM</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
+          <span class="n">tp</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">NM_CON_ACT</span><span class="p">,</span> <span class="s1">&#39;Type&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+          <span class="k">if</span> <span class="n">tp</span> <span class="o">==</span> <span class="s1">&#39;gsm&#39;</span><span class="p">:</span>
+            <span class="n">modem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_modem</span><span class="p">()</span>
+            <span class="n">access_t</span> <span class="o">=</span> <span class="n">modem</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">MM_MODEM</span><span class="p">,</span> <span class="s1">&#39;AccessTechnologies&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">access_t</span> <span class="o">&gt;=</span> <span class="n">MM_MODEM_ACCESS_TECHNOLOGY_LTE</span><span class="p">:</span>
+              <span class="k">return</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">cell4G</span>
+            <span class="k">elif</span> <span class="n">access_t</span> <span class="o">&gt;=</span> <span class="n">MM_MODEM_ACCESS_TECHNOLOGY_UMTS</span><span class="p">:</span>
+              <span class="k">return</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">cell3G</span>
+            <span class="k">else</span><span class="p">:</span>
+              <span class="k">return</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">cell2G</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">none</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_modem">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_modem">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_modem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">objects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">GetManagedObjects</span><span class="p">(</span><span class="n">dbus_interface</span><span class="o">=</span><span class="s2">&quot;org.freedesktop.DBus.ObjectManager&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+    <span class="n">modem_path</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">objects</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">MM</span><span class="p">,</span> <span class="n">modem_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_wlan">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_wlan">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_wlan</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">wlan_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nm</span><span class="o">.</span><span class="n">GetDeviceByIpIface</span><span class="p">(</span><span class="s1">&#39;wlan0&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">NM</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">NM</span><span class="p">,</span> <span class="n">wlan_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_wwan">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_wwan">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_wwan</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">wwan_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nm</span><span class="o">.</span><span class="n">GetDeviceByIpIface</span><span class="p">(</span><span class="s1">&#39;wwan0&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">NM</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">NM</span><span class="p">,</span> <span class="n">wwan_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_sim_info">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_sim_info">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_sim_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">modem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_modem</span><span class="p">()</span>
+    <span class="n">sim_path</span> <span class="o">=</span> <span class="n">modem</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">MM_MODEM</span><span class="p">,</span> <span class="s1">&#39;Sim&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">sim_path</span> <span class="o">==</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;sim_id&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;mcc_mnc&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;network_type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Unknown&quot;</span><span class="p">],</span>
+        <span class="s1">&#39;sim_state&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ABSENT&quot;</span><span class="p">],</span>
+        <span class="s1">&#39;data_connected&#39;</span><span class="p">:</span> <span class="kc">False</span>
+      <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">sim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">MM</span><span class="p">,</span> <span class="n">sim_path</span><span class="p">)</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;sim_id&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">MM_SIM</span><span class="p">,</span> <span class="s1">&#39;SimIdentifier&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)),</span>
+        <span class="s1">&#39;mcc_mnc&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">MM_SIM</span><span class="p">,</span> <span class="s1">&#39;OperatorIdentifier&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)),</span>
+        <span class="s1">&#39;network_type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Unknown&quot;</span><span class="p">],</span>
+        <span class="s1">&#39;sim_state&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;READY&quot;</span><span class="p">],</span>
+        <span class="s1">&#39;data_connected&#39;</span><span class="p">:</span> <span class="n">modem</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">MM_MODEM</span><span class="p">,</span> <span class="s1">&#39;State&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span> <span class="o">==</span> <span class="n">MM_MODEM_STATE</span><span class="o">.</span><span class="n">CONNECTED</span><span class="p">,</span>
+      <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_imei">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_imei">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_imei</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">slot</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_modem</span><span class="p">()</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">MM_MODEM</span><span class="p">,</span> <span class="s1">&#39;EquipmentIdentifier&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_network_info">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_network_info">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_network_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">modem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_modem</span><span class="p">()</span>
+      <span class="n">info</span> <span class="o">=</span> <span class="n">modem</span><span class="o">.</span><span class="n">Command</span><span class="p">(</span><span class="s2">&quot;AT+QNWINFO&quot;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">TIMEOUT</span><span class="p">),</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">MM_MODEM</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+      <span class="n">extra</span> <span class="o">=</span> <span class="n">modem</span><span class="o">.</span><span class="n">Command</span><span class="p">(</span><span class="s1">&#39;AT+QENG=&quot;servingcell&quot;&#39;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">TIMEOUT</span><span class="p">),</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">MM_MODEM</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+      <span class="n">state</span> <span class="o">=</span> <span class="n">modem</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">MM_MODEM</span><span class="p">,</span> <span class="s1">&#39;State&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">info</span> <span class="ow">and</span> <span class="n">info</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;+QNWINFO: &#39;</span><span class="p">):</span>
+      <span class="n">info</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;+QNWINFO: &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+      <span class="n">extra</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">extra</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">extra</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;+QENG: &quot;servingcell&quot;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+      <span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">MM_MODEM_STATE</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+      <span class="n">technology</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">band</span><span class="p">,</span> <span class="n">channel</span> <span class="o">=</span> <span class="n">info</span>
+
+      <span class="k">return</span><span class="p">({</span>
+        <span class="s1">&#39;technology&#39;</span><span class="p">:</span> <span class="n">technology</span><span class="p">,</span>
+        <span class="s1">&#39;operator&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="p">,</span>
+        <span class="s1">&#39;band&#39;</span><span class="p">:</span> <span class="n">band</span><span class="p">,</span>
+        <span class="s1">&#39;channel&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">channel</span><span class="p">),</span>
+        <span class="s1">&#39;extra&#39;</span><span class="p">:</span> <span class="n">extra</span><span class="p">,</span>
+        <span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="n">state</span><span class="p">,</span>
+      <span class="p">})</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Tici.parse_strength">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.parse_strength">[docs]</a>
+  <span class="k">def</span> <span class="nf">parse_strength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">percentage</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">percentage</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">NetworkStrength</span><span class="o">.</span><span class="n">poor</span>
+    <span class="k">elif</span> <span class="n">percentage</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">NetworkStrength</span><span class="o">.</span><span class="n">moderate</span>
+    <span class="k">elif</span> <span class="n">percentage</span> <span class="o">&lt;</span> <span class="mi">75</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">NetworkStrength</span><span class="o">.</span><span class="n">good</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">NetworkStrength</span><span class="o">.</span><span class="n">great</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_network_strength">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_network_strength">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_network_strength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">network_type</span><span class="p">):</span>
+    <span class="n">network_strength</span> <span class="o">=</span> <span class="n">NetworkStrength</span><span class="o">.</span><span class="n">unknown</span>
+
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">network_type</span> <span class="o">==</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">none</span><span class="p">:</span>
+        <span class="k">pass</span>
+      <span class="k">elif</span> <span class="n">network_type</span> <span class="o">==</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">wifi</span><span class="p">:</span>
+        <span class="n">wlan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wlan</span><span class="p">()</span>
+        <span class="n">active_ap_path</span> <span class="o">=</span> <span class="n">wlan</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">NM_DEV_WL</span><span class="p">,</span> <span class="s1">&#39;ActiveAccessPoint&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">active_ap_path</span> <span class="o">!=</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
+          <span class="n">active_ap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">NM</span><span class="p">,</span> <span class="n">active_ap_path</span><span class="p">)</span>
+          <span class="n">strength</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">active_ap</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">NM_AP</span><span class="p">,</span> <span class="s1">&#39;Strength&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">))</span>
+          <span class="n">network_strength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_strength</span><span class="p">(</span><span class="n">strength</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>  <span class="c1"># Cellular</span>
+        <span class="n">modem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_modem</span><span class="p">()</span>
+        <span class="n">strength</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">modem</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">MM_MODEM</span><span class="p">,</span> <span class="s1">&#39;SignalQuality&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">network_strength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_strength</span><span class="p">(</span><span class="n">strength</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">network_strength</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_network_metered">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_network_metered">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_network_metered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">network_type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">primary_connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nm</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">NM</span><span class="p">,</span> <span class="s1">&#39;PrimaryConnection&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+      <span class="n">primary_connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">NM</span><span class="p">,</span> <span class="n">primary_connection</span><span class="p">)</span>
+      <span class="n">primary_devices</span> <span class="o">=</span> <span class="n">primary_connection</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">NM_CON_ACT</span><span class="p">,</span> <span class="s1">&#39;Devices&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+
+      <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">primary_devices</span><span class="p">:</span>
+        <span class="n">dev_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">NM</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">dev</span><span class="p">))</span>
+        <span class="n">metered_prop</span> <span class="o">=</span> <span class="n">dev_obj</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">NM_DEV</span><span class="p">,</span> <span class="s1">&#39;Metered&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">network_type</span> <span class="o">==</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">wifi</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">metered_prop</span> <span class="ow">in</span> <span class="p">[</span><span class="n">NMMetered</span><span class="o">.</span><span class="n">NM_METERED_YES</span><span class="p">,</span> <span class="n">NMMetered</span><span class="o">.</span><span class="n">NM_METERED_GUESS_YES</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">network_type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">NetworkType</span><span class="o">.</span><span class="n">cell2G</span><span class="p">,</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">cell3G</span><span class="p">,</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">cell4G</span><span class="p">,</span> <span class="n">NetworkType</span><span class="o">.</span><span class="n">cell5G</span><span class="p">]:</span>
+          <span class="k">if</span> <span class="n">metered_prop</span> <span class="o">==</span> <span class="n">NMMetered</span><span class="o">.</span><span class="n">NM_METERED_NO</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_network_metered</span><span class="p">(</span><span class="n">network_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_modem_version">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_modem_version">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_modem_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">modem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_modem</span><span class="p">()</span>
+      <span class="k">return</span> <span class="n">modem</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">MM_MODEM</span><span class="p">,</span> <span class="s1">&#39;Revision&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_modem_nv">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_modem_nv">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_modem_nv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mf">0.2</span>  <span class="c1"># Default timeout is too short</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">(</span>
+      <span class="s1">&#39;/nv/item_files/modem/mmode/ue_usage_setting&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;/nv/item_files/ims/IMS_enable&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;/nv/item_files/modem/mmode/sms_only&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">modem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_modem</span><span class="p">()</span>
+      <span class="k">return</span> <span class="p">{</span> <span class="n">fn</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">modem</span><span class="o">.</span><span class="n">Command</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;AT+QNVFR=&quot;</span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">timeout</span><span class="p">),</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">MM_MODEM</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">))</span> <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">files</span><span class="p">}</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_modem_temperatures">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_modem_temperatures">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_modem_temperatures</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mf">0.2</span>  <span class="c1"># Default timeout is too short</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">modem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_modem</span><span class="p">()</span>
+      <span class="n">temps</span> <span class="o">=</span> <span class="n">modem</span><span class="o">.</span><span class="n">Command</span><span class="p">(</span><span class="s2">&quot;AT+QTEMP&quot;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">timeout</span><span class="p">),</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">MM_MODEM</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+      <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">temps</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)))</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_nvme_temperatures">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_nvme_temperatures">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_nvme_temperatures</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">out</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="s2">&quot;sudo smartctl -aj /dev/nvme0&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="n">dat</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+      <span class="n">ret</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">dat</span><span class="p">[</span><span class="s2">&quot;nvme_smart_health_information_log&quot;</span><span class="p">][</span><span class="s2">&quot;temperature_sensors&quot;</span><span class="p">]))</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_current_power_draw">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_current_power_draw">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_current_power_draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_param_file</span><span class="p">(</span><span class="s2">&quot;/sys/class/hwmon/hwmon1/power1_input&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_som_power_draw">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_som_power_draw">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_som_power_draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_param_file</span><span class="p">(</span><span class="s2">&quot;/sys/class/power_supply/bms/voltage_now&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_param_file</span><span class="p">(</span><span class="s2">&quot;/sys/class/power_supply/bms/current_now&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1e12</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tici.shutdown">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.shutdown">[docs]</a>
+  <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;sudo poweroff&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_thermal_config">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_thermal_config">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_thermal_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">ThermalConfig</span><span class="p">(</span><span class="n">cpu</span><span class="o">=</span><span class="p">([</span><span class="s2">&quot;cpu</span><span class="si">%d</span><span class="s2">-silver-usr&quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span> <span class="o">+</span>
+                              <span class="p">[</span><span class="s2">&quot;cpu</span><span class="si">%d</span><span class="s2">-gold-usr&quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)],</span> <span class="mi">1000</span><span class="p">),</span>
+                         <span class="n">gpu</span><span class="o">=</span><span class="p">((</span><span class="s2">&quot;gpu0-usr&quot;</span><span class="p">,</span> <span class="s2">&quot;gpu1-usr&quot;</span><span class="p">),</span> <span class="mi">1000</span><span class="p">),</span>
+                         <span class="n">mem</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;ddr-usr&quot;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
+                         <span class="n">bat</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                         <span class="n">pmic</span><span class="o">=</span><span class="p">((</span><span class="s2">&quot;pm8998_tz&quot;</span><span class="p">,</span> <span class="s2">&quot;pm8005_tz&quot;</span><span class="p">),</span> <span class="mi">1000</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Tici.set_screen_brightness">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.set_screen_brightness">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_screen_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">percentage</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/sys/class/backlight/panel0-backlight/max_brightness&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">max_brightness</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+      <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">percentage</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_brightness</span> <span class="o">/</span> <span class="mf">100.</span><span class="p">))</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/sys/class/backlight/panel0-backlight/brightness&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_screen_brightness">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_screen_brightness">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_screen_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/sys/class/backlight/panel0-backlight/max_brightness&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">max_brightness</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/sys/class/backlight/panel0-backlight/brightness&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_brightness</span> <span class="o">/</span> <span class="mf">100.</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">return</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="Tici.set_power_save">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.set_power_save">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_power_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">powersave_enabled</span><span class="p">):</span>
+    <span class="c1"># amplifier, 100mW at idle</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplifier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">amplifier</span><span class="o">.</span><span class="n">set_global_shutdown</span><span class="p">(</span><span class="n">amp_disabled</span><span class="o">=</span><span class="n">powersave_enabled</span><span class="p">)</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">powersave_enabled</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">amplifier</span><span class="o">.</span><span class="n">initialize_configuration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_device_type</span><span class="p">())</span>
+
+    <span class="c1"># *** CPU config ***</span>
+
+    <span class="c1"># offline big cluster, leave core 4 online for boardd</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
+      <span class="n">val</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span> <span class="k">if</span> <span class="n">powersave_enabled</span> <span class="k">else</span> <span class="s1">&#39;1&#39;</span>
+      <span class="n">sudo_write</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/sys/devices/system/cpu/cpu</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">/online&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">):</span>
+      <span class="n">gov</span> <span class="o">=</span> <span class="s1">&#39;ondemand&#39;</span> <span class="k">if</span> <span class="n">powersave_enabled</span> <span class="k">else</span> <span class="s1">&#39;performance&#39;</span>
+      <span class="n">sudo_write</span><span class="p">(</span><span class="n">gov</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/sys/devices/system/cpu/cpufreq/policy</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">/scaling_governor&#39;</span><span class="p">)</span>
+
+    <span class="c1"># *** IRQ config ***</span>
+
+    <span class="c1"># boardd core</span>
+    <span class="n">affine_irq</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;spi_geni&quot;</span><span class="p">)</span>         <span class="c1"># SPI</span>
+    <span class="n">affine_irq</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;xhci-hcd:usb3&quot;</span><span class="p">)</span>    <span class="c1"># aux panda USB (or potentially anything else on USB)</span>
+    <span class="k">if</span> <span class="s2">&quot;tici&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_device_type</span><span class="p">():</span>
+      <span class="n">affine_irq</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;xhci-hcd:usb1&quot;</span><span class="p">)</span>  <span class="c1"># internal panda USB (also modem)</span>
+
+    <span class="c1"># GPU</span>
+    <span class="n">affine_irq</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;kgsl-3d0&quot;</span><span class="p">)</span>
+
+    <span class="c1"># camerad core</span>
+    <span class="n">camera_irqs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cci&quot;</span><span class="p">,</span> <span class="s2">&quot;cpas_camnoc&quot;</span><span class="p">,</span> <span class="s2">&quot;cpas-cdm&quot;</span><span class="p">,</span> <span class="s2">&quot;csid&quot;</span><span class="p">,</span> <span class="s2">&quot;ife&quot;</span><span class="p">,</span> <span class="s2">&quot;csid-lite&quot;</span><span class="p">,</span> <span class="s2">&quot;ife-lite&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">camera_irqs</span><span class="p">:</span>
+      <span class="n">affine_irq</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_gpu_usage_percent">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_gpu_usage_percent">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_gpu_usage_percent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/sys/class/kgsl/kgsl-3d0/gpubusy&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">used</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+      <span class="k">return</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">used</span><span class="p">)</span> <span class="o">/</span> <span class="nb">int</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">return</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="Tici.initialize_hardware">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.initialize_hardware">[docs]</a>
+  <span class="k">def</span> <span class="nf">initialize_hardware</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplifier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">amplifier</span><span class="o">.</span><span class="n">initialize_configuration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_device_type</span><span class="p">())</span>
+
+    <span class="c1"># Allow thermald to write engagement status to kmsg</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;sudo chmod a+w /dev/kmsg&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Ensure fan gpio is enabled so fan runs until shutdown, also turned on at boot by the ABL</span>
+    <span class="n">gpio_init</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">SOM_ST_IO</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">gpio_set</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">SOM_ST_IO</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># *** IRQ config ***</span>
+
+    <span class="c1"># mask off big cluster from default affinity</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="s2">&quot;/proc/irq/default_smp_affinity&quot;</span><span class="p">)</span>
+
+    <span class="c1"># move these off the default core</span>
+    <span class="n">affine_irq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;msm_drm&quot;</span><span class="p">)</span>   <span class="c1"># display</span>
+    <span class="n">affine_irq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;msm_vidc&quot;</span><span class="p">)</span>  <span class="c1"># encoders</span>
+    <span class="n">affine_irq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;i2c_geni&quot;</span><span class="p">)</span>  <span class="c1"># sensors</span>
+
+    <span class="c1"># *** GPU config ***</span>
+    <span class="c1"># https://github.com/commaai/agnos-kernel-sdm845/blob/master/arch/arm64/boot/dts/qcom/sdm845-gpu.dtsi#L216</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;/sys/class/kgsl/kgsl-3d0/min_pwrlevel&quot;</span><span class="p">)</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;/sys/class/kgsl/kgsl-3d0/max_pwrlevel&quot;</span><span class="p">)</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;/sys/class/kgsl/kgsl-3d0/force_bus_on&quot;</span><span class="p">)</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;/sys/class/kgsl/kgsl-3d0/force_clk_on&quot;</span><span class="p">)</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;/sys/class/kgsl/kgsl-3d0/force_rail_on&quot;</span><span class="p">)</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;1000&quot;</span><span class="p">,</span> <span class="s2">&quot;/sys/class/kgsl/kgsl-3d0/idle_timer&quot;</span><span class="p">)</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;performance&quot;</span><span class="p">,</span> <span class="s2">&quot;/sys/class/kgsl/kgsl-3d0/devfreq/governor&quot;</span><span class="p">)</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;710&quot;</span><span class="p">,</span> <span class="s2">&quot;/sys/class/kgsl/kgsl-3d0/max_clock_mhz&quot;</span><span class="p">)</span>
+
+    <span class="c1"># setup governors</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;performance&quot;</span><span class="p">,</span> <span class="s2">&quot;/sys/class/devfreq/soc:qcom,cpubw/governor&quot;</span><span class="p">)</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;performance&quot;</span><span class="p">,</span> <span class="s2">&quot;/sys/class/devfreq/soc:qcom,memlat-cpu0/governor&quot;</span><span class="p">)</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;performance&quot;</span><span class="p">,</span> <span class="s2">&quot;/sys/class/devfreq/soc:qcom,memlat-cpu4/governor&quot;</span><span class="p">)</span>
+
+    <span class="c1"># *** VIDC (encoder) config ***</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;/sys/kernel/debug/msm_vidc/clock_scaling&quot;</span><span class="p">)</span>
+    <span class="n">sudo_write</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;/sys/kernel/debug/msm_vidc/disable_thermal_mitigation&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tici.configure_modem">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.configure_modem">[docs]</a>
+  <span class="k">def</span> <span class="nf">configure_modem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">sim_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sim_info</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sim_id&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="n">modem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_modem</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">manufacturer</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">modem</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">MM_MODEM</span><span class="p">,</span> <span class="s1">&#39;Manufacturer&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">manufacturer</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">cmds</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">manufacturer</span> <span class="o">==</span> <span class="s1">&#39;Cavli Inc.&#39;</span><span class="p">:</span>
+      <span class="n">cmds</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="c1"># use sim slot</span>
+        <span class="s1">&#39;AT^SIMSWAP=1&#39;</span><span class="p">,</span>
+
+        <span class="c1"># ethernet config</span>
+        <span class="s1">&#39;AT$QCPCFG=usbNet,0&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AT$QCNETDEVCTL=3,1&#39;</span><span class="p">,</span>
+      <span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">cmds</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="c1"># configure modem as data-centric</span>
+        <span class="s1">&#39;AT+QNVW=5280,0,&quot;0102000000000000&quot;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AT+QNVFW=&quot;/nv/item_files/ims/IMS_enable&quot;,00&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AT+QNVFW=&quot;/nv/item_files/modem/mmode/ue_usage_setting&quot;,01&#39;</span><span class="p">,</span>
+      <span class="p">]</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_device_type</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;tizi&quot;</span><span class="p">:</span>
+        <span class="n">cmds</span> <span class="o">+=</span> <span class="p">[</span>
+          <span class="c1"># SIM hot swap</span>
+          <span class="s1">&#39;AT+QSIMDET=1,0&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;AT+QSIMSTAT=1&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+      <span class="c1"># clear out old blue prime initial APN</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;mmcli -m any --3gpp-set-initial-eps-bearer-settings=&quot;apn=&quot;&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">cmds</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">modem</span><span class="o">.</span><span class="n">Command</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">TIMEOUT</span><span class="p">),</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">MM_MODEM</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># eSIM prime</span>
+    <span class="k">if</span> <span class="n">sim_id</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;8985235&#39;</span><span class="p">):</span>
+      <span class="n">dest</span> <span class="o">=</span> <span class="s2">&quot;/etc/NetworkManager/system-connections/esim.nmconnection&quot;</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">/</span><span class="s1">&#39;esim.nmconnection&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">,</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tf</span><span class="p">:</span>
+        <span class="n">dat</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;sim-id=&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;sim-id=</span><span class="si">{</span><span class="n">sim_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="c1"># needs to be root</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sudo cp </span><span class="si">{</span><span class="n">tf</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">dest</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sudo nmcli con load </span><span class="si">{</span><span class="n">dest</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_networks">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_networks">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">iwlist</span><span class="o">.</span><span class="n">scan</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">wlan</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">r</span><span class="p">[</span><span class="s1">&#39;wlan&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wlan</span>
+
+    <span class="n">lte_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_network_info</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">lte_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">extra</span> <span class="o">=</span> <span class="n">lte_info</span><span class="p">[</span><span class="s1">&#39;extra&#39;</span><span class="p">]</span>
+
+      <span class="c1"># &lt;state&gt;,&quot;LTE&quot;,&lt;is_tdd&gt;,&lt;mcc&gt;,&lt;mnc&gt;,&lt;cellid&gt;,&lt;pcid&gt;,&lt;earfcn&gt;,&lt;freq_band_ind&gt;,</span>
+      <span class="c1"># &lt;ul_bandwidth&gt;,&lt;dl_bandwidth&gt;,&lt;tac&gt;,&lt;rsrp&gt;,&lt;rsrq&gt;,&lt;rssi&gt;,&lt;sinr&gt;,&lt;srxlev&gt;</span>
+      <span class="k">if</span> <span class="s1">&#39;LTE&#39;</span> <span class="ow">in</span> <span class="n">extra</span><span class="p">:</span>
+        <span class="n">extra</span> <span class="o">=</span> <span class="n">extra</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+          <span class="n">r</span><span class="p">[</span><span class="s1">&#39;lte&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[{</span>
+            <span class="s2">&quot;mcc&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">extra</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+            <span class="s2">&quot;mnc&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">extra</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span>
+            <span class="s2">&quot;cid&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">extra</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="mi">16</span><span class="p">),</span>
+            <span class="s2">&quot;nmr&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;pci&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">extra</span><span class="p">[</span><span class="mi">6</span><span class="p">]),</span> <span class="s2">&quot;earfcn&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">extra</span><span class="p">[</span><span class="mi">7</span><span class="p">])}],</span>
+          <span class="p">}]</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">):</span>
+          <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="Tici.get_modem_data_usage">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.get_modem_data_usage">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_modem_data_usage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">wwan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wwan</span><span class="p">()</span>
+
+      <span class="c1"># Ensure refresh rate is set so values don&#39;t go stale</span>
+      <span class="n">refresh_rate</span> <span class="o">=</span> <span class="n">wwan</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">NM_DEV_STATS</span><span class="p">,</span> <span class="s1">&#39;RefreshRateMs&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">refresh_rate</span> <span class="o">!=</span> <span class="n">REFRESH_RATE_MS</span><span class="p">:</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">refresh_rate</span><span class="p">)</span>
+        <span class="n">wwan</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">NM_DEV_STATS</span><span class="p">,</span> <span class="s1">&#39;RefreshRateMs&#39;</span><span class="p">,</span> <span class="n">u</span><span class="p">(</span><span class="n">REFRESH_RATE_MS</span><span class="p">),</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+
+      <span class="n">tx</span> <span class="o">=</span> <span class="n">wwan</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">NM_DEV_STATS</span><span class="p">,</span> <span class="s1">&#39;TxBytes&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+      <span class="n">rx</span> <span class="o">=</span> <span class="n">wwan</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">NM_DEV_STATS</span><span class="p">,</span> <span class="s1">&#39;RxBytes&#39;</span><span class="p">,</span> <span class="n">dbus_interface</span><span class="o">=</span><span class="n">DBUS_PROPS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">)</span>
+      <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">tx</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">rx</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="Tici.has_internal_panda">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.has_internal_panda">[docs]</a>
+  <span class="k">def</span> <span class="nf">has_internal_panda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="Tici.reset_internal_panda">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.reset_internal_panda">[docs]</a>
+  <span class="k">def</span> <span class="nf">reset_internal_panda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">gpio_init</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">STM_RST_N</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">gpio_set</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">STM_RST_N</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">gpio_set</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">STM_RST_N</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tici.recover_internal_panda">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.recover_internal_panda">[docs]</a>
+  <span class="k">def</span> <span class="nf">recover_internal_panda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">gpio_init</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">STM_RST_N</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">gpio_init</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">STM_BOOT0</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">gpio_set</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">STM_RST_N</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">gpio_set</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">STM_BOOT0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">gpio_set</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">STM_RST_N</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">gpio_set</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">STM_BOOT0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tici.booted">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.hardware.Tici.booted">[docs]</a>
+  <span class="k">def</span> <span class="nf">booted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># this normally boots within 8s, but on rare occasions takes 30+s</span>
+    <span class="n">encoder_state</span> <span class="o">=</span> <span class="n">sudo_read</span><span class="p">(</span><span class="s2">&quot;/sys/kernel/debug/msm_vidc/core0/info&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;Core state: 0&quot;</span> <span class="ow">in</span> <span class="n">encoder_state</span> <span class="ow">and</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="o">*</span><span class="mi">2</span><span class="p">):</span>
+      <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+</div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="n">Tici</span><span class="p">()</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">configure_modem</span><span class="p">()</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">initialize_hardware</span><span class="p">()</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">set_power_save</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

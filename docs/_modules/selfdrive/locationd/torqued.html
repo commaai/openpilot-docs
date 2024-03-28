@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.locationd.torqued &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/locationd/torqued.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.locationd.torqued</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.locationd.torqued</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span><span class="p">,</span> <span class="n">defaultdict</span>
+
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span><span class="p">,</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">config_realtime_process</span><span class="p">,</span> <span class="n">DT_MDL</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.filter_simple</span> <span class="kn">import</span> <span class="n">FirstOrderFilter</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.vehicle_model</span> <span class="kn">import</span> <span class="n">ACCELERATION_DUE_TO_GRAVITY</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.locationd.helpers</span> <span class="kn">import</span> <span class="n">PointBuckets</span><span class="p">,</span> <span class="n">ParameterEstimator</span>
+
+<span class="n">HISTORY</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># secs</span>
+<span class="n">POINTS_PER_BUCKET</span> <span class="o">=</span> <span class="mi">1500</span>
+<span class="n">MIN_POINTS_TOTAL</span> <span class="o">=</span> <span class="mi">4000</span>
+<span class="n">MIN_POINTS_TOTAL_QLOG</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">FIT_POINTS_TOTAL</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">FIT_POINTS_TOTAL_QLOG</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">MIN_VEL</span> <span class="o">=</span> <span class="mi">15</span>  <span class="c1"># m/s</span>
+<span class="n">FRICTION_FACTOR</span> <span class="o">=</span> <span class="mf">1.5</span>  <span class="c1"># ~85% of data coverage</span>
+<span class="n">FACTOR_SANITY</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">FACTOR_SANITY_QLOG</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">FRICTION_SANITY</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">FRICTION_SANITY_QLOG</span> <span class="o">=</span> <span class="mf">0.8</span>
+<span class="n">STEER_MIN_THRESHOLD</span> <span class="o">=</span> <span class="mf">0.02</span>
+<span class="n">MIN_FILTER_DECAY</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">MAX_FILTER_DECAY</span> <span class="o">=</span> <span class="mi">250</span>
+<span class="n">LAT_ACC_THRESHOLD</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">STEER_BUCKET_BOUNDS</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)]</span>
+<span class="n">MIN_BUCKET_POINTS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
+<span class="n">MIN_ENGAGE_BUFFER</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># secs</span>
+
+<span class="n">VERSION</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># bump this to invalidate old parameter caches</span>
+<span class="n">ALLOWED_CARS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;toyota&#39;</span><span class="p">,</span> <span class="s1">&#39;hyundai&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="slope2rot">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.torqued.slope2rot">[docs]</a>
+<span class="k">def</span> <span class="nf">slope2rot</span><span class="p">(</span><span class="n">slope</span><span class="p">):</span>
+  <span class="n">sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">slope</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">slope</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="n">cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">slope</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">cos</span><span class="p">,</span> <span class="o">-</span><span class="n">sin</span><span class="p">],</span> <span class="p">[</span><span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">]])</span></div>
+
+
+
+<div class="viewcode-block" id="TorqueBuckets">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.torqued.TorqueBuckets">[docs]</a>
+<span class="k">class</span> <span class="nc">TorqueBuckets</span><span class="p">(</span><span class="n">PointBuckets</span><span class="p">):</span>
+<div class="viewcode-block" id="TorqueBuckets.add_point">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.torqued.TorqueBuckets.add_point">[docs]</a>
+  <span class="k">def</span> <span class="nf">add_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">bound_min</span><span class="p">,</span> <span class="n">bound_max</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_bounds</span><span class="p">:</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">bound_min</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">bound_max</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buckets</span><span class="p">[(</span><span class="n">bound_min</span><span class="p">,</span> <span class="n">bound_max</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
+        <span class="k">break</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TorqueEstimator">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.torqued.TorqueEstimator">[docs]</a>
+<span class="k">class</span> <span class="nc">TorqueEstimator</span><span class="p">(</span><span class="n">ParameterEstimator</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">,</span> <span class="n">decimated</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hist_len</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">HISTORY</span> <span class="o">/</span> <span class="n">DT_MDL</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lag</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">+</span> <span class="mf">.2</span>   <span class="c1"># from controlsd</span>
+    <span class="k">if</span> <span class="n">decimated</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">min_bucket_points</span> <span class="o">=</span> <span class="n">MIN_BUCKET_POINTS</span> <span class="o">/</span> <span class="mi">10</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">min_points_total</span> <span class="o">=</span> <span class="n">MIN_POINTS_TOTAL_QLOG</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">fit_points</span> <span class="o">=</span> <span class="n">FIT_POINTS_TOTAL_QLOG</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">factor_sanity</span> <span class="o">=</span> <span class="n">FACTOR_SANITY_QLOG</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">friction_sanity</span> <span class="o">=</span> <span class="n">FRICTION_SANITY_QLOG</span>
+
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">min_bucket_points</span> <span class="o">=</span> <span class="n">MIN_BUCKET_POINTS</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">min_points_total</span> <span class="o">=</span> <span class="n">MIN_POINTS_TOTAL</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">fit_points</span> <span class="o">=</span> <span class="n">FIT_POINTS_TOTAL</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">factor_sanity</span> <span class="o">=</span> <span class="n">FACTOR_SANITY</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">friction_sanity</span> <span class="o">=</span> <span class="n">FRICTION_SANITY</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">offline_friction</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">offline_latAccelFactor</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">resets</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">use_params</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">carName</span> <span class="ow">in</span> <span class="n">ALLOWED_CARS</span> <span class="ow">and</span> <span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;torque&#39;</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;torque&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">offline_friction</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">friction</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">offline_latAccelFactor</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">latAccelFactor</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="n">initial_params</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s1">&#39;latAccelFactor&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">offline_latAccelFactor</span><span class="p">,</span>
+      <span class="s1">&#39;latAccelOffset&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+      <span class="s1">&#39;frictionCoefficient&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">offline_friction</span><span class="p">,</span>
+      <span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">decay</span> <span class="o">=</span> <span class="n">MIN_FILTER_DECAY</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">min_lataccel_factor</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">factor_sanity</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">offline_latAccelFactor</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">max_lataccel_factor</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">factor_sanity</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">offline_latAccelFactor</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">min_friction</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">friction_sanity</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">offline_friction</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">max_friction</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">friction_sanity</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">offline_friction</span>
+
+    <span class="c1"># try to restore cached params</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+    <span class="n">params_cache</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CarParamsPrevRoute&quot;</span><span class="p">)</span>
+    <span class="n">torque_cache</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;LiveTorqueParameters&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">params_cache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">torque_cache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">log</span><span class="o">.</span><span class="n">Event</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">torque_cache</span><span class="p">)</span> <span class="k">as</span> <span class="n">log_evt</span><span class="p">:</span>
+          <span class="n">cache_ltp</span> <span class="o">=</span> <span class="n">log_evt</span><span class="o">.</span><span class="n">liveTorqueParameters</span>
+        <span class="k">with</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">params_cache</span><span class="p">)</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>
+          <span class="n">cache_CP</span> <span class="o">=</span> <span class="n">msg</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_restore_key</span><span class="p">(</span><span class="n">cache_CP</span><span class="p">,</span> <span class="n">cache_ltp</span><span class="o">.</span><span class="n">version</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_restore_key</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">VERSION</span><span class="p">):</span>
+          <span class="k">if</span> <span class="n">cache_ltp</span><span class="o">.</span><span class="n">liveValid</span><span class="p">:</span>
+            <span class="n">initial_params</span> <span class="o">=</span> <span class="p">{</span>
+              <span class="s1">&#39;latAccelFactor&#39;</span><span class="p">:</span> <span class="n">cache_ltp</span><span class="o">.</span><span class="n">latAccelFactorFiltered</span><span class="p">,</span>
+              <span class="s1">&#39;latAccelOffset&#39;</span><span class="p">:</span> <span class="n">cache_ltp</span><span class="o">.</span><span class="n">latAccelOffsetFiltered</span><span class="p">,</span>
+              <span class="s1">&#39;frictionCoefficient&#39;</span><span class="p">:</span> <span class="n">cache_ltp</span><span class="o">.</span><span class="n">frictionCoefficientFiltered</span>
+            <span class="p">}</span>
+          <span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cache_ltp</span><span class="o">.</span><span class="n">points</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">decay</span> <span class="o">=</span> <span class="n">cache_ltp</span><span class="o">.</span><span class="n">decay</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">filtered_points</span><span class="o">.</span><span class="n">load_points</span><span class="p">(</span><span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">])</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;restored torque params from cache&quot;</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;failed to restore cached torque params&quot;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;LiveTorqueParameters&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">filtered_params</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">initial_params</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">filtered_params</span><span class="p">[</span><span class="n">param</span><span class="p">]</span> <span class="o">=</span> <span class="n">FirstOrderFilter</span><span class="p">(</span><span class="n">initial_params</span><span class="p">[</span><span class="n">param</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">decay</span><span class="p">,</span> <span class="n">DT_MDL</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TorqueEstimator.get_restore_key">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.torqued.TorqueEstimator.get_restore_key">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_restore_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;torque&#39;</span><span class="p">:</span>
+      <span class="n">a</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">friction</span>
+      <span class="n">b</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">latAccelFactor</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">,</span> <span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">which</span><span class="p">(),</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TorqueEstimator.reset">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.torqued.TorqueEstimator.reset">[docs]</a>
+  <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">resets</span> <span class="o">+=</span> <span class="mf">1.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">decay</span> <span class="o">=</span> <span class="n">MIN_FILTER_DECAY</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hist_len</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">filtered_points</span> <span class="o">=</span> <span class="n">TorqueBuckets</span><span class="p">(</span><span class="n">x_bounds</span><span class="o">=</span><span class="n">STEER_BUCKET_BOUNDS</span><span class="p">,</span>
+                                         <span class="n">min_points</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_bucket_points</span><span class="p">,</span>
+                                         <span class="n">min_points_total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_points_total</span><span class="p">,</span>
+                                         <span class="n">points_per_bucket</span><span class="o">=</span><span class="n">POINTS_PER_BUCKET</span><span class="p">,</span>
+                                         <span class="n">rowsize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TorqueEstimator.estimate_params">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.torqued.TorqueEstimator.estimate_params">[docs]</a>
+  <span class="k">def</span> <span class="nf">estimate_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filtered_points</span><span class="o">.</span><span class="n">get_points</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fit_points</span><span class="p">)</span>
+    <span class="c1"># total least square solution as both x and y are noisy observations</span>
+    <span class="c1"># this is empirically the slope of the hysteresis parallelogram as opposed to the line through the diagonals</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      <span class="n">slope</span><span class="p">,</span> <span class="n">offset</span> <span class="o">=</span> <span class="o">-</span><span class="n">v</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">v</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+      <span class="n">_</span><span class="p">,</span> <span class="n">spread</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="n">slope2rot</span><span class="p">(</span><span class="n">slope</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+      <span class="n">friction_coeff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">spread</span><span class="p">)</span> <span class="o">*</span> <span class="n">FRICTION_FACTOR</span>
+    <span class="k">except</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">LinAlgError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error computing live torque params: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">slope</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">friction_coeff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">return</span> <span class="n">slope</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">friction_coeff</span></div>
+
+
+<div class="viewcode-block" id="TorqueEstimator.update_params">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.torqued.TorqueEstimator.update_params">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">decay</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decay</span> <span class="o">+</span> <span class="n">DT_MDL</span><span class="p">,</span> <span class="n">MAX_FILTER_DECAY</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">filtered_params</span><span class="p">[</span><span class="n">param</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">filtered_params</span><span class="p">[</span><span class="n">param</span><span class="p">]</span><span class="o">.</span><span class="n">update_alpha</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decay</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TorqueEstimator.handle_log">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.torqued.TorqueEstimator.handle_log">[docs]</a>
+  <span class="k">def</span> <span class="nf">handle_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">which</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">which</span> <span class="o">==</span> <span class="s2">&quot;carControl&quot;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s2">&quot;carControl_t&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lag</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s2">&quot;active&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">latActive</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">which</span> <span class="o">==</span> <span class="s2">&quot;carOutput&quot;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s2">&quot;carOutput_t&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lag</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s2">&quot;steer_torque&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="n">msg</span><span class="o">.</span><span class="n">actuatorsOutput</span><span class="o">.</span><span class="n">steer</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">which</span> <span class="o">==</span> <span class="s2">&quot;carState&quot;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s2">&quot;carState_t&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lag</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s2">&quot;vego&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">vEgo</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s2">&quot;steer_override&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">steeringPressed</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">which</span> <span class="o">==</span> <span class="s2">&quot;liveLocationKalman&quot;</span><span class="p">:</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s1">&#39;steer_torque&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">hist_len</span><span class="p">:</span>
+        <span class="n">yaw_rate</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">angularVelocityCalibrated</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">roll</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">orientationNED</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">active</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">MIN_ENGAGE_BUFFER</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">DT_MDL</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s1">&#39;carControl_t&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="n">steer_override</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">MIN_ENGAGE_BUFFER</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">DT_MDL</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s1">&#39;carState_t&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s1">&#39;steer_override&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="n">vego</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s1">&#39;carState_t&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s1">&#39;vego&#39;</span><span class="p">])</span>
+        <span class="n">steer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s1">&#39;carOutput_t&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_points</span><span class="p">[</span><span class="s1">&#39;steer_torque&#39;</span><span class="p">])</span>
+        <span class="n">lateral_acc</span> <span class="o">=</span> <span class="p">(</span><span class="n">vego</span> <span class="o">*</span> <span class="n">yaw_rate</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">roll</span><span class="p">)</span> <span class="o">*</span> <span class="n">ACCELERATION_DUE_TO_GRAVITY</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">active</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">steer_override</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="n">vego</span> <span class="o">&gt;</span> <span class="n">MIN_VEL</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">steer</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">STEER_MIN_THRESHOLD</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">lateral_acc</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">LAT_ACC_THRESHOLD</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">filtered_points</span><span class="o">.</span><span class="n">add_point</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">steer</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">lateral_acc</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TorqueEstimator.get_msg">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.torqued.TorqueEstimator.get_msg">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">with_points</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;liveTorqueParameters&#39;</span><span class="p">)</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="n">valid</span>
+    <span class="n">liveTorqueParameters</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">liveTorqueParameters</span>
+    <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">VERSION</span>
+    <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">useParams</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_params</span>
+
+    <span class="c1"># Calculate raw estimates when possible, only update filters when enough points are gathered</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filtered_points</span><span class="o">.</span><span class="n">is_calculable</span><span class="p">():</span>
+      <span class="n">latAccelFactor</span><span class="p">,</span> <span class="n">latAccelOffset</span><span class="p">,</span> <span class="n">frictionCoeff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimate_params</span><span class="p">()</span>
+      <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">latAccelFactorRaw</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">latAccelFactor</span><span class="p">)</span>
+      <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">latAccelOffsetRaw</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">latAccelOffset</span><span class="p">)</span>
+      <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">frictionCoefficientRaw</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">frictionCoeff</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filtered_points</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="p">[</span><span class="n">latAccelFactor</span><span class="p">,</span> <span class="n">latAccelOffset</span><span class="p">,</span> <span class="n">frictionCoeff</span><span class="p">]):</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Live torque parameters are invalid.&quot;</span><span class="p">)</span>
+          <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">liveValid</span> <span class="o">=</span> <span class="kc">False</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">liveValid</span> <span class="o">=</span> <span class="kc">True</span>
+          <span class="n">latAccelFactor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">latAccelFactor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_lataccel_factor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_lataccel_factor</span><span class="p">)</span>
+          <span class="n">frictionCoeff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">frictionCoeff</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_friction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_friction</span><span class="p">)</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">update_params</span><span class="p">({</span><span class="s1">&#39;latAccelFactor&#39;</span><span class="p">:</span> <span class="n">latAccelFactor</span><span class="p">,</span> <span class="s1">&#39;latAccelOffset&#39;</span><span class="p">:</span> <span class="n">latAccelOffset</span><span class="p">,</span> <span class="s1">&#39;frictionCoefficient&#39;</span><span class="p">:</span> <span class="n">frictionCoeff</span><span class="p">})</span>
+
+    <span class="k">if</span> <span class="n">with_points</span><span class="p">:</span>
+      <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filtered_points</span><span class="o">.</span><span class="n">get_points</span><span class="p">()[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+    <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">latAccelFactorFiltered</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filtered_params</span><span class="p">[</span><span class="s1">&#39;latAccelFactor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">latAccelOffsetFiltered</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filtered_params</span><span class="p">[</span><span class="s1">&#39;latAccelOffset&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">frictionCoefficientFiltered</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filtered_params</span><span class="p">[</span><span class="s1">&#39;frictionCoefficient&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">totalBucketPoints</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filtered_points</span><span class="p">)</span>
+    <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">decay</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decay</span>
+    <span class="n">liveTorqueParameters</span><span class="o">.</span><span class="n">maxResets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resets</span>
+    <span class="k">return</span> <span class="n">msg</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.torqued.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">demo</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+  <span class="n">config_realtime_process</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">5</span><span class="p">)</span>
+
+  <span class="n">pm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">([</span><span class="s1">&#39;liveTorqueParameters&#39;</span><span class="p">])</span>
+  <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="s1">&#39;carControl&#39;</span><span class="p">,</span> <span class="s1">&#39;carOutput&#39;</span><span class="p">,</span> <span class="s1">&#39;carState&#39;</span><span class="p">,</span> <span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">],</span> <span class="n">poll</span><span class="o">=</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">)</span>
+
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+  <span class="k">with</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CarParams&quot;</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="k">as</span> <span class="n">CP</span><span class="p">:</span>
+    <span class="n">estimator</span> <span class="o">=</span> <span class="n">TorqueEstimator</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+
+  <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">all_checks</span><span class="p">():</span>
+      <span class="k">for</span> <span class="n">which</span> <span class="ow">in</span> <span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="p">[</span><span class="n">which</span><span class="p">]:</span>
+          <span class="n">t</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">[</span><span class="n">which</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e-9</span>
+          <span class="n">estimator</span><span class="o">.</span><span class="n">handle_log</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">which</span><span class="p">,</span> <span class="n">sm</span><span class="p">[</span><span class="n">which</span><span class="p">])</span>
+
+    <span class="c1"># 4Hz driven by liveLocationKalman</span>
+    <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;liveTorqueParameters&#39;</span><span class="p">,</span> <span class="n">estimator</span><span class="o">.</span><span class="n">get_msg</span><span class="p">(</span><span class="n">valid</span><span class="o">=</span><span class="n">sm</span><span class="o">.</span><span class="n">all_checks</span><span class="p">()))</span>
+
+    <span class="c1"># Cache points every 60 seconds while onroad</span>
+    <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">240</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">get_msg</span><span class="p">(</span><span class="n">valid</span><span class="o">=</span><span class="n">sm</span><span class="o">.</span><span class="n">all_checks</span><span class="p">(),</span> <span class="n">with_points</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="n">params</span><span class="o">.</span><span class="n">put_nonblocking</span><span class="p">(</span><span class="s2">&quot;LiveTorqueParameters&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">argparse</span>
+  <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Process the --demo argument.&#39;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--demo&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;A boolean for demo mode.&#39;</span><span class="p">)</span>
+  <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+  <span class="n">main</span><span class="p">(</span><span class="n">demo</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">demo</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

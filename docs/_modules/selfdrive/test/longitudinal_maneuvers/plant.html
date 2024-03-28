@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.test.longitudinal_maneuvers.plant &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/test/longitudinal_maneuvers/plant.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.test.longitudinal_maneuvers.plant</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.test.longitudinal_maneuvers.plant</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">Ratekeeper</span><span class="p">,</span> <span class="n">DT_MDL</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.longcontrol</span> <span class="kn">import</span> <span class="n">LongCtrlState</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.modeld.constants</span> <span class="kn">import</span> <span class="n">ModelConstants</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.longitudinal_planner</span> <span class="kn">import</span> <span class="n">LongitudinalPlanner</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.radard</span> <span class="kn">import</span> <span class="n">_LEAD_ACCEL_TAU</span>
+
+
+<div class="viewcode-block" id="Plant">
+<a class="viewcode-back" href="../../../../selfdrive.test.longitudinal_maneuvers.html#selfdrive.test.longitudinal_maneuvers.plant.Plant">[docs]</a>
+<span class="k">class</span> <span class="nc">Plant</span><span class="p">:</span>
+  <span class="n">messaging_initialized</span> <span class="o">=</span> <span class="kc">False</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lead_relevancy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">speed</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">distance_lead</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+               <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">only_lead2</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">only_radar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">e2e</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">personality</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">force_decel</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">DT_MDL</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">Plant</span><span class="o">.</span><span class="n">messaging_initialized</span><span class="p">:</span>
+      <span class="n">Plant</span><span class="o">.</span><span class="n">radar</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">pub_sock</span><span class="p">(</span><span class="s1">&#39;radarState&#39;</span><span class="p">)</span>
+      <span class="n">Plant</span><span class="o">.</span><span class="n">controls_state</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">pub_sock</span><span class="p">(</span><span class="s1">&#39;controlsState&#39;</span><span class="p">)</span>
+      <span class="n">Plant</span><span class="o">.</span><span class="n">car_state</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">pub_sock</span><span class="p">(</span><span class="s1">&#39;carState&#39;</span><span class="p">)</span>
+      <span class="n">Plant</span><span class="o">.</span><span class="n">plan</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">sub_sock</span><span class="p">(</span><span class="s1">&#39;longitudinalPlan&#39;</span><span class="p">)</span>
+      <span class="n">Plant</span><span class="o">.</span><span class="n">messaging_initialized</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_lead_prev</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">speed</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">speeds</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># lead car</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lead_relevancy</span> <span class="o">=</span> <span class="n">lead_relevancy</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">distance_lead</span> <span class="o">=</span> <span class="n">distance_lead</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">enabled</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">only_lead2</span> <span class="o">=</span> <span class="n">only_lead2</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">only_radar</span> <span class="o">=</span> <span class="n">only_radar</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">e2e</span> <span class="o">=</span> <span class="n">e2e</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">personality</span> <span class="o">=</span> <span class="n">personality</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">force_decel</span> <span class="o">=</span> <span class="n">force_decel</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">rk</span> <span class="o">=</span> <span class="n">Ratekeeper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">,</span> <span class="n">print_delay_threshold</span><span class="o">=</span><span class="mf">100.0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ts</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="s1">&#39;longitudinalPlan&#39;</span><span class="p">])</span>
+
+    <span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.honda.values</span> <span class="kn">import</span> <span class="n">CAR</span>
+    <span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.honda.interface</span> <span class="kn">import</span> <span class="n">CarInterface</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">planner</span> <span class="o">=</span> <span class="n">LongitudinalPlanner</span><span class="p">(</span><span class="n">CarInterface</span><span class="o">.</span><span class="n">get_non_essential_params</span><span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_CIVIC</span><span class="p">),</span> <span class="n">init_v</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">speed</span><span class="p">)</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">current_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rk</span><span class="o">.</span><span class="n">frame</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span>
+
+<div class="viewcode-block" id="Plant.step">
+<a class="viewcode-back" href="../../../../selfdrive.test.longitudinal_maneuvers.html#selfdrive.test.longitudinal_maneuvers.plant.Plant.step">[docs]</a>
+  <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v_lead</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">v_cruise</span><span class="o">=</span><span class="mf">50.</span><span class="p">):</span>
+    <span class="c1"># ******** publish a fake model going straight and fake calibration ********</span>
+    <span class="c1"># note that this is worst case for MPC, since model will delay long mpc by one time step</span>
+    <span class="n">radar</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;radarState&#39;</span><span class="p">)</span>
+    <span class="n">control</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;controlsState&#39;</span><span class="p">)</span>
+    <span class="n">car_state</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;carState&#39;</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;modelV2&#39;</span><span class="p">)</span>
+    <span class="n">a_lead</span> <span class="o">=</span> <span class="p">(</span><span class="n">v_lead</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_lead_prev</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">ts</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_lead_prev</span> <span class="o">=</span> <span class="n">v_lead</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lead_relevancy</span><span class="p">:</span>
+      <span class="n">d_rel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance_lead</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span><span class="p">)</span>
+      <span class="n">v_rel</span> <span class="o">=</span> <span class="n">v_lead</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_radar</span><span class="p">:</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="k">elif</span> <span class="n">prob</span> <span class="o">&gt;</span> <span class="mf">.5</span><span class="p">:</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">d_rel</span> <span class="o">=</span> <span class="mf">200.</span>
+      <span class="n">v_rel</span> <span class="o">=</span> <span class="mf">0.</span>
+      <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.0</span>
+      <span class="n">status</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">lead</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">RadarState</span><span class="o">.</span><span class="n">LeadData</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="n">lead</span><span class="o">.</span><span class="n">dRel</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">d_rel</span><span class="p">)</span>
+    <span class="n">lead</span><span class="o">.</span><span class="n">yRel</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">lead</span><span class="o">.</span><span class="n">vRel</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">v_rel</span><span class="p">)</span>
+    <span class="n">lead</span><span class="o">.</span><span class="n">aRel</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">a_lead</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span><span class="p">)</span>
+    <span class="n">lead</span><span class="o">.</span><span class="n">vLead</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">v_lead</span><span class="p">)</span>
+    <span class="n">lead</span><span class="o">.</span><span class="n">vLeadK</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">v_lead</span><span class="p">)</span>
+    <span class="n">lead</span><span class="o">.</span><span class="n">aLeadK</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">a_lead</span><span class="p">)</span>
+    <span class="c1"># TODO use real radard logic for this</span>
+    <span class="n">lead</span><span class="o">.</span><span class="n">aLeadTau</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">_LEAD_ACCEL_TAU</span><span class="p">)</span>
+    <span class="n">lead</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+    <span class="n">lead</span><span class="o">.</span><span class="n">modelProb</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_lead2</span><span class="p">:</span>
+      <span class="n">radar</span><span class="o">.</span><span class="n">radarState</span><span class="o">.</span><span class="n">leadOne</span> <span class="o">=</span> <span class="n">lead</span>
+    <span class="n">radar</span><span class="o">.</span><span class="n">radarState</span><span class="o">.</span><span class="n">leadTwo</span> <span class="o">=</span> <span class="n">lead</span>
+
+    <span class="c1"># Simulate model predicting slightly faster speed</span>
+    <span class="c1"># this is to ensure lead policy is effective when model</span>
+    <span class="c1"># does not predict slowdown in e2e mode</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">XYZTData</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ModelConstants</span><span class="o">.</span><span class="n">T_IDXS</span><span class="p">)]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">modelV2</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
+    <span class="n">velocity</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">XYZTData</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">ModelConstants</span><span class="o">.</span><span class="n">T_IDXS</span><span class="p">)]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">modelV2</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">velocity</span>
+    <span class="n">acceleration</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">XYZTData</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="n">acceleration</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">ModelConstants</span><span class="o">.</span><span class="n">T_IDXS</span><span class="p">)]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">modelV2</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="n">acceleration</span>
+
+    <span class="n">control</span><span class="o">.</span><span class="n">controlsState</span><span class="o">.</span><span class="n">longControlState</span> <span class="o">=</span> <span class="n">LongCtrlState</span><span class="o">.</span><span class="n">pid</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="k">else</span> <span class="n">LongCtrlState</span><span class="o">.</span><span class="n">off</span>
+    <span class="n">control</span><span class="o">.</span><span class="n">controlsState</span><span class="o">.</span><span class="n">vCruise</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">v_cruise</span> <span class="o">*</span> <span class="mf">3.6</span><span class="p">)</span>
+    <span class="n">control</span><span class="o">.</span><span class="n">controlsState</span><span class="o">.</span><span class="n">experimentalMode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">e2e</span>
+    <span class="n">control</span><span class="o">.</span><span class="n">controlsState</span><span class="o">.</span><span class="n">personality</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">personality</span>
+    <span class="n">control</span><span class="o">.</span><span class="n">controlsState</span><span class="o">.</span><span class="n">forceDecel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_decel</span>
+    <span class="n">car_state</span><span class="o">.</span><span class="n">carState</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speed</span><span class="p">)</span>
+    <span class="n">car_state</span><span class="o">.</span><span class="n">carState</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">&lt;</span> <span class="mf">0.01</span>
+
+    <span class="c1"># ******** get controlsState messages for plotting ***</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;radarState&#39;</span><span class="p">:</span> <span class="n">radar</span><span class="o">.</span><span class="n">radarState</span><span class="p">,</span>
+          <span class="s1">&#39;carState&#39;</span><span class="p">:</span> <span class="n">car_state</span><span class="o">.</span><span class="n">carState</span><span class="p">,</span>
+          <span class="s1">&#39;controlsState&#39;</span><span class="p">:</span> <span class="n">control</span><span class="o">.</span><span class="n">controlsState</span><span class="p">,</span>
+          <span class="s1">&#39;modelV2&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">modelV2</span><span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">planner</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sm</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">planner</span><span class="o">.</span><span class="n">v_desired_filter</span><span class="o">.</span><span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">planner</span><span class="o">.</span><span class="n">a_desired</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">speeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">planner</span><span class="o">.</span><span class="n">v_desired_trajectory</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">fcw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">planner</span><span class="o">.</span><span class="n">fcw</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">distance_lead</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance_lead</span> <span class="o">+</span> <span class="n">v_lead</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ts</span>
+
+    <span class="c1"># ******** run the car ********</span>
+    <span class="c1">#print(self.distance, speed)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ts</span>
+
+    <span class="c1"># *** radar model ***</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lead_relevancy</span><span class="p">:</span>
+      <span class="n">d_rel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance_lead</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span><span class="p">)</span>
+      <span class="n">v_rel</span> <span class="o">=</span> <span class="n">v_lead</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">d_rel</span> <span class="o">=</span> <span class="mf">200.</span>
+      <span class="n">v_rel</span> <span class="o">=</span> <span class="mf">0.</span>
+
+    <span class="c1"># print at 5hz</span>
+    <span class="c1"># if (self.rk.frame % (self.rate // 5)) == 0:</span>
+    <span class="c1">#   print(&quot;%2.2f sec   %6.2f m  %6.2f m/s  %6.2f m/s2   lead_rel: %6.2f m  %6.2f m/s&quot;</span>
+    <span class="c1">#         % (self.current_time, self.distance, self.speed, self.acceleration, d_rel, v_rel))</span>
+
+
+    <span class="c1"># ******** update prevs ********</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rk</span><span class="o">.</span><span class="n">monitor_time</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="s2">&quot;distance&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span><span class="p">,</span>
+      <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span><span class="p">,</span>
+      <span class="s2">&quot;acceleration&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span><span class="p">,</span>
+      <span class="s2">&quot;speeds&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">speeds</span><span class="p">,</span>
+      <span class="s2">&quot;distance_lead&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance_lead</span><span class="p">,</span>
+      <span class="s2">&quot;fcw&quot;</span><span class="p">:</span> <span class="n">fcw</span><span class="p">,</span>
+    <span class="p">}</span></div>
+</div>
+
+
+<span class="c1"># simple engage in standalone mode</span>
+<div class="viewcode-block" id="plant_thread">
+<a class="viewcode-back" href="../../../../selfdrive.test.longitudinal_maneuvers.html#selfdrive.test.longitudinal_maneuvers.plant.plant_thread">[docs]</a>
+<span class="k">def</span> <span class="nf">plant_thread</span><span class="p">():</span>
+  <span class="n">plant</span> <span class="o">=</span> <span class="n">Plant</span><span class="p">()</span>
+  <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">plant</span><span class="o">.</span><span class="n">step</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">plant_thread</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

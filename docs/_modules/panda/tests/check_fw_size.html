@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>panda.tests.check_fw_size &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/panda/tests/check_fw_size.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">panda.tests.check_fw_size</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for panda.tests.check_fw_size</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+
+<div class="viewcode-block" id="check_space">
+<a class="viewcode-back" href="../../../panda.tests.html#panda.tests.check_fw_size.check_space">[docs]</a>
+<span class="k">def</span> <span class="nf">check_space</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mcu</span><span class="p">):</span>
+  <span class="n">MCUS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;H7&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;.flash&quot;</span><span class="p">:</span> <span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># FLASH</span>
+      <span class="s2">&quot;.dtcmram&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># DTCMRAM</span>
+      <span class="s2">&quot;.itcmram&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># ITCMRAM</span>
+      <span class="s2">&quot;.axisram&quot;</span><span class="p">:</span> <span class="mi">320</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># AXI SRAM</span>
+      <span class="s2">&quot;.sram12&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># SRAM1(16kb) + SRAM2(16kb)</span>
+      <span class="s2">&quot;.sram4&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># SRAM4</span>
+      <span class="s2">&quot;.backup_sram&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># SRAM4</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;F4&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;.flash&quot;</span><span class="p">:</span> <span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># FLASH</span>
+      <span class="s2">&quot;.dtcmram&quot;</span><span class="p">:</span> <span class="mi">256</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># RAM</span>
+      <span class="s2">&quot;.ram_d1&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># RAM2</span>
+    <span class="p">},</span>
+  <span class="p">}</span>
+  <span class="n">IGNORE_LIST</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;.ARM.attributes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.comment&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.debug_line&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.debug_info&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.debug_abbrev&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.debug_aranges&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.debug_str&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.debug_ranges&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.debug_loc&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.debug_frame&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.debug_line_str&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.debug_rnglists&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.debug_loclists&quot;</span><span class="p">,</span>
+  <span class="p">]</span>
+  <span class="n">FLASH</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;.isr_vector&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.text&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.rodata&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.data&quot;</span>
+  <span class="p">]</span>
+  <span class="n">RAM</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;.data&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.bss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;._user_heap_stack&quot;</span> <span class="c1"># _user_heap_stack considered free?</span>
+  <span class="p">]</span>
+
+  <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="n">calcs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+  <span class="n">output</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;arm-none-eabi-size -x --format=sysv </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+    <span class="n">pop</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">IGNORE_LIST</span><span class="p">:</span>
+        <span class="k">continue</span>
+      <span class="n">result</span><span class="p">[</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+      <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">FLASH</span><span class="p">:</span>
+        <span class="n">calcs</span><span class="p">[</span><span class="s2">&quot;.flash&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="n">pop</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">RAM</span><span class="p">:</span>
+        <span class="n">calcs</span><span class="p">[</span><span class="s2">&quot;.dtcmram&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="n">pop</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="k">if</span> <span class="n">pop</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+      <span class="n">calcs</span><span class="p">[</span><span class="n">line</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">line</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;=======SUMMARY FOR </span><span class="si">{</span><span class="n">mcu</span><span class="si">}</span><span class="s2"> FILE </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">=======&quot;</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">calcs</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">MCUS</span><span class="p">[</span><span class="n">mcu</span><span class="p">]:</span>
+      <span class="n">used_percent</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span> <span class="o">-</span> <span class="p">(</span><span class="n">MCUS</span><span class="p">[</span><span class="n">mcu</span><span class="p">][</span><span class="n">line</span><span class="p">]</span> <span class="o">-</span> <span class="n">calcs</span><span class="p">[</span><span class="n">line</span><span class="p">])</span> <span class="o">/</span> <span class="n">MCUS</span><span class="p">[</span><span class="n">mcu</span><span class="p">][</span><span class="n">line</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SECTION: </span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s2"> size: </span><span class="si">{</span><span class="n">MCUS</span><span class="p">[</span><span class="n">mcu</span><span class="p">][</span><span class="n">line</span><span class="p">]</span><span class="si">}</span><span class="s2"> USED: </span><span class="si">{</span><span class="n">calcs</span><span class="p">[</span><span class="n">line</span><span class="p">]</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">used_percent</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%) FREE: </span><span class="si">{</span><span class="n">MCUS</span><span class="p">[</span><span class="n">mcu</span><span class="p">][</span><span class="n">line</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">calcs</span><span class="p">[</span><span class="n">line</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">calcs</span><span class="p">[</span><span class="n">line</span><span class="p">])</span>
+  <span class="nb">print</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="c1"># red panda</span>
+  <span class="n">check_space</span><span class="p">(</span><span class="s2">&quot;../board/obj/bootstub.panda_h7.elf&quot;</span><span class="p">,</span> <span class="s2">&quot;H7&quot;</span><span class="p">)</span>
+  <span class="n">check_space</span><span class="p">(</span><span class="s2">&quot;../board/obj/panda_h7.elf&quot;</span><span class="p">,</span> <span class="s2">&quot;H7&quot;</span><span class="p">)</span>
+  <span class="c1"># black panda</span>
+  <span class="n">check_space</span><span class="p">(</span><span class="s2">&quot;../board/obj/bootstub.panda.elf&quot;</span><span class="p">,</span> <span class="s2">&quot;F4&quot;</span><span class="p">)</span>
+  <span class="n">check_space</span><span class="p">(</span><span class="s2">&quot;../board/obj/panda.elf&quot;</span><span class="p">,</span> <span class="s2">&quot;F4&quot;</span><span class="p">)</span>
+  <span class="c1"># jungle v1</span>
+  <span class="n">check_space</span><span class="p">(</span><span class="s2">&quot;../board/jungle/obj/bootstub.panda_jungle.elf&quot;</span><span class="p">,</span> <span class="s2">&quot;F4&quot;</span><span class="p">)</span>
+  <span class="n">check_space</span><span class="p">(</span><span class="s2">&quot;../board/jungle/obj/panda_jungle.elf&quot;</span><span class="p">,</span> <span class="s2">&quot;F4&quot;</span><span class="p">)</span>
+  <span class="c1"># jungle v2</span>
+  <span class="n">check_space</span><span class="p">(</span><span class="s2">&quot;../board/jungle/obj/bootstub.panda_jungle_h7.elf&quot;</span><span class="p">,</span> <span class="s2">&quot;H7&quot;</span><span class="p">)</span>
+  <span class="n">check_space</span><span class="p">(</span><span class="s2">&quot;../board/jungle/obj/panda_jungle_h7.elf&quot;</span><span class="p">,</span> <span class="s2">&quot;H7&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.toyota.tests.test_toyota &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/toyota/tests/test_toyota.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.toyota.tests.test_toyota</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.toyota.tests.test_toyota</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">hypothesis</span> <span class="kn">import</span> <span class="n">given</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">strategies</span> <span class="k">as</span> <span class="n">st</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.fw_versions</span> <span class="kn">import</span> <span class="n">build_fw_dict</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.toyota.fingerprints</span> <span class="kn">import</span> <span class="n">FW_VERSIONS</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.toyota.values</span> <span class="kn">import</span> <span class="n">CAR</span><span class="p">,</span> <span class="n">DBC</span><span class="p">,</span> <span class="n">TSS2_CAR</span><span class="p">,</span> <span class="n">ANGLE_CONTROL_CAR</span><span class="p">,</span> <span class="n">RADAR_ACC_CAR</span><span class="p">,</span> \
+                                                  <span class="n">FW_QUERY_CONFIG</span><span class="p">,</span> <span class="n">PLATFORM_CODE_ECUS</span><span class="p">,</span> <span class="n">FUZZY_EXCLUDED_PLATFORMS</span><span class="p">,</span> \
+                                                  <span class="n">get_platform_codes</span>
+
+<span class="n">Ecu</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">Ecu</span>
+<span class="n">ECU_NAME</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">enumerants</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+
+<div class="viewcode-block" id="check_fw_version">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.check_fw_version">[docs]</a>
+<span class="k">def</span> <span class="nf">check_fw_version</span><span class="p">(</span><span class="n">fw_version</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">return</span> <span class="sa">b</span><span class="s1">&#39;?&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fw_version</span></div>
+
+
+
+<div class="viewcode-block" id="TestToyotaInterfaces">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.TestToyotaInterfaces">[docs]</a>
+<span class="k">class</span> <span class="nc">TestToyotaInterfaces</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestToyotaInterfaces.test_car_sets">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.TestToyotaInterfaces.test_car_sets">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_car_sets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ANGLE_CONTROL_CAR</span> <span class="o">-</span> <span class="n">TSS2_CAR</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">RADAR_ACC_CAR</span> <span class="o">-</span> <span class="n">TSS2_CAR</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaInterfaces.test_lta_platforms">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.TestToyotaInterfaces.test_lta_platforms">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_lta_platforms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># At this time, only RAV4 2023 is expected to use LTA/angle control</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ANGLE_CONTROL_CAR</span><span class="p">,</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">TOYOTA_RAV4_TSS2_2023</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaInterfaces.test_tss2_dbc">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.TestToyotaInterfaces.test_tss2_dbc">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_tss2_dbc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># We make some assumptions about TSS2 platforms,</span>
+    <span class="c1"># like looking up certain signals only in this DBC</span>
+    <span class="k">for</span> <span class="n">car_model</span><span class="p">,</span> <span class="n">dbc</span> <span class="ow">in</span> <span class="n">DBC</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">if</span> <span class="n">car_model</span> <span class="ow">in</span> <span class="n">TSS2_CAR</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">dbc</span><span class="p">[</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="s2">&quot;toyota_nodsu_pt_generated&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaInterfaces.test_essential_ecus">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.TestToyotaInterfaces.test_essential_ecus">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_essential_ecus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Asserts standard ECUs exist for each platform</span>
+    <span class="n">common_ecus</span> <span class="o">=</span> <span class="p">{</span><span class="n">Ecu</span><span class="o">.</span><span class="n">fwdRadar</span><span class="p">,</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">car_model</span><span class="p">,</span> <span class="n">ecus</span> <span class="ow">in</span> <span class="n">FW_VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">car_model</span><span class="o">=</span><span class="n">car_model</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+        <span class="n">present_ecus</span> <span class="o">=</span> <span class="p">{</span><span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">ecu</span> <span class="ow">in</span> <span class="n">ecus</span><span class="p">}</span>
+        <span class="n">missing_ecus</span> <span class="o">=</span> <span class="n">common_ecus</span> <span class="o">-</span> <span class="n">present_ecus</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">missing_ecus</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Some exceptions for other common ECUs</span>
+        <span class="k">if</span> <span class="n">car_model</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">TOYOTA_ALPHARD_TSS2</span><span class="p">,):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">abs</span><span class="p">,</span> <span class="n">present_ecus</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">car_model</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">TOYOTA_MIRAI</span><span class="p">,):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="n">present_ecus</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">car_model</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">TOYOTA_PRIUS_V</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="n">Ecu</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span> <span class="n">present_ecus</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TestToyotaFingerprint">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.TestToyotaFingerprint">[docs]</a>
+<span class="k">class</span> <span class="nc">TestToyotaFingerprint</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestToyotaFingerprint.test_non_essential_ecus">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.TestToyotaFingerprint.test_non_essential_ecus">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_non_essential_ecus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Ensures only the cars that have multiple engine ECUs are in the engine non-essential ECU list</span>
+    <span class="k">for</span> <span class="n">car_model</span><span class="p">,</span> <span class="n">ecus</span> <span class="ow">in</span> <span class="n">FW_VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">car_model</span><span class="o">=</span><span class="n">car_model</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+        <span class="n">engine_ecus</span> <span class="o">=</span> <span class="p">{</span><span class="n">ecu</span> <span class="k">for</span> <span class="n">ecu</span> <span class="ow">in</span> <span class="n">ecus</span> <span class="k">if</span> <span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">engine</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">engine_ecus</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span>
+                         <span class="n">car_model</span> <span class="ow">in</span> <span class="n">FW_QUERY_CONFIG</span><span class="o">.</span><span class="n">non_essential_ecus</span><span class="p">[</span><span class="n">Ecu</span><span class="o">.</span><span class="n">engine</span><span class="p">],</span>
+                         <span class="sa">f</span><span class="s2">&quot;Car model unexpectedly </span><span class="si">{</span><span class="s1">&#39;not &#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">engine_ecus</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">in non-essential list&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaFingerprint.test_valid_fw_versions">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.TestToyotaFingerprint.test_valid_fw_versions">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_valid_fw_versions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Asserts all FW versions are valid</span>
+    <span class="k">for</span> <span class="n">car_model</span><span class="p">,</span> <span class="n">ecus</span> <span class="ow">in</span> <span class="n">FW_VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">car_model</span><span class="o">=</span><span class="n">car_model</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">fws</span> <span class="ow">in</span> <span class="n">ecus</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+          <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">fws</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">check_fw_version</span><span class="p">(</span><span class="n">fw</span><span class="p">),</span> <span class="n">fw</span><span class="p">)</span></div>
+
+
+  <span class="c1"># Tests for part numbers, platform codes, and sub-versions which Toyota will use to fuzzy</span>
+  <span class="c1"># fingerprint in the absence of full FW matches:</span>
+<div class="viewcode-block" id="TestToyotaFingerprint.test_platform_codes_fuzzy_fw">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.TestToyotaFingerprint.test_platform_codes_fuzzy_fw">[docs]</a>
+  <span class="nd">@settings</span><span class="p">(</span><span class="n">max_examples</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+  <span class="nd">@given</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">data</span><span class="p">())</span>
+  <span class="k">def</span> <span class="nf">test_platform_codes_fuzzy_fw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">fw_strategy</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">lists</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">binary</span><span class="p">())</span>
+    <span class="n">fws</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">fw_strategy</span><span class="p">)</span>
+    <span class="n">get_platform_codes</span><span class="p">(</span><span class="n">fws</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaFingerprint.test_platform_code_ecus_available">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.TestToyotaFingerprint.test_platform_code_ecus_available">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_platform_code_ecus_available</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Asserts ECU keys essential for fuzzy fingerprinting are available on all platforms</span>
+    <span class="k">for</span> <span class="n">car_model</span><span class="p">,</span> <span class="n">ecus</span> <span class="ow">in</span> <span class="n">FW_VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">car_model</span><span class="o">=</span><span class="n">car_model</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">platform_code_ecu</span> <span class="ow">in</span> <span class="n">PLATFORM_CODE_ECUS</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">platform_code_ecu</span> <span class="o">==</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">eps</span> <span class="ow">and</span> <span class="n">car_model</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">TOYOTA_PRIUS_V</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">,):</span>
+            <span class="k">continue</span>
+          <span class="k">if</span> <span class="n">platform_code_ecu</span> <span class="o">==</span> <span class="n">Ecu</span><span class="o">.</span><span class="n">abs</span> <span class="ow">and</span> <span class="n">car_model</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">TOYOTA_ALPHARD_TSS2</span><span class="p">,):</span>
+            <span class="k">continue</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="n">platform_code_ecu</span><span class="p">,</span> <span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">ecus</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaFingerprint.test_fw_format">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.TestToyotaFingerprint.test_fw_format">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_fw_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Asserts:</span>
+    <span class="c1"># - every supported ECU FW version returns one platform code</span>
+    <span class="c1"># - every supported ECU FW version has a part number</span>
+    <span class="c1"># - expected parsing of ECU sub-versions</span>
+
+    <span class="k">for</span> <span class="n">car_model</span><span class="p">,</span> <span class="n">ecus</span> <span class="ow">in</span> <span class="n">FW_VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">car_model</span><span class="o">=</span><span class="n">car_model</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">ecu</span><span class="p">,</span> <span class="n">fws</span> <span class="ow">in</span> <span class="n">ecus</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+          <span class="k">if</span> <span class="n">ecu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">PLATFORM_CODE_ECUS</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+          <span class="n">codes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+          <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">fws</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">get_platform_codes</span><span class="p">([</span><span class="n">fw</span><span class="p">])</span>
+            <span class="c1"># Check only one platform code and sub-version</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Unable to parse FW: </span><span class="si">{</span><span class="n">fw</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]),</span> <span class="sa">f</span><span class="s2">&quot;Unable to parse FW: </span><span class="si">{</span><span class="n">fw</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">codes</span> <span class="o">|=</span> <span class="n">result</span>
+
+          <span class="c1"># Toyota places the ECU part number in their FW versions, assert all parsable</span>
+          <span class="c1"># Note that there is only one unique part number per ECU across the fleet, so this</span>
+          <span class="c1"># is not important for identification, just a sanity check.</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;-&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">codes</span><span class="p">),</span>
+                          <span class="sa">f</span><span class="s2">&quot;FW does not have part number: </span><span class="si">{</span><span class="n">fw</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">codes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaFingerprint.test_platform_codes_spot_check">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.TestToyotaFingerprint.test_platform_codes_spot_check">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_platform_codes_spot_check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Asserts basic platform code parsing behavior for a few cases</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">get_platform_codes</span><span class="p">([</span>
+      <span class="sa">b</span><span class="s2">&quot;F152607140</span><span class="se">\x00\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span>
+      <span class="sa">b</span><span class="s2">&quot;F152607171</span><span class="se">\x00\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span>
+      <span class="sa">b</span><span class="s2">&quot;F152607110</span><span class="se">\x00\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span>
+      <span class="sa">b</span><span class="s2">&quot;F152607180</span><span class="se">\x00\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="p">{</span><span class="sa">b</span><span class="s2">&quot;F1526-07-1&quot;</span><span class="p">:</span> <span class="p">{</span><span class="sa">b</span><span class="s2">&quot;10&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;40&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;71&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;80&quot;</span><span class="p">}})</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">get_platform_codes</span><span class="p">([</span>
+      <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x02</span><span class="s2">8646F4104100</span><span class="se">\x00\x00\x00\x00</span><span class="s2">8646G5301200</span><span class="se">\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span>
+      <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x02</span><span class="s2">8646F4104100</span><span class="se">\x00\x00\x00\x00</span><span class="s2">8646G3304000</span><span class="se">\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="p">{</span><span class="sa">b</span><span class="s2">&quot;8646F-41-04&quot;</span><span class="p">:</span> <span class="p">{</span><span class="sa">b</span><span class="s2">&quot;100&quot;</span><span class="p">}})</span>
+
+    <span class="c1"># Short version has no part number</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">get_platform_codes</span><span class="p">([</span>
+      <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x02</span><span class="s2">35870000</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s2">A0202000</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span>
+      <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x02</span><span class="s2">35883000</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s2">A0202000</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="p">{</span><span class="sa">b</span><span class="s2">&quot;58-70&quot;</span><span class="p">:</span> <span class="p">{</span><span class="sa">b</span><span class="s2">&quot;000&quot;</span><span class="p">},</span> <span class="sa">b</span><span class="s2">&quot;58-83&quot;</span><span class="p">:</span> <span class="p">{</span><span class="sa">b</span><span class="s2">&quot;000&quot;</span><span class="p">}})</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">get_platform_codes</span><span class="p">([</span>
+      <span class="sa">b</span><span class="s2">&quot;F152607110</span><span class="se">\x00\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span>
+      <span class="sa">b</span><span class="s2">&quot;F152607140</span><span class="se">\x00\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span>
+      <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x02</span><span class="s2">8646F4104100</span><span class="se">\x00\x00\x00\x00</span><span class="s2">8646G5301200</span><span class="se">\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span>
+      <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x02</span><span class="s2">35879000</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s2">A4701000</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="p">{</span><span class="sa">b</span><span class="s2">&quot;F1526-07-1&quot;</span><span class="p">:</span> <span class="p">{</span><span class="sa">b</span><span class="s2">&quot;10&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;40&quot;</span><span class="p">},</span> <span class="sa">b</span><span class="s2">&quot;8646F-41-04&quot;</span><span class="p">:</span> <span class="p">{</span><span class="sa">b</span><span class="s2">&quot;100&quot;</span><span class="p">},</span> <span class="sa">b</span><span class="s2">&quot;58-79&quot;</span><span class="p">:</span> <span class="p">{</span><span class="sa">b</span><span class="s2">&quot;000&quot;</span><span class="p">}})</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaFingerprint.test_fuzzy_excluded_platforms">
+<a class="viewcode-back" href="../../../../../selfdrive.car.toyota.tests.html#selfdrive.car.toyota.tests.test_toyota.TestToyotaFingerprint.test_fuzzy_excluded_platforms">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_fuzzy_excluded_platforms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Asserts a list of platforms that will not fuzzy fingerprint with platform codes due to them being shared.</span>
+    <span class="n">platforms_with_shared_codes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">platform</span><span class="p">,</span> <span class="n">fw_by_addr</span> <span class="ow">in</span> <span class="n">FW_VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">car_fw</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">for</span> <span class="n">ecu</span><span class="p">,</span> <span class="n">fw_versions</span> <span class="ow">in</span> <span class="n">fw_by_addr</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">ecu_name</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sub_addr</span> <span class="o">=</span> <span class="n">ecu</span>
+        <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">fw_versions</span><span class="p">:</span>
+          <span class="n">car_fw</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;ecu&quot;</span><span class="p">:</span> <span class="n">ecu_name</span><span class="p">,</span> <span class="s2">&quot;fwVersion&quot;</span><span class="p">:</span> <span class="n">fw</span><span class="p">,</span> <span class="s2">&quot;address&quot;</span><span class="p">:</span> <span class="n">addr</span><span class="p">,</span>
+                         <span class="s2">&quot;subAddress&quot;</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">sub_addr</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">sub_addr</span><span class="p">})</span>
+
+      <span class="n">CP</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="n">carFw</span><span class="o">=</span><span class="n">car_fw</span><span class="p">)</span>
+      <span class="n">matches</span> <span class="o">=</span> <span class="n">FW_QUERY_CONFIG</span><span class="o">.</span><span class="n">match_fw_to_car_fuzzy</span><span class="p">(</span><span class="n">build_fw_dict</span><span class="p">(</span><span class="n">CP</span><span class="o">.</span><span class="n">carFw</span><span class="p">),</span> <span class="n">FW_VERSIONS</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">matches</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">platform</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># If a platform has multiple matches, add it and its matches</span>
+        <span class="n">platforms_with_shared_codes</span> <span class="o">|=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">platform</span><span class="p">),</span> <span class="o">*</span><span class="n">matches</span><span class="p">}</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">platforms_with_shared_codes</span><span class="p">,</span> <span class="n">FUZZY_EXCLUDED_PLATFORMS</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">platforms_with_shared_codes</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">FW_VERSIONS</span><span class="p">)))</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

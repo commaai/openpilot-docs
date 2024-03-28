@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cereal.services &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/cereal/services.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cereal.services</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cereal.services</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="n">RESERVED_PORT</span> <span class="o">=</span> <span class="mi">8022</span>  <span class="c1"># sshd</span>
+<span class="n">STARTING_PORT</span> <span class="o">=</span> <span class="mi">8001</span>
+
+
+<div class="viewcode-block" id="new_port">
+<a class="viewcode-back" href="../../cereal.html#cereal.services.new_port">[docs]</a>
+<span class="k">def</span> <span class="nf">new_port</span><span class="p">(</span><span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+  <span class="n">port</span> <span class="o">+=</span> <span class="n">STARTING_PORT</span>
+  <span class="k">return</span> <span class="n">port</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">port</span> <span class="o">&gt;=</span> <span class="n">RESERVED_PORT</span> <span class="k">else</span> <span class="n">port</span></div>
+
+
+
+<div class="viewcode-block" id="Service">
+<a class="viewcode-back" href="../../cereal.html#cereal.services.Service">[docs]</a>
+<span class="k">class</span> <span class="nc">Service</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">should_log</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">frequency</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">decimation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">should_log</span> <span class="o">=</span> <span class="n">should_log</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">frequency</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="n">decimation</span></div>
+
+
+
+<span class="n">services</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="c1"># service: (should_log, frequency, qlog decimation (optional))</span>
+  <span class="c1"># note: the &quot;EncodeIdx&quot; packets will still be in the log</span>
+  <span class="s2">&quot;gyroscope&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">104.</span><span class="p">,</span> <span class="mi">104</span><span class="p">),</span>
+  <span class="s2">&quot;gyroscope2&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">100.</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+  <span class="s2">&quot;accelerometer&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">104.</span><span class="p">,</span> <span class="mi">104</span><span class="p">),</span>
+  <span class="s2">&quot;accelerometer2&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">100.</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+  <span class="s2">&quot;magnetometer&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">25.</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span>
+  <span class="s2">&quot;lightSensor&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">100.</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+  <span class="s2">&quot;temperatureSensor&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span>
+  <span class="s2">&quot;temperatureSensor2&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span>
+  <span class="s2">&quot;gpsNMEA&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">9.</span><span class="p">),</span>
+  <span class="s2">&quot;deviceState&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;can&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">100.</span><span class="p">,</span> <span class="mi">1223</span><span class="p">),</span>  <span class="c1"># decimation gives ~5 msgs in a full segment</span>
+  <span class="s2">&quot;controlsState&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">100.</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+  <span class="s2">&quot;pandaStates&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;peripheralState&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;radarState&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+  <span class="s2">&quot;roadEncodeIdx&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;liveTracks&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">),</span>
+  <span class="s2">&quot;sendcan&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">100.</span><span class="p">,</span> <span class="mi">139</span><span class="p">),</span>
+  <span class="s2">&quot;logMessage&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span>
+  <span class="s2">&quot;errorLogMessage&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;liveCalibration&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+  <span class="s2">&quot;liveTorqueParameters&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;androidLog&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span>
+  <span class="s2">&quot;carState&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">100.</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+  <span class="s2">&quot;carControl&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">100.</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+  <span class="s2">&quot;carOutput&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">100.</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+  <span class="s2">&quot;longitudinalPlan&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+  <span class="s2">&quot;procLog&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>
+  <span class="s2">&quot;gpsLocationExternal&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+  <span class="s2">&quot;gpsLocation&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;ubloxGnss&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">10.</span><span class="p">),</span>
+  <span class="s2">&quot;qcomGnss&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">2.</span><span class="p">),</span>
+  <span class="s2">&quot;gnssMeasurements&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+  <span class="s2">&quot;clocks&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;ubloxRaw&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">),</span>
+  <span class="s2">&quot;liveLocationKalman&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+  <span class="s2">&quot;liveParameters&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+  <span class="s2">&quot;cameraOdometry&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+  <span class="s2">&quot;thumbnail&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;onroadEvents&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;carParams&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;roadCameraState&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+  <span class="s2">&quot;driverCameraState&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+  <span class="s2">&quot;driverEncodeIdx&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;driverStateV2&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+  <span class="s2">&quot;driverMonitoringState&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+  <span class="s2">&quot;wideRoadEncodeIdx&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;wideRoadCameraState&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+  <span class="s2">&quot;modelV2&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
+  <span class="s2">&quot;managerState&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;uploaderState&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;navInstruction&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+  <span class="s2">&quot;navRoute&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span>
+  <span class="s2">&quot;navThumbnail&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span>
+  <span class="s2">&quot;navModel&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">),</span>
+  <span class="s2">&quot;mapRenderState&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">),</span>
+  <span class="s2">&quot;uiPlan&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mf">40.</span><span class="p">),</span>
+  <span class="s2">&quot;qRoadEncodeIdx&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">),</span>
+  <span class="s2">&quot;userFlag&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;microphone&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+
+  <span class="c1"># debug</span>
+  <span class="s2">&quot;uiDebug&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="s2">&quot;testJoystick&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span>
+  <span class="s2">&quot;roadEncodeData&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">),</span>
+  <span class="s2">&quot;driverEncodeData&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">),</span>
+  <span class="s2">&quot;wideRoadEncodeData&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">),</span>
+  <span class="s2">&quot;qRoadEncodeData&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">),</span>
+  <span class="s2">&quot;livestreamWideRoadEncodeIdx&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">),</span>
+  <span class="s2">&quot;livestreamRoadEncodeIdx&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">),</span>
+  <span class="s2">&quot;livestreamDriverEncodeIdx&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">),</span>
+  <span class="s2">&quot;livestreamWideRoadEncodeData&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">),</span>
+  <span class="s2">&quot;livestreamRoadEncodeData&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">),</span>
+  <span class="s2">&quot;livestreamDriverEncodeData&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mf">20.</span><span class="p">),</span>
+  <span class="s2">&quot;customReservedRawData0&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span>
+  <span class="s2">&quot;customReservedRawData1&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span>
+  <span class="s2">&quot;customReservedRawData2&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span>
+<span class="p">}</span>
+<span class="n">SERVICE_LIST</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">Service</span><span class="p">(</span><span class="n">new_port</span><span class="p">(</span><span class="n">idx</span><span class="p">),</span> <span class="o">*</span><span class="n">vals</span><span class="p">)</span> <span class="k">for</span>
+                <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">services</span><span class="o">.</span><span class="n">items</span><span class="p">())}</span>
+
+
+<div class="viewcode-block" id="build_header">
+<a class="viewcode-back" href="../../cereal.html#cereal.services.build_header">[docs]</a>
+<span class="k">def</span> <span class="nf">build_header</span><span class="p">():</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">h</span> <span class="o">+=</span> <span class="s2">&quot;/* THIS IS AN AUTOGENERATED FILE, PLEASE EDIT services.py */</span><span class="se">\n</span><span class="s2">&quot;</span>
+  <span class="n">h</span> <span class="o">+=</span> <span class="s2">&quot;#ifndef __SERVICES_H</span><span class="se">\n</span><span class="s2">&quot;</span>
+  <span class="n">h</span> <span class="o">+=</span> <span class="s2">&quot;#define __SERVICES_H</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+  <span class="n">h</span> <span class="o">+=</span> <span class="s2">&quot;#include &lt;map&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+  <span class="n">h</span> <span class="o">+=</span> <span class="s2">&quot;#include &lt;string&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+  <span class="n">h</span> <span class="o">+=</span> <span class="s2">&quot;struct service { std::string name; int port; bool should_log; int frequency; int decimation; };</span><span class="se">\n</span><span class="s2">&quot;</span>
+  <span class="n">h</span> <span class="o">+=</span> <span class="s2">&quot;static std::map&lt;std::string, service&gt; services = {</span><span class="se">\n</span><span class="s2">&quot;</span>
+  <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">SERVICE_LIST</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">should_log</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">should_log</span> <span class="k">else</span> <span class="s2">&quot;false&quot;</span>
+    <span class="n">decimation</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">decimation</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">v</span><span class="o">.</span><span class="n">decimation</span>
+    <span class="n">h</span> <span class="o">+=</span> <span class="s1">&#39;  { &quot;</span><span class="si">%s</span><span class="s1">&quot;, {&quot;</span><span class="si">%s</span><span class="s1">&quot;, </span><span class="si">%d</span><span class="s1">, </span><span class="si">%s</span><span class="s1">, </span><span class="si">%d</span><span class="s1">, </span><span class="si">%d</span><span class="s1">}},</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> \
+         <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="n">should_log</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">frequency</span><span class="p">,</span> <span class="n">decimation</span><span class="p">)</span>
+  <span class="n">h</span> <span class="o">+=</span> <span class="s2">&quot;};</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+  <span class="n">h</span> <span class="o">+=</span> <span class="s2">&quot;#endif</span><span class="se">\n</span><span class="s2">&quot;</span>
+  <span class="k">return</span> <span class="n">h</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">build_header</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

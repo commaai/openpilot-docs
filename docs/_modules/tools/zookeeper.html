@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tools.zookeeper &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/tools/zookeeper.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tools.zookeeper</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tools.zookeeper</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ft4222</span>
+<span class="kn">import</span> <span class="nn">ft4222.I2CMaster</span>
+
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">INA231_ADDR</span> <span class="o">=</span> <span class="mh">0x40</span>
+<span class="n">INA231_REG_CONFIG</span> <span class="o">=</span> <span class="mh">0x00</span>
+<span class="n">INA231_REG_SHUNT_VOLTAGE</span> <span class="o">=</span> <span class="mh">0x01</span>
+<span class="n">INA231_REG_BUS_VOLTAGE</span> <span class="o">=</span> <span class="mh">0x02</span>
+<span class="n">INA231_REG_POWER</span> <span class="o">=</span> <span class="mh">0x03</span>
+<span class="n">INA231_REG_CURRENT</span> <span class="o">=</span> <span class="mh">0x04</span>
+<span class="n">INA231_REG_CALIBRATION</span> <span class="o">=</span> <span class="mh">0x05</span>
+
+<span class="n">INA231_BUS_LSB</span> <span class="o">=</span> <span class="mf">1.25e-3</span>
+<span class="n">INA231_SHUNT_LSB</span> <span class="o">=</span> <span class="mf">2.5e-6</span>
+<span class="n">SHUNT_RESISTOR</span> <span class="o">=</span> <span class="mf">30e-3</span>
+<span class="n">CURRENT_LSB</span> <span class="o">=</span> <span class="mf">1e-5</span>
+
+<div class="viewcode-block" id="Zookeeper">
+<a class="viewcode-back" href="../../tools.zookeeper.html#tools.zookeeper.Zookeeper">[docs]</a>
+<span class="k">class</span> <span class="nc">Zookeeper</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">ft4222</span><span class="o">.</span><span class="n">createDeviceInfoList</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No connected zookeeper found!&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dev_a</span> <span class="o">=</span> <span class="n">ft4222</span><span class="o">.</span><span class="n">openByDescription</span><span class="p">(</span><span class="s2">&quot;FT4222 A&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dev_b</span> <span class="o">=</span> <span class="n">ft4222</span><span class="o">.</span><span class="n">openByDescription</span><span class="p">(</span><span class="s2">&quot;FT4222 B&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ft4222</span><span class="o">.</span><span class="n">createDeviceInfoList</span><span class="p">()):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Device </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">ft4222</span><span class="o">.</span><span class="n">getDeviceInfoDetail</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kc">False</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Setup GPIO</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dev_b</span><span class="o">.</span><span class="n">gpio_Init</span><span class="p">(</span><span class="n">gpio2</span><span class="o">=</span><span class="n">ft4222</span><span class="o">.</span><span class="n">Dir</span><span class="o">.</span><span class="n">OUTPUT</span><span class="p">,</span> <span class="n">gpio3</span><span class="o">=</span><span class="n">ft4222</span><span class="o">.</span><span class="n">Dir</span><span class="o">.</span><span class="n">OUTPUT</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dev_b</span><span class="o">.</span><span class="n">setSuspendOut</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dev_b</span><span class="o">.</span><span class="n">setWakeUpInterrut</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Setup I2C</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dev_a</span><span class="o">.</span><span class="n">i2cMaster_Init</span><span class="p">(</span><span class="n">kbps</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_ina</span><span class="p">()</span>
+
+  <span class="c1"># Helper functions</span>
+  <span class="k">def</span> <span class="nf">_read_ina_register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">register</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dev_a</span><span class="o">.</span><span class="n">i2cMaster_WriteEx</span><span class="p">(</span><span class="n">INA231_ADDR</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">register</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="n">ft4222</span><span class="o">.</span><span class="n">I2CMaster</span><span class="o">.</span><span class="n">Flag</span><span class="o">.</span><span class="n">REPEATED_START</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_a</span><span class="o">.</span><span class="n">i2cMaster_Read</span><span class="p">(</span><span class="n">INA231_ADDR</span><span class="p">,</span> <span class="n">bytesToRead</span><span class="o">=</span><span class="n">length</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_write_ina_register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">register</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">register</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="s2">&quot;big&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="s2">&quot;big&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dev_a</span><span class="o">.</span><span class="n">i2cMaster_Write</span><span class="p">(</span><span class="n">INA231_ADDR</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_initialize_ina</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Config</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_write_ina_register</span><span class="p">(</span><span class="n">INA231_REG_CONFIG</span><span class="p">,</span> <span class="mh">0x4127</span><span class="p">)</span>
+
+    <span class="c1"># Calibration</span>
+    <span class="n">CAL_VALUE</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.00512</span> <span class="o">/</span> <span class="p">(</span><span class="n">CURRENT_LSB</span> <span class="o">*</span> <span class="n">SHUNT_RESISTOR</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calibration value: </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">CAL_VALUE</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_write_ina_register</span><span class="p">(</span><span class="n">INA231_REG_CALIBRATION</span><span class="p">,</span> <span class="n">CAL_VALUE</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_set_gpio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dev_b</span><span class="o">.</span><span class="n">gpio_Write</span><span class="p">(</span><span class="n">portNum</span><span class="o">=</span><span class="n">number</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">enabled</span><span class="p">)</span>
+
+  <span class="c1"># Public API functions</span>
+<div class="viewcode-block" id="Zookeeper.set_device_power">
+<a class="viewcode-back" href="../../tools.zookeeper.html#tools.zookeeper.Zookeeper.set_device_power">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_device_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_set_gpio</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">enabled</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Zookeeper.set_device_ignition">
+<a class="viewcode-back" href="../../tools.zookeeper.html#tools.zookeeper.Zookeeper.set_device_ignition">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_device_ignition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_set_gpio</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">enabled</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Zookeeper.read_current">
+<a class="viewcode-back" href="../../tools.zookeeper.html#tools.zookeeper.Zookeeper.read_current">[docs]</a>
+  <span class="k">def</span> <span class="nf">read_current</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Returns in A</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_ina_register</span><span class="p">(</span><span class="n">INA231_REG_CURRENT</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">byteorder</span><span class="o">=</span><span class="s2">&quot;big&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="n">CURRENT_LSB</span></div>
+
+
+<div class="viewcode-block" id="Zookeeper.read_power">
+<a class="viewcode-back" href="../../tools.zookeeper.html#tools.zookeeper.Zookeeper.read_power">[docs]</a>
+  <span class="k">def</span> <span class="nf">read_power</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Returns in W</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_ina_register</span><span class="p">(</span><span class="n">INA231_REG_POWER</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">byteorder</span><span class="o">=</span><span class="s2">&quot;big&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="n">CURRENT_LSB</span> <span class="o">*</span> <span class="mi">25</span></div>
+
+
+<div class="viewcode-block" id="Zookeeper.read_voltage">
+<a class="viewcode-back" href="../../tools.zookeeper.html#tools.zookeeper.Zookeeper.read_voltage">[docs]</a>
+  <span class="k">def</span> <span class="nf">read_voltage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Returns in V</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_ina_register</span><span class="p">(</span><span class="n">INA231_REG_BUS_VOLTAGE</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">byteorder</span><span class="o">=</span><span class="s2">&quot;big&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="n">INA231_BUS_LSB</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

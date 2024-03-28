@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.test.process_replay.regen &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/test/process_replay/regen.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.test.process_replay.regen</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.test.process_replay.regen</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">capnp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.process_replay.process_replay</span> <span class="kn">import</span> <span class="n">CONFIGS</span><span class="p">,</span> <span class="n">FAKEDATA</span><span class="p">,</span> <span class="n">ProcessConfig</span><span class="p">,</span> <span class="n">replay_process</span><span class="p">,</span> <span class="n">get_process_config</span><span class="p">,</span> \
+                                                                   <span class="n">check_openpilot_enabled</span><span class="p">,</span> <span class="n">get_custom_params_from_lr</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.process_replay.vision_meta</span> <span class="kn">import</span> <span class="n">DRIVER_CAMERA_FRAME_SIZES</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.update_ci_routes</span> <span class="kn">import</span> <span class="n">upload_route</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.route</span> <span class="kn">import</span> <span class="n">Route</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.framereader</span> <span class="kn">import</span> <span class="n">FrameReader</span><span class="p">,</span> <span class="n">BaseFrameReader</span><span class="p">,</span> <span class="n">FrameType</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.logreader</span> <span class="kn">import</span> <span class="n">LogReader</span><span class="p">,</span> <span class="n">LogIterable</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.helpers</span> <span class="kn">import</span> <span class="n">save_log</span>
+
+
+<div class="viewcode-block" id="DummyFrameReader">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.regen.DummyFrameReader">[docs]</a>
+<span class="k">class</span> <span class="nc">DummyFrameReader</span><span class="p">(</span><span class="n">BaseFrameReader</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">frame_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pix_val</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pix_val</span> <span class="o">=</span> <span class="n">pix_val</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span> <span class="o">=</span> <span class="n">frame_count</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame_type</span> <span class="o">=</span> <span class="n">FrameType</span><span class="o">.</span><span class="n">raw</span>
+
+<div class="viewcode-block" id="DummyFrameReader.get">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.regen.DummyFrameReader.get">[docs]</a>
+  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="o">=</span><span class="s2">&quot;yuv420p&quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;rgb24&quot;</span><span class="p">:</span>
+      <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;nv12&quot;</span> <span class="ow">or</span> <span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;yuv420p&quot;</span><span class="p">:</span>
+      <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pix_val</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="DummyFrameReader.zero_dcamera">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.regen.DummyFrameReader.zero_dcamera">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">zero_dcamera</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">DummyFrameReader</span><span class="p">(</span><span class="o">*</span><span class="n">DRIVER_CAMERA_FRAME_SIZES</span><span class="p">[(</span><span class="s2">&quot;tici&quot;</span><span class="p">,</span> <span class="s2">&quot;ar0231&quot;</span><span class="p">)],</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="regen_segment">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.regen.regen_segment">[docs]</a>
+<span class="k">def</span> <span class="nf">regen_segment</span><span class="p">(</span>
+  <span class="n">lr</span><span class="p">:</span> <span class="n">LogIterable</span><span class="p">,</span> <span class="n">frs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">processes</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">ProcessConfig</span><span class="p">]</span> <span class="o">=</span> <span class="n">CONFIGS</span><span class="p">,</span> <span class="n">disable_tqdm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructReader</span><span class="p">]:</span>
+  <span class="n">all_msgs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">)</span>
+  <span class="n">custom_params</span> <span class="o">=</span> <span class="n">get_custom_params_from_lr</span><span class="p">(</span><span class="n">all_msgs</span><span class="p">)</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Replayed processes:&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">proc_name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">processes</span><span class="p">])</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="o">*</span><span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+  <span class="n">output_logs</span> <span class="o">=</span> <span class="n">replay_process</span><span class="p">(</span><span class="n">processes</span><span class="p">,</span> <span class="n">all_msgs</span><span class="p">,</span> <span class="n">frs</span><span class="p">,</span> <span class="n">return_all_logs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">custom_params</span><span class="o">=</span><span class="n">custom_params</span><span class="p">,</span> <span class="n">disable_progress</span><span class="o">=</span><span class="n">disable_tqdm</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">output_logs</span></div>
+
+
+
+<div class="viewcode-block" id="setup_data_readers">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.regen.setup_data_readers">[docs]</a>
+<span class="k">def</span> <span class="nf">setup_data_readers</span><span class="p">(</span>
+    <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sidx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">use_route_meta</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">needs_driver_cam</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">needs_road_cam</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">dummy_driver_cam</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">LogReader</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+  <span class="k">if</span> <span class="n">use_route_meta</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">Route</span><span class="p">(</span><span class="n">route</span><span class="p">)</span>
+    <span class="n">lr</span> <span class="o">=</span> <span class="n">LogReader</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">log_paths</span><span class="p">()[</span><span class="n">sidx</span><span class="p">])</span>
+    <span class="n">frs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">needs_road_cam</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">camera_paths</span><span class="p">())</span> <span class="o">&gt;</span> <span class="n">sidx</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">camera_paths</span><span class="p">()[</span><span class="n">sidx</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">frs</span><span class="p">[</span><span class="s1">&#39;roadCameraState&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FrameReader</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">camera_paths</span><span class="p">()[</span><span class="n">sidx</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">needs_road_cam</span> <span class="ow">and</span>  <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">ecamera_paths</span><span class="p">())</span> <span class="o">&gt;</span> <span class="n">sidx</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">ecamera_paths</span><span class="p">()[</span><span class="n">sidx</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">frs</span><span class="p">[</span><span class="s1">&#39;wideRoadCameraState&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FrameReader</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">ecamera_paths</span><span class="p">()[</span><span class="n">sidx</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">needs_driver_cam</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">dummy_driver_cam</span><span class="p">:</span>
+        <span class="n">frs</span><span class="p">[</span><span class="s1">&#39;driverCameraState&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DummyFrameReader</span><span class="o">.</span><span class="n">zero_dcamera</span><span class="p">()</span>
+      <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">dcamera_paths</span><span class="p">())</span> <span class="o">&gt;</span> <span class="n">sidx</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">dcamera_paths</span><span class="p">()[</span><span class="n">sidx</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">device_type</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">initData</span><span class="o">.</span><span class="n">deviceType</span><span class="p">)</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span> <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;initData&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">device_type</span> <span class="o">!=</span> <span class="s2">&quot;neo&quot;</span><span class="p">,</span> <span class="s2">&quot;Driver camera not supported on neo segments. Use dummy dcamera.&quot;</span>
+        <span class="n">frs</span><span class="p">[</span><span class="s1">&#39;driverCameraState&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FrameReader</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">dcamera_paths</span><span class="p">()[</span><span class="n">sidx</span><span class="p">])</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">lr</span> <span class="o">=</span> <span class="n">LogReader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cd:/</span><span class="si">{</span><span class="n">route</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">sidx</span><span class="si">}</span><span class="s2">/rlog.bz2&quot;</span><span class="p">)</span>
+    <span class="n">frs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">needs_road_cam</span><span class="p">:</span>
+      <span class="n">frs</span><span class="p">[</span><span class="s1">&#39;roadCameraState&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FrameReader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cd:/</span><span class="si">{</span><span class="n">route</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">sidx</span><span class="si">}</span><span class="s2">/fcamera.hevc&quot;</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nb">next</span><span class="p">((</span><span class="kc">True</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">lr</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;wideRoadCameraState&quot;</span><span class="p">),</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="n">frs</span><span class="p">[</span><span class="s1">&#39;wideRoadCameraState&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FrameReader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cd:/</span><span class="si">{</span><span class="n">route</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">sidx</span><span class="si">}</span><span class="s2">/ecamera.hevc&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">needs_driver_cam</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">dummy_driver_cam</span><span class="p">:</span>
+        <span class="n">frs</span><span class="p">[</span><span class="s1">&#39;driverCameraState&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DummyFrameReader</span><span class="o">.</span><span class="n">zero_dcamera</span><span class="p">()</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">device_type</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">initData</span><span class="o">.</span><span class="n">deviceType</span><span class="p">)</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span> <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;initData&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">device_type</span> <span class="o">!=</span> <span class="s2">&quot;neo&quot;</span><span class="p">,</span> <span class="s2">&quot;Driver camera not supported on neo segments. Use dummy dcamera.&quot;</span>
+        <span class="n">frs</span><span class="p">[</span><span class="s1">&#39;driverCameraState&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FrameReader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cd:/</span><span class="si">{</span><span class="n">route</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">sidx</span><span class="si">}</span><span class="s2">/dcamera.hevc&quot;</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">lr</span><span class="p">,</span> <span class="n">frs</span></div>
+
+
+
+<div class="viewcode-block" id="regen_and_save">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.regen.regen_and_save">[docs]</a>
+<span class="k">def</span> <span class="nf">regen_and_save</span><span class="p">(</span>
+  <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sidx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">processes</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">FAKEDATA</span><span class="p">,</span>
+  <span class="n">upload</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">use_route_meta</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">disable_tqdm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">dummy_driver_cam</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">processes</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">processes</span><span class="p">,</span> <span class="s2">&quot;__iter__&quot;</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;whitelist_proc must be a string or iterable&quot;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">processes</span> <span class="o">!=</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">processes</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid value for processes: </span><span class="si">{</span><span class="n">processes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">replayed_processes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">processes</span><span class="p">:</span>
+      <span class="n">cfg</span> <span class="o">=</span> <span class="n">get_process_config</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+      <span class="n">replayed_processes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">replayed_processes</span> <span class="o">=</span> <span class="n">CONFIGS</span>
+
+  <span class="n">all_vision_pubs</span> <span class="o">=</span> <span class="p">{</span><span class="n">pub</span> <span class="k">for</span> <span class="n">cfg</span> <span class="ow">in</span> <span class="n">replayed_processes</span> <span class="k">for</span> <span class="n">pub</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">vision_pubs</span><span class="p">}</span>
+  <span class="n">lr</span><span class="p">,</span> <span class="n">frs</span> <span class="o">=</span> <span class="n">setup_data_readers</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">sidx</span><span class="p">,</span> <span class="n">use_route_meta</span><span class="p">,</span>
+                               <span class="n">needs_driver_cam</span><span class="o">=</span><span class="s2">&quot;driverCameraState&quot;</span> <span class="ow">in</span> <span class="n">all_vision_pubs</span><span class="p">,</span>
+                               <span class="n">needs_road_cam</span><span class="o">=</span><span class="s2">&quot;roadCameraState&quot;</span> <span class="ow">in</span> <span class="n">all_vision_pubs</span> <span class="ow">or</span> <span class="s2">&quot;wideRoadCameraState&quot;</span> <span class="ow">in</span> <span class="n">all_vision_pubs</span><span class="p">,</span>
+                               <span class="n">dummy_driver_cam</span><span class="o">=</span><span class="n">dummy_driver_cam</span><span class="p">)</span>
+  <span class="n">output_logs</span> <span class="o">=</span> <span class="n">regen_segment</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">frs</span><span class="p">,</span> <span class="n">replayed_processes</span><span class="p">,</span> <span class="n">disable_tqdm</span><span class="o">=</span><span class="n">disable_tqdm</span><span class="p">)</span>
+
+  <span class="n">log_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">--%H-%M-%S--0&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">()))</span>
+  <span class="n">rel_log_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">log_dir</span><span class="p">)</span>
+  <span class="n">rpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="s2">&quot;rlog.bz2&quot;</span><span class="p">)</span>
+
+  <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">log_dir</span><span class="p">)</span>
+  <span class="n">save_log</span><span class="p">(</span><span class="n">rpath</span><span class="p">,</span> <span class="n">output_logs</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="o">*</span><span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New route:&quot;</span><span class="p">,</span> <span class="n">rel_log_dir</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">check_openpilot_enabled</span><span class="p">(</span><span class="n">output_logs</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Route did not engage for long enough&quot;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">upload</span><span class="p">:</span>
+    <span class="n">upload_route</span><span class="p">(</span><span class="n">rel_log_dir</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">rel_log_dir</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">comma_separated_list</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+
+  <span class="n">all_procs</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">proc_name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">CONFIGS</span><span class="p">]</span>
+  <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Generate new segments from old ones&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--upload&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Upload the new segment to the CI bucket&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--outdir&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;log output dir&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">FAKEDATA</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--dummy-dcamera&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Use dummy blank driver camera&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--whitelist-procs&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">comma_separated_list</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">all_procs</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Comma-separated whitelist of processes to regen (e.g. controlsd,radard)&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--blacklist-procs&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">comma_separated_list</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Comma-separated blacklist of processes to regen (e.g. controlsd,radard)&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;route&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The source route&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;seg&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Segment in source route&quot;</span><span class="p">)</span>
+  <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+  <span class="n">blacklist_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">blacklist_procs</span><span class="p">)</span>
+  <span class="n">processes</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">whitelist_procs</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">blacklist_set</span><span class="p">]</span>
+  <span class="n">regen_and_save</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">route</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">seg</span><span class="p">,</span> <span class="n">processes</span><span class="o">=</span><span class="n">processes</span><span class="p">,</span> <span class="n">upload</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">upload</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">outdir</span><span class="p">,</span> <span class="n">dummy_driver_cam</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">dummy_dcamera</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

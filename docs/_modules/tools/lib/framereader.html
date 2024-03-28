@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tools.lib.framereader &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/tools/lib/framereader.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tools.lib.framereader</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tools.lib.framereader</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">lru</span> <span class="kn">import</span> <span class="n">LRU</span>
+
+<span class="kn">import</span> <span class="nn">_io</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.cache</span> <span class="kn">import</span> <span class="n">cache_path_for_file_path</span><span class="p">,</span> <span class="n">DEFAULT_CACHE_DIR</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.exceptions</span> <span class="kn">import</span> <span class="n">DataUnreadableError</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.vidindex</span> <span class="kn">import</span> <span class="n">hevc_index</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.file_helpers</span> <span class="kn">import</span> <span class="n">atomic_write_in_dir</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.filereader</span> <span class="kn">import</span> <span class="n">FileReader</span><span class="p">,</span> <span class="n">resolve_name</span>
+
+<span class="n">HEVC_SLICE_B</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">HEVC_SLICE_P</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">HEVC_SLICE_I</span> <span class="o">=</span> <span class="mi">2</span>
+
+
+<div class="viewcode-block" id="GOPReader">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.GOPReader">[docs]</a>
+<span class="k">class</span> <span class="nc">GOPReader</span><span class="p">:</span>
+<div class="viewcode-block" id="GOPReader.get_gop">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.GOPReader.get_gop">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_gop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+    <span class="c1"># returns (start_frame_num, num_frames, frames_to_skip, gop_data)</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DoNothingContextManager">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.DoNothingContextManager">[docs]</a>
+<span class="k">class</span> <span class="nc">DoNothingContextManager</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span>
+
+  <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="FrameType">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.FrameType">[docs]</a>
+<span class="k">class</span> <span class="nc">FrameType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">raw</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">h265_stream</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+
+<div class="viewcode-block" id="fingerprint_video">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.fingerprint_video">[docs]</a>
+<span class="k">def</span> <span class="nf">fingerprint_video</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+  <span class="k">with</span> <span class="n">FileReader</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">DataUnreadableError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s2"> is empty&quot;</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">header</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00\xc0\x12\x00</span><span class="s2">&quot;</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">FrameType</span><span class="o">.</span><span class="n">raw</span>
+  <span class="k">elif</span> <span class="n">header</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00\x00\x00\x01</span><span class="s2">&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s1">&#39;hevc&#39;</span> <span class="ow">in</span> <span class="n">fn</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">FrameType</span><span class="o">.</span><span class="n">h265_stream</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ffprobe">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.ffprobe">[docs]</a>
+<span class="k">def</span> <span class="nf">ffprobe</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="n">fn</span> <span class="o">=</span> <span class="n">resolve_name</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+  <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ffprobe&quot;</span><span class="p">,</span> <span class="s2">&quot;-v&quot;</span><span class="p">,</span> <span class="s2">&quot;quiet&quot;</span><span class="p">,</span> <span class="s2">&quot;-print_format&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">,</span> <span class="s2">&quot;-show_format&quot;</span><span class="p">,</span> <span class="s2">&quot;-show_streams&quot;</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">fmt</span><span class="p">:</span>
+    <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="n">fmt</span><span class="p">]</span>
+  <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">]</span>
+
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">FileReader</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">ffprobe_output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4096</span><span class="p">))</span>
+  <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">DataUnreadableError</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+  <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">ffprobe_output</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="cache_fn">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.cache_fn">[docs]</a>
+<span class="k">def</span> <span class="nf">cache_fn</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+  <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">cache_inner</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;no_cache&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+      <span class="n">cache_path</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cache_dir&#39;</span><span class="p">,</span> <span class="n">DEFAULT_CACHE_DIR</span><span class="p">)</span>
+      <span class="n">cache_path</span> <span class="o">=</span> <span class="n">cache_path_for_file_path</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">cache_dir</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">cache_path</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cache_path</span><span class="p">):</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cache_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cache_file</span><span class="p">:</span>
+        <span class="n">cache_value</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">cache_file</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">cache_value</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">cache_path</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">atomic_write_in_dir</span><span class="p">(</span><span class="n">cache_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;wb&quot;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">cache_file</span><span class="p">:</span>
+          <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">cache_value</span><span class="p">,</span> <span class="n">cache_file</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cache_value</span>
+
+  <span class="k">return</span> <span class="n">cache_inner</span></div>
+
+
+
+<div class="viewcode-block" id="index_stream">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.index_stream">[docs]</a>
+<span class="nd">@cache_fn</span>
+<span class="k">def</span> <span class="nf">index_stream</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">ft</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">ft</span> <span class="o">!=</span> <span class="n">FrameType</span><span class="o">.</span><span class="n">h265_stream</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Only h265 supported&quot;</span><span class="p">)</span>
+
+  <span class="n">frame_types</span><span class="p">,</span> <span class="n">dat_len</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">=</span> <span class="n">hevc_index</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+  <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frame_types</span> <span class="o">+</span> <span class="p">[(</span><span class="mh">0xFFFFFFFF</span><span class="p">,</span> <span class="n">dat_len</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+  <span class="n">probe</span> <span class="o">=</span> <span class="n">ffprobe</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s2">&quot;hevc&quot;</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="n">index</span><span class="p">,</span>
+    <span class="s1">&#39;global_prefix&#39;</span><span class="p">:</span> <span class="n">prefix</span><span class="p">,</span>
+    <span class="s1">&#39;probe&#39;</span><span class="p">:</span> <span class="n">probe</span>
+  <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="get_video_index">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.get_video_index">[docs]</a>
+<span class="k">def</span> <span class="nf">get_video_index</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">cache_dir</span><span class="o">=</span><span class="n">DEFAULT_CACHE_DIR</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">index_stream</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">cache_dir</span><span class="o">=</span><span class="n">cache_dir</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="read_file_check_size">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.read_file_check_size">[docs]</a>
+<span class="k">def</span> <span class="nf">read_file_check_size</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sz</span><span class="p">,</span> <span class="n">cookie</span><span class="p">):</span>
+  <span class="n">buff</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">sz</span><span class="p">)</span>
+  <span class="n">bytes_read</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readinto</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span>
+  <span class="k">assert</span> <span class="n">bytes_read</span> <span class="o">==</span> <span class="n">sz</span><span class="p">,</span> <span class="p">(</span><span class="n">bytes_read</span><span class="p">,</span> <span class="n">sz</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">buff</span></div>
+
+
+
+<div class="viewcode-block" id="rgb24toyuv">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.rgb24toyuv">[docs]</a>
+<span class="k">def</span> <span class="nf">rgb24toyuv</span><span class="p">(</span><span class="n">rgb</span><span class="p">):</span>
+  <span class="n">yuv_from_rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.299</span>     <span class="p">,</span>  <span class="mf">0.587</span>     <span class="p">,</span>  <span class="mf">0.114</span>      <span class="p">],</span>
+                           <span class="p">[</span><span class="o">-</span><span class="mf">0.14714119</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.28886916</span><span class="p">,</span>  <span class="mf">0.43601035</span> <span class="p">],</span>
+                           <span class="p">[</span> <span class="mf">0.61497538</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.51496512</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.10001026</span> <span class="p">]])</span>
+  <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rgb</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">yuv_from_rgb</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+
+
+  <span class="n">ys</span> <span class="o">=</span> <span class="n">img</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="n">us</span> <span class="o">=</span> <span class="p">(</span><span class="n">img</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">img</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">img</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">img</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">128</span>
+  <span class="n">vs</span> <span class="o">=</span> <span class="p">(</span><span class="n">img</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">img</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">img</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">img</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">128</span>
+
+  <span class="k">return</span> <span class="n">ys</span><span class="p">,</span> <span class="n">us</span><span class="p">,</span> <span class="n">vs</span></div>
+
+
+
+<div class="viewcode-block" id="rgb24toyuv420">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.rgb24toyuv420">[docs]</a>
+<span class="k">def</span> <span class="nf">rgb24toyuv420</span><span class="p">(</span><span class="n">rgb</span><span class="p">):</span>
+  <span class="n">ys</span><span class="p">,</span> <span class="n">us</span><span class="p">,</span> <span class="n">vs</span> <span class="o">=</span> <span class="n">rgb24toyuv</span><span class="p">(</span><span class="n">rgb</span><span class="p">)</span>
+
+  <span class="n">y_len</span> <span class="o">=</span> <span class="n">rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">uv_len</span> <span class="o">=</span> <span class="n">y_len</span> <span class="o">//</span> <span class="mi">4</span>
+
+  <span class="n">yuv420</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">y_len</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">uv_len</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">rgb</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+  <span class="n">yuv420</span><span class="p">[:</span><span class="n">y_len</span><span class="p">]</span> <span class="o">=</span> <span class="n">ys</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">yuv420</span><span class="p">[</span><span class="n">y_len</span><span class="p">:</span><span class="n">y_len</span> <span class="o">+</span> <span class="n">uv_len</span><span class="p">]</span> <span class="o">=</span> <span class="n">us</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">yuv420</span><span class="p">[</span><span class="n">y_len</span> <span class="o">+</span> <span class="n">uv_len</span><span class="p">:</span><span class="n">y_len</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">uv_len</span><span class="p">]</span> <span class="o">=</span> <span class="n">vs</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">yuv420</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="rgb24tonv12">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.rgb24tonv12">[docs]</a>
+<span class="k">def</span> <span class="nf">rgb24tonv12</span><span class="p">(</span><span class="n">rgb</span><span class="p">):</span>
+  <span class="n">ys</span><span class="p">,</span> <span class="n">us</span><span class="p">,</span> <span class="n">vs</span> <span class="o">=</span> <span class="n">rgb24toyuv</span><span class="p">(</span><span class="n">rgb</span><span class="p">)</span>
+
+  <span class="n">y_len</span> <span class="o">=</span> <span class="n">rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">uv_len</span> <span class="o">=</span> <span class="n">y_len</span> <span class="o">//</span> <span class="mi">4</span>
+
+  <span class="n">nv12</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">y_len</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">uv_len</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">rgb</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+  <span class="n">nv12</span><span class="p">[:</span><span class="n">y_len</span><span class="p">]</span> <span class="o">=</span> <span class="n">ys</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">nv12</span><span class="p">[</span><span class="n">y_len</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">us</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">nv12</span><span class="p">[</span><span class="n">y_len</span><span class="o">+</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">vs</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">nv12</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="decompress_video_data">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.decompress_video_data">[docs]</a>
+<span class="k">def</span> <span class="nf">decompress_video_data</span><span class="p">(</span><span class="n">rawdat</span><span class="p">,</span> <span class="n">vid_fmt</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">):</span>
+  <span class="n">threads</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;FFMPEG_THREADS&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span>
+  <span class="n">cuda</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;FFMPEG_CUDA&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span>
+  <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ffmpeg&quot;</span><span class="p">,</span> <span class="s2">&quot;-v&quot;</span><span class="p">,</span> <span class="s2">&quot;quiet&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;-threads&quot;</span><span class="p">,</span> <span class="n">threads</span><span class="p">,</span>
+          <span class="s2">&quot;-hwaccel&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">cuda</span> <span class="k">else</span> <span class="s2">&quot;cuda&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;-c:v&quot;</span><span class="p">,</span> <span class="s2">&quot;hevc&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;-vsync&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="n">vid_fmt</span><span class="p">,</span>
+          <span class="s2">&quot;-flags2&quot;</span><span class="p">,</span> <span class="s2">&quot;showall&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;-threads&quot;</span><span class="p">,</span> <span class="n">threads</span><span class="p">,</span>
+          <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="s2">&quot;rawvideo&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;-pix_fmt&quot;</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">,</span>
+          <span class="s2">&quot;-&quot;</span><span class="p">]</span>
+  <span class="n">dat</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="n">rawdat</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;rgb24&quot;</span><span class="p">:</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;nv12&quot;</span><span class="p">:</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">w</span><span class="o">*</span><span class="mi">3</span><span class="o">//</span><span class="mi">2</span><span class="p">))</span>
+  <span class="k">elif</span> <span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;yuv420p&quot;</span><span class="p">:</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">w</span><span class="o">*</span><span class="mi">3</span><span class="o">//</span><span class="mi">2</span><span class="p">))</span>
+  <span class="k">elif</span> <span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;yuv444p&quot;</span><span class="p">:</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+  <span class="k">return</span> <span class="n">ret</span></div>
+
+
+
+<div class="viewcode-block" id="BaseFrameReader">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.BaseFrameReader">[docs]</a>
+<span class="k">class</span> <span class="nc">BaseFrameReader</span><span class="p">:</span>
+  <span class="c1"># properties: frame_type, frame_count, w, h</span>
+
+  <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span>
+
+  <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<div class="viewcode-block" id="BaseFrameReader.close">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.BaseFrameReader.close">[docs]</a>
+  <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="BaseFrameReader.get">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.BaseFrameReader.get">[docs]</a>
+  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="o">=</span><span class="s2">&quot;yuv420p&quot;</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="FrameReader">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.FrameReader">[docs]</a>
+<span class="k">def</span> <span class="nf">FrameReader</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">cache_dir</span><span class="o">=</span><span class="n">DEFAULT_CACHE_DIR</span><span class="p">,</span> <span class="n">readahead</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">readbehind</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="n">frame_type</span> <span class="o">=</span> <span class="n">fingerprint_video</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">frame_type</span> <span class="o">==</span> <span class="n">FrameType</span><span class="o">.</span><span class="n">raw</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">RawFrameReader</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">frame_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">FrameType</span><span class="o">.</span><span class="n">h265_stream</span><span class="p">,):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">index_data</span><span class="p">:</span>
+      <span class="n">index_data</span> <span class="o">=</span> <span class="n">get_video_index</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">cache_dir</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">StreamFrameReader</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">index_data</span><span class="p">,</span> <span class="n">readahead</span><span class="o">=</span><span class="n">readahead</span><span class="p">,</span> <span class="n">readbehind</span><span class="o">=</span><span class="n">readbehind</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">frame_type</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="RawData">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.RawData">[docs]</a>
+<span class="k">class</span> <span class="nc">RawData</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">_io</span><span class="o">.</span><span class="n">FileIO</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lenn</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lenn</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RawData.read">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.RawData.read">[docs]</a>
+  <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lenn</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lenn</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="RawFrameReader">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.RawFrameReader">[docs]</a>
+<span class="k">class</span> <span class="nc">RawFrameReader</span><span class="p">(</span><span class="n">BaseFrameReader</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+    <span class="c1"># raw camera</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame_type</span> <span class="o">=</span> <span class="n">FrameType</span><span class="o">.</span><span class="n">raw</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rawfile</span> <span class="o">=</span> <span class="n">RawData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rawfile</span><span class="o">.</span><span class="n">count</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="mi">640</span><span class="p">,</span> <span class="mi">480</span>
+
+<div class="viewcode-block" id="RawFrameReader.load_and_debayer">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.RawFrameReader.load_and_debayer">[docs]</a>
+  <span class="k">def</span> <span class="nf">load_and_debayer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">960</span><span class="p">,</span> <span class="mi">1280</span><span class="p">)</span>
+    <span class="n">cimg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">([</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">],</span> <span class="p">((</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint16&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">img</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint16&quot;</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">),</span> <span class="n">img</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">cimg</span></div>
+
+
+<div class="viewcode-block" id="RawFrameReader.get">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.RawFrameReader.get">[docs]</a>
+  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="o">=</span><span class="s2">&quot;yuv420p&quot;</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">num</span><span class="o">+</span><span class="n">count</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span>
+
+    <span class="k">if</span> <span class="n">pix_fmt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;nv12&quot;</span><span class="p">,</span> <span class="s2">&quot;yuv420p&quot;</span><span class="p">,</span> <span class="s2">&quot;rgb24&quot;</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported pixel format </span><span class="si">{</span><span class="n">pix_fmt</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">num</span><span class="o">+</span><span class="n">count</span><span class="p">):</span>
+      <span class="n">dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rawfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+      <span class="n">rgb_dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_and_debayer</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;rgb24&quot;</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rgb_dat</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;nv12&quot;</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rgb24tonv12</span><span class="p">(</span><span class="n">rgb_dat</span><span class="p">))</span>
+      <span class="k">elif</span> <span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;yuv420p&quot;</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rgb24toyuv420</span><span class="p">(</span><span class="n">rgb_dat</span><span class="p">))</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">return</span> <span class="n">app</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="VideoStreamDecompressor">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.VideoStreamDecompressor">[docs]</a>
+<span class="k">class</span> <span class="nc">VideoStreamDecompressor</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">vid_fmt</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">vid_fmt</span> <span class="o">=</span> <span class="n">vid_fmt</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">w</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">h</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pix_fmt</span> <span class="o">=</span> <span class="n">pix_fmt</span>
+
+    <span class="k">if</span> <span class="n">pix_fmt</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;nv12&quot;</span><span class="p">,</span> <span class="s2">&quot;yuv420p&quot;</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">out_size</span> <span class="o">=</span> <span class="n">w</span><span class="o">*</span><span class="n">h</span><span class="o">*</span><span class="mi">3</span><span class="o">//</span><span class="mi">2</span>  <span class="c1"># yuv420p</span>
+    <span class="k">elif</span> <span class="n">pix_fmt</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;rgb24&quot;</span><span class="p">,</span> <span class="s2">&quot;yuv444p&quot;</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">out_size</span> <span class="o">=</span> <span class="n">w</span><span class="o">*</span><span class="n">h</span><span class="o">*</span><span class="mi">3</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">proc</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">write_thread</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="VideoStreamDecompressor.write_thread">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.VideoStreamDecompressor.write_thread">[docs]</a>
+  <span class="k">def</span> <span class="nf">write_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">with</span> <span class="n">FileReader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+          <span class="n">r</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">)</span>
+          <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">BrokenPipeError</span><span class="p">:</span>
+      <span class="k">pass</span>
+    <span class="k">finally</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="VideoStreamDecompressor.read">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.VideoStreamDecompressor.read">[docs]</a>
+  <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">threads</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;FFMPEG_THREADS&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span>
+    <span class="n">cuda</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;FFMPEG_CUDA&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="s2">&quot;ffmpeg&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;-threads&quot;</span><span class="p">,</span> <span class="n">threads</span><span class="p">,</span>
+      <span class="s2">&quot;-hwaccel&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">cuda</span> <span class="k">else</span> <span class="s2">&quot;cuda&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;-c:v&quot;</span><span class="p">,</span> <span class="s2">&quot;hevc&quot;</span><span class="p">,</span>
+      <span class="c1"># &quot;-avioflags&quot;, &quot;direct&quot;,</span>
+      <span class="s2">&quot;-analyzeduration&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;-probesize&quot;</span><span class="p">,</span> <span class="s2">&quot;32&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;-flush_packets&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+      <span class="c1"># &quot;-fflags&quot;, &quot;nobuffer&quot;,</span>
+      <span class="s2">&quot;-vsync&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vid_fmt</span><span class="p">,</span>
+      <span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;pipe:0&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;-threads&quot;</span><span class="p">,</span> <span class="n">threads</span><span class="p">,</span>
+      <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="s2">&quot;rawvideo&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;-pix_fmt&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pix_fmt</span><span class="p">,</span>
+      <span class="s2">&quot;pipe:1&quot;</span>
+    <span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+      <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="k">break</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_size</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;rgb24&quot;</span><span class="p">:</span>
+          <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;yuv420p&quot;</span><span class="p">:</span>
+          <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;nv12&quot;</span><span class="p">:</span>
+          <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pix_fmt</span> <span class="o">==</span> <span class="s2">&quot;yuv444p&quot;</span><span class="p">:</span>
+          <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown pix_fmt: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pix_fmt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">ret</span>
+
+      <span class="n">result_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+      <span class="k">assert</span> <span class="n">result_code</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">result_code</span>
+    <span class="k">finally</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
+</div>
+
+
+<div class="viewcode-block" id="StreamGOPReader">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.StreamGOPReader">[docs]</a>
+<span class="k">class</span> <span class="nc">StreamGOPReader</span><span class="p">(</span><span class="n">GOPReader</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">index_data</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">frame_type</span> <span class="o">==</span> <span class="n">FrameType</span><span class="o">.</span><span class="n">h265_stream</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame_type</span> <span class="o">=</span> <span class="n">frame_type</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index_data</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="n">index_data</span><span class="p">[</span><span class="s1">&#39;global_prefix&#39;</span><span class="p">]</span>
+    <span class="n">probe</span> <span class="o">=</span> <span class="n">index_data</span><span class="p">[</span><span class="s1">&#39;probe&#39;</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">prefix_frame_data</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">num_prefix_frames</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">vid_fmt</span> <span class="o">=</span> <span class="s2">&quot;hevc&quot;</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">HEVC_SLICE_I</span><span class="p">:</span>
+      <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">first_iframe</span> <span class="o">=</span> <span class="n">i</span>
+
+    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_iframe</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">probe</span><span class="p">[</span><span class="s1">&#39;streams&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;width&#39;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">probe</span><span class="p">[</span><span class="s1">&#39;streams&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;height&#39;</span><span class="p">]</span>
+
+  <span class="k">def</span> <span class="nf">_lookup_gop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+    <span class="n">frame_b</span> <span class="o">=</span> <span class="n">num</span>
+    <span class="k">while</span> <span class="n">frame_b</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">frame_b</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">HEVC_SLICE_I</span><span class="p">:</span>
+      <span class="n">frame_b</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="n">frame_e</span> <span class="o">=</span> <span class="n">num</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">frame_e</span> <span class="o">&lt;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">frame_e</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">HEVC_SLICE_I</span><span class="p">:</span>
+      <span class="n">frame_e</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">offset_b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">frame_b</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">offset_e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">frame_e</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">frame_b</span><span class="p">,</span> <span class="n">frame_e</span><span class="p">,</span> <span class="n">offset_b</span><span class="p">,</span> <span class="n">offset_e</span><span class="p">)</span>
+
+<div class="viewcode-block" id="StreamGOPReader.get_gop">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.StreamGOPReader.get_gop">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_gop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+    <span class="n">frame_b</span><span class="p">,</span> <span class="n">frame_e</span><span class="p">,</span> <span class="n">offset_b</span><span class="p">,</span> <span class="n">offset_e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lookup_gop</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">frame_b</span> <span class="o">&lt;=</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="n">frame_e</span>
+
+    <span class="n">num_frames</span> <span class="o">=</span> <span class="n">frame_e</span> <span class="o">-</span> <span class="n">frame_b</span>
+
+    <span class="k">with</span> <span class="n">FileReader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">offset_b</span><span class="p">)</span>
+      <span class="n">rawdat</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">offset_e</span> <span class="o">-</span> <span class="n">offset_b</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_iframe</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix_frame_data</span>
+        <span class="n">rawdat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix_frame_data</span> <span class="o">+</span> <span class="n">rawdat</span>
+
+      <span class="n">rawdat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">rawdat</span>
+
+    <span class="n">skip_frames</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_iframe</span><span class="p">:</span>
+      <span class="n">skip_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_prefix_frames</span>
+
+    <span class="k">return</span> <span class="n">frame_b</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">,</span> <span class="n">skip_frames</span><span class="p">,</span> <span class="n">rawdat</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="GOPFrameReader">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.GOPFrameReader">[docs]</a>
+<span class="k">class</span> <span class="nc">GOPFrameReader</span><span class="p">(</span><span class="n">BaseFrameReader</span><span class="p">):</span>
+  <span class="c1">#FrameReader with caching and readahead for formats that are group-of-picture based</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">readahead</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">readbehind</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">open_</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">readahead</span> <span class="o">=</span> <span class="n">readahead</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">readbehind</span> <span class="o">=</span> <span class="n">readbehind</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame_cache</span> <span class="o">=</span> <span class="n">LRU</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readahead</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cache_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_last</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_len</span> <span class="o">=</span> <span class="mi">30</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_c</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Condition</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_readahead_thread</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_thread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cache_lock</span> <span class="o">=</span> <span class="n">DoNothingContextManager</span><span class="p">()</span>
+
+<div class="viewcode-block" id="GOPFrameReader.close">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.GOPFrameReader.close">[docs]</a>
+  <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_</span><span class="p">:</span>
+      <span class="k">return</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">open_</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readahead</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_c</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_c</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_c</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
+
+
+  <span class="k">def</span> <span class="nf">_readahead_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_c</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_</span><span class="p">:</span>
+          <span class="k">break</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readahead_c</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+      <span class="k">finally</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readahead_c</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_</span><span class="p">:</span>
+        <span class="k">break</span>
+      <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">readahead_last</span>
+      <span class="n">num</span><span class="p">,</span> <span class="n">pix_fmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readahead_last</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readbehind</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">readahead_len</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">_get_one</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span><span class="p">,</span> <span class="n">num</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">readahead_len</span><span class="p">)):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">_get_one</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_get_one</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_cache</span><span class="p">:</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_cache</span><span class="p">[(</span><span class="n">num</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">)]</span>
+
+    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_lock</span><span class="p">:</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_cache</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_cache</span><span class="p">[(</span><span class="n">num</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">)]</span>
+
+      <span class="n">frame_b</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">,</span> <span class="n">skip_frames</span><span class="p">,</span> <span class="n">rawdat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_gop</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+
+      <span class="n">ret</span> <span class="o">=</span> <span class="n">decompress_video_data</span><span class="p">(</span><span class="n">rawdat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vid_fmt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">)</span>
+      <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="n">skip_frames</span><span class="p">:]</span>
+      <span class="k">assert</span> <span class="n">ret</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">num_frames</span>
+
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame_cache</span><span class="p">[(</span><span class="n">frame_b</span><span class="o">+</span><span class="n">i</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">)]</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_cache</span><span class="p">[(</span><span class="n">num</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">)]</span>
+
+<div class="viewcode-block" id="GOPFrameReader.get">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.GOPFrameReader.get">[docs]</a>
+  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="o">=</span><span class="s2">&quot;yuv420p&quot;</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">num</span> <span class="o">+</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">count</span><span class="si">}</span><span class="s2"> &gt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">pix_fmt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;nv12&quot;</span><span class="p">,</span> <span class="s2">&quot;yuv420p&quot;</span><span class="p">,</span> <span class="s2">&quot;rgb24&quot;</span><span class="p">,</span> <span class="s2">&quot;yuv444p&quot;</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported pixel format </span><span class="si">{</span><span class="n">pix_fmt</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_one</span><span class="p">(</span><span class="n">num</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span><span class="p">)]</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readahead</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_last</span> <span class="o">=</span> <span class="p">(</span><span class="n">num</span><span class="o">+</span><span class="n">count</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_c</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_c</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">readahead_c</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="StreamFrameReader">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.StreamFrameReader">[docs]</a>
+<span class="k">class</span> <span class="nc">StreamFrameReader</span><span class="p">(</span><span class="n">StreamGOPReader</span><span class="p">,</span> <span class="n">GOPFrameReader</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">index_data</span><span class="p">,</span> <span class="n">readahead</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">readbehind</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">StreamGOPReader</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">index_data</span><span class="p">)</span>
+    <span class="n">GOPFrameReader</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">readahead</span><span class="p">,</span> <span class="n">readbehind</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="GOPFrameIterator">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.GOPFrameIterator">[docs]</a>
+<span class="k">def</span> <span class="nf">GOPFrameIterator</span><span class="p">(</span><span class="n">gop_reader</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">):</span>
+  <span class="n">dec</span> <span class="o">=</span> <span class="n">VideoStreamDecompressor</span><span class="p">(</span><span class="n">gop_reader</span><span class="o">.</span><span class="n">fn</span><span class="p">,</span> <span class="n">gop_reader</span><span class="o">.</span><span class="n">vid_fmt</span><span class="p">,</span> <span class="n">gop_reader</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">gop_reader</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">)</span>
+  <span class="k">yield from</span> <span class="n">dec</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="FrameIterator">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.framereader.FrameIterator">[docs]</a>
+<span class="k">def</span> <span class="nf">FrameIterator</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="n">fr</span> <span class="o">=</span> <span class="n">FrameReader</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fr</span><span class="p">,</span> <span class="n">GOPReader</span><span class="p">):</span>
+    <span class="k">yield from</span> <span class="n">GOPFrameIterator</span><span class="p">(</span><span class="n">fr</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">fr</span><span class="o">.</span><span class="n">frame_count</span><span class="p">):</span>
+      <span class="k">yield</span> <span class="n">fr</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="o">=</span><span class="n">pix_fmt</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

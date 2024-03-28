@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>common.transformations.tests.test_coordinates &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/common/transformations/tests/test_coordinates.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">common.transformations.tests.test_coordinates</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for common.transformations.tests.test_coordinates</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">import</span> <span class="nn">openpilot.common.transformations.coordinates</span> <span class="k">as</span> <span class="nn">coord</span>
+
+<span class="n">geodetic_positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">37.7610403</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.4778699</span><span class="p">,</span> <span class="mi">115</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="mf">27.4840915</span><span class="p">,</span> <span class="o">-</span><span class="mf">68.5867592</span><span class="p">,</span> <span class="mi">2380</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="mf">32.4916858</span><span class="p">,</span> <span class="o">-</span><span class="mf">113.652821</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="mf">15.1392514</span><span class="p">,</span> <span class="mf">103.6976037</span><span class="p">,</span> <span class="mi">24</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="mf">24.2302229</span><span class="p">,</span> <span class="mf">44.2835412</span><span class="p">,</span> <span class="mi">1650</span><span class="p">]])</span>
+
+<span class="n">ecef_positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">2711076.55270557</span><span class="p">,</span> <span class="o">-</span><span class="mf">4259167.14692758</span><span class="p">,</span>  <span class="mf">3884579.87669935</span><span class="p">],</span>
+                          <span class="p">[</span> <span class="mf">2068042.69652729</span><span class="p">,</span> <span class="o">-</span><span class="mf">5273435.40316622</span><span class="p">,</span>  <span class="mf">2927004.89190746</span><span class="p">],</span>
+                          <span class="p">[</span><span class="o">-</span><span class="mf">2160412.60461669</span><span class="p">,</span> <span class="o">-</span><span class="mf">4932588.89873832</span><span class="p">,</span>  <span class="mf">3406542.29652851</span><span class="p">],</span>
+                          <span class="p">[</span><span class="o">-</span><span class="mf">1458247.92550567</span><span class="p">,</span>  <span class="mf">5983060.87496612</span><span class="p">,</span>  <span class="mf">1654984.6099885</span> <span class="p">],</span>
+                          <span class="p">[</span> <span class="mf">4167239.10867871</span><span class="p">,</span>  <span class="mf">4064301.90363223</span><span class="p">,</span>  <span class="mf">2602234.6065749</span> <span class="p">]])</span>
+
+<span class="n">ecef_positions_offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">2711004.46961115</span><span class="p">,</span> <span class="o">-</span><span class="mf">4259099.33540613</span><span class="p">,</span>  <span class="mf">3884605.16002147</span><span class="p">],</span>
+                                  <span class="p">[</span> <span class="mf">2068074.30639499</span><span class="p">,</span> <span class="o">-</span><span class="mf">5273413.78835412</span><span class="p">,</span>  <span class="mf">2927012.48741131</span><span class="p">],</span>
+                                  <span class="p">[</span><span class="o">-</span><span class="mf">2160344.53748176</span><span class="p">,</span> <span class="o">-</span><span class="mf">4932586.20092211</span><span class="p">,</span>  <span class="mf">3406636.2962545</span> <span class="p">],</span>
+                                  <span class="p">[</span><span class="o">-</span><span class="mf">1458211.98517094</span><span class="p">,</span>  <span class="mf">5983151.11161276</span><span class="p">,</span>  <span class="mf">1655077.02698447</span><span class="p">],</span>
+                                  <span class="p">[</span> <span class="mf">4167271.20055269</span><span class="p">,</span>  <span class="mf">4064398.22619263</span><span class="p">,</span>  <span class="mf">2602238.95265847</span><span class="p">]])</span>
+
+
+<span class="n">ned_offsets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">78.722153649976391</span><span class="p">,</span> <span class="mf">24.396208657446344</span><span class="p">,</span> <span class="mf">60.343017506838436</span><span class="p">],</span>
+                       <span class="p">[</span><span class="mf">10.699003365155221</span><span class="p">,</span> <span class="mf">37.319278617604269</span><span class="p">,</span> <span class="mf">4.1084100025050407</span><span class="p">],</span>
+                       <span class="p">[</span><span class="mf">95.282646251726959</span><span class="p">,</span> <span class="mf">61.266689955574428</span><span class="p">,</span> <span class="o">-</span><span class="mf">25.376506058505054</span><span class="p">],</span>
+                       <span class="p">[</span><span class="mf">68.535769283630003</span><span class="p">,</span> <span class="o">-</span><span class="mf">56.285970011848889</span><span class="p">,</span> <span class="o">-</span><span class="mf">100.54840137956515</span><span class="p">],</span>
+                       <span class="p">[</span><span class="o">-</span><span class="mf">33.066609321880179</span><span class="p">,</span> <span class="mf">46.549821994306861</span><span class="p">,</span> <span class="o">-</span><span class="mf">84.062540548335591</span><span class="p">]])</span>
+
+<span class="n">ecef_init_batch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2068042.69652729</span><span class="p">,</span> <span class="o">-</span><span class="mf">5273435.40316622</span><span class="p">,</span>  <span class="mf">2927004.89190746</span><span class="p">])</span>
+<span class="n">ecef_positions_offset_batch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mf">2068089.41454771</span><span class="p">,</span> <span class="o">-</span><span class="mf">5273434.46829148</span><span class="p">,</span>  <span class="mf">2927074.04783672</span><span class="p">],</span>
+                                        <span class="p">[</span> <span class="mf">2068103.31628647</span><span class="p">,</span> <span class="o">-</span><span class="mf">5273393.92275431</span><span class="p">,</span>  <span class="mf">2927102.08725987</span><span class="p">],</span>
+                                        <span class="p">[</span> <span class="mf">2068108.49939636</span><span class="p">,</span> <span class="o">-</span><span class="mf">5273359.27047121</span><span class="p">,</span>  <span class="mf">2927045.07091581</span><span class="p">],</span>
+                                        <span class="p">[</span> <span class="mf">2068075.12395611</span><span class="p">,</span> <span class="o">-</span><span class="mf">5273381.69432566</span><span class="p">,</span>  <span class="mf">2927041.08207992</span><span class="p">],</span>
+                                        <span class="p">[</span> <span class="mf">2068060.72033399</span><span class="p">,</span> <span class="o">-</span><span class="mf">5273430.6061505</span><span class="p">,</span>  <span class="mf">2927094.54928305</span><span class="p">]])</span>
+
+<span class="n">ned_offsets_batch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span>  <span class="mf">53.88103168</span><span class="p">,</span>   <span class="mf">43.83445935</span><span class="p">,</span>  <span class="o">-</span><span class="mf">46.27488057</span><span class="p">],</span>
+                              <span class="p">[</span>  <span class="mf">93.83378995</span><span class="p">,</span>   <span class="mf">71.57943024</span><span class="p">,</span>  <span class="o">-</span><span class="mf">30.23113187</span><span class="p">],</span>
+                              <span class="p">[</span>  <span class="mf">57.26725796</span><span class="p">,</span>   <span class="mf">89.05602684</span><span class="p">,</span>   <span class="mf">23.02265814</span><span class="p">],</span>
+                              <span class="p">[</span>  <span class="mf">49.71775195</span><span class="p">,</span>   <span class="mf">49.79767572</span><span class="p">,</span>   <span class="mf">17.15351015</span><span class="p">],</span>
+                              <span class="p">[</span>  <span class="mf">78.56272609</span><span class="p">,</span>   <span class="mf">18.53100158</span><span class="p">,</span>  <span class="o">-</span><span class="mf">43.25290759</span><span class="p">]])</span>
+
+
+<div class="viewcode-block" id="TestNED">
+<a class="viewcode-back" href="../../../../common.transformations.tests.html#common.transformations.tests.test_coordinates.TestNED">[docs]</a>
+<span class="k">class</span> <span class="nc">TestNED</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestNED.test_small_distances">
+<a class="viewcode-back" href="../../../../common.transformations.tests.html#common.transformations.tests.test_coordinates.TestNED.test_small_distances">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_small_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">start_geodetic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">33.8042184</span><span class="p">,</span> <span class="o">-</span><span class="mf">117.888593</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+    <span class="n">local_coord</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">LocalCoord</span><span class="o">.</span><span class="n">from_geodetic</span><span class="p">(</span><span class="n">start_geodetic</span><span class="p">)</span>
+
+    <span class="n">start_ned</span> <span class="o">=</span> <span class="n">local_coord</span><span class="o">.</span><span class="n">geodetic2ned</span><span class="p">(</span><span class="n">start_geodetic</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span><span class="n">start_ned</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
+
+    <span class="n">west_geodetic</span> <span class="o">=</span> <span class="n">start_geodetic</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0005</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">west_ned</span> <span class="o">=</span> <span class="n">local_coord</span><span class="o">.</span><span class="n">geodetic2ned</span><span class="p">(</span><span class="n">west_geodetic</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">west_ned</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mf">1e-3</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="n">west_ned</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">southwest_geodetic</span> <span class="o">=</span> <span class="n">start_geodetic</span> <span class="o">+</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0005</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.002</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">southwest_ned</span> <span class="o">=</span> <span class="n">local_coord</span><span class="o">.</span><span class="n">geodetic2ned</span><span class="p">(</span><span class="n">southwest_geodetic</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="n">southwest_ned</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="n">southwest_ned</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestNED.test_ecef_geodetic">
+<a class="viewcode-back" href="../../../../common.transformations.tests.html#common.transformations.tests.test_coordinates.TestNED.test_ecef_geodetic">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_ecef_geodetic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># testing single</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">ecef_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">coord</span><span class="o">.</span><span class="n">geodetic2ecef</span><span class="p">(</span><span class="n">geodetic_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">geodetic_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">coord</span><span class="o">.</span><span class="n">ecef2geodetic</span><span class="p">(</span><span class="n">ecef_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">])[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">geodetic_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">coord</span><span class="o">.</span><span class="n">ecef2geodetic</span><span class="p">(</span><span class="n">ecef_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">2</span><span class="p">],</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">geodetic_positions</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">coord</span><span class="o">.</span><span class="n">ecef2geodetic</span><span class="p">(</span><span class="n">ecef_positions</span><span class="p">)[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">geodetic_positions</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">coord</span><span class="o">.</span><span class="n">ecef2geodetic</span><span class="p">(</span><span class="n">ecef_positions</span><span class="p">)[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">ecef_positions</span><span class="p">,</span> <span class="n">coord</span><span class="o">.</span><span class="n">geodetic2ecef</span><span class="p">(</span><span class="n">geodetic_positions</span><span class="p">),</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TestNED.test_ned">
+<a class="viewcode-back" href="../../../../common.transformations.tests.html#common.transformations.tests.test_coordinates.TestNED.test_ned">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_ned</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">ecef_pos</span> <span class="ow">in</span> <span class="n">ecef_positions</span><span class="p">:</span>
+      <span class="n">converter</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">LocalCoord</span><span class="o">.</span><span class="n">from_ecef</span><span class="p">(</span><span class="n">ecef_pos</span><span class="p">)</span>
+      <span class="n">ecef_pos_moved</span> <span class="o">=</span> <span class="n">ecef_pos</span> <span class="o">+</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="o">-</span><span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+      <span class="n">ecef_pos_moved_double_converted</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">ned2ecef</span><span class="p">(</span><span class="n">converter</span><span class="o">.</span><span class="n">ecef2ned</span><span class="p">(</span><span class="n">ecef_pos_moved</span><span class="p">))</span>
+      <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">ecef_pos_moved</span><span class="p">,</span> <span class="n">ecef_pos_moved_double_converted</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">geo_pos</span> <span class="ow">in</span> <span class="n">geodetic_positions</span><span class="p">:</span>
+      <span class="n">converter</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">LocalCoord</span><span class="o">.</span><span class="n">from_geodetic</span><span class="p">(</span><span class="n">geo_pos</span><span class="p">)</span>
+      <span class="n">geo_pos_moved</span> <span class="o">=</span> <span class="n">geo_pos</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+      <span class="n">geo_pos_double_converted_moved</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">ned2geodetic</span><span class="p">(</span><span class="n">converter</span><span class="o">.</span><span class="n">geodetic2ned</span><span class="p">(</span><span class="n">geo_pos</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">]))</span>
+      <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">geo_pos_moved</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">geo_pos_double_converted_moved</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+      <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">geo_pos_moved</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">geo_pos_double_converted_moved</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestNED.test_ned_saved_results">
+<a class="viewcode-back" href="../../../../common.transformations.tests.html#common.transformations.tests.test_coordinates.TestNED.test_ned_saved_results">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_ned_saved_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ecef_pos</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ecef_positions</span><span class="p">):</span>
+      <span class="n">converter</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">LocalCoord</span><span class="o">.</span><span class="n">from_ecef</span><span class="p">(</span><span class="n">ecef_pos</span><span class="p">)</span>
+      <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">converter</span><span class="o">.</span><span class="n">ned2ecef</span><span class="p">(</span><span class="n">ned_offsets</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+                                 <span class="n">ecef_positions_offset</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                 <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+      <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">converter</span><span class="o">.</span><span class="n">ecef2ned</span><span class="p">(</span><span class="n">ecef_positions_offset</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+                                 <span class="n">ned_offsets</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                 <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestNED.test_ned_batch">
+<a class="viewcode-back" href="../../../../common.transformations.tests.html#common.transformations.tests.test_coordinates.TestNED.test_ned_batch">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_ned_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">converter</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">LocalCoord</span><span class="o">.</span><span class="n">from_ecef</span><span class="p">(</span><span class="n">ecef_init_batch</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">converter</span><span class="o">.</span><span class="n">ecef2ned</span><span class="p">(</span><span class="n">ecef_positions_offset_batch</span><span class="p">),</span>
+                                                           <span class="n">ned_offsets_batch</span><span class="p">,</span>
+                                                           <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">converter</span><span class="o">.</span><span class="n">ned2ecef</span><span class="p">(</span><span class="n">ned_offsets_batch</span><span class="p">),</span>
+                                                           <span class="n">ecef_positions_offset_batch</span><span class="p">,</span>
+                                                           <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">)</span></div>
+</div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

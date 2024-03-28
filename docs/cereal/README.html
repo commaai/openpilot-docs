@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="openpilot docs" name="description" />
+<meta content="op, openpilot, docs, documentation" name="keywords" />
+<meta content="all,follow" name="robots" />
+<meta content="index,follow,snippet,archive" name="googlebot" />
+<meta content="en_US" property="og:locale" />
+<meta content="docs.comma.ai" property="og:site_name" />
+<meta content="https://docs.comma.ai" property="og:url" />
+<meta content="openpilot Documentation" property="og:title" />
+<meta content="website" property="og:type" />
+<meta content="image/jpeg" property="og:image:type" />
+<meta content="400" property="og:image:width" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image:url" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image:secure_url" />
+<meta content="openpilot Documentation" property="og:description" />
+<meta content="summary_large_image" property="twitter:card" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="twitter:logo" />
+<meta content="openpilot Documentation" property="twitter:title" />
+<meta content="openpilot Documentation" property="twitter:description" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What is cereal? &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/cereal/README.html" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="MSGQ: A lock free single producer multi consumer message queue" href="messaging/msgq.html" />
+    <link rel="prev" title="Process replay" href="../selfdrive/test/process_replay/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">openpilot</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../overview.html#cereal">cereal</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">What is cereal?  </a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#messaging-spec">Messaging Spec</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#best-practices">Best Practices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maintaining-backwards-compatibility">Maintaining backwards-compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#custom-forks">Custom forks</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pub-sub-backends">Pub Sub Backends</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="messaging/msgq.html">MSGQ: A lock free single producer multi consumer message queue</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../overview.html">openpilot</a></li>
+      <li class="breadcrumb-item active">What is cereal?  </li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/cereal/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="what-is-cereal">
+<h1>What is cereal? <a class="reference external" href="https://github.com/commaai/cereal/actions"><img alt="cereal tests" src="https://github.com/commaai/cereal/workflows/tests/badge.svg?event=push" /></a> <a class="reference external" href="https://codecov.io/gh/commaai/cereal"><img alt="codecov" src="https://codecov.io/gh/commaai/cereal/branch/master/graph/badge.svg" /></a><a class="headerlink" href="#what-is-cereal" title="Link to this heading"></a></h1>
+<p>cereal is both a messaging spec for robotics systems as well as generic high performance IPC pub sub messaging with a single publisher and multiple subscribers.</p>
+<p>Imagine this use case:</p>
+<ul class="simple">
+<li><p>A sensor process reads gyro measurements directly from an IMU and publishes a <code class="docutils literal notranslate"><span class="pre">sensorEvents</span></code> packet</p></li>
+<li><p>A calibration process subscribes to the <code class="docutils literal notranslate"><span class="pre">sensorEvents</span></code> packet to use the IMU</p></li>
+<li><p>A localization process subscribes to the <code class="docutils literal notranslate"><span class="pre">sensorEvents</span></code> packet to use the IMU also</p></li>
+</ul>
+<section id="messaging-spec">
+<h2>Messaging Spec<a class="headerlink" href="#messaging-spec" title="Link to this heading"></a></h2>
+<p>You’ll find the message types in <a class="reference internal" href="#log.capnp"><span class="xref myst">log.capnp</span></a>. It uses <a class="reference external" href="https://capnproto.org/capnp-tool.html">Cap’n proto</a> and defines one struct called <code class="docutils literal notranslate"><span class="pre">Event</span></code>.</p>
+<p>All <code class="docutils literal notranslate"><span class="pre">Events</span></code> have a <code class="docutils literal notranslate"><span class="pre">logMonoTime</span></code> and a <code class="docutils literal notranslate"><span class="pre">valid</span></code>. Then a big union defines the packet type.</p>
+<section id="best-practices">
+<h3>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>All fields must describe quantities in SI units</strong>, unless otherwise specified in the field name.</p></li>
+<li><p>In the context of the message they are in, field names should be completely unambiguous.</p></li>
+<li><p>All values should be easy to plot and be human-readable with minimal parsing.</p></li>
+</ul>
+</section>
+<section id="maintaining-backwards-compatibility">
+<h3>Maintaining backwards-compatibility<a class="headerlink" href="#maintaining-backwards-compatibility" title="Link to this heading"></a></h3>
+<p>When making changes to the messaging spec you want to maintain backwards-compatibility, such that old logs can
+be parsed with a new version of cereal. Adding structs and adding members to structs is generally safe, most other
+things are not. Read more details <a class="reference external" href="https://capnproto.org/language.html">here</a>.</p>
+</section>
+<section id="custom-forks">
+<h3>Custom forks<a class="headerlink" href="#custom-forks" title="Link to this heading"></a></h3>
+<p>Forks of <a class="reference external" href="https://github.com/commaai/openpilot">openpilot</a> might want to add things to the messaging
+spec, however this could conflict with future changes made in mainline cereal/openpilot. Rebasing against mainline openpilot
+then means breaking backwards-compatibility with all old logs of your fork. So we added reserved events in
+<a class="reference internal" href="#custom.capnp"><span class="xref myst">custom.capnp</span></a> that we will leave empty in mainline cereal/openpilot. <strong>If you only modify those, you can ensure your
+fork will remain backwards-compatible with all versions of mainline cereal/openpilot and your fork.</strong></p>
+</section>
+</section>
+<section id="pub-sub-backends">
+<h2>Pub Sub Backends<a class="headerlink" href="#pub-sub-backends" title="Link to this heading"></a></h2>
+<p>cereal supports two backends, one based on <a class="reference external" href="https://zeromq.org/">zmq</a> and another called <a class="reference internal" href="#messaging/msgq.cc"><span class="xref myst">msgq</span></a>, a custom pub sub based on shared memory that doesn’t require the bytes to pass through the kernel.</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+
+<span class="c1"># in subscriber</span>
+<span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="s1">&#39;sensorEvents&#39;</span><span class="p">])</span>
+<span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+  <span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;sensorEvents&#39;</span><span class="p">])</span>
+
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># in publisher</span>
+<span class="n">pm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">([</span><span class="s1">&#39;sensorEvents&#39;</span><span class="p">])</span>
+<span class="n">dat</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;sensorEvents&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">dat</span><span class="o">.</span><span class="n">sensorEvents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;gyro&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]}}</span>
+<span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;sensorEvents&#39;</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../selfdrive/test/process_replay/README.html" class="btn btn-neutral float-left" title="Process replay" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="messaging/msgq.html" class="btn btn-neutral float-right" title="MSGQ: A lock free single producer multi consumer message queue" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

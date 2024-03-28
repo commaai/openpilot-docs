@@ -1,0 +1,881 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="class_abstract_stream" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>AbstractStream</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">QObject</basecompoundref>
+    <derivedcompoundref refid="class_dummy_stream" prot="public" virt="non-virtual">DummyStream</derivedcompoundref>
+    <derivedcompoundref refid="class_live_stream" prot="public" virt="non-virtual">LiveStream</derivedcompoundref>
+    <derivedcompoundref refid="class_replay_stream" prot="public" virt="non-virtual">ReplayStream</derivedcompoundref>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_abstract_stream_1a0908e573ea79c1f9ece021c76c496586" prot="public" static="no" mutable="no">
+        <type>SourceSet</type>
+        <definition>SourceSet AbstractStream::sources</definition>
+        <argsstring></argsstring>
+        <name>sources</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="100" column="13" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="class_abstract_stream_1abd3571b8e3ad5964589c825fad9791ee" prot="protected" static="no" mutable="no">
+        <type>std::vector&lt; const <ref refid="struct_can_event" kindref="compound">CanEvent</ref> * &gt;</type>
+        <definition>std::vector&lt;const CanEvent *&gt; AbstractStream::all_events_</definition>
+        <argsstring></argsstring>
+        <name>all_events_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="108" column="15" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_abstract_stream_1a2174368127347f2a12f3f8e744ec620e" prot="protected" static="no" mutable="no">
+        <type>uint64_t</type>
+        <definition>uint64_t AbstractStream::lastest_event_ts</definition>
+        <argsstring></argsstring>
+        <name>lastest_event_ts</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="109" column="12" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_abstract_stream_1a2b322ddc357bf0edff98fac1846d6a01" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double AbstractStream::current_sec_</definition>
+        <argsstring></argsstring>
+        <name>current_sec_</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="116" column="10" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_abstract_stream_1a3aafc097e4f5f6755679d14dbbac7638" prot="private" static="no" mutable="no">
+        <type>MessageEventsMap</type>
+        <definition>MessageEventsMap AbstractStream::events_</definition>
+        <argsstring></argsstring>
+        <name>events_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="117" column="20" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_abstract_stream_1a539b215720f329018f3581f1f9992712" prot="private" static="no" mutable="no">
+        <type>std::unordered_map&lt; MessageId, <ref refid="struct_can_data" kindref="compound">CanData</ref> &gt;</type>
+        <definition>std::unordered_map&lt;MessageId, CanData&gt; AbstractStream::last_msgs</definition>
+        <argsstring></argsstring>
+        <name>last_msgs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="118" column="22" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_abstract_stream_1a626b2ffaa1f340b5e3b98715a697d926" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; MonotonicBuffer &gt;</type>
+        <definition>std::unique_ptr&lt;MonotonicBuffer&gt; AbstractStream::event_buffer_</definition>
+        <argsstring></argsstring>
+        <name>event_buffer_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="119" column="19" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_abstract_stream_1acf3f37653dfa0a3c28ef91f825f3cba8" prot="private" static="no" mutable="no">
+        <type>std::mutex</type>
+        <definition>std::mutex AbstractStream::mutex_</definition>
+        <argsstring></argsstring>
+        <name>mutex_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="122" column="14" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_abstract_stream_1a30ee69390f7f55724549a301246a84a3" prot="private" static="no" mutable="no">
+        <type>std::set&lt; MessageId &gt;</type>
+        <definition>std::set&lt;MessageId&gt; AbstractStream::new_msgs_</definition>
+        <argsstring></argsstring>
+        <name>new_msgs_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="123" column="12" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_abstract_stream_1a9d0dd1312a1dfcd22f89057fcdc2093e" prot="private" static="no" mutable="no">
+        <type>std::unordered_map&lt; MessageId, <ref refid="struct_can_data" kindref="compound">CanData</ref> &gt;</type>
+        <definition>std::unordered_map&lt;MessageId, CanData&gt; AbstractStream::messages_</definition>
+        <argsstring></argsstring>
+        <name>messages_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="124" column="22" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_abstract_stream_1a402e1743f1ac93c24c472c54ffc4eb0b" prot="private" static="no" mutable="no">
+        <type>std::unordered_map&lt; MessageId, std::vector&lt; uint8_t &gt; &gt;</type>
+        <definition>std::unordered_map&lt;MessageId, std::vector&lt;uint8_t&gt; &gt; AbstractStream::masks_</definition>
+        <argsstring></argsstring>
+        <name>masks_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="125" column="22" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_abstract_stream_1ac6362a12180cfa744dc9d460e089b82a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>AbstractStream::AbstractStream</definition>
+        <argsstring>(QObject *parent)</argsstring>
+        <name>AbstractStream</name>
+        <param>
+          <type>QObject *</type>
+          <declname>parent</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="63" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a5ce050aae85ca6a085cd30acc0e629a9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type></type>
+        <definition>virtual AbstractStream::~AbstractStream</definition>
+        <argsstring>()</argsstring>
+        <name>~AbstractStream</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="64" column="11" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="64" bodyend="64"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a3a44162ada17f69d44af2122ff5be4f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void AbstractStream::start</definition>
+        <argsstring>()=0</argsstring>
+        <name>start</name>
+        <reimplementedby refid="class_live_stream_1a49631ae41c50bd3112d2329b7d63cb0f">start</reimplementedby>
+        <reimplementedby refid="class_replay_stream_1ac0cdad1a50c3d297e4ac1e1cc908e49b">start</reimplementedby>
+        <reimplementedby refid="class_dummy_stream_1af9f6086b64ca323310765bda2601046d">start</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="65" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a15b9d027fe6a7012a57b1cc52fec0091" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>bool</type>
+        <definition>virtual bool AbstractStream::liveStreaming</definition>
+        <argsstring>() const</argsstring>
+        <name>liveStreaming</name>
+        <reimplementedby refid="class_replay_stream_1a9bd872d86f0ea2845db0b679539dbed5">liveStreaming</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="66" column="16" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="66" bodyend="66"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1afc8c5bfc0ccf1b50b8c1e7a7cb0f69ad" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void AbstractStream::seekTo</definition>
+        <argsstring>(double ts)</argsstring>
+        <name>seekTo</name>
+        <reimplementedby refid="class_live_stream_1a108a458d33f2fa22ca64ed86b0299571">seekTo</reimplementedby>
+        <reimplementedby refid="class_replay_stream_1a0914cdd0b50f675f67df74c1d5b08e5c">seekTo</reimplementedby>
+        <param>
+          <type>double</type>
+          <declname>ts</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="67" column="16" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="67" bodyend="67"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a6548cd03f719cdff918cac98cd18fc25" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>QString</type>
+        <definition>virtual QString AbstractStream::routeName</definition>
+        <argsstring>() const =0</argsstring>
+        <name>routeName</name>
+        <reimplementedby refid="class_device_stream_1a09a1558bd6b4c2bc9b422fc74d9969b6">routeName</reimplementedby>
+        <reimplementedby refid="class_replay_stream_1a9b95a6b780f2b37d3619fee853447c6c">routeName</reimplementedby>
+        <reimplementedby refid="class_socket_can_stream_1aa997516d818afa6811a0b80118c94c09">routeName</reimplementedby>
+        <reimplementedby refid="class_panda_stream_1a9899f67e0483c9342f442357990828b5">routeName</reimplementedby>
+        <reimplementedby refid="class_dummy_stream_1a27a33447411ef6527a30e97acd1c8f35">routeName</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="68" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a8f2d0b4d51ebf21f25cfb5e2b2847bad" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>QString</type>
+        <definition>virtual QString AbstractStream::carFingerprint</definition>
+        <argsstring>() const</argsstring>
+        <name>carFingerprint</name>
+        <reimplementedby refid="class_replay_stream_1a1eca8cc7a9cc25fca3621aa58d1941d2">carFingerprint</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="69" column="19" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="69" bodyend="69"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a361749e1b3d489b661696d2e0a57dd7d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>QDateTime</type>
+        <definition>virtual QDateTime AbstractStream::beginDateTime</definition>
+        <argsstring>() const</argsstring>
+        <name>beginDateTime</name>
+        <reimplementedby refid="class_live_stream_1a8769e2441f49b6ffc31b19ead7eb18cf">beginDateTime</reimplementedby>
+        <reimplementedby refid="class_replay_stream_1ac5c2b7e846b9a73088e6adda54369980">beginDateTime</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="70" column="21" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="70" bodyend="70"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1ae18f4caded575e7b91acd9fefe3fb6c4" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>double</type>
+        <definition>virtual double AbstractStream::routeStartTime</definition>
+        <argsstring>() const</argsstring>
+        <name>routeStartTime</name>
+        <reimplementedby refid="class_live_stream_1ad106b6c0e578ab1feefed8d3abd75fd4">routeStartTime</reimplementedby>
+        <reimplementedby refid="class_replay_stream_1a0209a60369f338e258c785531b0cfb3b">routeStartTime</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="71" column="18" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="71" bodyend="71"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a0af595fb92c11ff20629633159bc61dc" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double AbstractStream::currentSec</definition>
+        <argsstring>() const</argsstring>
+        <name>currentSec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="72" column="17" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="72" bodyend="72"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1ac734775a79fe703fbe157f9987787ae4" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>double</type>
+        <definition>virtual double AbstractStream::totalSeconds</definition>
+        <argsstring>() const</argsstring>
+        <name>totalSeconds</name>
+        <reimplementedby refid="class_replay_stream_1a7da69c425f6cdcc460143f04e0beffb0">totalSeconds</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="73" column="18" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="73" bodyend="73"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1ac3905b779f55bfb37172b3b69aedada6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void AbstractStream::setSpeed</definition>
+        <argsstring>(float speed)</argsstring>
+        <name>setSpeed</name>
+        <reimplementedby refid="class_live_stream_1a9d3113b25853bea14bcaa0d7543df8b9">setSpeed</reimplementedby>
+        <reimplementedby refid="class_replay_stream_1a7a9970cfaab1bd130a979f260b8bc06f">setSpeed</reimplementedby>
+        <param>
+          <type>float</type>
+          <declname>speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="74" column="16" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="74" bodyend="74"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a022ebc351d047bfdacb06ad34e3025de" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>double</type>
+        <definition>virtual double AbstractStream::getSpeed</definition>
+        <argsstring>()</argsstring>
+        <name>getSpeed</name>
+        <reimplementedby refid="class_live_stream_1aa0e2e7d5886d1e97ace3a836e44cf26b">getSpeed</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="75" column="18" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="75" bodyend="75"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a6867b48dff0ddf3d94c3c3a3c6843d9c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>bool</type>
+        <definition>virtual bool AbstractStream::isPaused</definition>
+        <argsstring>() const</argsstring>
+        <name>isPaused</name>
+        <reimplementedby refid="class_live_stream_1aafc9ee91e661ccd174da7de3b1697a92">isPaused</reimplementedby>
+        <reimplementedby refid="class_replay_stream_1a411ebee5dff2cf70fd70d721bece9334">isPaused</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="76" column="16" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="76" bodyend="76"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a6842e80df2842fc72f2a85f65b25c155" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void AbstractStream::pause</definition>
+        <argsstring>(bool pause)</argsstring>
+        <name>pause</name>
+        <reimplementedby refid="class_live_stream_1a90080c4281255be117605948f7b1943d">pause</reimplementedby>
+        <reimplementedby refid="class_replay_stream_1a9f82bc65af17c4e00e7014723e2d8b10">pause</reimplementedby>
+        <param>
+          <type>bool</type>
+          <declname>pause</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="77" column="16" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="77" bodyend="77"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1ae0ea318ec4b5c1d49872645a23d33605" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const std::unordered_map&lt; MessageId, <ref refid="struct_can_data" kindref="compound">CanData</ref> &gt; &amp;</type>
+        <definition>const std::unordered_map&lt;MessageId, CanData&gt;&amp; AbstractStream::lastMessages</definition>
+        <argsstring>() const</argsstring>
+        <name>lastMessages</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="79" column="35" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="79" bodyend="79"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1aa74ca35333975bae28385200432e12d3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const MessageEventsMap &amp;</type>
+        <definition>const MessageEventsMap&amp; AbstractStream::eventsMap</definition>
+        <argsstring>() const</argsstring>
+        <name>eventsMap</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="80" column="33" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="80" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a85544b53c6b91dbc5e6ebd5c9fa707b2" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const std::vector&lt; const <ref refid="struct_can_event" kindref="compound">CanEvent</ref> * &gt; &amp;</type>
+        <definition>const std::vector&lt;const CanEvent *&gt;&amp; AbstractStream::allEvents</definition>
+        <argsstring>() const</argsstring>
+        <name>allEvents</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="81" column="28" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="81" bodyend="81"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a7163a6b54351dc7f5326bd399caea806" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="struct_can_data" kindref="compound">CanData</ref> &amp;</type>
+        <definition>const CanData&amp; AbstractStream::lastMessage</definition>
+        <argsstring>(const MessageId &amp;id)</argsstring>
+        <name>lastMessage</name>
+        <param>
+          <type>const MessageId &amp;</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="82" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1ac51dbdc2cd17f7ff4c747d4d9f79d3c3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const std::vector&lt; const <ref refid="struct_can_event" kindref="compound">CanEvent</ref> * &gt; &amp;</type>
+        <definition>const std::vector&lt;const CanEvent *&gt;&amp; AbstractStream::events</definition>
+        <argsstring>(const MessageId &amp;id) const</argsstring>
+        <name>events</name>
+        <param>
+          <type>const MessageId &amp;</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="83" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a4aeaebb34134433f98529733726d1356" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t AbstractStream::suppressHighlighted</definition>
+        <argsstring>()</argsstring>
+        <name>suppressHighlighted</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="85" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1ad64c62780ba7d5ec071e7a25679c70b9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::clearSuppressed</definition>
+        <argsstring>()</argsstring>
+        <name>clearSuppressed</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="86" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a63fdc98822bf51a3ee1851bf25e93f5f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::suppressDefinedSignals</definition>
+        <argsstring>(bool suppress)</argsstring>
+        <name>suppressDefinedSignals</name>
+        <param>
+          <type>bool</type>
+          <declname>suppress</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="87" column="8"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="signal">
+      <memberdef kind="signal" id="class_abstract_stream_1a0a65e0e9bd73c42020c20166aac31112" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::paused</definition>
+        <argsstring>()</argsstring>
+        <name>paused</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="90" column="8"/>
+      </memberdef>
+      <memberdef kind="signal" id="class_abstract_stream_1a816bc4879b071c6c5b6a7cd68d98732c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::resume</definition>
+        <argsstring>()</argsstring>
+        <name>resume</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="91" column="8"/>
+      </memberdef>
+      <memberdef kind="signal" id="class_abstract_stream_1af2e93c10db5e8329f3287ac3eba79582" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::seekedTo</definition>
+        <argsstring>(double sec)</argsstring>
+        <name>seekedTo</name>
+        <param>
+          <type>double</type>
+          <declname>sec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="92" column="8"/>
+      </memberdef>
+      <memberdef kind="signal" id="class_abstract_stream_1a398dd3db93da45a6b1db1c4538c5fc8b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::streamStarted</definition>
+        <argsstring>()</argsstring>
+        <name>streamStarted</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="93" column="8"/>
+      </memberdef>
+      <memberdef kind="signal" id="class_abstract_stream_1a1730ae40c02a68535cabdfea1bf9706f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::eventsMerged</definition>
+        <argsstring>(const MessageEventsMap &amp;events_map)</argsstring>
+        <name>eventsMerged</name>
+        <param>
+          <type>const MessageEventsMap &amp;</type>
+          <declname>events_map</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="94" column="8"/>
+      </memberdef>
+      <memberdef kind="signal" id="class_abstract_stream_1a1d5289bacb8bece5c88b9a50cabd534c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::msgsReceived</definition>
+        <argsstring>(const std::set&lt; MessageId &gt; *new_msgs, bool has_new_ids)</argsstring>
+        <name>msgsReceived</name>
+        <param>
+          <type>const std::set&lt; MessageId &gt; *</type>
+          <declname>new_msgs</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>has_new_ids</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="95" column="8"/>
+      </memberdef>
+      <memberdef kind="signal" id="class_abstract_stream_1aab4505acc61c563b0245e8b7b1157a63" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::sourcesUpdated</definition>
+        <argsstring>(const SourceSet &amp;s)</argsstring>
+        <name>sourcesUpdated</name>
+        <param>
+          <type>const SourceSet &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="96" column="8"/>
+      </memberdef>
+      <memberdef kind="signal" id="class_abstract_stream_1a79046e9d2897df88ec5efbc2379a4358" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::privateUpdateLastMsgsSignal</definition>
+        <argsstring>()</argsstring>
+        <name>privateUpdateLastMsgsSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="97" column="8"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="class_abstract_stream_1a7df802daa16c35fe4b09c4fb77e90a63" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::mergeEvents</definition>
+        <argsstring>(const std::vector&lt; const CanEvent * &gt; &amp;events)</argsstring>
+        <name>mergeEvents</name>
+        <param>
+          <type>const std::vector&lt; const <ref refid="struct_can_event" kindref="compound">CanEvent</ref> * &gt; &amp;</type>
+          <declname>events</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="103" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1ac717eb2f0910cc924419ae46c579b04b" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="struct_can_event" kindref="compound">CanEvent</ref> *</type>
+        <definition>const CanEvent* AbstractStream::newEvent</definition>
+        <argsstring>(uint64_t mono_time, const cereal::CanData::Reader &amp;c)</argsstring>
+        <name>newEvent</name>
+        <param>
+          <type>uint64_t</type>
+          <declname>mono_time</declname>
+        </param>
+        <param>
+          <type>const cereal::CanData::Reader &amp;</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="104" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a5d3ff960083e12abb08f66983e5c686d" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::updateEvent</definition>
+        <argsstring>(const MessageId &amp;id, double sec, const uint8_t *data, uint8_t size)</argsstring>
+        <name>updateEvent</name>
+        <param>
+          <type>const MessageId &amp;</type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>sec</declname>
+        </param>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="105" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1aa71b6ad25e2128d1c535ea04ab0c2a20" prot="protected" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>uint64_t</type>
+        <definition>uint64_t AbstractStream::lastEventMonoTime</definition>
+        <argsstring>() const</argsstring>
+        <name>lastEventMonoTime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="106" column="12" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="106" bodyend="106"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="class_abstract_stream_1a70e3c2927e88715b218bcaed437dd73f" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::updateLastMessages</definition>
+        <argsstring>()</argsstring>
+        <name>updateLastMessages</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="112" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a479b4e070c205cb9d704e76178cb5212" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::updateLastMsgsTo</definition>
+        <argsstring>(double sec)</argsstring>
+        <name>updateLastMsgsTo</name>
+        <param>
+          <type>double</type>
+          <declname>sec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="113" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_abstract_stream_1a8b3711553e5214ab370fbced0af04aea" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void AbstractStream::updateMasks</definition>
+        <argsstring>()</argsstring>
+        <name>updateMasks</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="114" column="8"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="5">
+        <label>DeviceStream</label>
+        <link refid="class_device_stream"/>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>QObject</label>
+      </node>
+      <node id="6">
+        <label>PandaStream</label>
+        <link refid="class_panda_stream"/>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>DummyStream</label>
+        <link refid="class_dummy_stream"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>AbstractStream</label>
+        <link refid="class_abstract_stream"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>SocketCanStream</label>
+        <link refid="class_socket_can_stream"/>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>ReplayStream</label>
+        <link refid="class_replay_stream"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>LiveStream</label>
+        <link refid="class_live_stream"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>QObject</label>
+      </node>
+      <node id="1">
+        <label>AbstractStream</label>
+        <link refid="class_abstract_stream"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/tmp/openpilot/tools/cabana/streams/abstractstream.h" line="59" column="36" bodyfile="/tmp/openpilot/tools/cabana/streams/abstractstream.h" bodystart="59" bodyend="126"/>
+    <listofallmembers>
+      <member refid="class_abstract_stream_1ac6362a12180cfa744dc9d460e089b82a" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>AbstractStream</name></member>
+      <member refid="class_abstract_stream_1abd3571b8e3ad5964589c825fad9791ee" prot="protected" virt="non-virtual"><scope>AbstractStream</scope><name>all_events_</name></member>
+      <member refid="class_abstract_stream_1a85544b53c6b91dbc5e6ebd5c9fa707b2" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>allEvents</name></member>
+      <member refid="class_abstract_stream_1a361749e1b3d489b661696d2e0a57dd7d" prot="public" virt="virtual"><scope>AbstractStream</scope><name>beginDateTime</name></member>
+      <member refid="class_abstract_stream_1a8f2d0b4d51ebf21f25cfb5e2b2847bad" prot="public" virt="virtual"><scope>AbstractStream</scope><name>carFingerprint</name></member>
+      <member refid="class_abstract_stream_1ad64c62780ba7d5ec071e7a25679c70b9" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>clearSuppressed</name></member>
+      <member refid="class_abstract_stream_1a2b322ddc357bf0edff98fac1846d6a01" prot="private" virt="non-virtual"><scope>AbstractStream</scope><name>current_sec_</name></member>
+      <member refid="class_abstract_stream_1a0af595fb92c11ff20629633159bc61dc" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>currentSec</name></member>
+      <member refid="class_abstract_stream_1a626b2ffaa1f340b5e3b98715a697d926" prot="private" virt="non-virtual"><scope>AbstractStream</scope><name>event_buffer_</name></member>
+      <member refid="class_abstract_stream_1ac51dbdc2cd17f7ff4c747d4d9f79d3c3" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>events</name></member>
+      <member refid="class_abstract_stream_1a3aafc097e4f5f6755679d14dbbac7638" prot="private" virt="non-virtual"><scope>AbstractStream</scope><name>events_</name></member>
+      <member refid="class_abstract_stream_1aa74ca35333975bae28385200432e12d3" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>eventsMap</name></member>
+      <member refid="class_abstract_stream_1a1730ae40c02a68535cabdfea1bf9706f" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>eventsMerged</name></member>
+      <member refid="class_abstract_stream_1a022ebc351d047bfdacb06ad34e3025de" prot="public" virt="virtual"><scope>AbstractStream</scope><name>getSpeed</name></member>
+      <member refid="class_abstract_stream_1a6867b48dff0ddf3d94c3c3a3c6843d9c" prot="public" virt="virtual"><scope>AbstractStream</scope><name>isPaused</name></member>
+      <member refid="class_abstract_stream_1a539b215720f329018f3581f1f9992712" prot="private" virt="non-virtual"><scope>AbstractStream</scope><name>last_msgs</name></member>
+      <member refid="class_abstract_stream_1a2174368127347f2a12f3f8e744ec620e" prot="protected" virt="non-virtual"><scope>AbstractStream</scope><name>lastest_event_ts</name></member>
+      <member refid="class_abstract_stream_1aa71b6ad25e2128d1c535ea04ab0c2a20" prot="protected" virt="non-virtual"><scope>AbstractStream</scope><name>lastEventMonoTime</name></member>
+      <member refid="class_abstract_stream_1a7163a6b54351dc7f5326bd399caea806" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>lastMessage</name></member>
+      <member refid="class_abstract_stream_1ae0ea318ec4b5c1d49872645a23d33605" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>lastMessages</name></member>
+      <member refid="class_abstract_stream_1a15b9d027fe6a7012a57b1cc52fec0091" prot="public" virt="virtual"><scope>AbstractStream</scope><name>liveStreaming</name></member>
+      <member refid="class_abstract_stream_1a402e1743f1ac93c24c472c54ffc4eb0b" prot="private" virt="non-virtual"><scope>AbstractStream</scope><name>masks_</name></member>
+      <member refid="class_abstract_stream_1a7df802daa16c35fe4b09c4fb77e90a63" prot="protected" virt="non-virtual"><scope>AbstractStream</scope><name>mergeEvents</name></member>
+      <member refid="class_abstract_stream_1a9d0dd1312a1dfcd22f89057fcdc2093e" prot="private" virt="non-virtual"><scope>AbstractStream</scope><name>messages_</name></member>
+      <member refid="class_abstract_stream_1a1d5289bacb8bece5c88b9a50cabd534c" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>msgsReceived</name></member>
+      <member refid="class_abstract_stream_1acf3f37653dfa0a3c28ef91f825f3cba8" prot="private" virt="non-virtual"><scope>AbstractStream</scope><name>mutex_</name></member>
+      <member refid="class_abstract_stream_1a30ee69390f7f55724549a301246a84a3" prot="private" virt="non-virtual"><scope>AbstractStream</scope><name>new_msgs_</name></member>
+      <member refid="class_abstract_stream_1ac717eb2f0910cc924419ae46c579b04b" prot="protected" virt="non-virtual"><scope>AbstractStream</scope><name>newEvent</name></member>
+      <member refid="class_abstract_stream_1a6842e80df2842fc72f2a85f65b25c155" prot="public" virt="virtual"><scope>AbstractStream</scope><name>pause</name></member>
+      <member refid="class_abstract_stream_1a0a65e0e9bd73c42020c20166aac31112" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>paused</name></member>
+      <member refid="class_abstract_stream_1a79046e9d2897df88ec5efbc2379a4358" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>privateUpdateLastMsgsSignal</name></member>
+      <member refid="class_abstract_stream_1a816bc4879b071c6c5b6a7cd68d98732c" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>resume</name></member>
+      <member refid="class_abstract_stream_1a6548cd03f719cdff918cac98cd18fc25" prot="public" virt="pure-virtual"><scope>AbstractStream</scope><name>routeName</name></member>
+      <member refid="class_abstract_stream_1ae18f4caded575e7b91acd9fefe3fb6c4" prot="public" virt="virtual"><scope>AbstractStream</scope><name>routeStartTime</name></member>
+      <member refid="class_abstract_stream_1af2e93c10db5e8329f3287ac3eba79582" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>seekedTo</name></member>
+      <member refid="class_abstract_stream_1afc8c5bfc0ccf1b50b8c1e7a7cb0f69ad" prot="public" virt="virtual"><scope>AbstractStream</scope><name>seekTo</name></member>
+      <member refid="class_abstract_stream_1ac3905b779f55bfb37172b3b69aedada6" prot="public" virt="virtual"><scope>AbstractStream</scope><name>setSpeed</name></member>
+      <member refid="class_abstract_stream_1a0908e573ea79c1f9ece021c76c496586" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>sources</name></member>
+      <member refid="class_abstract_stream_1aab4505acc61c563b0245e8b7b1157a63" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>sourcesUpdated</name></member>
+      <member refid="class_abstract_stream_1a3a44162ada17f69d44af2122ff5be4f9" prot="public" virt="pure-virtual"><scope>AbstractStream</scope><name>start</name></member>
+      <member refid="class_abstract_stream_1a398dd3db93da45a6b1db1c4538c5fc8b" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>streamStarted</name></member>
+      <member refid="class_abstract_stream_1a63fdc98822bf51a3ee1851bf25e93f5f" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>suppressDefinedSignals</name></member>
+      <member refid="class_abstract_stream_1a4aeaebb34134433f98529733726d1356" prot="public" virt="non-virtual"><scope>AbstractStream</scope><name>suppressHighlighted</name></member>
+      <member refid="class_abstract_stream_1ac734775a79fe703fbe157f9987787ae4" prot="public" virt="virtual"><scope>AbstractStream</scope><name>totalSeconds</name></member>
+      <member refid="class_abstract_stream_1a5d3ff960083e12abb08f66983e5c686d" prot="protected" virt="non-virtual"><scope>AbstractStream</scope><name>updateEvent</name></member>
+      <member refid="class_abstract_stream_1a70e3c2927e88715b218bcaed437dd73f" prot="private" virt="non-virtual"><scope>AbstractStream</scope><name>updateLastMessages</name></member>
+      <member refid="class_abstract_stream_1a479b4e070c205cb9d704e76178cb5212" prot="private" virt="non-virtual"><scope>AbstractStream</scope><name>updateLastMsgsTo</name></member>
+      <member refid="class_abstract_stream_1a8b3711553e5214ab370fbced0af04aea" prot="private" virt="non-virtual"><scope>AbstractStream</scope><name>updateMasks</name></member>
+      <member refid="class_abstract_stream_1a5ce050aae85ca6a085cd30acc0e629a9" prot="public" virt="virtual"><scope>AbstractStream</scope><name>~AbstractStream</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

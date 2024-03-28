@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.gm.carstate &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/gm/carstate.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.gm.carstate</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.gm.carstate</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.numpy_fast</span> <span class="kn">import</span> <span class="n">mean</span>
+<span class="kn">from</span> <span class="nn">opendbc.can.can_define</span> <span class="kn">import</span> <span class="n">CANDefine</span>
+<span class="kn">from</span> <span class="nn">opendbc.can.parser</span> <span class="kn">import</span> <span class="n">CANParser</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.interfaces</span> <span class="kn">import</span> <span class="n">CarStateBase</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.gm.values</span> <span class="kn">import</span> <span class="n">DBC</span><span class="p">,</span> <span class="n">AccState</span><span class="p">,</span> <span class="n">CanBus</span><span class="p">,</span> <span class="n">STEER_THRESHOLD</span>
+
+<span class="n">TransmissionType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">TransmissionType</span>
+<span class="n">NetworkLocation</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">NetworkLocation</span>
+<span class="n">STANDSTILL_THRESHOLD</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mf">0.0311</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span>
+
+
+<div class="viewcode-block" id="CarState">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.carstate.CarState">[docs]</a>
+<span class="k">class</span> <span class="nc">CarState</span><span class="p">(</span><span class="n">CarStateBase</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+    <span class="n">can_define</span> <span class="o">=</span> <span class="n">CANDefine</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">shifter_values</span> <span class="o">=</span> <span class="n">can_define</span><span class="o">.</span><span class="n">dv</span><span class="p">[</span><span class="s2">&quot;ECMPRDNL2&quot;</span><span class="p">][</span><span class="s2">&quot;PRNDL2&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cluster_speed_hyst_gap</span> <span class="o">=</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span> <span class="o">/</span> <span class="mf">2.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cluster_min_speed</span> <span class="o">=</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span> <span class="o">/</span> <span class="mf">2.</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">loopback_lka_steering_cmd_updated</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">loopback_lka_steering_cmd_ts_nanos</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pt_lka_steering_cmd_counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cam_lka_steering_cmd_counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">buttons_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">prev_distance_button</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">distance_button</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="CarState.update">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.carstate.CarState.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pt_cp</span><span class="p">,</span> <span class="n">cam_cp</span><span class="p">,</span> <span class="n">loopback_cp</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">prev_cruise_buttons</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cruise_buttons</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">prev_distance_button</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance_button</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cruise_buttons</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ASCMSteeringButton&quot;</span><span class="p">][</span><span class="s2">&quot;ACCButtons&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">distance_button</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ASCMSteeringButton&quot;</span><span class="p">][</span><span class="s2">&quot;DistanceButton&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">buttons_counter</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ASCMSteeringButton&quot;</span><span class="p">][</span><span class="s2">&quot;RollingCounter&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pscm_status</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;PSCMStatus&quot;</span><span class="p">])</span>
+    <span class="c1"># This is to avoid a fault where you engage while still moving backwards after shifting to D.</span>
+    <span class="c1"># An Equinox has been seen with an unsupported status (3), so only check if either wheel is in reverse (2)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">moving_backward</span> <span class="o">=</span> <span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EBCMWheelSpdRear&quot;</span><span class="p">][</span><span class="s2">&quot;RLWheelDir&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EBCMWheelSpdRear&quot;</span><span class="p">][</span><span class="s2">&quot;RRWheelDir&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Variables used for avoiding LKAS faults</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">loopback_lka_steering_cmd_updated</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">loopback_cp</span><span class="o">.</span><span class="n">vl_all</span><span class="p">[</span><span class="s2">&quot;ASCMLKASteeringCmd&quot;</span><span class="p">][</span><span class="s2">&quot;RollingCounter&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">loopback_lka_steering_cmd_updated</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">loopback_lka_steering_cmd_ts_nanos</span> <span class="o">=</span> <span class="n">loopback_cp</span><span class="o">.</span><span class="n">ts_nanos</span><span class="p">[</span><span class="s2">&quot;ASCMLKASteeringCmd&quot;</span><span class="p">][</span><span class="s2">&quot;RollingCounter&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">pt_lka_steering_cmd_counter</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ASCMLKASteeringCmd&quot;</span><span class="p">][</span><span class="s2">&quot;RollingCounter&quot;</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cam_lka_steering_cmd_counter</span> <span class="o">=</span> <span class="n">cam_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ASCMLKASteeringCmd&quot;</span><span class="p">][</span><span class="s2">&quot;RollingCounter&quot;</span><span class="p">]</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wheel_speeds</span><span class="p">(</span>
+      <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EBCMWheelSpdFront&quot;</span><span class="p">][</span><span class="s2">&quot;FLWheelSpd&quot;</span><span class="p">],</span>
+      <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EBCMWheelSpdFront&quot;</span><span class="p">][</span><span class="s2">&quot;FRWheelSpd&quot;</span><span class="p">],</span>
+      <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EBCMWheelSpdRear&quot;</span><span class="p">][</span><span class="s2">&quot;RLWheelSpd&quot;</span><span class="p">],</span>
+      <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EBCMWheelSpdRear&quot;</span><span class="p">][</span><span class="s2">&quot;RRWheelSpd&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span> <span class="o">=</span> <span class="n">mean</span><span class="p">([</span><span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">fl</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">fr</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rl</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rr</span><span class="p">])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">aEgo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_speed_kf</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span><span class="p">)</span>
+    <span class="c1"># sample rear wheel speeds, standstill=True if ECM allows engagement with brake</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rl</span> <span class="o">&lt;=</span> <span class="n">STANDSTILL_THRESHOLD</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rr</span> <span class="o">&lt;=</span> <span class="n">STANDSTILL_THRESHOLD</span>
+
+    <span class="k">if</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ECMPRDNL2&quot;</span><span class="p">][</span><span class="s2">&quot;ManualMode&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_gear_shifter</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_gear_shifter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shifter_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ECMPRDNL2&quot;</span><span class="p">][</span><span class="s2">&quot;PRNDL2&quot;</span><span class="p">],</span> <span class="kc">None</span><span class="p">))</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">brake</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ECMAcceleratorPos&quot;</span><span class="p">][</span><span class="s2">&quot;BrakePedalPos&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">brakePressed</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ECMEngineStatus&quot;</span><span class="p">][</span><span class="s2">&quot;BrakePressed&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># Some Volt 2016-17 have loose brake pedal push rod retainers which causes the ECM to believe</span>
+      <span class="c1"># that the brake is being intermittently pressed without user interaction.</span>
+      <span class="c1"># To avoid a cruise fault we need to use a conservative brake position threshold</span>
+      <span class="c1"># https://static.nhtsa.gov/odi/tsbs/2017/MC-10137629-9999.pdf</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">brakePressed</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">brake</span> <span class="o">&gt;=</span> <span class="mi">8</span>
+
+    <span class="c1"># Regen braking is braking</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">direct</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">regenBraking</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EBCMRegenPaddle&quot;</span><span class="p">][</span><span class="s2">&quot;RegenPaddle&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;AcceleratorPedal2&quot;</span><span class="p">][</span><span class="s2">&quot;AcceleratorPedal2&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">254.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">gasPressed</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">&gt;</span> <span class="mf">1e-5</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringAngleDeg</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;PSCMSteeringAngle&quot;</span><span class="p">][</span><span class="s2">&quot;SteeringWheelAngle&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringRateDeg</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;PSCMSteeringAngle&quot;</span><span class="p">][</span><span class="s2">&quot;SteeringWheelRate&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringTorque</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;PSCMStatus&quot;</span><span class="p">][</span><span class="s2">&quot;LKADriverAppldTrq&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringTorqueEps</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;PSCMStatus&quot;</span><span class="p">][</span><span class="s2">&quot;LKATorqueDelivered&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringPressed</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">steeringTorque</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">STEER_THRESHOLD</span>
+
+    <span class="c1"># 0 inactive, 1 active, 2 temporarily limited, 3 failed</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lkas_status</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;PSCMStatus&quot;</span><span class="p">][</span><span class="s2">&quot;LKATorqueDeliveredStatus&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerFaultTemporary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lkas_status</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerFaultPermanent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lkas_status</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="c1"># 1 - open, 0 - closed</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">doorOpen</span> <span class="o">=</span> <span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BCMDoorBeltStatus&quot;</span><span class="p">][</span><span class="s2">&quot;FrontLeftDoor&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span>
+                    <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BCMDoorBeltStatus&quot;</span><span class="p">][</span><span class="s2">&quot;FrontRightDoor&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span>
+                    <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BCMDoorBeltStatus&quot;</span><span class="p">][</span><span class="s2">&quot;RearLeftDoor&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span>
+                    <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BCMDoorBeltStatus&quot;</span><span class="p">][</span><span class="s2">&quot;RearRightDoor&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># 1 - latched</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">seatbeltUnlatched</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BCMDoorBeltStatus&quot;</span><span class="p">][</span><span class="s2">&quot;LeftSeatBelt&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">leftBlinker</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BCMTurnSignals&quot;</span><span class="p">][</span><span class="s2">&quot;TurnSignals&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">rightBlinker</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BCMTurnSignals&quot;</span><span class="p">][</span><span class="s2">&quot;TurnSignals&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">parkingBrake</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BCMGeneralPlatformStatus&quot;</span><span class="p">][</span><span class="s2">&quot;ParkBrakeSwActive&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">available</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ECMEngineStatus&quot;</span><span class="p">][</span><span class="s2">&quot;CruiseMainOn&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">espDisabled</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ESPStatus&quot;</span><span class="p">][</span><span class="s2">&quot;TractionControlOn&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">accFaulted</span> <span class="o">=</span> <span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;AcceleratorPedal2&quot;</span><span class="p">][</span><span class="s2">&quot;CruiseState&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">AccState</span><span class="o">.</span><span class="n">FAULTED</span> <span class="ow">or</span>
+                      <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EBCMFrictionBrakeStatus&quot;</span><span class="p">][</span><span class="s2">&quot;FrictionBrakeUnavailable&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;AcceleratorPedal2&quot;</span><span class="p">][</span><span class="s2">&quot;CruiseState&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">AccState</span><span class="o">.</span><span class="n">OFF</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;AcceleratorPedal2&quot;</span><span class="p">][</span><span class="s2">&quot;CruiseState&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">AccState</span><span class="o">.</span><span class="n">STANDSTILL</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">cam_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ASCMActiveCruiseControlStatus&quot;</span><span class="p">][</span><span class="s2">&quot;ACCSpeedSetpoint&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">stockAeb</span> <span class="o">=</span> <span class="n">cam_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;AEBCmd&quot;</span><span class="p">][</span><span class="s2">&quot;AEBCmdActive&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+      <span class="c1"># openpilot controls nonAdaptive when not pcmCruise</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">nonAdaptive</span> <span class="o">=</span> <span class="n">cam_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ASCMActiveCruiseControlStatus&quot;</span><span class="p">][</span><span class="s2">&quot;ACCCruiseState&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">leftBlindspot</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BCMBlindSpotMonitor&quot;</span><span class="p">][</span><span class="s2">&quot;LeftBSM&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">rightBlindspot</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;BCMBlindSpotMonitor&quot;</span><span class="p">][</span><span class="s2">&quot;RightBSM&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="CarState.get_cam_can_parser">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.carstate.CarState.get_cam_can_parser">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_cam_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;AEBCmd&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;ASCMLKASteeringCmd&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;ASCMActiveCruiseControlStatus&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span>
+      <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="n">messages</span><span class="p">,</span> <span class="n">CanBus</span><span class="o">.</span><span class="n">CAMERA</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarState.get_can_parser">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.carstate.CarState.get_can_parser">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">(</span><span class="s2">&quot;BCMTurnSignals&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;ECMPRDNL2&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;PSCMStatus&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;ESPStatus&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;BCMDoorBeltStatus&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;BCMGeneralPlatformStatus&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;EBCMWheelSpdFront&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;EBCMWheelSpdRear&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;EBCMFrictionBrakeStatus&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;AcceleratorPedal2&quot;</span><span class="p">,</span> <span class="mi">33</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;ASCMSteeringButton&quot;</span><span class="p">,</span> <span class="mi">33</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;ECMEngineStatus&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;PSCMSteeringAngle&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;ECMAcceleratorPos&quot;</span><span class="p">,</span> <span class="mi">80</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span><span class="p">:</span>
+      <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;BCMBlindSpotMonitor&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+    <span class="c1"># Used to read back last counter sent to PT by camera</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;ASCMLKASteeringCmd&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+      <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">direct</span><span class="p">:</span>
+      <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;EBCMRegenPaddle&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="n">messages</span><span class="p">,</span> <span class="n">CanBus</span><span class="o">.</span><span class="n">POWERTRAIN</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarState.get_loopback_can_parser">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.carstate.CarState.get_loopback_can_parser">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_loopback_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">(</span><span class="s2">&quot;ASCMLKASteeringCmd&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="n">messages</span><span class="p">,</span> <span class="n">CanBus</span><span class="o">.</span><span class="n">LOOPBACK</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

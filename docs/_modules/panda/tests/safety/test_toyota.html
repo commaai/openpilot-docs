@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>panda.tests.safety.test_toyota &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/panda/tests/safety/test_toyota.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">panda.tests.safety.test_toyota</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for panda.tests.safety.test_toyota</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="kn">from</span> <span class="nn">panda</span> <span class="kn">import</span> <span class="n">Panda</span>
+<span class="kn">from</span> <span class="nn">panda.tests.libpanda</span> <span class="kn">import</span> <span class="n">libpanda_py</span>
+<span class="kn">import</span> <span class="nn">panda.tests.safety.common</span> <span class="k">as</span> <span class="nn">common</span>
+<span class="kn">from</span> <span class="nn">panda.tests.safety.common</span> <span class="kn">import</span> <span class="n">CANPackerPanda</span>
+
+<span class="n">TOYOTA_COMMON_TX_MSGS</span> <span class="o">=</span> <span class="p">[[</span><span class="mh">0x2E4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x191</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x412</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x343</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x1D2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>  <span class="c1"># LKAS + LTA + ACC &amp; PCM cancel cmds</span>
+<span class="n">TOYOTA_COMMON_LONG_TX_MSGS</span> <span class="o">=</span> <span class="p">[[</span><span class="mh">0x283</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x2E6</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x2E7</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x33E</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x344</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x365</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x366</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x4CB</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># DSU bus 0</span>
+                              <span class="p">[</span><span class="mh">0x128</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x141</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x160</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x161</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mh">0x470</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># DSU bus 1</span>
+                              <span class="p">[</span><span class="mh">0x411</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># PCS_HUD</span>
+                              <span class="p">[</span><span class="mh">0x750</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>  <span class="c1"># radar diagnostic address</span>
+
+
+<div class="viewcode-block" id="TestToyotaSafetyBase">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyBase">[docs]</a>
+<span class="k">class</span> <span class="nc">TestToyotaSafetyBase</span><span class="p">(</span><span class="n">common</span><span class="o">.</span><span class="n">PandaCarSafetyTest</span><span class="p">,</span> <span class="n">common</span><span class="o">.</span><span class="n">LongitudinalAccelSafetyTest</span><span class="p">):</span>
+
+  <span class="n">TX_MSGS</span> <span class="o">=</span> <span class="n">TOYOTA_COMMON_TX_MSGS</span> <span class="o">+</span> <span class="n">TOYOTA_COMMON_LONG_TX_MSGS</span>
+  <span class="n">STANDSTILL_THRESHOLD</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># kph</span>
+  <span class="n">RELAY_MALFUNCTION_ADDRS</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">(</span><span class="mh">0x2E4</span><span class="p">,</span> <span class="mh">0x343</span><span class="p">)}</span>
+  <span class="n">FWD_BLACKLISTED_ADDRS</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x2E4</span><span class="p">,</span> <span class="mh">0x412</span><span class="p">,</span> <span class="mh">0x191</span><span class="p">,</span> <span class="mh">0x343</span><span class="p">]}</span>
+  <span class="n">FWD_BUS_LOOKUP</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+  <span class="n">EPS_SCALE</span> <span class="o">=</span> <span class="mi">73</span>
+
+  <span class="n">packer</span><span class="p">:</span> <span class="n">CANPackerPanda</span>
+  <span class="n">safety</span><span class="p">:</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">Panda</span>
+
+<div class="viewcode-block" id="TestToyotaSafetyBase.setUpClass">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyBase.setUpClass">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">setUpClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;Base&quot;</span><span class="p">):</span>
+      <span class="bp">cls</span><span class="o">.</span><span class="n">packer</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="bp">cls</span><span class="o">.</span><span class="n">safety</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="k">raise</span> <span class="n">unittest</span><span class="o">.</span><span class="n">SkipTest</span></div>
+
+
+  <span class="k">def</span> <span class="nf">_torque_meas_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">torque</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">driver_torque</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;STEER_TORQUE_EPS&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">torque</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">EPS_SCALE</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">driver_torque</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">values</span><span class="p">[</span><span class="s2">&quot;STEER_TORQUE_DRIVER&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">driver_torque</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg_panda</span><span class="p">(</span><span class="s2">&quot;STEER_TORQUE_SENSOR&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+  <span class="c1"># Both torque and angle safety modes test with each other&#39;s steering commands</span>
+  <span class="k">def</span> <span class="nf">_torque_cmd_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">torque</span><span class="p">,</span> <span class="n">steer_req</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;STEER_TORQUE_CMD&quot;</span><span class="p">:</span> <span class="n">torque</span><span class="p">,</span> <span class="s2">&quot;STEER_REQUEST&quot;</span><span class="p">:</span> <span class="n">steer_req</span><span class="p">}</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg_panda</span><span class="p">(</span><span class="s2">&quot;STEERING_LKA&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_angle_meas_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steer_angle_initializing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="c1"># This creates a steering torque angle message. Not set on all platforms,</span>
+    <span class="c1"># relative to init angle on some older TSS2 platforms. Only to be used with LTA</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;STEER_ANGLE&quot;</span><span class="p">:</span> <span class="n">angle</span><span class="p">,</span> <span class="s2">&quot;STEER_ANGLE_INITIALIZING&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">steer_angle_initializing</span><span class="p">)}</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg_panda</span><span class="p">(</span><span class="s2">&quot;STEER_TORQUE_SENSOR&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_angle_cmd_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lta_msg</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">enabled</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">enabled</span><span class="p">),</span> <span class="n">angle</span><span class="p">,</span> <span class="n">torque_wind_down</span><span class="o">=</span><span class="mi">100</span> <span class="k">if</span> <span class="n">enabled</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_lta_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">,</span> <span class="n">req2</span><span class="p">,</span> <span class="n">angle_cmd</span><span class="p">,</span> <span class="n">torque_wind_down</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;STEER_REQUEST&quot;</span><span class="p">:</span> <span class="n">req</span><span class="p">,</span> <span class="s2">&quot;STEER_REQUEST_2&quot;</span><span class="p">:</span> <span class="n">req2</span><span class="p">,</span> <span class="s2">&quot;STEER_ANGLE_CMD&quot;</span><span class="p">:</span> <span class="n">angle_cmd</span><span class="p">,</span> <span class="s2">&quot;TORQUE_WIND_DOWN&quot;</span><span class="p">:</span> <span class="n">torque_wind_down</span><span class="p">}</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg_panda</span><span class="p">(</span><span class="s2">&quot;STEERING_LTA&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_accel_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accel</span><span class="p">,</span> <span class="n">cancel_req</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ACCEL_CMD&quot;</span><span class="p">:</span> <span class="n">accel</span><span class="p">,</span> <span class="s2">&quot;CANCEL_REQ&quot;</span><span class="p">:</span> <span class="n">cancel_req</span><span class="p">}</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg_panda</span><span class="p">(</span><span class="s2">&quot;ACC_CONTROL&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_speed_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">{(</span><span class="s2">&quot;WHEEL_SPEED_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">n</span><span class="p">):</span> <span class="n">speed</span> <span class="o">*</span> <span class="mf">3.6</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;FR&quot;</span><span class="p">,</span> <span class="s2">&quot;FL&quot;</span><span class="p">,</span> <span class="s2">&quot;RR&quot;</span><span class="p">,</span> <span class="s2">&quot;RL&quot;</span><span class="p">]}</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg_panda</span><span class="p">(</span><span class="s2">&quot;WHEEL_SPEEDS&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_user_brake_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brake</span><span class="p">):</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;BRAKE_PRESSED&quot;</span><span class="p">:</span> <span class="n">brake</span><span class="p">}</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg_panda</span><span class="p">(</span><span class="s2">&quot;BRAKE_MODULE&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_user_gas_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gas</span><span class="p">):</span>
+    <span class="n">cruise_active</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_controls_allowed</span><span class="p">()</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;GAS_RELEASED&quot;</span><span class="p">:</span> <span class="ow">not</span> <span class="n">gas</span><span class="p">,</span> <span class="s2">&quot;CRUISE_ACTIVE&quot;</span><span class="p">:</span> <span class="n">cruise_active</span><span class="p">}</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg_panda</span><span class="p">(</span><span class="s2">&quot;PCM_CRUISE&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_pcm_status_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable</span><span class="p">):</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;CRUISE_ACTIVE&quot;</span><span class="p">:</span> <span class="n">enable</span><span class="p">}</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg_panda</span><span class="p">(</span><span class="s2">&quot;PCM_CRUISE&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TestToyotaSafetyBase.test_diagnostics">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyBase.test_diagnostics">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_diagnostics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stock_longitudinal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">should_tx</span><span class="p">,</span> <span class="n">msg</span> <span class="ow">in</span> <span class="p">((</span><span class="kc">False</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x6D\x02\x3E\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">),</span>  <span class="c1"># fwdCamera tester present</span>
+                           <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x0F\x03\xAA\xAA\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">),</span>  <span class="c1"># non-tester present</span>
+                           <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x0F\x02\x3E\x00\x00\x00\x00\x00</span><span class="s2">&quot;</span><span class="p">)):</span>
+      <span class="n">tester_present</span> <span class="o">=</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">make_CANPacket</span><span class="p">(</span><span class="mh">0x750</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">should_tx</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">stock_longitudinal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tx</span><span class="p">(</span><span class="n">tester_present</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaSafetyBase.test_block_aeb">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyBase.test_block_aeb">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_block_aeb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stock_longitudinal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">controls_allowed</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">bad</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_controls_allowed</span><span class="p">(</span><span class="n">controls_allowed</span><span class="p">)</span>
+          <span class="n">dat</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)]</span>
+          <span class="k">if</span> <span class="ow">not</span> <span class="n">bad</span><span class="p">:</span>
+            <span class="n">dat</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">6</span> <span class="o">+</span> <span class="n">dat</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
+          <span class="n">msg</span> <span class="o">=</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">make_CANPacket</span><span class="p">(</span><span class="mh">0x283</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">dat</span><span class="p">))</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="ow">not</span> <span class="n">bad</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">stock_longitudinal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tx</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span></div>
+
+
+  <span class="c1"># Only allow LTA msgs with no actuation</span>
+<div class="viewcode-block" id="TestToyotaSafetyBase.test_lta_steer_cmd">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyBase.test_lta_steer_cmd">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_lta_steer_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">engaged</span><span class="p">,</span> <span class="n">req</span><span class="p">,</span> <span class="n">req2</span><span class="p">,</span> <span class="n">torque_wind_down</span><span class="p">,</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">([</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+                                                                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                                                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+                                                                  <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_controls_allowed</span><span class="p">(</span><span class="n">engaged</span><span class="p">)</span>
+
+      <span class="n">should_tx</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">req</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">req2</span> <span class="ow">and</span> <span class="n">angle</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">torque_wind_down</span> <span class="o">==</span> <span class="mi">0</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">should_tx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lta_msg</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">req2</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">torque_wind_down</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaSafetyBase.test_rx_hook">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyBase.test_rx_hook">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_rx_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># checksum checks</span>
+    <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;trq&quot;</span><span class="p">,</span> <span class="s2">&quot;pcm&quot;</span><span class="p">]:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_controls_allowed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">msg</span> <span class="o">==</span> <span class="s2">&quot;trq&quot;</span><span class="p">:</span>
+        <span class="n">to_push</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_torque_meas_msg</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">msg</span> <span class="o">==</span> <span class="s2">&quot;pcm&quot;</span><span class="p">:</span>
+        <span class="n">to_push</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pcm_status_msg</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rx</span><span class="p">(</span><span class="n">to_push</span><span class="p">))</span>
+      <span class="n">to_push</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="n">to_push</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="n">to_push</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="n">to_push</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rx</span><span class="p">(</span><span class="n">to_push</span><span class="p">))</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_controls_allowed</span><span class="p">())</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TestToyotaSafetyTorque">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyTorque">[docs]</a>
+<span class="k">class</span> <span class="nc">TestToyotaSafetyTorque</span><span class="p">(</span><span class="n">TestToyotaSafetyBase</span><span class="p">,</span> <span class="n">common</span><span class="o">.</span><span class="n">MotorTorqueSteeringSafetyTest</span><span class="p">,</span> <span class="n">common</span><span class="o">.</span><span class="n">SteerRequestCutSafetyTest</span><span class="p">):</span>
+
+  <span class="n">MAX_RATE_UP</span> <span class="o">=</span> <span class="mi">15</span>
+  <span class="n">MAX_RATE_DOWN</span> <span class="o">=</span> <span class="mi">25</span>
+  <span class="n">MAX_TORQUE</span> <span class="o">=</span> <span class="mi">1500</span>
+  <span class="n">MAX_RT_DELTA</span> <span class="o">=</span> <span class="mi">450</span>
+  <span class="n">RT_INTERVAL</span> <span class="o">=</span> <span class="mi">250000</span>
+  <span class="n">MAX_TORQUE_ERROR</span> <span class="o">=</span> <span class="mi">350</span>
+  <span class="n">TORQUE_MEAS_TOLERANCE</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># toyota safety adds one to be conservative for rounding</span>
+
+  <span class="c1"># Safety around steering req bit</span>
+  <span class="n">MIN_VALID_STEERING_FRAMES</span> <span class="o">=</span> <span class="mi">18</span>
+  <span class="n">MAX_INVALID_STEERING_FRAMES</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">MIN_VALID_STEERING_RT_INTERVAL</span> <span class="o">=</span> <span class="mi">170000</span>  <span class="c1"># a ~10% buffer, can send steer up to 110Hz</span>
+
+<div class="viewcode-block" id="TestToyotaSafetyTorque.setUp">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyTorque.setUp">[docs]</a>
+  <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">packer</span> <span class="o">=</span> <span class="n">CANPackerPanda</span><span class="p">(</span><span class="s2">&quot;toyota_nodsu_pt_generated&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span> <span class="o">=</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">libpanda</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_safety_hooks</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">SAFETY_TOYOTA</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">EPS_SCALE</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">init_tests</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TestToyotaSafetyAngle">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyAngle">[docs]</a>
+<span class="k">class</span> <span class="nc">TestToyotaSafetyAngle</span><span class="p">(</span><span class="n">TestToyotaSafetyBase</span><span class="p">,</span> <span class="n">common</span><span class="o">.</span><span class="n">AngleSteeringSafetyTest</span><span class="p">):</span>
+
+  <span class="c1"># Angle control limits</span>
+  <span class="n">DEG_TO_CAN</span> <span class="o">=</span> <span class="mf">17.452007</span>  <span class="c1"># 1 / 0.0573 deg to can</span>
+
+  <span class="n">ANGLE_RATE_BP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">25.</span><span class="p">,</span> <span class="mf">25.</span><span class="p">]</span>
+  <span class="n">ANGLE_RATE_UP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">]</span>  <span class="c1"># windup limit</span>
+  <span class="n">ANGLE_RATE_DOWN</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.36</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">]</span>  <span class="c1"># unwind limit</span>
+
+  <span class="n">MAX_LTA_ANGLE</span> <span class="o">=</span> <span class="mf">94.9461</span>  <span class="c1"># PCS faults if commanding above this, deg</span>
+  <span class="n">MAX_MEAS_TORQUE</span> <span class="o">=</span> <span class="mi">1500</span>  <span class="c1"># max allowed measured EPS torque before wind down</span>
+  <span class="n">MAX_LTA_DRIVER_TORQUE</span> <span class="o">=</span> <span class="mi">150</span>  <span class="c1"># max allowed driver torque before wind down</span>
+
+<div class="viewcode-block" id="TestToyotaSafetyAngle.setUp">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyAngle.setUp">[docs]</a>
+  <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">packer</span> <span class="o">=</span> <span class="n">CANPackerPanda</span><span class="p">(</span><span class="s2">&quot;toyota_nodsu_pt_generated&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span> <span class="o">=</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">libpanda</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_safety_hooks</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">SAFETY_TOYOTA</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">EPS_SCALE</span> <span class="o">|</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_TOYOTA_LTA</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">init_tests</span><span class="p">()</span></div>
+
+
+  <span class="c1"># Only allow LKA msgs with no actuation</span>
+<div class="viewcode-block" id="TestToyotaSafetyAngle.test_lka_steer_cmd">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyAngle.test_lka_steer_cmd">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_lka_steer_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">engaged</span><span class="p">,</span> <span class="n">steer_req</span><span class="p">,</span> <span class="n">torque</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">([</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+                                                        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                                        <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">1500</span><span class="p">,</span> <span class="mi">7</span><span class="p">)):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_controls_allowed</span><span class="p">(</span><span class="n">engaged</span><span class="p">)</span>
+      <span class="n">torque</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">torque</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_rt_torque_last</span><span class="p">(</span><span class="n">torque</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_torque_meas</span><span class="p">(</span><span class="n">torque</span><span class="p">,</span> <span class="n">torque</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_desired_torque_last</span><span class="p">(</span><span class="n">torque</span><span class="p">)</span>
+
+      <span class="n">should_tx</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">steer_req</span> <span class="ow">and</span> <span class="n">torque</span> <span class="o">==</span> <span class="mi">0</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">should_tx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_torque_cmd_msg</span><span class="p">(</span><span class="n">torque</span><span class="p">,</span> <span class="n">steer_req</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaSafetyAngle.test_lta_steer_cmd">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyAngle.test_lta_steer_cmd">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_lta_steer_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tests the LTA steering command message</span>
+<span class="sd">    controls_allowed:</span>
+<span class="sd">    * STEER_REQUEST and STEER_REQUEST_2 do not mismatch</span>
+<span class="sd">    * TORQUE_WIND_DOWN is only set to 0 or 100 when STEER_REQUEST and STEER_REQUEST_2 are both 1</span>
+<span class="sd">    * Full torque messages are blocked if either EPS torque or driver torque is above the threshold</span>
+
+<span class="sd">    not controls_allowed:</span>
+<span class="sd">    * STEER_REQUEST, STEER_REQUEST_2, and TORQUE_WIND_DOWN are all 0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">controls_allowed</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_controls_allowed</span><span class="p">(</span><span class="n">controls_allowed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_angle_measurement</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_prev_desired_angle</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lta_msg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">controls_allowed</span><span class="p">:</span>
+          <span class="c1"># Test the two steer request bits and TORQUE_WIND_DOWN torque wind down signal</span>
+          <span class="k">for</span> <span class="n">req</span><span class="p">,</span> <span class="n">req2</span><span class="p">,</span> <span class="n">torque_wind_down</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]):</span>
+            <span class="n">mismatch</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">req</span> <span class="ow">or</span> <span class="n">req2</span><span class="p">)</span> <span class="ow">and</span> <span class="n">torque_wind_down</span> <span class="o">!=</span> <span class="mi">0</span>
+            <span class="n">should_tx</span> <span class="o">=</span> <span class="n">req</span> <span class="o">==</span> <span class="n">req2</span> <span class="ow">and</span> <span class="p">(</span><span class="n">torque_wind_down</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">mismatch</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">should_tx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lta_msg</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">req2</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">torque_wind_down</span><span class="p">)))</span>
+
+          <span class="c1"># Test max EPS torque and driver override thresholds</span>
+          <span class="n">cases</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_MEAS_TORQUE</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_MEAS_TORQUE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_MEAS_TORQUE</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_MEAS_TORQUE</span> <span class="o">*</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_LTA_DRIVER_TORQUE</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_LTA_DRIVER_TORQUE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_LTA_DRIVER_TORQUE</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_LTA_DRIVER_TORQUE</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+          <span class="p">)</span>
+
+          <span class="k">for</span> <span class="n">eps_torque</span><span class="p">,</span> <span class="n">driver_torque</span> <span class="ow">in</span> <span class="n">cases</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">sign</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+              <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_rx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_torque_meas_msg</span><span class="p">(</span><span class="n">sign</span> <span class="o">*</span> <span class="n">eps_torque</span><span class="p">,</span> <span class="n">sign</span> <span class="o">*</span> <span class="n">driver_torque</span><span class="p">))</span>
+
+              <span class="c1"># Toyota adds 1 to EPS torque since it is rounded after EPS factor</span>
+              <span class="n">should_tx</span> <span class="o">=</span> <span class="p">(</span><span class="n">eps_torque</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_MEAS_TORQUE</span> <span class="ow">and</span> <span class="n">driver_torque</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_LTA_DRIVER_TORQUE</span>
+              <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">should_tx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lta_msg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="mi">100</span><span class="p">)))</span>
+              <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lta_msg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>  <span class="c1"># should tx if we wind down torque</span>
+
+        <span class="k">else</span><span class="p">:</span>
+          <span class="c1"># Controls not allowed</span>
+          <span class="k">for</span> <span class="n">req</span><span class="p">,</span> <span class="n">req2</span><span class="p">,</span> <span class="n">torque_wind_down</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]):</span>
+            <span class="n">should_tx</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">req</span> <span class="ow">or</span> <span class="n">req2</span><span class="p">)</span> <span class="ow">and</span> <span class="n">torque_wind_down</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">should_tx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lta_msg</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">req2</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">torque_wind_down</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaSafetyAngle.test_steering_angle_measurements">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyAngle.test_steering_angle_measurements">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_steering_angle_measurements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_angle</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Measurement test tests max angle + 0.5 which will fail</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">test_steering_angle_measurements</span><span class="p">(</span><span class="n">max_angle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">MAX_LTA_ANGLE</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaSafetyAngle.test_angle_cmd_when_enabled">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyAngle.test_angle_cmd_when_enabled">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_angle_cmd_when_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_angle</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">test_angle_cmd_when_enabled</span><span class="p">(</span><span class="n">max_angle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">MAX_LTA_ANGLE</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaSafetyAngle.test_angle_measurements">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaSafetyAngle.test_angle_measurements">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_angle_measurements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    * Tests angle meas quality flag dictates whether angle measurement is parsed, and if rx is valid</span>
+<span class="sd">    * Tests rx hook correctly clips the angle measurement, since it is to be compared to LTA cmd when inactive</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">steer_angle_initializing</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_LTA_ANGLE</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># If init flag is set, do not rx or parse any angle measurements</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="o">-</span><span class="n">angle</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="ow">not</span> <span class="n">steer_angle_initializing</span><span class="p">,</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">_rx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_angle_meas_msg</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">steer_angle_initializing</span><span class="p">)))</span>
+
+        <span class="n">final_angle</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">steer_angle_initializing</span> <span class="k">else</span>
+                       <span class="nb">round</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_LTA_ANGLE</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEG_TO_CAN</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_angle_meas_min</span><span class="p">(),</span> <span class="o">-</span><span class="n">final_angle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_angle_meas_max</span><span class="p">(),</span> <span class="n">final_angle</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_angle_meas_msg</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_angle_meas_min</span><span class="p">(),</span> <span class="o">-</span><span class="n">final_angle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_angle_meas_max</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_angle_meas_msg</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_angle_meas_min</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">get_angle_meas_max</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TestToyotaAltBrakeSafety">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaAltBrakeSafety">[docs]</a>
+<span class="k">class</span> <span class="nc">TestToyotaAltBrakeSafety</span><span class="p">(</span><span class="n">TestToyotaSafetyTorque</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestToyotaAltBrakeSafety.setUp">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaAltBrakeSafety.setUp">[docs]</a>
+  <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">packer</span> <span class="o">=</span> <span class="n">CANPackerPanda</span><span class="p">(</span><span class="s2">&quot;toyota_new_mc_pt_generated&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span> <span class="o">=</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">libpanda</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_safety_hooks</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">SAFETY_TOYOTA</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">EPS_SCALE</span> <span class="o">|</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_TOYOTA_ALT_BRAKE</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">init_tests</span><span class="p">()</span></div>
+
+
+  <span class="k">def</span> <span class="nf">_user_brake_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brake</span><span class="p">):</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;BRAKE_PRESSED&quot;</span><span class="p">:</span> <span class="n">brake</span><span class="p">}</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg_panda</span><span class="p">(</span><span class="s2">&quot;BRAKE_MODULE&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+  <span class="c1"># No LTA message in the DBC</span>
+<div class="viewcode-block" id="TestToyotaAltBrakeSafety.test_lta_steer_cmd">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaAltBrakeSafety.test_lta_steer_cmd">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_lta_steer_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TestToyotaStockLongitudinalBase">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaStockLongitudinalBase">[docs]</a>
+<span class="k">class</span> <span class="nc">TestToyotaStockLongitudinalBase</span><span class="p">(</span><span class="n">TestToyotaSafetyBase</span><span class="p">):</span>
+
+  <span class="n">TX_MSGS</span> <span class="o">=</span> <span class="n">TOYOTA_COMMON_TX_MSGS</span>
+  <span class="c1"># Base addresses minus ACC_CONTROL (0x343)</span>
+  <span class="n">RELAY_MALFUNCTION_ADDRS</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">(</span><span class="mh">0x2E4</span><span class="p">,)}</span>
+  <span class="n">FWD_BLACKLISTED_ADDRS</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x2E4</span><span class="p">,</span> <span class="mh">0x412</span><span class="p">,</span> <span class="mh">0x191</span><span class="p">]}</span>
+
+<div class="viewcode-block" id="TestToyotaStockLongitudinalBase.test_diagnostics">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaStockLongitudinalBase.test_diagnostics">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_diagnostics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stock_longitudinal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">test_diagnostics</span><span class="p">(</span><span class="n">stock_longitudinal</span><span class="o">=</span><span class="n">stock_longitudinal</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaStockLongitudinalBase.test_block_aeb">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaStockLongitudinalBase.test_block_aeb">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_block_aeb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stock_longitudinal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">test_block_aeb</span><span class="p">(</span><span class="n">stock_longitudinal</span><span class="o">=</span><span class="n">stock_longitudinal</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaStockLongitudinalBase.test_accel_actuation_limits">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaStockLongitudinalBase.test_accel_actuation_limits">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_accel_actuation_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stock_longitudinal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">test_accel_actuation_limits</span><span class="p">(</span><span class="n">stock_longitudinal</span><span class="o">=</span><span class="n">stock_longitudinal</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestToyotaStockLongitudinalBase.test_acc_cancel">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaStockLongitudinalBase.test_acc_cancel">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_acc_cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      Regardless of controls allowed, never allow ACC_CONTROL if cancel bit isn&#39;t set</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">controls_allowed</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_controls_allowed</span><span class="p">(</span><span class="n">controls_allowed</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">accel</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MIN_ACCEL</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_ACCEL</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_accel_msg</span><span class="p">(</span><span class="n">accel</span><span class="p">)))</span>
+        <span class="n">should_tx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">accel</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">should_tx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_accel_msg</span><span class="p">(</span><span class="n">accel</span><span class="p">,</span> <span class="n">cancel_req</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TestToyotaStockLongitudinalTorque">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaStockLongitudinalTorque">[docs]</a>
+<span class="k">class</span> <span class="nc">TestToyotaStockLongitudinalTorque</span><span class="p">(</span><span class="n">TestToyotaStockLongitudinalBase</span><span class="p">,</span> <span class="n">TestToyotaSafetyTorque</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestToyotaStockLongitudinalTorque.setUp">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaStockLongitudinalTorque.setUp">[docs]</a>
+  <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">packer</span> <span class="o">=</span> <span class="n">CANPackerPanda</span><span class="p">(</span><span class="s2">&quot;toyota_nodsu_pt_generated&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span> <span class="o">=</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">libpanda</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_safety_hooks</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">SAFETY_TOYOTA</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">EPS_SCALE</span> <span class="o">|</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_TOYOTA_STOCK_LONGITUDINAL</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">init_tests</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TestToyotaStockLongitudinalAngle">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaStockLongitudinalAngle">[docs]</a>
+<span class="k">class</span> <span class="nc">TestToyotaStockLongitudinalAngle</span><span class="p">(</span><span class="n">TestToyotaStockLongitudinalBase</span><span class="p">,</span> <span class="n">TestToyotaSafetyAngle</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestToyotaStockLongitudinalAngle.setUp">
+<a class="viewcode-back" href="../../../../panda.tests.safety.html#panda.tests.safety.test_toyota.TestToyotaStockLongitudinalAngle.setUp">[docs]</a>
+  <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">packer</span> <span class="o">=</span> <span class="n">CANPackerPanda</span><span class="p">(</span><span class="s2">&quot;toyota_nodsu_pt_generated&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span> <span class="o">=</span> <span class="n">libpanda_py</span><span class="o">.</span><span class="n">libpanda</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">set_safety_hooks</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">SAFETY_TOYOTA</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">EPS_SCALE</span> <span class="o">|</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_TOYOTA_STOCK_LONGITUDINAL</span> <span class="o">|</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_TOYOTA_LTA</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">safety</span><span class="o">.</span><span class="n">init_tests</span><span class="p">()</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>conftest &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/conftest.html" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">conftest</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for conftest</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.common.prefix</span> <span class="kn">import</span> <span class="n">OpenpilotPrefix</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.manager</span> <span class="kn">import</span> <span class="n">manager</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware</span> <span class="kn">import</span> <span class="n">TICI</span><span class="p">,</span> <span class="n">HARDWARE</span>
+
+
+<div class="viewcode-block" id="pytest_sessionstart">
+<a class="viewcode-back" href="../conftest.html#conftest.pytest_sessionstart">[docs]</a>
+<span class="k">def</span> <span class="nf">pytest_sessionstart</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+  <span class="c1"># TODO: fix tests and enable test order randomization</span>
+  <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">pluginmanager</span><span class="o">.</span><span class="n">hasplugin</span><span class="p">(</span><span class="s1">&#39;randomly&#39;</span><span class="p">):</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">randomly_reorganize</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="pytest_runtest_call">
+<a class="viewcode-back" href="../conftest.html#conftest.pytest_runtest_call">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">hookwrapper</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">trylast</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pytest_runtest_call</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+  <span class="c1"># ensure we run as a hook after capturemanager&#39;s</span>
+  <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">get_closest_marker</span><span class="p">(</span><span class="s2">&quot;nocapture&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">capmanager</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">pluginmanager</span><span class="o">.</span><span class="n">getplugin</span><span class="p">(</span><span class="s2">&quot;capturemanager&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">capmanager</span><span class="o">.</span><span class="n">global_and_fixture_disabled</span><span class="p">():</span>
+      <span class="k">yield</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">yield</span></div>
+
+
+
+<div class="viewcode-block" id="clean_env">
+<a class="viewcode-back" href="../conftest.html#conftest.clean_env">[docs]</a>
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">clean_env</span><span class="p">():</span>
+  <span class="n">starting_env</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>
+  <span class="k">yield</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">starting_env</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="openpilot_function_fixture">
+<a class="viewcode-back" href="../conftest.html#conftest.openpilot_function_fixture">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="n">autouse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">openpilot_function_fixture</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+  <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+  <span class="k">with</span> <span class="n">clean_env</span><span class="p">():</span>
+    <span class="c1"># setup a clean environment for each test</span>
+    <span class="k">with</span> <span class="n">OpenpilotPrefix</span><span class="p">(</span><span class="n">shared_download_cache</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">get_closest_marker</span><span class="p">(</span><span class="s2">&quot;shared_download_cache&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="k">as</span> <span class="n">prefix</span><span class="p">:</span>
+      <span class="n">prefix</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;OPENPILOT_PREFIX&quot;</span><span class="p">]</span>
+
+      <span class="k">yield</span>
+
+      <span class="c1"># ensure the test doesn&#39;t change the prefix</span>
+      <span class="k">assert</span> <span class="s2">&quot;OPENPILOT_PREFIX&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span> <span class="ow">and</span> <span class="n">prefix</span> <span class="o">==</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;OPENPILOT_PREFIX&quot;</span><span class="p">]</span>
+
+    <span class="c1"># cleanup any started processes</span>
+    <span class="n">manager</span><span class="o">.</span><span class="n">manager_cleanup</span><span class="p">()</span>
+
+    <span class="c1"># some processes disable gc for performance, re-enable here</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">gc</span><span class="o">.</span><span class="n">isenabled</span><span class="p">():</span>
+      <span class="n">gc</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
+      <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span></div>
+
+
+<span class="c1"># If you use setUpClass, the environment variables won&#39;t be cleared properly,</span>
+<span class="c1"># so we need to hook both the function and class pytest fixtures</span>
+<div class="viewcode-block" id="openpilot_class_fixture">
+<a class="viewcode-back" href="../conftest.html#conftest.openpilot_class_fixture">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">autouse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">openpilot_class_fixture</span><span class="p">():</span>
+  <span class="k">with</span> <span class="n">clean_env</span><span class="p">():</span>
+    <span class="k">yield</span></div>
+
+
+
+<div class="viewcode-block" id="tici_setup_fixture">
+<a class="viewcode-back" href="../conftest.html#conftest.tici_setup_fixture">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;function&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tici_setup_fixture</span><span class="p">(</span><span class="n">openpilot_function_fixture</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Ensure a consistent state for tests on-device. Needs the openpilot function fixture to run first.&quot;&quot;&quot;</span>
+  <span class="n">HARDWARE</span><span class="o">.</span><span class="n">initialize_hardware</span><span class="p">()</span>
+  <span class="n">HARDWARE</span><span class="o">.</span><span class="n">set_power_save</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;pkill -9 -f athena&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="pytest_collection_modifyitems">
+<a class="viewcode-back" href="../conftest.html#conftest.pytest_collection_modifyitems">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">tryfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pytest_collection_modifyitems</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+  <span class="n">skipper</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Skipping tici test on PC&quot;</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;tici&quot;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">keywords</span><span class="p">:</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">TICI</span><span class="p">:</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">skipper</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">fixturenames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;tici_setup_fixture&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s2">&quot;xdist_group_class_property&quot;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">keywords</span><span class="p">:</span>
+      <span class="n">class_property_name</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get_closest_marker</span><span class="p">(</span><span class="s1">&#39;xdist_group_class_property&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="n">class_property_value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">cls</span><span class="p">,</span> <span class="n">class_property_name</span><span class="p">)</span>
+      <span class="n">item</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">xdist_group</span><span class="p">(</span><span class="n">class_property_value</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="pytest_configure">
+<a class="viewcode-back" href="../conftest.html#conftest.pytest_configure">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">trylast</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pytest_configure</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+  <span class="n">config_line</span> <span class="o">=</span> <span class="s2">&quot;xdist_group_class_property: group tests by a property of the class that contains them&quot;</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">addinivalue_line</span><span class="p">(</span><span class="s2">&quot;markers&quot;</span><span class="p">,</span> <span class="n">config_line</span><span class="p">)</span>
+
+  <span class="n">config_line</span> <span class="o">=</span> <span class="s2">&quot;nocapture: don&#39;t capture test output&quot;</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">addinivalue_line</span><span class="p">(</span><span class="s2">&quot;markers&quot;</span><span class="p">,</span> <span class="n">config_line</span><span class="p">)</span>
+
+  <span class="n">config_line</span> <span class="o">=</span> <span class="s2">&quot;shared_download_cache: share download cache between tests&quot;</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">addinivalue_line</span><span class="p">(</span><span class="s2">&quot;markers&quot;</span><span class="p">,</span> <span class="n">config_line</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.locationd.paramsd &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/locationd/paramsd.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.locationd.paramsd</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.locationd.paramsd</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">config_realtime_process</span><span class="p">,</span> <span class="n">DT_MDL</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.numpy_fast</span> <span class="kn">import</span> <span class="n">clip</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.locationd.models.car_kf</span> <span class="kn">import</span> <span class="n">CarKalman</span><span class="p">,</span> <span class="n">ObservationKind</span><span class="p">,</span> <span class="n">States</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.locationd.models.constants</span> <span class="kn">import</span> <span class="n">GENERATED_DIR</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+
+
+<span class="n">MAX_ANGLE_OFFSET_DELTA</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">DT_MDL</span>  <span class="c1"># Max 20 deg/s</span>
+<span class="n">ROLL_MAX_DELTA</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">20.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">DT_MDL</span>  <span class="c1"># 20deg in 1 second is well within curvature limits</span>
+<span class="n">ROLL_MIN</span><span class="p">,</span> <span class="n">ROLL_MAX</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ROLL_LOWERED_MAX</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">ROLL_STD_MAX</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">LATERAL_ACC_SENSOR_THRESHOLD</span> <span class="o">=</span> <span class="mf">4.0</span>
+<span class="n">OFFSET_MAX</span> <span class="o">=</span> <span class="mf">10.0</span>
+<span class="n">OFFSET_LOWERED_MAX</span> <span class="o">=</span> <span class="mf">8.0</span>
+<span class="n">MIN_ACTIVE_SPEED</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">LOW_ACTIVE_SPEED</span> <span class="o">=</span> <span class="mf">10.0</span>
+
+
+<div class="viewcode-block" id="ParamsLearner">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.paramsd.ParamsLearner">[docs]</a>
+<span class="k">class</span> <span class="nc">ParamsLearner</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">,</span> <span class="n">steer_ratio</span><span class="p">,</span> <span class="n">stiffness_factor</span><span class="p">,</span> <span class="n">angle_offset</span><span class="p">,</span> <span class="n">P_initial</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="n">CarKalman</span><span class="p">(</span><span class="n">GENERATED_DIR</span><span class="p">,</span> <span class="n">steer_ratio</span><span class="p">,</span> <span class="n">stiffness_factor</span><span class="p">,</span> <span class="n">angle_offset</span><span class="p">,</span> <span class="n">P_initial</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">set_global</span><span class="p">(</span><span class="s2">&quot;mass&quot;</span><span class="p">,</span> <span class="n">CP</span><span class="o">.</span><span class="n">mass</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">set_global</span><span class="p">(</span><span class="s2">&quot;rotational_inertia&quot;</span><span class="p">,</span> <span class="n">CP</span><span class="o">.</span><span class="n">rotationalInertia</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">set_global</span><span class="p">(</span><span class="s2">&quot;center_to_front&quot;</span><span class="p">,</span> <span class="n">CP</span><span class="o">.</span><span class="n">centerToFront</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">set_global</span><span class="p">(</span><span class="s2">&quot;center_to_rear&quot;</span><span class="p">,</span> <span class="n">CP</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">-</span> <span class="n">CP</span><span class="o">.</span><span class="n">centerToFront</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">set_global</span><span class="p">(</span><span class="s2">&quot;stiffness_front&quot;</span><span class="p">,</span> <span class="n">CP</span><span class="o">.</span><span class="n">tireStiffnessFront</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">set_global</span><span class="p">(</span><span class="s2">&quot;stiffness_rear&quot;</span><span class="p">,</span> <span class="n">CP</span><span class="o">.</span><span class="n">tireStiffnessRear</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">yaw_rate</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">yaw_rate_std</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">roll</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">steering_angle</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">roll_valid</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="ParamsLearner.handle_log">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.paramsd.ParamsLearner.handle_log">[docs]</a>
+  <span class="k">def</span> <span class="nf">handle_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">which</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">which</span> <span class="o">==</span> <span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">yaw_rate</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">angularVelocityCalibrated</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">yaw_rate_std</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">angularVelocityCalibrated</span><span class="o">.</span><span class="n">std</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+      <span class="n">localizer_roll</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">orientationNED</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="n">localizer_roll_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">orientationNED</span><span class="o">.</span><span class="n">std</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">else</span> <span class="n">msg</span><span class="o">.</span><span class="n">orientationNED</span><span class="o">.</span><span class="n">std</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">roll_valid</span> <span class="o">=</span> <span class="p">(</span><span class="n">localizer_roll_std</span> <span class="o">&lt;</span> <span class="n">ROLL_STD_MAX</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ROLL_MIN</span> <span class="o">&lt;</span> <span class="n">localizer_roll</span> <span class="o">&lt;</span> <span class="n">ROLL_MAX</span><span class="p">)</span> <span class="ow">and</span> <span class="n">msg</span><span class="o">.</span><span class="n">sensorsOK</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">roll_valid</span><span class="p">:</span>
+        <span class="n">roll</span> <span class="o">=</span> <span class="n">localizer_roll</span>
+        <span class="c1"># Experimentally found multiplier of 2 to be best trade-off between stability and accuracy or similar?</span>
+        <span class="n">roll_std</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">localizer_roll_std</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># This is done to bound the road roll estimate when localizer values are invalid</span>
+        <span class="n">roll</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">roll_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">roll</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">roll</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">roll</span> <span class="o">-</span> <span class="n">ROLL_MAX_DELTA</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">roll</span> <span class="o">+</span> <span class="n">ROLL_MAX_DELTA</span><span class="p">)</span>
+
+      <span class="n">yaw_rate_valid</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">angularVelocityCalibrated</span><span class="o">.</span><span class="n">valid</span>
+      <span class="n">yaw_rate_valid</span> <span class="o">=</span> <span class="n">yaw_rate_valid</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">yaw_rate_std</span> <span class="o">&lt;</span> <span class="mi">10</span>  <span class="c1"># rad/s</span>
+      <span class="n">yaw_rate_valid</span> <span class="o">=</span> <span class="n">yaw_rate_valid</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yaw_rate</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span>  <span class="c1"># rad/s</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">posenetOK</span><span class="p">:</span>
+
+          <span class="k">if</span> <span class="n">yaw_rate_valid</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">predict_and_observe</span><span class="p">(</span><span class="n">t</span><span class="p">,</span>
+                                        <span class="n">ObservationKind</span><span class="o">.</span><span class="n">ROAD_FRAME_YAW_RATE</span><span class="p">,</span>
+                                        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">yaw_rate</span><span class="p">]]),</span>
+                                        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yaw_rate_std</span><span class="o">**</span><span class="mi">2</span><span class="p">)]))</span>
+
+          <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">predict_and_observe</span><span class="p">(</span><span class="n">t</span><span class="p">,</span>
+                                      <span class="n">ObservationKind</span><span class="o">.</span><span class="n">ROAD_ROLL</span><span class="p">,</span>
+                                      <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="bp">self</span><span class="o">.</span><span class="n">roll</span><span class="p">]]),</span>
+                                      <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">roll_std</span><span class="o">**</span><span class="mi">2</span><span class="p">)]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">predict_and_observe</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ObservationKind</span><span class="o">.</span><span class="n">ANGLE_OFFSET_FAST</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">]]))</span>
+
+        <span class="c1"># We observe the current stiffness and steer ratio (with a high observation noise) to bound</span>
+        <span class="c1"># the respective estimate STD. Otherwise the STDs keep increasing, causing rapid changes in the</span>
+        <span class="c1"># states in longer routes (especially straight stretches).</span>
+        <span class="n">stiffness</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">STIFFNESS</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="n">steer_ratio</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">STEER_RATIO</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">predict_and_observe</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ObservationKind</span><span class="o">.</span><span class="n">STIFFNESS</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">stiffness</span><span class="p">]]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">predict_and_observe</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ObservationKind</span><span class="o">.</span><span class="n">STEER_RATIO</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">steer_ratio</span><span class="p">]]))</span>
+
+    <span class="k">elif</span> <span class="n">which</span> <span class="o">==</span> <span class="s1">&#39;carState&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">steering_angle</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">steeringAngleDeg</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">vEgo</span>
+
+      <span class="n">in_linear_region</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">steering_angle</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">45</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">&gt;</span> <span class="n">MIN_ACTIVE_SPEED</span> <span class="ow">and</span> <span class="n">in_linear_region</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">predict_and_observe</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ObservationKind</span><span class="o">.</span><span class="n">STEER_ANGLE</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">steeringAngleDeg</span><span class="p">)]]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">predict_and_observe</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ObservationKind</span><span class="o">.</span><span class="n">ROAD_FRAME_X_SPEED</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="bp">self</span><span class="o">.</span><span class="n">speed</span><span class="p">]]))</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">:</span>
+      <span class="c1"># Reset time when stopped so uncertainty doesn&#39;t grow</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">set_filter_time</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">reset_rewind</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="check_valid_with_hysteresis">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.paramsd.check_valid_with_hysteresis">[docs]</a>
+<span class="k">def</span> <span class="nf">check_valid_with_hysteresis</span><span class="p">(</span><span class="n">current_valid</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">lowered_threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">current_valid</span><span class="p">:</span>
+    <span class="n">current_valid</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">threshold</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">current_valid</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">lowered_threshold</span>
+  <span class="k">return</span> <span class="n">current_valid</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../selfdrive.locationd.html#selfdrive.locationd.paramsd.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+  <span class="n">config_realtime_process</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">5</span><span class="p">)</span>
+
+  <span class="n">DEBUG</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)))</span>
+  <span class="n">REPLAY</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;REPLAY&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)))</span>
+
+  <span class="n">pm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">([</span><span class="s1">&#39;liveParameters&#39;</span><span class="p">])</span>
+  <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">,</span> <span class="s1">&#39;carState&#39;</span><span class="p">],</span> <span class="n">poll</span><span class="o">=</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">)</span>
+
+  <span class="n">params_reader</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+  <span class="c1"># wait for stats about the car to come in from controls</span>
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;paramsd is waiting for CarParams&quot;</span><span class="p">)</span>
+  <span class="k">with</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">params_reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CarParams&quot;</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>
+    <span class="n">CP</span> <span class="o">=</span> <span class="n">msg</span>
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;paramsd got CarParams&quot;</span><span class="p">)</span>
+
+  <span class="n">min_sr</span><span class="p">,</span> <span class="n">max_sr</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">CP</span><span class="o">.</span><span class="n">steerRatio</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">CP</span><span class="o">.</span><span class="n">steerRatio</span>
+
+  <span class="n">params</span> <span class="o">=</span> <span class="n">params_reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;LiveParameters&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Check if car model matches</span>
+  <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;carFingerprint&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Parameter learner found parameters for wrong car.&quot;</span><span class="p">)</span>
+      <span class="n">params</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="c1"># Check if starting values are sane</span>
+  <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">steer_ratio_sane</span> <span class="o">=</span> <span class="n">min_sr</span> <span class="o">&lt;=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;steerRatio&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">max_sr</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">steer_ratio_sane</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid starting values found </span><span class="si">{</span><span class="n">params</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error reading params </span><span class="si">{</span><span class="n">params</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">params</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="c1"># TODO: cache the params with the capnp struct</span>
+  <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s1">&#39;carFingerprint&#39;</span><span class="p">:</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">,</span>
+      <span class="s1">&#39;steerRatio&#39;</span><span class="p">:</span> <span class="n">CP</span><span class="o">.</span><span class="n">steerRatio</span><span class="p">,</span>
+      <span class="s1">&#39;stiffnessFactor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+      <span class="s1">&#39;angleOffsetAverageDeg&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Parameter learner resetting to default values&quot;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">REPLAY</span><span class="p">:</span>
+    <span class="c1"># When driving in wet conditions the stiffness can go down, and then be too low on the next drive</span>
+    <span class="c1"># Without a way to detect this we have to reset the stiffness every drive</span>
+    <span class="n">params</span><span class="p">[</span><span class="s1">&#39;stiffnessFactor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+  <span class="n">pInitial</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+    <span class="n">pInitial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;filterState&#39;</span><span class="p">][</span><span class="s1">&#39;std&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="s1">&#39;filterState&#39;</span> <span class="ow">in</span> <span class="n">params</span> <span class="k">else</span> <span class="kc">None</span>
+
+  <span class="n">learner</span> <span class="o">=</span> <span class="n">ParamsLearner</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;steerRatio&#39;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;stiffnessFactor&#39;</span><span class="p">],</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;angleOffsetAverageDeg&#39;</span><span class="p">]),</span> <span class="n">pInitial</span><span class="p">)</span>
+  <span class="n">angle_offset_average</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;angleOffsetAverageDeg&#39;</span><span class="p">]</span>
+  <span class="n">angle_offset</span> <span class="o">=</span> <span class="n">angle_offset_average</span>
+  <span class="n">roll</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="n">avg_offset_valid</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">total_offset_valid</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">roll_valid</span> <span class="o">=</span> <span class="kc">True</span>
+
+  <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">all_checks</span><span class="p">():</span>
+      <span class="k">for</span> <span class="n">which</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">sm</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">[</span><span class="n">x</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="p">[</span><span class="n">which</span><span class="p">]:</span>
+          <span class="n">t</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">[</span><span class="n">which</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e-9</span>
+          <span class="n">learner</span><span class="o">.</span><span class="n">handle_log</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">which</span><span class="p">,</span> <span class="n">sm</span><span class="p">[</span><span class="n">which</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">updated</span><span class="p">[</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">]:</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">learner</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">x</span>
+      <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">learner</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">P</span><span class="o">.</span><span class="n">diagonal</span><span class="p">())</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">isfinite</span><span class="p">,</span> <span class="n">x</span><span class="p">)):</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;NaN in liveParameters estimate. Resetting to default values&quot;</span><span class="p">)</span>
+        <span class="n">learner</span> <span class="o">=</span> <span class="n">ParamsLearner</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">CP</span><span class="o">.</span><span class="n">steerRatio</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">learner</span><span class="o">.</span><span class="n">kf</span><span class="o">.</span><span class="n">x</span>
+
+      <span class="n">angle_offset_average</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">ANGLE_OFFSET</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()),</span>
+                                  <span class="n">angle_offset_average</span> <span class="o">-</span> <span class="n">MAX_ANGLE_OFFSET_DELTA</span><span class="p">,</span> <span class="n">angle_offset_average</span> <span class="o">+</span> <span class="n">MAX_ANGLE_OFFSET_DELTA</span><span class="p">)</span>
+      <span class="n">angle_offset</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">ANGLE_OFFSET</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">ANGLE_OFFSET_FAST</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()),</span>
+                          <span class="n">angle_offset</span> <span class="o">-</span> <span class="n">MAX_ANGLE_OFFSET_DELTA</span><span class="p">,</span> <span class="n">angle_offset</span> <span class="o">+</span> <span class="n">MAX_ANGLE_OFFSET_DELTA</span><span class="p">)</span>
+      <span class="n">roll</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">ROAD_ROLL</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()),</span> <span class="n">roll</span> <span class="o">-</span> <span class="n">ROLL_MAX_DELTA</span><span class="p">,</span> <span class="n">roll</span> <span class="o">+</span> <span class="n">ROLL_MAX_DELTA</span><span class="p">)</span>
+      <span class="n">roll_std</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">ROAD_ROLL</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+      <span class="k">if</span> <span class="n">learner</span><span class="o">.</span><span class="n">active</span> <span class="ow">and</span> <span class="n">learner</span><span class="o">.</span><span class="n">speed</span> <span class="o">&gt;</span> <span class="n">LOW_ACTIVE_SPEED</span><span class="p">:</span>
+        <span class="c1"># Account for the opposite signs of the yaw rates</span>
+        <span class="c1"># At low speeds, bumping into a curb can cause the yaw rate to be very high</span>
+        <span class="n">sensors_valid</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">learner</span><span class="o">.</span><span class="n">speed</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">YAW_RATE</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">+</span> <span class="n">learner</span><span class="o">.</span><span class="n">yaw_rate</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">LATERAL_ACC_SENSOR_THRESHOLD</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">sensors_valid</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">avg_offset_valid</span> <span class="o">=</span> <span class="n">check_valid_with_hysteresis</span><span class="p">(</span><span class="n">avg_offset_valid</span><span class="p">,</span> <span class="n">angle_offset_average</span><span class="p">,</span> <span class="n">OFFSET_MAX</span><span class="p">,</span> <span class="n">OFFSET_LOWERED_MAX</span><span class="p">)</span>
+      <span class="n">total_offset_valid</span> <span class="o">=</span> <span class="n">check_valid_with_hysteresis</span><span class="p">(</span><span class="n">total_offset_valid</span><span class="p">,</span> <span class="n">angle_offset</span><span class="p">,</span> <span class="n">OFFSET_MAX</span><span class="p">,</span> <span class="n">OFFSET_LOWERED_MAX</span><span class="p">)</span>
+      <span class="n">roll_valid</span> <span class="o">=</span> <span class="n">check_valid_with_hysteresis</span><span class="p">(</span><span class="n">roll_valid</span><span class="p">,</span> <span class="n">roll</span><span class="p">,</span> <span class="n">ROLL_MAX</span><span class="p">,</span> <span class="n">ROLL_LOWERED_MAX</span><span class="p">)</span>
+
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;liveParameters&#39;</span><span class="p">)</span>
+
+      <span class="n">liveParameters</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">liveParameters</span>
+      <span class="n">liveParameters</span><span class="o">.</span><span class="n">posenetValid</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">liveParameters</span><span class="o">.</span><span class="n">sensorValid</span> <span class="o">=</span> <span class="n">sensors_valid</span>
+      <span class="n">liveParameters</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">STEER_RATIO</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+      <span class="n">liveParameters</span><span class="o">.</span><span class="n">stiffnessFactor</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">STIFFNESS</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+      <span class="n">liveParameters</span><span class="o">.</span><span class="n">roll</span> <span class="o">=</span> <span class="n">roll</span>
+      <span class="n">liveParameters</span><span class="o">.</span><span class="n">angleOffsetAverageDeg</span> <span class="o">=</span> <span class="n">angle_offset_average</span>
+      <span class="n">liveParameters</span><span class="o">.</span><span class="n">angleOffsetDeg</span> <span class="o">=</span> <span class="n">angle_offset</span>
+      <span class="n">liveParameters</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="nb">all</span><span class="p">((</span>
+        <span class="n">avg_offset_valid</span><span class="p">,</span>
+        <span class="n">total_offset_valid</span><span class="p">,</span>
+        <span class="n">roll_valid</span><span class="p">,</span>
+        <span class="n">roll_std</span> <span class="o">&lt;</span> <span class="n">ROLL_STD_MAX</span><span class="p">,</span>
+        <span class="mf">0.2</span> <span class="o">&lt;=</span> <span class="n">liveParameters</span><span class="o">.</span><span class="n">stiffnessFactor</span> <span class="o">&lt;=</span> <span class="mf">5.0</span><span class="p">,</span>
+        <span class="n">min_sr</span> <span class="o">&lt;=</span> <span class="n">liveParameters</span><span class="o">.</span><span class="n">steerRatio</span> <span class="o">&lt;=</span> <span class="n">max_sr</span><span class="p">,</span>
+      <span class="p">))</span>
+      <span class="n">liveParameters</span><span class="o">.</span><span class="n">steerRatioStd</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">STEER_RATIO</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+      <span class="n">liveParameters</span><span class="o">.</span><span class="n">stiffnessFactorStd</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">STIFFNESS</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+      <span class="n">liveParameters</span><span class="o">.</span><span class="n">angleOffsetAverageStd</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">ANGLE_OFFSET</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+      <span class="n">liveParameters</span><span class="o">.</span><span class="n">angleOffsetFastStd</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="n">States</span><span class="o">.</span><span class="n">ANGLE_OFFSET_FAST</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+      <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+        <span class="n">liveParameters</span><span class="o">.</span><span class="n">filterState</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">LiveLocationKalman</span><span class="o">.</span><span class="n">Measurement</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+        <span class="n">liveParameters</span><span class="o">.</span><span class="n">filterState</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">liveParameters</span><span class="o">.</span><span class="n">filterState</span><span class="o">.</span><span class="n">std</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">liveParameters</span><span class="o">.</span><span class="n">filterState</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="kc">True</span>
+
+      <span class="n">msg</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">all_checks</span><span class="p">()</span>
+
+      <span class="k">if</span> <span class="n">sm</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="mi">1200</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># once a minute</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="s1">&#39;carFingerprint&#39;</span><span class="p">:</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">,</span>
+          <span class="s1">&#39;steerRatio&#39;</span><span class="p">:</span> <span class="n">liveParameters</span><span class="o">.</span><span class="n">steerRatio</span><span class="p">,</span>
+          <span class="s1">&#39;stiffnessFactor&#39;</span><span class="p">:</span> <span class="n">liveParameters</span><span class="o">.</span><span class="n">stiffnessFactor</span><span class="p">,</span>
+          <span class="s1">&#39;angleOffsetAverageDeg&#39;</span><span class="p">:</span> <span class="n">liveParameters</span><span class="o">.</span><span class="n">angleOffsetAverageDeg</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">params_reader</span><span class="o">.</span><span class="n">put_nonblocking</span><span class="p">(</span><span class="s2">&quot;LiveParameters&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
+
+      <span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;liveParameters&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

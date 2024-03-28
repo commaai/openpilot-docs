@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.test.process_replay package &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/selfdrive.test.process_replay.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="selfdrive.test.profiling package" href="selfdrive.test.profiling.html" />
+    <link rel="prev" title="selfdrive.test.longitudinal_maneuvers package" href="selfdrive.test.longitudinal_maneuvers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            openpilot docs
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">openpilot</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cereal.html">cereal package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.html">common package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conftest.html">conftest module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opendbc.html">opendbc package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openpilot.html">openpilot package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="panda.html">panda package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="selfdrive.html">selfdrive package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="selfdrive.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="selfdrive.athena.html">selfdrive.athena package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="selfdrive.boardd.html">selfdrive.boardd package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="selfdrive.car.html">selfdrive.car package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="selfdrive.controls.html">selfdrive.controls package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="selfdrive.locationd.html">selfdrive.locationd package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="selfdrive.manager.html">selfdrive.manager package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="selfdrive.navd.html">selfdrive.navd package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="selfdrive.test.html">selfdrive.test package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="selfdrive.thermald.html">selfdrive.thermald package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="selfdrive.ui.html">selfdrive.ui package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="selfdrive.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selfdrive.html#module-selfdrive.sentry">selfdrive.sentry module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selfdrive.html#module-selfdrive.statsd">selfdrive.statsd module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selfdrive.html#module-selfdrive.tombstoned">selfdrive.tombstoned module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selfdrive.html#module-selfdrive">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="system.html">system package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">tools package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">openpilot</a></li>
+          <li class="breadcrumb-item"><a href="selfdrive.html">selfdrive package</a></li>
+          <li class="breadcrumb-item"><a href="selfdrive.test.html">selfdrive.test package</a></li>
+      <li class="breadcrumb-item active">selfdrive.test.process_replay package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/selfdrive.test.process_replay.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="selfdrive-test-process-replay-package">
+<h1>selfdrive.test.process_replay package<a class="headerlink" href="#selfdrive-test-process-replay-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-selfdrive.test.process_replay.capture">
+<span id="selfdrive-test-process-replay-capture-module"></span><h2>selfdrive.test.process_replay.capture module<a class="headerlink" href="#module-selfdrive.test.process_replay.capture" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.capture.FdRedirect">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.capture.</span></span><span class="sig-name descname"><span class="pre">FdRedirect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/capture.html#FdRedirect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.capture.FdRedirect" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.capture.FdRedirect.link">
+<span class="sig-name descname"><span class="pre">link</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/capture.html#FdRedirect.link"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.capture.FdRedirect.link" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.capture.FdRedirect.purge">
+<span class="sig-name descname"><span class="pre">purge</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/capture.html#FdRedirect.purge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.capture.FdRedirect.purge" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.capture.FdRedirect.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/capture.html#FdRedirect.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.capture.FdRedirect.read" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.capture.ProcessOutputCapture">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.capture.</span></span><span class="sig-name descname"><span class="pre">ProcessOutputCapture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/capture.html#ProcessOutputCapture"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.capture.ProcessOutputCapture" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.capture.ProcessOutputCapture.link_with_current_proc">
+<span class="sig-name descname"><span class="pre">link_with_current_proc</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/capture.html#ProcessOutputCapture.link_with_current_proc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.capture.ProcessOutputCapture.link_with_current_proc" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.capture.ProcessOutputCapture.read_outerr">
+<span class="sig-name descname"><span class="pre">read_outerr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/capture.html#ProcessOutputCapture.read_outerr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.capture.ProcessOutputCapture.read_outerr" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-selfdrive.test.process_replay.compare_logs">
+<span id="selfdrive-test-process-replay-compare-logs-module"></span><h2>selfdrive.test.process_replay.compare_logs module<a class="headerlink" href="#module-selfdrive.test.process_replay.compare_logs" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.compare_logs.compare_logs">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.compare_logs.</span></span><span class="sig-name descname"><span class="pre">compare_logs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_msgs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/compare_logs.html#compare_logs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.compare_logs.compare_logs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.compare_logs.format_diff">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.compare_logs.</span></span><span class="sig-name descname"><span class="pre">format_diff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_commit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/compare_logs.html#format_diff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.compare_logs.format_diff" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.compare_logs.format_process_diff">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.compare_logs.</span></span><span class="sig-name descname"><span class="pre">format_process_diff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diff</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/compare_logs.html#format_process_diff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.compare_logs.format_process_diff" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.compare_logs.remove_ignored_fields">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.compare_logs.</span></span><span class="sig-name descname"><span class="pre">remove_ignored_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/compare_logs.html#remove_ignored_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.compare_logs.remove_ignored_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-selfdrive.test.process_replay.migration">
+<span id="selfdrive-test-process-replay-migration-module"></span><h2>selfdrive.test.process_replay.migration module<a class="headerlink" href="#module-selfdrive.test.process_replay.migration" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.migration.migrate_all">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.migration.</span></span><span class="sig-name descname"><span class="pre">migrate_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_logtime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manager_states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">panda_states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/migration.html#migrate_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.migration.migrate_all" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.migration.migrate_cameraStates">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.migration.</span></span><span class="sig-name descname"><span class="pre">migrate_cameraStates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/migration.html#migrate_cameraStates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.migration.migrate_cameraStates" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.migration.migrate_carParams">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.migration.</span></span><span class="sig-name descname"><span class="pre">migrate_carParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_logtime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/migration.html#migrate_carParams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.migration.migrate_carParams" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.migration.migrate_deviceState">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.migration.</span></span><span class="sig-name descname"><span class="pre">migrate_deviceState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/migration.html#migrate_deviceState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.migration.migrate_deviceState" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.migration.migrate_gpsLocation">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.migration.</span></span><span class="sig-name descname"><span class="pre">migrate_gpsLocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/migration.html#migrate_gpsLocation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.migration.migrate_gpsLocation" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.migration.migrate_managerState">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.migration.</span></span><span class="sig-name descname"><span class="pre">migrate_managerState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/migration.html#migrate_managerState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.migration.migrate_managerState" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.migration.migrate_pandaStates">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.migration.</span></span><span class="sig-name descname"><span class="pre">migrate_pandaStates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/migration.html#migrate_pandaStates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.migration.migrate_pandaStates" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.migration.migrate_peripheralState">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.migration.</span></span><span class="sig-name descname"><span class="pre">migrate_peripheralState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/migration.html#migrate_peripheralState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.migration.migrate_peripheralState" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.migration.migrate_sensorEvents">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.migration.</span></span><span class="sig-name descname"><span class="pre">migrate_sensorEvents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_logtime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/migration.html#migrate_sensorEvents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.migration.migrate_sensorEvents" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-selfdrive.test.process_replay.model_replay">
+<span id="selfdrive-test-process-replay-model-replay-module"></span><h2>selfdrive.test.process_replay.model_replay module<a class="headerlink" href="#module-selfdrive.test.process_replay.model_replay" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.model_replay.get_log_fn">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.model_replay.</span></span><span class="sig-name descname"><span class="pre">get_log_fn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_commit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_route</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/model_replay.html#get_log_fn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.model_replay.get_log_fn" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.model_replay.model_replay">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.model_replay.</span></span><span class="sig-name descname"><span class="pre">model_replay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/model_replay.html#model_replay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.model_replay.model_replay" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.model_replay.nav_model_replay">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.model_replay.</span></span><span class="sig-name descname"><span class="pre">nav_model_replay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/model_replay.html#nav_model_replay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.model_replay.nav_model_replay" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.model_replay.trim_logs_to_max_frames">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.model_replay.</span></span><span class="sig-name descname"><span class="pre">trim_logs_to_max_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frs_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_all_types</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/model_replay.html#trim_logs_to_max_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.model_replay.trim_logs_to_max_frames" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-selfdrive.test.process_replay.process_replay">
+<span id="selfdrive-test-process-replay-process-replay-module"></span><h2>selfdrive.test.process_replay.process_replay module<a class="headerlink" href="#module-selfdrive.test.process_replay.process_replay" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.DummySocket">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">DummySocket</span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#DummySocket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.DummySocket" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.DummySocket.receive">
+<span class="sig-name descname"><span class="pre">receive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">non_blocking</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#DummySocket.receive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.DummySocket.receive" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.DummySocket.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#DummySocket.send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.DummySocket.send" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.FrequencyBasedRcvCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">FrequencyBasedRcvCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trigger_msg_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#FrequencyBasedRcvCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.FrequencyBasedRcvCallback" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.LauncherWithCapture">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">LauncherWithCapture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">capture</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ProcessOutputCapture</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">launcher</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#LauncherWithCapture"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.LauncherWithCapture" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.MessageBasedRcvCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">MessageBasedRcvCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trigger_msg_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#MessageBasedRcvCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.MessageBasedRcvCallback" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ModeldCameraSyncRcvCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">ModeldCameraSyncRcvCallback</span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#ModeldCameraSyncRcvCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ModeldCameraSyncRcvCallback" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">ProcessConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">proc_name:</span> <span class="pre">str,</span> <span class="pre">pubs:</span> <span class="pre">list[str],</span> <span class="pre">subs:</span> <span class="pre">list[str],</span> <span class="pre">ignore:</span> <span class="pre">list[str],</span> <span class="pre">config_callback:</span> <span class="pre">collections.abc.Callable</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">init_callback:</span> <span class="pre">collections.abc.Callable</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">should_recv_callback:</span> <span class="pre">collections.abc.Callable</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">tolerance:</span> <span class="pre">float</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">processing_time:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.001,</span> <span class="pre">timeout:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">30,</span> <span class="pre">simulation:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">main_pub:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">main_pub_drained:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">vision_pubs:</span> <span class="pre">list[str]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">ignore_alive_pubs:</span> <span class="pre">list[str]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">unlocked_pubs:</span> <span class="pre">list[str]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#ProcessConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.config_callback">
+<span class="sig-name descname"><span class="pre">config_callback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.config_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.ignore">
+<span class="sig-name descname"><span class="pre">ignore</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.ignore" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.ignore_alive_pubs">
+<span class="sig-name descname"><span class="pre">ignore_alive_pubs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.ignore_alive_pubs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.init_callback">
+<span class="sig-name descname"><span class="pre">init_callback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.init_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.main_pub">
+<span class="sig-name descname"><span class="pre">main_pub</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.main_pub" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.main_pub_drained">
+<span class="sig-name descname"><span class="pre">main_pub_drained</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.main_pub_drained" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.proc_name">
+<span class="sig-name descname"><span class="pre">proc_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.proc_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.processing_time">
+<span class="sig-name descname"><span class="pre">processing_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.001</span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.processing_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.pubs">
+<span class="sig-name descname"><span class="pre">pubs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.pubs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.should_recv_callback">
+<span class="sig-name descname"><span class="pre">should_recv_callback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.should_recv_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.simulation">
+<span class="sig-name descname"><span class="pre">simulation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.simulation" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.subs">
+<span class="sig-name descname"><span class="pre">subs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.subs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.timeout">
+<span class="sig-name descname"><span class="pre">timeout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.timeout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.tolerance">
+<span class="sig-name descname"><span class="pre">tolerance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.tolerance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.unlocked_pubs">
+<span class="sig-name descname"><span class="pre">unlocked_pubs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.unlocked_pubs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessConfig.vision_pubs">
+<span class="sig-name descname"><span class="pre">vision_pubs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessConfig.vision_pubs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessContainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">ProcessContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#selfdrive.test.process_replay.process_replay.ProcessConfig" title="selfdrive.test.process_replay.process_replay.ProcessConfig"><span class="pre">ProcessConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#ProcessContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessContainer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessContainer.has_empty_queue">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_empty_queue</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessContainer.has_empty_queue" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessContainer.pubs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pubs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessContainer.pubs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessContainer.run_step">
+<span class="sig-name descname"><span class="pre">run_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_DynamicStructReader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">BaseFrameReader</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">_DynamicStructReader</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#ProcessContainer.run_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessContainer.run_step" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessContainer.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">environ_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_msgs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">_DynamicStructReader</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">BaseFrameReader</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fingerprint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capture_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#ProcessContainer.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessContainer.start" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessContainer.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#ProcessContainer.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessContainer.stop" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ProcessContainer.subs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">subs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ProcessContainer.subs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ReplayContext">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">ReplayContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#ReplayContext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ReplayContext" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ReplayContext.all_recv_called_events">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_recv_called_events</span></span><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ReplayContext.all_recv_called_events" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ReplayContext.all_recv_ready_events">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_recv_ready_events</span></span><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ReplayContext.all_recv_ready_events" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ReplayContext.close_context">
+<span class="sig-name descname"><span class="pre">close_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#ReplayContext.close_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ReplayContext.close_context" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ReplayContext.open_context">
+<span class="sig-name descname"><span class="pre">open_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#ReplayContext.open_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ReplayContext.open_context" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ReplayContext.send_sync">
+<span class="sig-name descname"><span class="pre">send_sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dat</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#ReplayContext.send_sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ReplayContext.send_sync" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ReplayContext.unlock_sockets">
+<span class="sig-name descname"><span class="pre">unlock_sockets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#ReplayContext.unlock_sockets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ReplayContext.unlock_sockets" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ReplayContext.wait_for_next_recv">
+<span class="sig-name descname"><span class="pre">wait_for_next_recv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trigger_empty_recv</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#ReplayContext.wait_for_next_recv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ReplayContext.wait_for_next_recv" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.ReplayContext.wait_for_recv_called">
+<span class="sig-name descname"><span class="pre">wait_for_recv_called</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#ReplayContext.wait_for_recv_called"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.ReplayContext.wait_for_recv_called" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.calibration_rcv_callback">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">calibration_rcv_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#calibration_rcv_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.calibration_rcv_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.check_openpilot_enabled">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">check_openpilot_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msgs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">_DynamicStructReader</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#check_openpilot_enabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.check_openpilot_enabled" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.controlsd_config_callback">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">controlsd_config_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#controlsd_config_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.controlsd_config_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.controlsd_fingerprint_callback">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">controlsd_fingerprint_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msgs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fingerprint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#controlsd_fingerprint_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.controlsd_fingerprint_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.controlsd_rcv_callback">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">controlsd_rcv_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#controlsd_rcv_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.controlsd_rcv_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.dmonitoringmodeld_rcv_callback">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">dmonitoringmodeld_rcv_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#dmonitoringmodeld_rcv_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.dmonitoringmodeld_rcv_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.generate_environ_config">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">generate_environ_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">CP</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fingerprint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#generate_environ_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.generate_environ_config" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.generate_params_config">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">generate_params_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CP</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fingerprint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#generate_params_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.generate_params_config" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.get_car_params_callback">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">get_car_params_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msgs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fingerprint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#get_car_params_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.get_car_params_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.get_custom_params_from_lr">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">get_custom_params_from_lr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">_DynamicStructReader</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'first'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#get_custom_params_from_lr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.get_custom_params_from_lr" title="Link to this definition"></a></dt>
+<dd><p>Use this to get custom params dict based on provided logs.
+Useful when replaying following processes: calibrationd, paramsd, torqued
+The params may be based on first or last message of given type (carParams, liveCalibration, liveParameters, liveTorqueParameters) in the logs.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.get_process_config">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">get_process_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#selfdrive.test.process_replay.process_replay.ProcessConfig" title="selfdrive.test.process_replay.process_replay.ProcessConfig"><span class="pre">ProcessConfig</span></a></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#get_process_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.get_process_config" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.locationd_config_pubsub_callback">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">locationd_config_pubsub_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#locationd_config_pubsub_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.locationd_config_pubsub_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.replay_process">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">replay_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#selfdrive.test.process_replay.process_replay.ProcessConfig" title="selfdrive.test.process_replay.process_replay.ProcessConfig"><span class="pre">ProcessConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#selfdrive.test.process_replay.process_replay.ProcessConfig" title="selfdrive.test.process_replay.process_replay.ProcessConfig"><span class="pre">ProcessConfig</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">_DynamicStructReader</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">BaseFrameReader</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fingerprint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_all_logs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">captured_output_store</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_progress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">_DynamicStructReader</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#replay_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.replay_process" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.replay_process_with_name">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">replay_process_with_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">_DynamicStructReader</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">_DynamicStructReader</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#replay_process_with_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.replay_process_with_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.process_replay.torqued_rcv_callback">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.process_replay.</span></span><span class="sig-name descname"><span class="pre">torqued_rcv_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/process_replay.html#torqued_rcv_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.process_replay.torqued_rcv_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-selfdrive.test.process_replay.regen">
+<span id="selfdrive-test-process-replay-regen-module"></span><h2>selfdrive.test.process_replay.regen module<a class="headerlink" href="#module-selfdrive.test.process_replay.regen" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.regen.DummyFrameReader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.regen.</span></span><span class="sig-name descname"><span class="pre">DummyFrameReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pix_val</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/regen.html#DummyFrameReader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.regen.DummyFrameReader" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseFrameReader</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.regen.DummyFrameReader.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pix_fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'yuv420p'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/regen.html#DummyFrameReader.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.regen.DummyFrameReader.get" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.regen.DummyFrameReader.zero_dcamera">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">zero_dcamera</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/regen.html#DummyFrameReader.zero_dcamera"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.regen.DummyFrameReader.zero_dcamera" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.regen.regen_and_save">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.regen.</span></span><span class="sig-name descname"><span class="pre">regen_and_save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">route</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sidx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/tmp/openpilot/openpilot/selfdrive/test/process_replay/fakedata/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_route_meta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_tqdm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dummy_driver_cam</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/regen.html#regen_and_save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.regen.regen_and_save" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.regen.regen_segment">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.regen.</span></span><span class="sig-name descname"><span class="pre">regen_segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">lr:</span> <span class="pre">~collections.abc.Iterable[type[~capnp.lib.capnp._DynamicStructReader]],</span> <span class="pre">frs:</span> <span class="pre">dict[str,</span> <span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">processes:</span> <span class="pre">~collections.abc.Iterable[~openpilot.selfdrive.test.process_replay.process_replay.ProcessConfig]</span> <span class="pre">=</span> <span class="pre">[ProcessConfig(proc_name='controlsd',</span> <span class="pre">pubs=['can',</span> <span class="pre">'deviceState',</span> <span class="pre">'pandaStates',</span> <span class="pre">'peripheralState',</span> <span class="pre">'liveCalibration',</span> <span class="pre">'driverMonitoringState',</span> <span class="pre">'longitudinalPlan',</span> <span class="pre">'liveLocationKalman',</span> <span class="pre">'liveParameters',</span> <span class="pre">'radarState',</span> <span class="pre">'modelV2',</span> <span class="pre">'driverCameraState',</span> <span class="pre">'roadCameraState',</span> <span class="pre">'wideRoadCameraState',</span> <span class="pre">'managerState',</span> <span class="pre">'testJoystick',</span> <span class="pre">'liveTorqueParameters',</span> <span class="pre">'accelerometer',</span> <span class="pre">'gyroscope'],</span> <span class="pre">subs=['controlsState',</span> <span class="pre">'carState',</span> <span class="pre">'carControl',</span> <span class="pre">'sendcan',</span> <span class="pre">'onroadEvents',</span> <span class="pre">'carParams'],</span> <span class="pre">ignore=['logMonoTime',</span> <span class="pre">'controlsState.startMonoTime',</span> <span class="pre">'controlsState.cumLagMs'],</span> <span class="pre">config_callback=&lt;function</span> <span class="pre">controlsd_config_callback&gt;,</span> <span class="pre">init_callback=&lt;function</span> <span class="pre">controlsd_fingerprint_callback&gt;,</span> <span class="pre">should_recv_callback=&lt;function</span> <span class="pre">controlsd_rcv_callback&gt;,</span> <span class="pre">tolerance=1e-07,</span> <span class="pre">processing_time=0.004,</span> <span class="pre">timeout=30,</span> <span class="pre">simulation=True,</span> <span class="pre">main_pub='can',</span> <span class="pre">main_pub_drained=True,</span> <span class="pre">vision_pubs=[],</span> <span class="pre">ignore_alive_pubs=[],</span> <span class="pre">unlocked_pubs=[]),</span> <span class="pre">ProcessConfig(proc_name='radard',</span> <span class="pre">pubs=['can',</span> <span class="pre">'carState',</span> <span class="pre">'modelV2'],</span> <span class="pre">subs=['radarState',</span> <span class="pre">'liveTracks'],</span> <span class="pre">ignore=['logMonoTime',</span> <span class="pre">'radarState.cumLagMs'],</span> <span class="pre">config_callback=None,</span> <span class="pre">init_callback=&lt;function</span> <span class="pre">get_car_params_callback&gt;,</span> <span class="pre">should_recv_callback=&lt;openpilot.selfdrive.test.process_replay.process_replay.MessageBasedRcvCallback</span> <span class="pre">object&gt;,</span> <span class="pre">tolerance=None,</span> <span class="pre">processing_time=0.001,</span> <span class="pre">timeout=30,</span> <span class="pre">simulation=True,</span> <span class="pre">main_pub='can',</span> <span class="pre">main_pub_drained=True,</span> <span class="pre">vision_pubs=[],</span> <span class="pre">ignore_alive_pubs=[],</span> <span class="pre">unlocked_pubs=[]),</span> <span class="pre">ProcessConfig(proc_name='plannerd',</span> <span class="pre">pubs=['modelV2',</span> <span class="pre">'carControl',</span> <span class="pre">'carState',</span> <span class="pre">'controlsState',</span> <span class="pre">'radarState'],</span> <span class="pre">subs=['longitudinalPlan',</span> <span class="pre">'uiPlan'],</span> <span class="pre">ignore=['logMonoTime',</span> <span class="pre">'longitudinalPlan.processingDelay',</span> <span class="pre">'longitudinalPlan.solverExecutionTime'],</span> <span class="pre">config_callback=None,</span> <span class="pre">init_callback=&lt;function</span> <span class="pre">get_car_params_callback&gt;,</span> <span class="pre">should_recv_callback=&lt;openpilot.selfdrive.test.process_replay.process_replay.FrequencyBasedRcvCallback</span> <span class="pre">object&gt;,</span> <span class="pre">tolerance=1e-07,</span> <span class="pre">processing_time=0.001,</span> <span class="pre">timeout=30,</span> <span class="pre">simulation=True,</span> <span class="pre">main_pub=None,</span> <span class="pre">main_pub_drained=True,</span> <span class="pre">vision_pubs=[],</span> <span class="pre">ignore_alive_pubs=[],</span> <span class="pre">unlocked_pubs=[]),</span> <span class="pre">ProcessConfig(proc_name='calibrationd',</span> <span class="pre">pubs=['carState',</span> <span class="pre">'cameraOdometry',</span> <span class="pre">'carParams'],</span> <span class="pre">subs=['liveCalibration'],</span> <span class="pre">ignore=['logMonoTime'],</span> <span class="pre">config_callback=None,</span> <span class="pre">init_callback=None,</span> <span class="pre">should_recv_callback=&lt;function</span> <span class="pre">calibration_rcv_callback&gt;,</span> <span class="pre">tolerance=None,</span> <span class="pre">processing_time=0.001,</span> <span class="pre">timeout=30,</span> <span class="pre">simulation=True,</span> <span class="pre">main_pub=None,</span> <span class="pre">main_pub_drained=True,</span> <span class="pre">vision_pubs=[],</span> <span class="pre">ignore_alive_pubs=[],</span> <span class="pre">unlocked_pubs=[]),</span> <span class="pre">ProcessConfig(proc_name='dmonitoringd',</span> <span class="pre">pubs=['driverStateV2',</span> <span class="pre">'liveCalibration',</span> <span class="pre">'carState',</span> <span class="pre">'modelV2',</span> <span class="pre">'controlsState'],</span> <span class="pre">subs=['driverMonitoringState'],</span> <span class="pre">ignore=['logMonoTime'],</span> <span class="pre">config_callback=None,</span> <span class="pre">init_callback=None,</span> <span class="pre">should_recv_callback=&lt;openpilot.selfdrive.test.process_replay.process_replay.FrequencyBasedRcvCallback</span> <span class="pre">object&gt;,</span> <span class="pre">tolerance=1e-07,</span> <span class="pre">processing_time=0.001,</span> <span class="pre">timeout=30,</span> <span class="pre">simulation=True,</span> <span class="pre">main_pub=None,</span> <span class="pre">main_pub_drained=True,</span> <span class="pre">vision_pubs=[],</span> <span class="pre">ignore_alive_pubs=[],</span> <span class="pre">unlocked_pubs=[]),</span> <span class="pre">ProcessConfig(proc_name='locationd',</span> <span class="pre">pubs=['cameraOdometry',</span> <span class="pre">'accelerometer',</span> <span class="pre">'gyroscope',</span> <span class="pre">'gpsLocationExternal',</span> <span class="pre">'liveCalibration',</span> <span class="pre">'carState',</span> <span class="pre">'gpsLocation'],</span> <span class="pre">subs=['liveLocationKalman'],</span> <span class="pre">ignore=['logMonoTime'],</span> <span class="pre">config_callback=&lt;function</span> <span class="pre">locationd_config_pubsub_callback&gt;,</span> <span class="pre">init_callback=None,</span> <span class="pre">should_recv_callback=None,</span> <span class="pre">tolerance=1e-07,</span> <span class="pre">processing_time=0.001,</span> <span class="pre">timeout=30,</span> <span class="pre">simulation=True,</span> <span class="pre">main_pub=None,</span> <span class="pre">main_pub_drained=True,</span> <span class="pre">vision_pubs=[],</span> <span class="pre">ignore_alive_pubs=[],</span> <span class="pre">unlocked_pubs=[]),</span> <span class="pre">ProcessConfig(proc_name='paramsd',</span> <span class="pre">pubs=['liveLocationKalman',</span> <span class="pre">'carState'],</span> <span class="pre">subs=['liveParameters'],</span> <span class="pre">ignore=['logMonoTime'],</span> <span class="pre">config_callback=None,</span> <span class="pre">init_callback=&lt;function</span> <span class="pre">get_car_params_callback&gt;,</span> <span class="pre">should_recv_callback=&lt;openpilot.selfdrive.test.process_replay.process_replay.FrequencyBasedRcvCallback</span> <span class="pre">object&gt;,</span> <span class="pre">tolerance=1e-07,</span> <span class="pre">processing_time=0.004,</span> <span class="pre">timeout=30,</span> <span class="pre">simulation=True,</span> <span class="pre">main_pub=None,</span> <span class="pre">main_pub_drained=True,</span> <span class="pre">vision_pubs=[],</span> <span class="pre">ignore_alive_pubs=[],</span> <span class="pre">unlocked_pubs=[]),</span> <span class="pre">ProcessConfig(proc_name='ubloxd',</span> <span class="pre">pubs=['ubloxRaw'],</span> <span class="pre">subs=['ubloxGnss',</span> <span class="pre">'gpsLocationExternal'],</span> <span class="pre">ignore=['logMonoTime'],</span> <span class="pre">config_callback=None,</span> <span class="pre">init_callback=None,</span> <span class="pre">should_recv_callback=None,</span> <span class="pre">tolerance=None,</span> <span class="pre">processing_time=0.001,</span> <span class="pre">timeout=30,</span> <span class="pre">simulation=True,</span> <span class="pre">main_pub=None,</span> <span class="pre">main_pub_drained=True,</span> <span class="pre">vision_pubs=[],</span> <span class="pre">ignore_alive_pubs=[],</span> <span class="pre">unlocked_pubs=[]),</span> <span class="pre">ProcessConfig(proc_name='torqued',</span> <span class="pre">pubs=['liveLocationKalman',</span> <span class="pre">'carState',</span> <span class="pre">'carControl'],</span> <span class="pre">subs=['liveTorqueParameters'],</span> <span class="pre">ignore=['logMonoTime'],</span> <span class="pre">config_callback=None,</span> <span class="pre">init_callback=&lt;function</span> <span class="pre">get_car_params_callback&gt;,</span> <span class="pre">should_recv_callback=&lt;function</span> <span class="pre">torqued_rcv_callback&gt;,</span> <span class="pre">tolerance=1e-07,</span> <span class="pre">processing_time=0.001,</span> <span class="pre">timeout=30,</span> <span class="pre">simulation=True,</span> <span class="pre">main_pub=None,</span> <span class="pre">main_pub_drained=True,</span> <span class="pre">vision_pubs=[],</span> <span class="pre">ignore_alive_pubs=[],</span> <span class="pre">unlocked_pubs=[]),</span> <span class="pre">ProcessConfig(proc_name='modeld',</span> <span class="pre">pubs=['deviceState',</span> <span class="pre">'roadCameraState',</span> <span class="pre">'wideRoadCameraState',</span> <span class="pre">'liveCalibration',</span> <span class="pre">'driverMonitoringState'],</span> <span class="pre">subs=['modelV2',</span> <span class="pre">'cameraOdometry'],</span> <span class="pre">ignore=['logMonoTime',</span> <span class="pre">'modelV2.frameDropPerc',</span> <span class="pre">'modelV2.modelExecutionTime'],</span> <span class="pre">config_callback=None,</span> <span class="pre">init_callback=&lt;function</span> <span class="pre">get_car_params_callback&gt;,</span> <span class="pre">should_recv_callback=&lt;openpilot.selfdrive.test.process_replay.process_replay.ModeldCameraSyncRcvCallback</span> <span class="pre">object&gt;,</span> <span class="pre">tolerance=1e-07,</span> <span class="pre">processing_time=0.02,</span> <span class="pre">timeout=30,</span> <span class="pre">simulation=True,</span> <span class="pre">main_pub='visionipc_camerad_0',</span> <span class="pre">main_pub_drained=False,</span> <span class="pre">vision_pubs=['roadCameraState',</span> <span class="pre">'wideRoadCameraState'],</span> <span class="pre">ignore_alive_pubs=['wideRoadCameraState'],</span> <span class="pre">unlocked_pubs=[]),</span> <span class="pre">ProcessConfig(proc_name='dmonitoringmodeld',</span> <span class="pre">pubs=['liveCalibration',</span> <span class="pre">'driverCameraState'],</span> <span class="pre">subs=['driverStateV2'],</span> <span class="pre">ignore=['logMonoTime',</span> <span class="pre">'driverStateV2.modelExecutionTime',</span> <span class="pre">'driverStateV2.dspExecutionTime'],</span> <span class="pre">config_callback=None,</span> <span class="pre">init_callback=None,</span> <span class="pre">should_recv_callback=&lt;function</span> <span class="pre">dmonitoringmodeld_rcv_callback&gt;,</span> <span class="pre">tolerance=1e-07,</span> <span class="pre">processing_time=0.02,</span> <span class="pre">timeout=30,</span> <span class="pre">simulation=True,</span> <span class="pre">main_pub='visionipc_camerad_1',</span> <span class="pre">main_pub_drained=False,</span> <span class="pre">vision_pubs=['driverCameraState'],</span> <span class="pre">ignore_alive_pubs=['driverCameraState'],</span> <span class="pre">unlocked_pubs=[])],</span> <span class="pre">disable_tqdm:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">_DynamicStructReader</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/regen.html#regen_segment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.regen.regen_segment" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.regen.setup_data_readers">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.regen.</span></span><span class="sig-name descname"><span class="pre">setup_data_readers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">route</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sidx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_route_meta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_driver_cam</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_road_cam</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dummy_driver_cam</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">LogReader</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/selfdrive/test/process_replay/regen.html#setup_data_readers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.regen.setup_data_readers" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-selfdrive.test.process_replay.regen_all">
+<span id="selfdrive-test-process-replay-regen-all-module"></span><h2>selfdrive.test.process_replay.regen_all module<a class="headerlink" href="#module-selfdrive.test.process_replay.regen_all" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.regen_all.regen_job">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.regen_all.</span></span><span class="sig-name descname"><span class="pre">regen_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upload</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_tqdm</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/regen_all.html#regen_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.regen_all.regen_job" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-selfdrive.test.process_replay.test_debayer">
+<span id="selfdrive-test-process-replay-test-debayer-module"></span><h2>selfdrive.test.process_replay.test_debayer module<a class="headerlink" href="#module-selfdrive.test.process_replay.test_debayer" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_debayer.bzip_frames">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.test_debayer.</span></span><span class="sig-name descname"><span class="pre">bzip_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frames</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/test_debayer.html#bzip_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.test_debayer.bzip_frames" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_debayer.debayer_frame">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.test_debayer.</span></span><span class="sig-name descname"><span class="pre">debayer_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debayer_prg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rgb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/test_debayer.html#debayer_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.test_debayer.debayer_frame" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_debayer.debayer_replay">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.test_debayer.</span></span><span class="sig-name descname"><span class="pre">debayer_replay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/test_debayer.html#debayer_replay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.test_debayer.debayer_replay" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_debayer.get_frame_fn">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.test_debayer.</span></span><span class="sig-name descname"><span class="pre">get_frame_fn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_commit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_route</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tici</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/test_debayer.html#get_frame_fn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.test_debayer.get_frame_fn" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_debayer.init_kernels">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.test_debayer.</span></span><span class="sig-name descname"><span class="pre">init_kernels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/test_debayer.html#init_kernels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.test_debayer.init_kernels" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_debayer.unbzip_frames">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.test_debayer.</span></span><span class="sig-name descname"><span class="pre">unbzip_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/test_debayer.html#unbzip_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.test_debayer.unbzip_frames" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-selfdrive.test.process_replay.test_fuzzy">
+<span id="selfdrive-test-process-replay-test-fuzzy-module"></span><h2>selfdrive.test.process_replay.test_fuzzy module<a class="headerlink" href="#module-selfdrive.test.process_replay.test_fuzzy" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_fuzzy.TestFuzzProcesses">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.test_fuzzy.</span></span><span class="sig-name descname"><span class="pre">TestFuzzProcesses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/test_fuzzy.html#TestFuzzProcesses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.test_fuzzy.TestFuzzProcesses" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_fuzzy.TestFuzzProcesses.test_fuzz_process">
+<span class="sig-name descname"><span class="pre">test_fuzz_process</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#selfdrive.test.process_replay.test_fuzzy.TestFuzzProcesses.test_fuzz_process" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_fuzzy.TestFuzzProcesses.test_fuzz_process_0_radard">
+<span class="sig-name descname"><span class="pre">test_fuzz_process_0_radard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#selfdrive.test.process_replay.test_fuzzy.TestFuzzProcesses.test_fuzz_process_0_radard" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_fuzzy.TestFuzzProcesses.test_fuzz_process_1_locationd">
+<span class="sig-name descname"><span class="pre">test_fuzz_process_1_locationd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#selfdrive.test.process_replay.test_fuzzy.TestFuzzProcesses.test_fuzz_process_1_locationd" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_fuzzy.TestFuzzProcesses.test_fuzz_process_2_ubloxd">
+<span class="sig-name descname"><span class="pre">test_fuzz_process_2_ubloxd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#selfdrive.test.process_replay.test_fuzzy.TestFuzzProcesses.test_fuzz_process_2_ubloxd" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_fuzzy.TestFuzzProcesses.test_fuzz_process_3_torqued">
+<span class="sig-name descname"><span class="pre">test_fuzz_process_3_torqued</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#selfdrive.test.process_replay.test_fuzzy.TestFuzzProcesses.test_fuzz_process_3_torqued" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-selfdrive.test.process_replay.test_processes">
+<span id="selfdrive-test-process-replay-test-processes-module"></span><h2>selfdrive.test.process_replay.test_processes module<a class="headerlink" href="#module-selfdrive.test.process_replay.test_processes" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_processes.get_log_data">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.test_processes.</span></span><span class="sig-name descname"><span class="pre">get_log_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/test_processes.html#get_log_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.test_processes.get_log_data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_processes.run_test_process">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.test_processes.</span></span><span class="sig-name descname"><span class="pre">run_test_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/test_processes.html#run_test_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.test_processes.run_test_process" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_processes.test_process">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.test_processes.</span></span><span class="sig-name descname"><span class="pre">test_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_log_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_log_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_msgs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/test_processes.html#test_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.test_processes.test_process" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-selfdrive.test.process_replay.test_regen">
+<span id="selfdrive-test-process-replay-test-regen-module"></span><h2>selfdrive.test.process_replay.test_regen module<a class="headerlink" href="#module-selfdrive.test.process_replay.test_regen" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_regen.TestRegen">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.test_regen.</span></span><span class="sig-name descname"><span class="pre">TestRegen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/test_regen.html#TestRegen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.test_regen.TestRegen" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_regen.TestRegen.test_engaged">
+<span class="sig-name descname"><span class="pre">test_engaged</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#selfdrive.test.process_replay.test_regen.TestRegen.test_engaged" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_regen.TestRegen.test_engaged_0_PRIUS_C2">
+<span class="sig-name descname"><span class="pre">test_engaged_0_PRIUS_C2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#selfdrive.test.process_replay.test_regen.TestRegen.test_engaged_0_PRIUS_C2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.test_regen.ci_setup_data_readers">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.test_regen.</span></span><span class="sig-name descname"><span class="pre">ci_setup_data_readers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">route</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sidx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/test_regen.html#ci_setup_data_readers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.test_regen.ci_setup_data_readers" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-selfdrive.test.process_replay.vision_meta">
+<span id="selfdrive-test-process-replay-vision-meta-module"></span><h2>selfdrive.test.process_replay.vision_meta module<a class="headerlink" href="#module-selfdrive.test.process_replay.vision_meta" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.vision_meta.VideoStreamMeta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.vision_meta.</span></span><span class="sig-name descname"><span class="pre">VideoStreamMeta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">camera_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encode_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_sizes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#selfdrive.test.process_replay.vision_meta.VideoStreamMeta" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.vision_meta.VideoStreamMeta.camera_state">
+<span class="sig-name descname"><span class="pre">camera_state</span></span><a class="headerlink" href="#selfdrive.test.process_replay.vision_meta.VideoStreamMeta.camera_state" title="Link to this definition"></a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.vision_meta.VideoStreamMeta.dt">
+<span class="sig-name descname"><span class="pre">dt</span></span><a class="headerlink" href="#selfdrive.test.process_replay.vision_meta.VideoStreamMeta.dt" title="Link to this definition"></a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.vision_meta.VideoStreamMeta.encode_index">
+<span class="sig-name descname"><span class="pre">encode_index</span></span><a class="headerlink" href="#selfdrive.test.process_replay.vision_meta.VideoStreamMeta.encode_index" title="Link to this definition"></a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.vision_meta.VideoStreamMeta.frame_sizes">
+<span class="sig-name descname"><span class="pre">frame_sizes</span></span><a class="headerlink" href="#selfdrive.test.process_replay.vision_meta.VideoStreamMeta.frame_sizes" title="Link to this definition"></a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.vision_meta.VideoStreamMeta.stream">
+<span class="sig-name descname"><span class="pre">stream</span></span><a class="headerlink" href="#selfdrive.test.process_replay.vision_meta.VideoStreamMeta.stream" title="Link to this definition"></a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.vision_meta.available_streams">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.vision_meta.</span></span><span class="sig-name descname"><span class="pre">available_streams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/vision_meta.html#available_streams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.vision_meta.available_streams" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.vision_meta.meta_from_camera_state">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.vision_meta.</span></span><span class="sig-name descname"><span class="pre">meta_from_camera_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/vision_meta.html#meta_from_camera_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.vision_meta.meta_from_camera_state" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.vision_meta.meta_from_encode_index">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.vision_meta.</span></span><span class="sig-name descname"><span class="pre">meta_from_encode_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encode_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/vision_meta.html#meta_from_encode_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.vision_meta.meta_from_encode_index" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="selfdrive.test.process_replay.vision_meta.meta_from_stream_type">
+<span class="sig-prename descclassname"><span class="pre">selfdrive.test.process_replay.vision_meta.</span></span><span class="sig-name descname"><span class="pre">meta_from_stream_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/selfdrive/test/process_replay/vision_meta.html#meta_from_stream_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#selfdrive.test.process_replay.vision_meta.meta_from_stream_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-selfdrive.test.process_replay">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-selfdrive.test.process_replay" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="selfdrive.test.longitudinal_maneuvers.html" class="btn btn-neutral float-left" title="selfdrive.test.longitudinal_maneuvers package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="selfdrive.test.profiling.html" class="btn btn-neutral float-right" title="selfdrive.test.profiling package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

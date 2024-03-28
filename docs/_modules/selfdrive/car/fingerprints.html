@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.fingerprints &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/fingerprints.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.fingerprints</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.fingerprints</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.interfaces</span> <span class="kn">import</span> <span class="n">get_interface_attr</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.body.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">BODY</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.chrysler.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">CHRYSLER</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.ford.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">FORD</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.gm.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">GM</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.honda.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">HONDA</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.hyundai.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">HYUNDAI</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.mazda.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">MAZDA</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.nissan.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">NISSAN</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.subaru.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">SUBARU</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.tesla.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">TESLA</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.toyota.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">TOYOTA</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.values</span> <span class="kn">import</span> <span class="n">PLATFORMS</span><span class="p">,</span> <span class="n">Platform</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.volkswagen.values</span> <span class="kn">import</span> <span class="n">CAR</span> <span class="k">as</span> <span class="n">VW</span>
+
+<span class="n">FW_VERSIONS</span> <span class="o">=</span> <span class="n">get_interface_attr</span><span class="p">(</span><span class="s1">&#39;FW_VERSIONS&#39;</span><span class="p">,</span> <span class="n">combine_brands</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">_FINGERPRINTS</span> <span class="o">=</span> <span class="n">get_interface_attr</span><span class="p">(</span><span class="s1">&#39;FINGERPRINTS&#39;</span><span class="p">,</span> <span class="n">combine_brands</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">_DEBUG_ADDRESS</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1880</span><span class="p">:</span> <span class="mi">8</span><span class="p">}</span>   <span class="c1"># reserved for debug purposes</span>
+
+
+<div class="viewcode-block" id="is_valid_for_fingerprint">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fingerprints.is_valid_for_fingerprint">[docs]</a>
+<span class="k">def</span> <span class="nf">is_valid_for_fingerprint</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">car_fingerprint</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
+  <span class="n">adr</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">address</span>
+  <span class="c1"># ignore addresses that are more than 11 bits</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">adr</span> <span class="ow">in</span> <span class="n">car_fingerprint</span> <span class="ow">and</span> <span class="n">car_fingerprint</span><span class="p">[</span><span class="n">adr</span><span class="p">]</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">dat</span><span class="p">))</span> <span class="ow">or</span> <span class="n">adr</span> <span class="o">&gt;=</span> <span class="mh">0x800</span></div>
+
+
+
+<div class="viewcode-block" id="eliminate_incompatible_cars">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fingerprints.eliminate_incompatible_cars">[docs]</a>
+<span class="k">def</span> <span class="nf">eliminate_incompatible_cars</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">candidate_cars</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Removes cars that could not have sent msg.</span>
+
+<span class="sd">     Inputs:</span>
+<span class="sd">      msg: A cereal/log CanData message from the car.</span>
+<span class="sd">      candidate_cars: A list of cars to consider.</span>
+
+<span class="sd">     Returns:</span>
+<span class="sd">      A list containing the subset of candidate_cars that could have sent msg.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">compatible_cars</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="k">for</span> <span class="n">car_name</span> <span class="ow">in</span> <span class="n">candidate_cars</span><span class="p">:</span>
+    <span class="n">car_fingerprints</span> <span class="o">=</span> <span class="n">_FINGERPRINTS</span><span class="p">[</span><span class="n">car_name</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">fingerprint</span> <span class="ow">in</span> <span class="n">car_fingerprints</span><span class="p">:</span>
+      <span class="c1"># add alien debug address</span>
+      <span class="k">if</span> <span class="n">is_valid_for_fingerprint</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">fingerprint</span> <span class="o">|</span> <span class="n">_DEBUG_ADDRESS</span><span class="p">):</span>
+        <span class="n">compatible_cars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">car_name</span><span class="p">)</span>
+        <span class="k">break</span>
+
+  <span class="k">return</span> <span class="n">compatible_cars</span></div>
+
+
+
+<div class="viewcode-block" id="all_known_cars">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fingerprints.all_known_cars">[docs]</a>
+<span class="k">def</span> <span class="nf">all_known_cars</span><span class="p">():</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a list of all known car strings.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="nb">list</span><span class="p">({</span><span class="o">*</span><span class="n">FW_VERSIONS</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="o">*</span><span class="n">_FINGERPRINTS</span><span class="o">.</span><span class="n">keys</span><span class="p">()})</span></div>
+
+
+
+<div class="viewcode-block" id="all_legacy_fingerprint_cars">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fingerprints.all_legacy_fingerprint_cars">[docs]</a>
+<span class="k">def</span> <span class="nf">all_legacy_fingerprint_cars</span><span class="p">():</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a list of all known car strings, FPv1 only.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">_FINGERPRINTS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+
+
+<span class="c1"># A dict that maps old platform strings to their latest representations</span>
+<span class="n">MIGRATION</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;ACURA ILX 2016 ACURAWATCH PLUS&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">ACURA_ILX</span><span class="p">,</span>
+  <span class="s2">&quot;ACURA RDX 2018 ACURAWATCH PLUS&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">ACURA_RDX</span><span class="p">,</span>
+  <span class="s2">&quot;ACURA RDX 2020 TECH&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">ACURA_RDX_3G</span><span class="p">,</span>
+  <span class="s2">&quot;AUDI A3&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">AUDI_A3_MK3</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA ACCORD 2018 HYBRID TOURING&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_ACCORD</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA ACCORD 1.5T 2018&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_ACCORD</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA ACCORD 2018 LX 1.5T&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_ACCORD</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA ACCORD 2018 SPORT 2T&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_ACCORD</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA ACCORD 2T 2018&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_ACCORD</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA ACCORD HYBRID 2018&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_ACCORD</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CIVIC 2016 TOURING&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CIVIC</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CIVIC HATCHBACK 2017 SEDAN/COUPE 2019&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CIVIC_BOSCH</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CIVIC SEDAN 1.6 DIESEL&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CIVIC_BOSCH_DIESEL</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CR-V 2016 EXECUTIVE&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CRV_EU</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CR-V 2016 TOURING&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CRV</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CR-V 2017 EX&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CRV_5G</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CR-V 2019 HYBRID&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CRV_HYBRID</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA FIT 2018 EX&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_FIT</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA HRV 2019 TOURING&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_HRV</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA INSIGHT 2019 TOURING&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_INSIGHT</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA ODYSSEY 2018 EX-L&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_ODYSSEY</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA ODYSSEY 2019 EXCLUSIVE CHN&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_ODYSSEY_CHN</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA PILOT 2017 TOURING&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_PILOT</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA PILOT 2019 ELITE&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_PILOT</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA PILOT 2019&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_PILOT</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA PASSPORT 2021&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_PILOT</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA RIDGELINE 2017 BLACK EDITION&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_RIDGELINE</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI ELANTRA LIMITED ULTIMATE 2017&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_ELANTRA</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI SANTA FE LIMITED 2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_SANTA_FE</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI TUCSON DIESEL 2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_TUCSON</span><span class="p">,</span>
+  <span class="s2">&quot;KIA OPTIMA 2016&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4</span><span class="p">,</span>
+  <span class="s2">&quot;KIA OPTIMA 2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4_FL</span><span class="p">,</span>
+  <span class="s2">&quot;KIA OPTIMA SX 2019 &amp; 2016&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4_FL</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS CT 200H 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS ES 300H 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS ES 300H 2019&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_ES_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS IS300 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_IS</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS NX300 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS NX300H 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS RX 350 2016&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS RX350 2020&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_RX_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS RX450 HYBRID 2020&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_RX_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA SIENNA XLE 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_SIENNA</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA C-HR HYBRID 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_CHR</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA COROLLA HYBRID TSS2 2019&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_COROLLA_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA RAV4 HYBRID 2019&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_RAV4_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS ES HYBRID 2019&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_ES_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS NX HYBRID 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS NX HYBRID 2020&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_NX_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS RX HYBRID 2020&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_RX_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA ALPHARD HYBRID 2021&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_ALPHARD_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA AVALON HYBRID 2019&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_AVALON_2019</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA AVALON HYBRID 2022&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_AVALON_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA CAMRY HYBRID 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_CAMRY</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA CAMRY HYBRID 2021&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_CAMRY_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA C-HR HYBRID 2022&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_CHR_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA HIGHLANDER HYBRID 2020&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_HIGHLANDER_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA RAV4 HYBRID 2022&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_RAV4_TSS2_2022</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA RAV4 HYBRID 2023&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_RAV4_TSS2_2023</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA HIGHLANDER HYBRID 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_HIGHLANDER</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS ES HYBRID 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS RX HYBRID 2017&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI TUCSON HYBRID 4TH GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_TUCSON_4TH_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;KIA SPORTAGE HYBRID 5TH GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_SPORTAGE_5TH_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;KIA SORENTO PLUG-IN HYBRID 4TH GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_SORENTO_HEV_4TH_GEN</span><span class="p">,</span>
+
+  <span class="c1"># Removal of platform_str, see https://github.com/commaai/openpilot/pull/31868/</span>
+  <span class="s2">&quot;COMMA BODY&quot;</span><span class="p">:</span> <span class="n">BODY</span><span class="o">.</span><span class="n">COMMA_BODY</span><span class="p">,</span>
+  <span class="s2">&quot;CHRYSLER PACIFICA HYBRID 2017&quot;</span><span class="p">:</span> <span class="n">CHRYSLER</span><span class="o">.</span><span class="n">CHRYSLER_PACIFICA_2017_HYBRID</span><span class="p">,</span>
+  <span class="s2">&quot;CHRYSLER PACIFICA HYBRID 2018&quot;</span><span class="p">:</span> <span class="n">CHRYSLER</span><span class="o">.</span><span class="n">CHRYSLER_PACIFICA_2018_HYBRID</span><span class="p">,</span>
+  <span class="s2">&quot;CHRYSLER PACIFICA HYBRID 2019&quot;</span><span class="p">:</span> <span class="n">CHRYSLER</span><span class="o">.</span><span class="n">CHRYSLER_PACIFICA_2019_HYBRID</span><span class="p">,</span>
+  <span class="s2">&quot;CHRYSLER PACIFICA 2018&quot;</span><span class="p">:</span> <span class="n">CHRYSLER</span><span class="o">.</span><span class="n">CHRYSLER_PACIFICA_2018</span><span class="p">,</span>
+  <span class="s2">&quot;CHRYSLER PACIFICA 2020&quot;</span><span class="p">:</span> <span class="n">CHRYSLER</span><span class="o">.</span><span class="n">CHRYSLER_PACIFICA_2020</span><span class="p">,</span>
+  <span class="s2">&quot;DODGE DURANGO 2021&quot;</span><span class="p">:</span> <span class="n">CHRYSLER</span><span class="o">.</span><span class="n">DODGE_DURANGO</span><span class="p">,</span>
+  <span class="s2">&quot;RAM 1500 5TH GEN&quot;</span><span class="p">:</span> <span class="n">CHRYSLER</span><span class="o">.</span><span class="n">RAM_1500_5TH_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;RAM HD 5TH GEN&quot;</span><span class="p">:</span> <span class="n">CHRYSLER</span><span class="o">.</span><span class="n">RAM_HD_5TH_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;FORD BRONCO SPORT 1ST GEN&quot;</span><span class="p">:</span> <span class="n">FORD</span><span class="o">.</span><span class="n">FORD_BRONCO_SPORT_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;FORD ESCAPE 4TH GEN&quot;</span><span class="p">:</span> <span class="n">FORD</span><span class="o">.</span><span class="n">FORD_ESCAPE_MK4</span><span class="p">,</span>
+  <span class="s2">&quot;FORD EXPLORER 6TH GEN&quot;</span><span class="p">:</span> <span class="n">FORD</span><span class="o">.</span><span class="n">FORD_EXPLORER_MK6</span><span class="p">,</span>
+  <span class="s2">&quot;FORD F-150 14TH GEN&quot;</span><span class="p">:</span> <span class="n">FORD</span><span class="o">.</span><span class="n">FORD_F_150_MK14</span><span class="p">,</span>
+  <span class="s2">&quot;FORD F-150 LIGHTNING 1ST GEN&quot;</span><span class="p">:</span> <span class="n">FORD</span><span class="o">.</span><span class="n">FORD_F_150_LIGHTNING_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;FORD FOCUS 4TH GEN&quot;</span><span class="p">:</span> <span class="n">FORD</span><span class="o">.</span><span class="n">FORD_FOCUS_MK4</span><span class="p">,</span>
+  <span class="s2">&quot;FORD MAVERICK 1ST GEN&quot;</span><span class="p">:</span> <span class="n">FORD</span><span class="o">.</span><span class="n">FORD_MAVERICK_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;FORD MUSTANG MACH-E 1ST GEN&quot;</span><span class="p">:</span> <span class="n">FORD</span><span class="o">.</span><span class="n">FORD_MUSTANG_MACH_E_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;HOLDEN ASTRA RS-V BK 2017&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">HOLDEN_ASTRA</span><span class="p">,</span>
+  <span class="s2">&quot;CHEVROLET VOLT PREMIER 2017&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">CHEVROLET_VOLT</span><span class="p">,</span>
+  <span class="s2">&quot;CADILLAC ATS Premium Performance 2018&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">CADILLAC_ATS</span><span class="p">,</span>
+  <span class="s2">&quot;CHEVROLET MALIBU PREMIER 2017&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">CHEVROLET_MALIBU</span><span class="p">,</span>
+  <span class="s2">&quot;GMC ACADIA DENALI 2018&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">GMC_ACADIA</span><span class="p">,</span>
+  <span class="s2">&quot;BUICK LACROSSE 2017&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">BUICK_LACROSSE</span><span class="p">,</span>
+  <span class="s2">&quot;BUICK REGAL ESSENCE 2018&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">BUICK_REGAL</span><span class="p">,</span>
+  <span class="s2">&quot;CADILLAC ESCALADE 2017&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">CADILLAC_ESCALADE</span><span class="p">,</span>
+  <span class="s2">&quot;CADILLAC ESCALADE ESV 2016&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">CADILLAC_ESCALADE_ESV</span><span class="p">,</span>
+  <span class="s2">&quot;CADILLAC ESCALADE ESV 2019&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">CADILLAC_ESCALADE_ESV_2019</span><span class="p">,</span>
+  <span class="s2">&quot;CHEVROLET BOLT EUV 2022&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">CHEVROLET_BOLT_EUV</span><span class="p">,</span>
+  <span class="s2">&quot;CHEVROLET SILVERADO 1500 2020&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">CHEVROLET_SILVERADO</span><span class="p">,</span>
+  <span class="s2">&quot;CHEVROLET EQUINOX 2019&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">CHEVROLET_EQUINOX</span><span class="p">,</span>
+  <span class="s2">&quot;CHEVROLET TRAILBLAZER 2021&quot;</span><span class="p">:</span> <span class="n">GM</span><span class="o">.</span><span class="n">CHEVROLET_TRAILBLAZER</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA ACCORD 2018&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_ACCORD</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CIVIC (BOSCH) 2019&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CIVIC_BOSCH</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CIVIC SEDAN 1.6 DIESEL 2019&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CIVIC_BOSCH_DIESEL</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CIVIC 2022&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CIVIC_2022</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CR-V 2017&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CRV_5G</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CR-V HYBRID 2019&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CRV_HYBRID</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA HR-V 2023&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_HRV_3G</span><span class="p">,</span>
+  <span class="s2">&quot;ACURA RDX 2020&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">ACURA_RDX_3G</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA INSIGHT 2019&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_INSIGHT</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA E 2020&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_E</span><span class="p">,</span>
+  <span class="s2">&quot;ACURA ILX 2016&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">ACURA_ILX</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CR-V 2016&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CRV</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CR-V EU 2016&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CRV_EU</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA FIT 2018&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_FIT</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA FREED 2020&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_FREED</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA HRV 2019&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_HRV</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA ODYSSEY 2018&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_ODYSSEY</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA ODYSSEY CHN 2019&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_ODYSSEY_CHN</span><span class="p">,</span>
+  <span class="s2">&quot;ACURA RDX 2018&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">ACURA_RDX</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA PILOT 2017&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_PILOT</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA RIDGELINE 2017&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_RIDGELINE</span><span class="p">,</span>
+  <span class="s2">&quot;HONDA CIVIC 2016&quot;</span><span class="p">:</span> <span class="n">HONDA</span><span class="o">.</span><span class="n">HONDA_CIVIC</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI AZERA 6TH GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_AZERA_6TH_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI AZERA HYBRID 6TH GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_AZERA_HEV_6TH_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI ELANTRA 2017&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_ELANTRA</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI I30 N LINE 2019 &amp; GT 2018 DCT&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_ELANTRA_GT_I30</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI ELANTRA 2021&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_ELANTRA_2021</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI ELANTRA HYBRID 2021&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_ELANTRA_HEV_2021</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI GENESIS 2015-2016&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_GENESIS</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI IONIQ HYBRID 2017-2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_IONIQ</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI IONIQ HYBRID 2020-2022&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_IONIQ_HEV_2022</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI IONIQ ELECTRIC LIMITED 2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_IONIQ_EV_LTD</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI IONIQ ELECTRIC 2020&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_IONIQ_EV_2020</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI IONIQ PLUG-IN HYBRID 2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_IONIQ_PHEV_2019</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI IONIQ PHEV 2020&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_IONIQ_PHEV</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI KONA 2020&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_KONA</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI KONA ELECTRIC 2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_KONA_EV</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI KONA ELECTRIC 2022&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_KONA_EV_2022</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI KONA ELECTRIC 2ND GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_KONA_EV_2ND_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI KONA HYBRID 2020&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_KONA_HEV</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI SANTA FE 2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_SANTA_FE</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI SANTA FE 2022&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_SANTA_FE_2022</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI SANTA FE HYBRID 2022&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_SANTA_FE_HEV_2022</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI SANTA FE PlUG-IN HYBRID 2022&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_SANTA_FE_PHEV_2022</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI SONATA 2020&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_SONATA</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI SONATA 2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_SONATA_LF</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI STARIA 4TH GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_STARIA_4TH_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI TUCSON 2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_TUCSON</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI PALISADE 2020&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_PALISADE</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI VELOSTER 2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_VELOSTER</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI SONATA HYBRID 2021&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_SONATA_HYBRID</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI IONIQ 5 2022&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_IONIQ_5</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI IONIQ 6 2023&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_IONIQ_6</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI TUCSON 4TH GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_TUCSON_4TH_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI SANTA CRUZ 1ST GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_SANTA_CRUZ_1ST_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;HYUNDAI CUSTIN 1ST GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">HYUNDAI_CUSTIN_1ST_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;KIA FORTE E 2018 &amp; GT 2021&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_FORTE</span><span class="p">,</span>
+  <span class="s2">&quot;KIA K5 2021&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_K5_2021</span><span class="p">,</span>
+  <span class="s2">&quot;KIA K5 HYBRID 2020&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_K5_HEV_2020</span><span class="p">,</span>
+  <span class="s2">&quot;KIA K8 HYBRID 1ST GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_K8_HEV_1ST_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;KIA NIRO EV 2020&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_NIRO_EV</span><span class="p">,</span>
+  <span class="s2">&quot;KIA NIRO EV 2ND GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_NIRO_EV_2ND_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;KIA NIRO HYBRID 2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_NIRO_PHEV</span><span class="p">,</span>
+  <span class="s2">&quot;KIA NIRO PLUG-IN HYBRID 2022&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_NIRO_PHEV_2022</span><span class="p">,</span>
+  <span class="s2">&quot;KIA NIRO HYBRID 2021&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_NIRO_HEV_2021</span><span class="p">,</span>
+  <span class="s2">&quot;KIA NIRO HYBRID 2ND GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_NIRO_HEV_2ND_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;KIA OPTIMA 4TH GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4</span><span class="p">,</span>
+  <span class="s2">&quot;KIA OPTIMA 4TH GEN FACELIFT&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_OPTIMA_G4_FL</span><span class="p">,</span>
+  <span class="s2">&quot;KIA OPTIMA HYBRID 2017 &amp; SPORTS 2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_OPTIMA_H</span><span class="p">,</span>
+  <span class="s2">&quot;KIA OPTIMA HYBRID 4TH GEN FACELIFT&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_OPTIMA_H_G4_FL</span><span class="p">,</span>
+  <span class="s2">&quot;KIA SELTOS 2021&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_SELTOS</span><span class="p">,</span>
+  <span class="s2">&quot;KIA SPORTAGE 5TH GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_SPORTAGE_5TH_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;KIA SORENTO GT LINE 2018&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_SORENTO</span><span class="p">,</span>
+  <span class="s2">&quot;KIA SORENTO 4TH GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_SORENTO_4TH_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;KIA SORENTO HYBRID 4TH GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_SORENTO_HEV_4TH_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;KIA STINGER GT2 2018&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_STINGER</span><span class="p">,</span>
+  <span class="s2">&quot;KIA STINGER 2022&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_STINGER_2022</span><span class="p">,</span>
+  <span class="s2">&quot;KIA CEED INTRO ED 2019&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_CEED</span><span class="p">,</span>
+  <span class="s2">&quot;KIA EV6 2022&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_EV6</span><span class="p">,</span>
+  <span class="s2">&quot;KIA CARNIVAL 4TH GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">KIA_CARNIVAL_4TH_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;GENESIS GV60 ELECTRIC 1ST GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">GENESIS_GV60_EV_1ST_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;GENESIS G70 2018&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">GENESIS_G70</span><span class="p">,</span>
+  <span class="s2">&quot;GENESIS G70 2020&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">GENESIS_G70_2020</span><span class="p">,</span>
+  <span class="s2">&quot;GENESIS GV70 1ST GEN&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">GENESIS_GV70_1ST_GEN</span><span class="p">,</span>
+  <span class="s2">&quot;GENESIS G80 2017&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">GENESIS_G80</span><span class="p">,</span>
+  <span class="s2">&quot;GENESIS G90 2017&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">GENESIS_G90</span><span class="p">,</span>
+  <span class="s2">&quot;GENESIS GV80 2023&quot;</span><span class="p">:</span> <span class="n">HYUNDAI</span><span class="o">.</span><span class="n">GENESIS_GV80</span><span class="p">,</span>
+  <span class="s2">&quot;MAZDA CX-5&quot;</span><span class="p">:</span> <span class="n">MAZDA</span><span class="o">.</span><span class="n">MAZDA_CX5</span><span class="p">,</span>
+  <span class="s2">&quot;MAZDA CX-9&quot;</span><span class="p">:</span> <span class="n">MAZDA</span><span class="o">.</span><span class="n">MAZDA_CX9</span><span class="p">,</span>
+  <span class="s2">&quot;MAZDA 3&quot;</span><span class="p">:</span> <span class="n">MAZDA</span><span class="o">.</span><span class="n">MAZDA_3</span><span class="p">,</span>
+  <span class="s2">&quot;MAZDA 6&quot;</span><span class="p">:</span> <span class="n">MAZDA</span><span class="o">.</span><span class="n">MAZDA_6</span><span class="p">,</span>
+  <span class="s2">&quot;MAZDA CX-9 2021&quot;</span><span class="p">:</span> <span class="n">MAZDA</span><span class="o">.</span><span class="n">MAZDA_CX9_2021</span><span class="p">,</span>
+  <span class="s2">&quot;MAZDA CX-5 2022&quot;</span><span class="p">:</span> <span class="n">MAZDA</span><span class="o">.</span><span class="n">MAZDA_CX5_2022</span><span class="p">,</span>
+  <span class="s2">&quot;NISSAN X-TRAIL 2017&quot;</span><span class="p">:</span> <span class="n">NISSAN</span><span class="o">.</span><span class="n">NISSAN_XTRAIL</span><span class="p">,</span>
+  <span class="s2">&quot;NISSAN LEAF 2018&quot;</span><span class="p">:</span> <span class="n">NISSAN</span><span class="o">.</span><span class="n">NISSAN_LEAF</span><span class="p">,</span>
+  <span class="s2">&quot;NISSAN ROGUE 2019&quot;</span><span class="p">:</span> <span class="n">NISSAN</span><span class="o">.</span><span class="n">NISSAN_ROGUE</span><span class="p">,</span>
+  <span class="s2">&quot;NISSAN ALTIMA 2020&quot;</span><span class="p">:</span> <span class="n">NISSAN</span><span class="o">.</span><span class="n">NISSAN_ALTIMA</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU ASCENT LIMITED 2019&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_ASCENT</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU OUTBACK 6TH GEN&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_OUTBACK</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU LEGACY 7TH GEN&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_LEGACY</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU IMPREZA LIMITED 2019&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_IMPREZA</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU IMPREZA SPORT 2020&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_IMPREZA_2020</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU CROSSTREK HYBRID 2020&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_CROSSTREK_HYBRID</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU FORESTER 2019&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_FORESTER</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU FORESTER HYBRID 2020&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_FORESTER_HYBRID</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU FORESTER 2017 - 2018&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_FORESTER_PREGLOBAL</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU LEGACY 2015 - 2018&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_LEGACY_PREGLOBAL</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU OUTBACK 2015 - 2017&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_OUTBACK_PREGLOBAL</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU OUTBACK 2018 - 2019&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_OUTBACK_PREGLOBAL_2018</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU FORESTER 2022&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_FORESTER_2022</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU OUTBACK 7TH GEN&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_OUTBACK_2023</span><span class="p">,</span>
+  <span class="s2">&quot;SUBARU ASCENT 2023&quot;</span><span class="p">:</span> <span class="n">SUBARU</span><span class="o">.</span><span class="n">SUBARU_ASCENT_2023</span><span class="p">,</span>
+  <span class="s1">&#39;TESLA AP1 MODEL S&#39;</span><span class="p">:</span> <span class="n">TESLA</span><span class="o">.</span><span class="n">TESLA_AP1_MODELS</span><span class="p">,</span>
+  <span class="s1">&#39;TESLA AP2 MODEL S&#39;</span><span class="p">:</span> <span class="n">TESLA</span><span class="o">.</span><span class="n">TESLA_AP2_MODELS</span><span class="p">,</span>
+  <span class="s1">&#39;TESLA MODEL S RAVEN&#39;</span><span class="p">:</span> <span class="n">TESLA</span><span class="o">.</span><span class="n">TESLA_MODELS_RAVEN</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA ALPHARD 2020&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_ALPHARD_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA AVALON 2016&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_AVALON</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA AVALON 2019&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_AVALON_2019</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA AVALON 2022&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_AVALON_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA CAMRY 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_CAMRY</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA CAMRY 2021&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_CAMRY_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA C-HR 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_CHR</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA C-HR 2021&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_CHR_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA COROLLA 2017&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_COROLLA</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA COROLLA TSS2 2019&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_COROLLA_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA HIGHLANDER 2017&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_HIGHLANDER</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA HIGHLANDER 2020&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_HIGHLANDER_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA PRIUS 2017&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_PRIUS</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA PRIUS v 2017&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_PRIUS_V</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA PRIUS TSS2 2021&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_PRIUS_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA RAV4 2017&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_RAV4</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA RAV4 HYBRID 2017&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_RAV4H</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA RAV4 2019&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_RAV4_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA RAV4 2022&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_RAV4_TSS2_2022</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA RAV4 2023&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_RAV4_TSS2_2023</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA MIRAI 2021&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_MIRAI</span><span class="p">,</span>
+  <span class="s2">&quot;TOYOTA SIENNA 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">TOYOTA_SIENNA</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS CT HYBRID 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_CTH</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS ES 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_ES</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS ES 2019&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_ES_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS IS 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_IS</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS IS 2023&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_IS_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS NX 2018&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_NX</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS NX 2020&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_NX_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS LC 2024&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_LC_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS RC 2020&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_RC</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS RX 2016&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_RX</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS RX 2020&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_RX_TSS2</span><span class="p">,</span>
+  <span class="s2">&quot;LEXUS GS F 2016&quot;</span><span class="p">:</span> <span class="n">TOYOTA</span><span class="o">.</span><span class="n">LEXUS_GS_F</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN ARTEON 1ST GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_ARTEON_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN ATLAS 1ST GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_ATLAS_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN CADDY 3RD GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_CADDY_MK3</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN CRAFTER 2ND GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_CRAFTER_MK2</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN GOLF 7TH GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_GOLF_MK7</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN JETTA 7TH GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_JETTA_MK7</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN PASSAT 8TH GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_PASSAT_MK8</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN PASSAT NMS&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_PASSAT_NMS</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN POLO 6TH GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_POLO_MK6</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN SHARAN 2ND GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_SHARAN_MK2</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN TAOS 1ST GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_TAOS_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN T-CROSS 1ST GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_TCROSS_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN TIGUAN 2ND GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_TIGUAN_MK2</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN TOURAN 2ND GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_TOURAN_MK2</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN TRANSPORTER T6.1&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_TRANSPORTER_T61</span><span class="p">,</span>
+  <span class="s2">&quot;VOLKSWAGEN T-ROC 1ST GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">VOLKSWAGEN_TROC_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;AUDI A3 3RD GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">AUDI_A3_MK3</span><span class="p">,</span>
+  <span class="s2">&quot;AUDI Q2 1ST GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">AUDI_Q2_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;AUDI Q3 2ND GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">AUDI_Q3_MK2</span><span class="p">,</span>
+  <span class="s2">&quot;SEAT ATECA 1ST GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">SEAT_ATECA_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;SEAT LEON 3RD GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">SEAT_LEON_MK3</span><span class="p">,</span>
+  <span class="s2">&quot;SKODA FABIA 4TH GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">SKODA_FABIA_MK4</span><span class="p">,</span>
+  <span class="s2">&quot;SKODA KAMIQ 1ST GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">SKODA_KAMIQ_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;SKODA KAROQ 1ST GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">SKODA_KAROQ_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;SKODA KODIAQ 1ST GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">SKODA_KODIAQ_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;SKODA OCTAVIA 3RD GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">SKODA_OCTAVIA_MK3</span><span class="p">,</span>
+  <span class="s2">&quot;SKODA SCALA 1ST GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">SKODA_SCALA_MK1</span><span class="p">,</span>
+  <span class="s2">&quot;SKODA SUPERB 3RD GEN&quot;</span><span class="p">:</span> <span class="n">VW</span><span class="o">.</span><span class="n">SKODA_SUPERB_MK3</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="n">MapFunc</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Platform</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="create_platform_map">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.fingerprints.create_platform_map">[docs]</a>
+<span class="k">def</span> <span class="nf">create_platform_map</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">MapFunc</span><span class="p">):</span>
+  <span class="n">ret</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">platform</span><span class="p">):</span> <span class="n">func</span><span class="p">(</span><span class="n">platform</span><span class="p">)</span> <span class="k">for</span> <span class="n">platform</span> <span class="ow">in</span> <span class="n">PLATFORMS</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">func</span><span class="p">(</span><span class="n">platform</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+
+  <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">MIGRATION</span><span class="p">:</span>
+    <span class="n">ret</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="n">MIGRATION</span><span class="p">[</span><span class="n">m</span><span class="p">]]</span>
+
+  <span class="k">return</span> <span class="n">ret</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

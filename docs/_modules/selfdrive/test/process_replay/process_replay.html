@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.test.process_replay.process_replay &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/test/process_replay/process_replay.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.test.process_replay.process_replay</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.test.process_replay.process_replay</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">heapq</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">capnp</span>
+
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">cereal.services</span> <span class="kn">import</span> <span class="n">SERVICE_LIST</span>
+<span class="kn">from</span> <span class="nn">cereal.visionipc</span> <span class="kn">import</span> <span class="n">VisionIpcServer</span><span class="p">,</span> <span class="n">get_endpoint_name</span> <span class="k">as</span> <span class="n">vipc_get_endpoint_name</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.prefix</span> <span class="kn">import</span> <span class="n">OpenpilotPrefix</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.timeout</span> <span class="kn">import</span> <span class="n">Timeout</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">DT_CTRL</span>
+<span class="kn">from</span> <span class="nn">panda.python</span> <span class="kn">import</span> <span class="n">ALTERNATIVE_EXPERIENCE</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.car_helpers</span> <span class="kn">import</span> <span class="n">get_car</span><span class="p">,</span> <span class="n">interfaces</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.manager.process_config</span> <span class="kn">import</span> <span class="n">managed_processes</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.process_replay.vision_meta</span> <span class="kn">import</span> <span class="n">meta_from_camera_state</span><span class="p">,</span> <span class="n">available_streams</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.process_replay.migration</span> <span class="kn">import</span> <span class="n">migrate_all</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.process_replay.capture</span> <span class="kn">import</span> <span class="n">ProcessOutputCapture</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.logreader</span> <span class="kn">import</span> <span class="n">LogIterable</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.framereader</span> <span class="kn">import</span> <span class="n">BaseFrameReader</span>
+
+<span class="c1"># Numpy gives different results based on CPU features after version 19</span>
+<span class="n">NUMPY_TOLERANCE</span> <span class="o">=</span> <span class="mf">1e-7</span>
+<span class="n">PROC_REPLAY_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="n">FAKEDATA</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PROC_REPLAY_DIR</span><span class="p">,</span> <span class="s2">&quot;fakedata/&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DummySocket">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.DummySocket">[docs]</a>
+<span class="k">class</span> <span class="nc">DummySocket</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="DummySocket.receive">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.DummySocket.receive">[docs]</a>
+  <span class="k">def</span> <span class="nf">receive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">non_blocking</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">non_blocking</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="DummySocket.send">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.DummySocket.send">[docs]</a>
+  <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="LauncherWithCapture">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.LauncherWithCapture">[docs]</a>
+<span class="k">class</span> <span class="nc">LauncherWithCapture</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">capture</span><span class="p">:</span> <span class="n">ProcessOutputCapture</span><span class="p">,</span> <span class="n">launcher</span><span class="p">:</span> <span class="n">Callable</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">capture</span> <span class="o">=</span> <span class="n">capture</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">launcher</span> <span class="o">=</span> <span class="n">launcher</span>
+
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">capture</span><span class="o">.</span><span class="n">link_with_current_proc</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">launcher</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ReplayContext">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.ReplayContext">[docs]</a>
+<span class="k">class</span> <span class="nc">ReplayContext</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">proc_name</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pubs</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">pubs</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">main_pub</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">main_pub</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">main_pub_drained</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">main_pub_drained</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">unlocked_pubs</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">unlocked_pubs</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pubs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_pub</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">open_context</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="bp">self</span>
+
+  <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_obj</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">close_context</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ReplayContext.open_context">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.ReplayContext.open_context">[docs]</a>
+  <span class="k">def</span> <span class="nf">open_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">messaging</span><span class="o">.</span><span class="n">toggle_fake_events</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">messaging</span><span class="o">.</span><span class="n">set_fake_prefix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proc_name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_pub</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+      <span class="n">pubs_with_events</span> <span class="o">=</span> <span class="p">[</span><span class="n">pub</span> <span class="k">for</span> <span class="n">pub</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pubs</span> <span class="k">if</span> <span class="n">pub</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">unlocked_pubs</span><span class="p">]</span>
+      <span class="k">for</span> <span class="n">pub</span> <span class="ow">in</span> <span class="n">pubs_with_events</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="n">pub</span><span class="p">]</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">fake_event_handle</span><span class="p">(</span><span class="n">pub</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">main_pub</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">fake_event_handle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_pub</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">)}</span></div>
+
+
+<div class="viewcode-block" id="ReplayContext.close_context">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.ReplayContext.close_context">[docs]</a>
+  <span class="k">def</span> <span class="nf">close_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span>
+
+    <span class="n">messaging</span><span class="o">.</span><span class="n">toggle_fake_events</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">messaging</span><span class="o">.</span><span class="n">delete_fake_prefix</span><span class="p">()</span></div>
+
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">all_recv_called_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">man</span><span class="o">.</span><span class="n">recv_called_event</span> <span class="k">for</span> <span class="n">man</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">all_recv_ready_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">man</span><span class="o">.</span><span class="n">recv_ready_event</span> <span class="k">for</span> <span class="n">man</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+
+<div class="viewcode-block" id="ReplayContext.send_sync">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.ReplayContext.send_sync">[docs]</a>
+  <span class="k">def</span> <span class="nf">send_sync</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">dat</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="n">endpoint</span><span class="p">]</span><span class="o">.</span><span class="n">recv_called_event</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="n">endpoint</span><span class="p">]</span><span class="o">.</span><span class="n">recv_called_event</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="n">endpoint</span><span class="p">]</span><span class="o">.</span><span class="n">recv_ready_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ReplayContext.unlock_sockets">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.ReplayContext.unlock_sockets">[docs]</a>
+  <span class="k">def</span> <span class="nf">unlock_sockets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">expected_sets</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">expected_sets</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">index</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">wait_for_one_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_recv_called_events</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">all_recv_called_events</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">all_recv_ready_events</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+      <span class="n">expected_sets</span> <span class="o">-=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="ReplayContext.wait_for_recv_called">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.ReplayContext.wait_for_recv_called">[docs]</a>
+  <span class="k">def</span> <span class="nf">wait_for_recv_called</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">messaging</span><span class="o">.</span><span class="n">wait_for_one_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_recv_called_events</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ReplayContext.wait_for_next_recv">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.ReplayContext.wait_for_next_recv">[docs]</a>
+  <span class="k">def</span> <span class="nf">wait_for_next_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trigger_empty_recv</span><span class="p">):</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">wait_for_one_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_recv_called_events</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_pub</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_pub_drained</span> <span class="ow">and</span> <span class="n">trigger_empty_recv</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">all_recv_called_events</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">all_recv_ready_events</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">all_recv_called_events</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ProcessConfig">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.ProcessConfig">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">ProcessConfig</span><span class="p">:</span>
+  <span class="n">proc_name</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">pubs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+  <span class="n">subs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+  <span class="n">ignore</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+  <span class="n">config_callback</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">init_callback</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">should_recv_callback</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">tolerance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">processing_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.001</span>
+  <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span>
+  <span class="n">simulation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">main_pub</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">main_pub_drained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">vision_pubs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+  <span class="n">ignore_alive_pubs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+  <span class="n">unlocked_pubs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ProcessContainer">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.ProcessContainer">[docs]</a>
+<span class="k">class</span> <span class="nc">ProcessContainer</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">ProcessConfig</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="n">OpenpilotPrefix</span><span class="p">(</span><span class="n">clean_dirs_on_exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">process</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">managed_processes</span><span class="p">[</span><span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">msg_queue</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructReader</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pm</span><span class="p">:</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sockets</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">messaging</span><span class="o">.</span><span class="n">SubSocket</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rc</span><span class="p">:</span> <span class="n">ReplayContext</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">vipc_server</span><span class="p">:</span> <span class="n">VisionIpcServer</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">environ_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">capture</span><span class="p">:</span> <span class="n">ProcessOutputCapture</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">has_empty_queue</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg_queue</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">pubs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">pubs</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">subs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">subs</span>
+
+  <span class="k">def</span> <span class="nf">_clean_env</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">environ_config</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+      <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;PROC_NAME&quot;</span><span class="p">,</span> <span class="s2">&quot;SIMULATION&quot;</span><span class="p">]:</span>
+      <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+  <span class="k">def</span> <span class="nf">_setup_env</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">environ_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">environ_config</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+      <span class="k">elif</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PROC_NAME&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SIMULATION&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+    <span class="k">elif</span> <span class="s2">&quot;SIMULATION&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+      <span class="k">del</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SIMULATION&quot;</span><span class="p">]</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params_config</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">environ_config</span> <span class="o">=</span> <span class="n">environ_config</span>
+
+  <span class="k">def</span> <span class="nf">_setup_vision_ipc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_msgs</span><span class="p">:</span> <span class="n">LogIterable</span><span class="p">,</span> <span class="n">frs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">vision_pubs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+
+    <span class="n">vipc_server</span> <span class="o">=</span> <span class="n">VisionIpcServer</span><span class="p">(</span><span class="s2">&quot;camerad&quot;</span><span class="p">)</span>
+    <span class="n">streams_metas</span> <span class="o">=</span> <span class="n">available_streams</span><span class="p">(</span><span class="n">all_msgs</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">meta</span> <span class="ow">in</span> <span class="n">streams_metas</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">camera_state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">vision_pubs</span><span class="p">:</span>
+        <span class="n">frame_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">frs</span><span class="p">[</span><span class="n">meta</span><span class="o">.</span><span class="n">camera_state</span><span class="p">]</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">frs</span><span class="p">[</span><span class="n">meta</span><span class="o">.</span><span class="n">camera_state</span><span class="p">]</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+        <span class="n">vipc_server</span><span class="o">.</span><span class="n">create_buffers</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">stream</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="n">frame_size</span><span class="p">)</span>
+    <span class="n">vipc_server</span><span class="o">.</span><span class="n">start_listener</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">vipc_server</span> <span class="o">=</span> <span class="n">vipc_server</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">vision_pubs</span> <span class="o">=</span> <span class="p">[</span><span class="n">meta</span><span class="o">.</span><span class="n">camera_state</span> <span class="k">for</span> <span class="n">meta</span> <span class="ow">in</span> <span class="n">streams_metas</span> <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">camera_state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">vision_pubs</span><span class="p">]</span>
+
+  <span class="k">def</span> <span class="nf">_start_process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">capture</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">launcher</span> <span class="o">=</span> <span class="n">LauncherWithCapture</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">capture</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">launcher</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">prepare</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ProcessContainer.start">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.ProcessContainer.start">[docs]</a>
+  <span class="k">def</span> <span class="nf">start</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">params_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">environ_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">all_msgs</span><span class="p">:</span> <span class="n">LogIterable</span><span class="p">,</span> <span class="n">frs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BaseFrameReader</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fingerprint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">capture_output</span><span class="p">:</span> <span class="nb">bool</span>
+  <span class="p">):</span>
+    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="k">as</span> <span class="n">p</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_setup_env</span><span class="p">(</span><span class="n">params_config</span><span class="p">,</span> <span class="n">environ_config</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">config_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">config_callback</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">,</span> <span class="n">all_msgs</span><span class="p">)</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">rc</span> <span class="o">=</span> <span class="n">ReplayContext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">rc</span><span class="o">.</span><span class="n">open_context</span><span class="p">()</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">pm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">pubs</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sockets</span> <span class="o">=</span> <span class="p">[</span><span class="n">messaging</span><span class="o">.</span><span class="n">sub_sock</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">subs</span><span class="p">]</span>
+
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">vision_pubs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">frs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_vision_ipc</span><span class="p">(</span><span class="n">all_msgs</span><span class="p">,</span> <span class="n">frs</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">vipc_server</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+      <span class="k">if</span> <span class="n">capture_output</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">capture</span> <span class="o">=</span> <span class="n">ProcessOutputCapture</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">_start_process</span><span class="p">()</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">init_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">init_callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pm</span><span class="p">,</span> <span class="n">all_msgs</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">)</span>
+
+      <span class="c1"># wait for process to startup</span>
+      <span class="k">with</span> <span class="n">Timeout</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">error_msg</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;timed out waiting for process to start: </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pm</span><span class="o">.</span><span class="n">all_readers_updated</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">pubs</span> <span class="k">if</span> <span class="n">s</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">ignore_alive_pubs</span><span class="p">):</span>
+          <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ProcessContainer.stop">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.ProcessContainer.stop">[docs]</a>
+  <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGKILL</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">rc</span><span class="o">.</span><span class="n">close_context</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="o">.</span><span class="n">clean_dirs</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_clean_env</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ProcessContainer.run_step">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.ProcessContainer.run_step">[docs]</a>
+  <span class="k">def</span> <span class="nf">run_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructReader</span><span class="p">,</span> <span class="n">frs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BaseFrameReader</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructReader</span><span class="p">]:</span>
+    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">rc</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">pm</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sockets</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">proc</span>
+
+    <span class="n">output_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">Timeout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">error_msg</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;timed out testing process </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+      <span class="n">end_of_cycle</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">should_recv_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">end_of_cycle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">should_recv_callback</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span><span class="p">)</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">end_of_cycle</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rc</span><span class="o">.</span><span class="n">wait_for_recv_called</span><span class="p">()</span>
+
+        <span class="c1"># call recv to let sub-sockets reconnect, after we know the process is ready</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sockets</span><span class="p">:</span>
+            <span class="n">messaging</span><span class="o">.</span><span class="n">recv_one_or_none</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+        <span class="c1"># empty recv on drained pub indicates the end of messages, only do that if there&#39;re any</span>
+        <span class="n">trigger_empty_recv</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">main_pub</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">main_pub_drained</span><span class="p">:</span>
+          <span class="n">trigger_empty_recv</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="kc">True</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg_queue</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">main_pub</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg_queue</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">(),</span> <span class="n">m</span><span class="o">.</span><span class="n">as_builder</span><span class="p">())</span>
+          <span class="c1"># send frames if needed</span>
+          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vipc_server</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">vision_pubs</span><span class="p">:</span>
+            <span class="n">camera_state</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">())</span>
+            <span class="n">camera_meta</span> <span class="o">=</span> <span class="n">meta_from_camera_state</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">())</span>
+            <span class="k">assert</span> <span class="n">frs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">frs</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">camera_state</span><span class="o">.</span><span class="n">frameId</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="o">=</span><span class="s2">&quot;nv12&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vipc_server</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">camera_meta</span><span class="o">.</span><span class="n">stream</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span>
+                                  <span class="n">camera_state</span><span class="o">.</span><span class="n">frameId</span><span class="p">,</span> <span class="n">camera_state</span><span class="o">.</span><span class="n">timestampSof</span><span class="p">,</span> <span class="n">camera_state</span><span class="o">.</span><span class="n">timestampEof</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg_queue</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rc</span><span class="o">.</span><span class="n">unlock_sockets</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rc</span><span class="o">.</span><span class="n">wait_for_next_recv</span><span class="p">(</span><span class="n">trigger_empty_recv</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">socket</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sockets</span><span class="p">:</span>
+          <span class="n">ms</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">drain_sock</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+          <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ms</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">logMonoTime</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">logMonoTime</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">processing_time</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">)</span>
+            <span class="n">output_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">as_reader</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">output_msgs</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="controlsd_fingerprint_callback">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.controlsd_fingerprint_callback">[docs]</a>
+<span class="k">def</span> <span class="nf">controlsd_fingerprint_callback</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">msgs</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;start fingerprinting&quot;</span><span class="p">)</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+  <span class="n">canmsgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">msg</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">msgs</span> <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;can&quot;</span><span class="p">][:</span><span class="mi">300</span><span class="p">]</span>
+
+  <span class="c1"># controlsd expects one arbitrary can and pandaState</span>
+  <span class="n">rc</span><span class="o">.</span><span class="n">send_sync</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="s2">&quot;can&quot;</span><span class="p">,</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s2">&quot;can&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;pandaStates&quot;</span><span class="p">,</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s2">&quot;pandaStates&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="n">rc</span><span class="o">.</span><span class="n">send_sync</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="s2">&quot;can&quot;</span><span class="p">,</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s2">&quot;can&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="n">rc</span><span class="o">.</span><span class="n">wait_for_next_recv</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+  <span class="c1"># fingerprinting is done, when CarParams is set</span>
+  <span class="k">while</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CarParams&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">canmsgs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Fingerprinting failed. Run out of can msgs&quot;</span><span class="p">)</span>
+
+    <span class="n">m</span> <span class="o">=</span> <span class="n">canmsgs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">rc</span><span class="o">.</span><span class="n">send_sync</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="s2">&quot;can&quot;</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+    <span class="n">rc</span><span class="o">.</span><span class="n">wait_for_next_recv</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_car_params_callback">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.get_car_params_callback">[docs]</a>
+<span class="k">def</span> <span class="nf">get_car_params_callback</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">msgs</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">):</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">fingerprint</span><span class="p">:</span>
+    <span class="n">CarInterface</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">interfaces</span><span class="p">[</span><span class="n">fingerprint</span><span class="p">]</span>
+    <span class="n">CP</span> <span class="o">=</span> <span class="n">CarInterface</span><span class="o">.</span><span class="n">get_non_essential_params</span><span class="p">(</span><span class="n">fingerprint</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">can</span> <span class="o">=</span> <span class="n">DummySocket</span><span class="p">()</span>
+    <span class="n">sendcan</span> <span class="o">=</span> <span class="n">DummySocket</span><span class="p">()</span>
+
+    <span class="n">canmsgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">msg</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">msgs</span> <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;can&quot;</span><span class="p">]</span>
+    <span class="n">has_cached_cp</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CarParamsCache&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">canmsgs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;CAN messages are required for fingerprinting&quot;</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SKIP_FW_QUERY&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">or</span> <span class="n">has_cached_cp</span><span class="p">,</span> \
+            <span class="s2">&quot;CarParamsCache is required for fingerprinting. Make sure to keep carParams msgs in the logs.&quot;</span>
+
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">canmsgs</span><span class="p">[:</span><span class="mi">300</span><span class="p">]:</span>
+      <span class="n">can</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">CP</span> <span class="o">=</span> <span class="n">get_car</span><span class="p">(</span><span class="n">can</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">,</span> <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;ExperimentalLongitudinalEnabled&quot;</span><span class="p">))</span>
+  <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;CarParams&quot;</span><span class="p">,</span> <span class="n">CP</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+  <span class="k">return</span> <span class="n">CP</span></div>
+
+
+
+<div class="viewcode-block" id="controlsd_rcv_callback">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.controlsd_rcv_callback">[docs]</a>
+<span class="k">def</span> <span class="nf">controlsd_rcv_callback</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+  <span class="c1"># no sendcan until controlsd is initialized</span>
+  <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;can&quot;</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+  <span class="n">socks</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">subs</span> <span class="k">if</span>
+    <span class="n">frame</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="n">SERVICE_LIST</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()]</span><span class="o">.</span><span class="n">frequency</span> <span class="o">/</span> <span class="n">SERVICE_LIST</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">frequency</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+  <span class="p">]</span>
+  <span class="k">if</span> <span class="s2">&quot;sendcan&quot;</span> <span class="ow">in</span> <span class="n">socks</span> <span class="ow">and</span> <span class="p">(</span><span class="n">frame</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2000</span><span class="p">:</span>
+    <span class="n">socks</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;sendcan&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">socks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="calibration_rcv_callback">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.calibration_rcv_callback">[docs]</a>
+<span class="k">def</span> <span class="nf">calibration_rcv_callback</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+  <span class="c1"># calibrationd publishes 1 calibrationData every 5 cameraOdometry packets.</span>
+  <span class="c1"># should_recv always true to increment frame</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">frame</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;cameraOdometry&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="torqued_rcv_callback">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.torqued_rcv_callback">[docs]</a>
+<span class="k">def</span> <span class="nf">torqued_rcv_callback</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+  <span class="c1"># should_recv always true to increment frame</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">frame</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;liveLocationKalman&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="dmonitoringmodeld_rcv_callback">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.dmonitoringmodeld_rcv_callback">[docs]</a>
+<span class="k">def</span> <span class="nf">dmonitoringmodeld_rcv_callback</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;driverCameraState&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="ModeldCameraSyncRcvCallback">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.ModeldCameraSyncRcvCallback">[docs]</a>
+<span class="k">class</span> <span class="nc">ModeldCameraSyncRcvCallback</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">road_present</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">wide_road_present</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">is_dual_camera</span> <span class="o">=</span> <span class="kc">True</span>
+
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">is_dual_camera</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">vision_pubs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;roadCameraState&quot;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">road_present</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;wideRoadCameraState&quot;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">wide_road_present</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">road_present</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">wide_road_present</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">road_present</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wide_road_present</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span>
+      <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">road_present</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_dual_camera</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">road_present</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="MessageBasedRcvCallback">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.MessageBasedRcvCallback">[docs]</a>
+<span class="k">class</span> <span class="nc">MessageBasedRcvCallback</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trigger_msg_type</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">trigger_msg_type</span> <span class="o">=</span> <span class="n">trigger_msg_type</span>
+
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigger_msg_type</span></div>
+
+
+
+<div class="viewcode-block" id="FrequencyBasedRcvCallback">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.FrequencyBasedRcvCallback">[docs]</a>
+<span class="k">class</span> <span class="nc">FrequencyBasedRcvCallback</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trigger_msg_type</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">trigger_msg_type</span> <span class="o">=</span> <span class="n">trigger_msg_type</span>
+
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigger_msg_type</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">resp_sockets</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">subs</span>
+      <span class="k">if</span> <span class="n">frame</span> <span class="o">%</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">SERVICE_LIST</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()]</span><span class="o">.</span><span class="n">frequency</span> <span class="o">/</span> <span class="n">SERVICE_LIST</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">frequency</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">resp_sockets</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="controlsd_config_callback">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.controlsd_config_callback">[docs]</a>
+<span class="k">def</span> <span class="nf">controlsd_config_callback</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">lr</span><span class="p">):</span>
+  <span class="n">controlsState</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">initialized</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;controlsState&quot;</span><span class="p">:</span>
+      <span class="n">controlsState</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">controlsState</span>
+      <span class="k">if</span> <span class="n">initialized</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="k">elif</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;onroadEvents&quot;</span><span class="p">:</span>
+      <span class="n">initialized</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">EventName</span><span class="o">.</span><span class="n">controlsInitializing</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">onroadEvents</span><span class="p">]</span>
+
+  <span class="k">assert</span> <span class="n">controlsState</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">initialized</span><span class="p">,</span> <span class="s2">&quot;controlsState never initialized&quot;</span>
+  <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;ReplayControlsState&quot;</span><span class="p">,</span> <span class="n">controlsState</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="locationd_config_pubsub_callback">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.locationd_config_pubsub_callback">[docs]</a>
+<span class="k">def</span> <span class="nf">locationd_config_pubsub_callback</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">lr</span><span class="p">):</span>
+  <span class="n">ublox</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;UbloxAvailable&quot;</span><span class="p">)</span>
+  <span class="n">sub_keys</span> <span class="o">=</span> <span class="p">({</span><span class="s2">&quot;gpsLocation&quot;</span><span class="p">,</span> <span class="p">}</span> <span class="k">if</span> <span class="n">ublox</span> <span class="k">else</span> <span class="p">{</span><span class="s2">&quot;gpsLocationExternal&quot;</span><span class="p">,</span> <span class="p">})</span>
+
+  <span class="n">cfg</span><span class="o">.</span><span class="n">pubs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">pubs</span><span class="p">)</span> <span class="o">-</span> <span class="n">sub_keys</span></div>
+
+
+
+<span class="n">CONFIGS</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">ProcessConfig</span><span class="p">(</span>
+    <span class="n">proc_name</span><span class="o">=</span><span class="s2">&quot;controlsd&quot;</span><span class="p">,</span>
+    <span class="n">pubs</span><span class="o">=</span><span class="p">[</span>
+      <span class="s2">&quot;can&quot;</span><span class="p">,</span> <span class="s2">&quot;deviceState&quot;</span><span class="p">,</span> <span class="s2">&quot;pandaStates&quot;</span><span class="p">,</span> <span class="s2">&quot;peripheralState&quot;</span><span class="p">,</span> <span class="s2">&quot;liveCalibration&quot;</span><span class="p">,</span> <span class="s2">&quot;driverMonitoringState&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;longitudinalPlan&quot;</span><span class="p">,</span> <span class="s2">&quot;liveLocationKalman&quot;</span><span class="p">,</span> <span class="s2">&quot;liveParameters&quot;</span><span class="p">,</span> <span class="s2">&quot;radarState&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;modelV2&quot;</span><span class="p">,</span> <span class="s2">&quot;driverCameraState&quot;</span><span class="p">,</span> <span class="s2">&quot;roadCameraState&quot;</span><span class="p">,</span> <span class="s2">&quot;wideRoadCameraState&quot;</span><span class="p">,</span> <span class="s2">&quot;managerState&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;testJoystick&quot;</span><span class="p">,</span> <span class="s2">&quot;liveTorqueParameters&quot;</span><span class="p">,</span> <span class="s2">&quot;accelerometer&quot;</span><span class="p">,</span> <span class="s2">&quot;gyroscope&quot;</span>
+    <span class="p">],</span>
+    <span class="n">subs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;controlsState&quot;</span><span class="p">,</span> <span class="s2">&quot;carState&quot;</span><span class="p">,</span> <span class="s2">&quot;carControl&quot;</span><span class="p">,</span> <span class="s2">&quot;sendcan&quot;</span><span class="p">,</span> <span class="s2">&quot;onroadEvents&quot;</span><span class="p">,</span> <span class="s2">&quot;carParams&quot;</span><span class="p">],</span>
+    <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;logMonoTime&quot;</span><span class="p">,</span> <span class="s2">&quot;controlsState.startMonoTime&quot;</span><span class="p">,</span> <span class="s2">&quot;controlsState.cumLagMs&quot;</span><span class="p">],</span>
+    <span class="n">config_callback</span><span class="o">=</span><span class="n">controlsd_config_callback</span><span class="p">,</span>
+    <span class="n">init_callback</span><span class="o">=</span><span class="n">controlsd_fingerprint_callback</span><span class="p">,</span>
+    <span class="n">should_recv_callback</span><span class="o">=</span><span class="n">controlsd_rcv_callback</span><span class="p">,</span>
+    <span class="n">tolerance</span><span class="o">=</span><span class="n">NUMPY_TOLERANCE</span><span class="p">,</span>
+    <span class="n">processing_time</span><span class="o">=</span><span class="mf">0.004</span><span class="p">,</span>
+    <span class="n">main_pub</span><span class="o">=</span><span class="s2">&quot;can&quot;</span><span class="p">,</span>
+  <span class="p">),</span>
+  <span class="n">ProcessConfig</span><span class="p">(</span>
+    <span class="n">proc_name</span><span class="o">=</span><span class="s2">&quot;radard&quot;</span><span class="p">,</span>
+    <span class="n">pubs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;can&quot;</span><span class="p">,</span> <span class="s2">&quot;carState&quot;</span><span class="p">,</span> <span class="s2">&quot;modelV2&quot;</span><span class="p">],</span>
+    <span class="n">subs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;radarState&quot;</span><span class="p">,</span> <span class="s2">&quot;liveTracks&quot;</span><span class="p">],</span>
+    <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;logMonoTime&quot;</span><span class="p">,</span> <span class="s2">&quot;radarState.cumLagMs&quot;</span><span class="p">],</span>
+    <span class="n">init_callback</span><span class="o">=</span><span class="n">get_car_params_callback</span><span class="p">,</span>
+    <span class="n">should_recv_callback</span><span class="o">=</span><span class="n">MessageBasedRcvCallback</span><span class="p">(</span><span class="s2">&quot;can&quot;</span><span class="p">),</span>
+    <span class="n">main_pub</span><span class="o">=</span><span class="s2">&quot;can&quot;</span><span class="p">,</span>
+  <span class="p">),</span>
+  <span class="n">ProcessConfig</span><span class="p">(</span>
+    <span class="n">proc_name</span><span class="o">=</span><span class="s2">&quot;plannerd&quot;</span><span class="p">,</span>
+    <span class="n">pubs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;modelV2&quot;</span><span class="p">,</span> <span class="s2">&quot;carControl&quot;</span><span class="p">,</span> <span class="s2">&quot;carState&quot;</span><span class="p">,</span> <span class="s2">&quot;controlsState&quot;</span><span class="p">,</span> <span class="s2">&quot;radarState&quot;</span><span class="p">],</span>
+    <span class="n">subs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;longitudinalPlan&quot;</span><span class="p">,</span> <span class="s2">&quot;uiPlan&quot;</span><span class="p">],</span>
+    <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;logMonoTime&quot;</span><span class="p">,</span> <span class="s2">&quot;longitudinalPlan.processingDelay&quot;</span><span class="p">,</span> <span class="s2">&quot;longitudinalPlan.solverExecutionTime&quot;</span><span class="p">],</span>
+    <span class="n">init_callback</span><span class="o">=</span><span class="n">get_car_params_callback</span><span class="p">,</span>
+    <span class="n">should_recv_callback</span><span class="o">=</span><span class="n">FrequencyBasedRcvCallback</span><span class="p">(</span><span class="s2">&quot;modelV2&quot;</span><span class="p">),</span>
+    <span class="n">tolerance</span><span class="o">=</span><span class="n">NUMPY_TOLERANCE</span><span class="p">,</span>
+  <span class="p">),</span>
+  <span class="n">ProcessConfig</span><span class="p">(</span>
+    <span class="n">proc_name</span><span class="o">=</span><span class="s2">&quot;calibrationd&quot;</span><span class="p">,</span>
+    <span class="n">pubs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;carState&quot;</span><span class="p">,</span> <span class="s2">&quot;cameraOdometry&quot;</span><span class="p">,</span> <span class="s2">&quot;carParams&quot;</span><span class="p">],</span>
+    <span class="n">subs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;liveCalibration&quot;</span><span class="p">],</span>
+    <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;logMonoTime&quot;</span><span class="p">],</span>
+    <span class="n">should_recv_callback</span><span class="o">=</span><span class="n">calibration_rcv_callback</span><span class="p">,</span>
+  <span class="p">),</span>
+  <span class="n">ProcessConfig</span><span class="p">(</span>
+    <span class="n">proc_name</span><span class="o">=</span><span class="s2">&quot;dmonitoringd&quot;</span><span class="p">,</span>
+    <span class="n">pubs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;driverStateV2&quot;</span><span class="p">,</span> <span class="s2">&quot;liveCalibration&quot;</span><span class="p">,</span> <span class="s2">&quot;carState&quot;</span><span class="p">,</span> <span class="s2">&quot;modelV2&quot;</span><span class="p">,</span> <span class="s2">&quot;controlsState&quot;</span><span class="p">],</span>
+    <span class="n">subs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;driverMonitoringState&quot;</span><span class="p">],</span>
+    <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;logMonoTime&quot;</span><span class="p">],</span>
+    <span class="n">should_recv_callback</span><span class="o">=</span><span class="n">FrequencyBasedRcvCallback</span><span class="p">(</span><span class="s2">&quot;driverStateV2&quot;</span><span class="p">),</span>
+    <span class="n">tolerance</span><span class="o">=</span><span class="n">NUMPY_TOLERANCE</span><span class="p">,</span>
+  <span class="p">),</span>
+  <span class="n">ProcessConfig</span><span class="p">(</span>
+    <span class="n">proc_name</span><span class="o">=</span><span class="s2">&quot;locationd&quot;</span><span class="p">,</span>
+    <span class="n">pubs</span><span class="o">=</span><span class="p">[</span>
+      <span class="s2">&quot;cameraOdometry&quot;</span><span class="p">,</span> <span class="s2">&quot;accelerometer&quot;</span><span class="p">,</span> <span class="s2">&quot;gyroscope&quot;</span><span class="p">,</span> <span class="s2">&quot;gpsLocationExternal&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;liveCalibration&quot;</span><span class="p">,</span> <span class="s2">&quot;carState&quot;</span><span class="p">,</span> <span class="s2">&quot;gpsLocation&quot;</span>
+    <span class="p">],</span>
+    <span class="n">subs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;liveLocationKalman&quot;</span><span class="p">],</span>
+    <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;logMonoTime&quot;</span><span class="p">],</span>
+    <span class="n">config_callback</span><span class="o">=</span><span class="n">locationd_config_pubsub_callback</span><span class="p">,</span>
+    <span class="n">tolerance</span><span class="o">=</span><span class="n">NUMPY_TOLERANCE</span><span class="p">,</span>
+  <span class="p">),</span>
+  <span class="n">ProcessConfig</span><span class="p">(</span>
+    <span class="n">proc_name</span><span class="o">=</span><span class="s2">&quot;paramsd&quot;</span><span class="p">,</span>
+    <span class="n">pubs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;liveLocationKalman&quot;</span><span class="p">,</span> <span class="s2">&quot;carState&quot;</span><span class="p">],</span>
+    <span class="n">subs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;liveParameters&quot;</span><span class="p">],</span>
+    <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;logMonoTime&quot;</span><span class="p">],</span>
+    <span class="n">init_callback</span><span class="o">=</span><span class="n">get_car_params_callback</span><span class="p">,</span>
+    <span class="n">should_recv_callback</span><span class="o">=</span><span class="n">FrequencyBasedRcvCallback</span><span class="p">(</span><span class="s2">&quot;liveLocationKalman&quot;</span><span class="p">),</span>
+    <span class="n">tolerance</span><span class="o">=</span><span class="n">NUMPY_TOLERANCE</span><span class="p">,</span>
+    <span class="n">processing_time</span><span class="o">=</span><span class="mf">0.004</span><span class="p">,</span>
+  <span class="p">),</span>
+  <span class="n">ProcessConfig</span><span class="p">(</span>
+    <span class="n">proc_name</span><span class="o">=</span><span class="s2">&quot;ubloxd&quot;</span><span class="p">,</span>
+    <span class="n">pubs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ubloxRaw&quot;</span><span class="p">],</span>
+    <span class="n">subs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ubloxGnss&quot;</span><span class="p">,</span> <span class="s2">&quot;gpsLocationExternal&quot;</span><span class="p">],</span>
+    <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;logMonoTime&quot;</span><span class="p">],</span>
+  <span class="p">),</span>
+  <span class="n">ProcessConfig</span><span class="p">(</span>
+    <span class="n">proc_name</span><span class="o">=</span><span class="s2">&quot;torqued&quot;</span><span class="p">,</span>
+    <span class="n">pubs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;liveLocationKalman&quot;</span><span class="p">,</span> <span class="s2">&quot;carState&quot;</span><span class="p">,</span> <span class="s2">&quot;carControl&quot;</span><span class="p">],</span>
+    <span class="n">subs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;liveTorqueParameters&quot;</span><span class="p">],</span>
+    <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;logMonoTime&quot;</span><span class="p">],</span>
+    <span class="n">init_callback</span><span class="o">=</span><span class="n">get_car_params_callback</span><span class="p">,</span>
+    <span class="n">should_recv_callback</span><span class="o">=</span><span class="n">torqued_rcv_callback</span><span class="p">,</span>
+    <span class="n">tolerance</span><span class="o">=</span><span class="n">NUMPY_TOLERANCE</span><span class="p">,</span>
+  <span class="p">),</span>
+  <span class="n">ProcessConfig</span><span class="p">(</span>
+    <span class="n">proc_name</span><span class="o">=</span><span class="s2">&quot;modeld&quot;</span><span class="p">,</span>
+    <span class="n">pubs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;deviceState&quot;</span><span class="p">,</span> <span class="s2">&quot;roadCameraState&quot;</span><span class="p">,</span> <span class="s2">&quot;wideRoadCameraState&quot;</span><span class="p">,</span> <span class="s2">&quot;liveCalibration&quot;</span><span class="p">,</span> <span class="s2">&quot;driverMonitoringState&quot;</span><span class="p">],</span>
+    <span class="n">subs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;modelV2&quot;</span><span class="p">,</span> <span class="s2">&quot;cameraOdometry&quot;</span><span class="p">],</span>
+    <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;logMonoTime&quot;</span><span class="p">,</span> <span class="s2">&quot;modelV2.frameDropPerc&quot;</span><span class="p">,</span> <span class="s2">&quot;modelV2.modelExecutionTime&quot;</span><span class="p">],</span>
+    <span class="n">should_recv_callback</span><span class="o">=</span><span class="n">ModeldCameraSyncRcvCallback</span><span class="p">(),</span>
+    <span class="n">tolerance</span><span class="o">=</span><span class="n">NUMPY_TOLERANCE</span><span class="p">,</span>
+    <span class="n">processing_time</span><span class="o">=</span><span class="mf">0.020</span><span class="p">,</span>
+    <span class="n">main_pub</span><span class="o">=</span><span class="n">vipc_get_endpoint_name</span><span class="p">(</span><span class="s2">&quot;camerad&quot;</span><span class="p">,</span> <span class="n">meta_from_camera_state</span><span class="p">(</span><span class="s2">&quot;roadCameraState&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">stream</span><span class="p">),</span>
+    <span class="n">main_pub_drained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">vision_pubs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;roadCameraState&quot;</span><span class="p">,</span> <span class="s2">&quot;wideRoadCameraState&quot;</span><span class="p">],</span>
+    <span class="n">ignore_alive_pubs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;wideRoadCameraState&quot;</span><span class="p">],</span>
+    <span class="n">init_callback</span><span class="o">=</span><span class="n">get_car_params_callback</span><span class="p">,</span>
+  <span class="p">),</span>
+  <span class="n">ProcessConfig</span><span class="p">(</span>
+    <span class="n">proc_name</span><span class="o">=</span><span class="s2">&quot;dmonitoringmodeld&quot;</span><span class="p">,</span>
+    <span class="n">pubs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;liveCalibration&quot;</span><span class="p">,</span> <span class="s2">&quot;driverCameraState&quot;</span><span class="p">],</span>
+    <span class="n">subs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;driverStateV2&quot;</span><span class="p">],</span>
+    <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;logMonoTime&quot;</span><span class="p">,</span> <span class="s2">&quot;driverStateV2.modelExecutionTime&quot;</span><span class="p">,</span> <span class="s2">&quot;driverStateV2.dspExecutionTime&quot;</span><span class="p">],</span>
+    <span class="n">should_recv_callback</span><span class="o">=</span><span class="n">dmonitoringmodeld_rcv_callback</span><span class="p">,</span>
+    <span class="n">tolerance</span><span class="o">=</span><span class="n">NUMPY_TOLERANCE</span><span class="p">,</span>
+    <span class="n">processing_time</span><span class="o">=</span><span class="mf">0.020</span><span class="p">,</span>
+    <span class="n">main_pub</span><span class="o">=</span><span class="n">vipc_get_endpoint_name</span><span class="p">(</span><span class="s2">&quot;camerad&quot;</span><span class="p">,</span> <span class="n">meta_from_camera_state</span><span class="p">(</span><span class="s2">&quot;driverCameraState&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">stream</span><span class="p">),</span>
+    <span class="n">main_pub_drained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">vision_pubs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;driverCameraState&quot;</span><span class="p">],</span>
+    <span class="n">ignore_alive_pubs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;driverCameraState&quot;</span><span class="p">],</span>
+  <span class="p">),</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="get_process_config">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.get_process_config">[docs]</a>
+<span class="k">def</span> <span class="nf">get_process_config</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProcessConfig</span><span class="p">:</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">CONFIGS</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">proc_name</span> <span class="o">==</span> <span class="n">name</span><span class="p">))</span>
+  <span class="k">except</span> <span class="ne">StopIteration</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot find process config with name: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">ex</span></div>
+
+
+
+<div class="viewcode-block" id="get_custom_params_from_lr">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.get_custom_params_from_lr">[docs]</a>
+<span class="k">def</span> <span class="nf">get_custom_params_from_lr</span><span class="p">(</span><span class="n">lr</span><span class="p">:</span> <span class="n">LogIterable</span><span class="p">,</span> <span class="n">initial_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;first&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Use this to get custom params dict based on provided logs.</span>
+<span class="sd">  Useful when replaying following processes: calibrationd, paramsd, torqued</span>
+<span class="sd">  The params may be based on first or last message of given type (carParams, liveCalibration, liveParameters, liveTorqueParameters) in the logs.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="n">car_params</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">lr</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;carParams&quot;</span><span class="p">]</span>
+  <span class="n">live_calibration</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">lr</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;liveCalibration&quot;</span><span class="p">]</span>
+  <span class="n">live_parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">lr</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;liveParameters&quot;</span><span class="p">]</span>
+  <span class="n">live_torque_parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">lr</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;liveTorqueParameters&quot;</span><span class="p">]</span>
+
+  <span class="k">assert</span> <span class="n">initial_state</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="p">]</span>
+  <span class="n">msg_index</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">initial_state</span> <span class="o">==</span> <span class="s2">&quot;first&quot;</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+
+  <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">car_params</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;carParams required for initial state of liveParameters and CarParamsPrevRoute&quot;</span>
+  <span class="n">CP</span> <span class="o">=</span> <span class="n">car_params</span><span class="p">[</span><span class="n">msg_index</span><span class="p">]</span><span class="o">.</span><span class="n">carParams</span>
+
+  <span class="n">custom_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;CarParamsPrevRoute&quot;</span><span class="p">:</span> <span class="n">CP</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">()</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">live_calibration</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">custom_params</span><span class="p">[</span><span class="s2">&quot;CalibrationParams&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">live_calibration</span><span class="p">[</span><span class="n">msg_index</span><span class="p">]</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">()</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">live_parameters</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">lp_dict</span> <span class="o">=</span> <span class="n">live_parameters</span><span class="p">[</span><span class="n">msg_index</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+    <span class="n">lp_dict</span><span class="p">[</span><span class="s2">&quot;carFingerprint&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span>
+    <span class="n">custom_params</span><span class="p">[</span><span class="s2">&quot;LiveParameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">lp_dict</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">live_torque_parameters</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">custom_params</span><span class="p">[</span><span class="s2">&quot;LiveTorqueParameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">live_torque_parameters</span><span class="p">[</span><span class="n">msg_index</span><span class="p">]</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">()</span>
+
+  <span class="k">return</span> <span class="n">custom_params</span></div>
+
+
+
+<div class="viewcode-block" id="replay_process_with_name">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.replay_process_with_name">[docs]</a>
+<span class="k">def</span> <span class="nf">replay_process_with_name</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">lr</span><span class="p">:</span> <span class="n">LogIterable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructReader</span><span class="p">]:</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">cfgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_process_config</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span>
+  <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+    <span class="n">cfgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_process_config</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">name</span><span class="p">]</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;name must be str or collections of strings&quot;</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">replay_process</span><span class="p">(</span><span class="n">cfgs</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="replay_process">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.replay_process">[docs]</a>
+<span class="k">def</span> <span class="nf">replay_process</span><span class="p">(</span>
+  <span class="n">cfg</span><span class="p">:</span> <span class="n">ProcessConfig</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">ProcessConfig</span><span class="p">],</span> <span class="n">lr</span><span class="p">:</span> <span class="n">LogIterable</span><span class="p">,</span> <span class="n">frs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BaseFrameReader</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">fingerprint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">return_all_logs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">custom_params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">captured_output_store</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">disable_progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructReader</span><span class="p">]:</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+    <span class="n">cfgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">cfgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+
+  <span class="n">all_msgs</span> <span class="o">=</span> <span class="n">migrate_all</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">old_logtime</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                         <span class="n">manager_states</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                         <span class="n">panda_states</span><span class="o">=</span><span class="nb">any</span><span class="p">(</span><span class="s2">&quot;pandaStates&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">pubs</span> <span class="k">for</span> <span class="n">cfg</span> <span class="ow">in</span> <span class="n">cfgs</span><span class="p">),</span>
+                         <span class="n">camera_states</span><span class="o">=</span><span class="nb">any</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">vision_pubs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">cfg</span> <span class="ow">in</span> <span class="n">cfgs</span><span class="p">))</span>
+  <span class="n">process_logs</span> <span class="o">=</span> <span class="n">_replay_multi_process</span><span class="p">(</span><span class="n">cfgs</span><span class="p">,</span> <span class="n">all_msgs</span><span class="p">,</span> <span class="n">frs</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">,</span> <span class="n">custom_params</span><span class="p">,</span> <span class="n">captured_output_store</span><span class="p">,</span> <span class="n">disable_progress</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">return_all_logs</span><span class="p">:</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span><span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">process_logs</span><span class="p">}</span>
+    <span class="n">modified_logs</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">all_msgs</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
+    <span class="n">modified_logs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">process_logs</span><span class="p">)</span>
+    <span class="n">modified_logs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">))</span>
+    <span class="n">log_msgs</span> <span class="o">=</span> <span class="n">modified_logs</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">log_msgs</span> <span class="o">=</span> <span class="n">process_logs</span>
+
+  <span class="k">return</span> <span class="n">log_msgs</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_replay_multi_process</span><span class="p">(</span>
+  <span class="n">cfgs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ProcessConfig</span><span class="p">],</span> <span class="n">lr</span><span class="p">:</span> <span class="n">LogIterable</span><span class="p">,</span> <span class="n">frs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BaseFrameReader</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">custom_params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">captured_output_store</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">disable_progress</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructReader</span><span class="p">]:</span>
+  <span class="k">if</span> <span class="n">fingerprint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">params_config</span> <span class="o">=</span> <span class="n">generate_params_config</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">fingerprint</span><span class="o">=</span><span class="n">fingerprint</span><span class="p">,</span> <span class="n">custom_params</span><span class="o">=</span><span class="n">custom_params</span><span class="p">)</span>
+    <span class="n">env_config</span> <span class="o">=</span> <span class="n">generate_environ_config</span><span class="p">(</span><span class="n">fingerprint</span><span class="o">=</span><span class="n">fingerprint</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">CP</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">m</span><span class="o">.</span><span class="n">carParams</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">lr</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;carParams&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">params_config</span> <span class="o">=</span> <span class="n">generate_params_config</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">CP</span><span class="o">=</span><span class="n">CP</span><span class="p">,</span> <span class="n">custom_params</span><span class="o">=</span><span class="n">custom_params</span><span class="p">)</span>
+    <span class="n">env_config</span> <span class="o">=</span> <span class="n">generate_environ_config</span><span class="p">(</span><span class="n">CP</span><span class="o">=</span><span class="n">CP</span><span class="p">)</span>
+
+  <span class="c1"># validate frs and vision pubs</span>
+  <span class="n">all_vision_pubs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pub</span> <span class="k">for</span> <span class="n">cfg</span> <span class="ow">in</span> <span class="n">cfgs</span> <span class="k">for</span> <span class="n">pub</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">vision_pubs</span><span class="p">]</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_vision_pubs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">frs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;frs must be provided when replaying process using vision streams&quot;</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">meta_from_camera_state</span><span class="p">(</span><span class="n">st</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">all_vision_pubs</span><span class="p">),</span> \
+                                                          <span class="sa">f</span><span class="s2">&quot;undefined vision stream spotted, probably misconfigured process: (vision pubs: </span><span class="si">{</span><span class="n">all_vision_pubs</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">required_vision_pubs</span> <span class="o">=</span> <span class="p">{</span><span class="n">m</span><span class="o">.</span><span class="n">camera_state</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">available_streams</span><span class="p">(</span><span class="n">lr</span><span class="p">)}</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">all_vision_pubs</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">st</span> <span class="ow">in</span> <span class="n">frs</span> <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">required_vision_pubs</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;frs for this process must contain following vision streams: </span><span class="si">{</span><span class="n">required_vision_pubs</span><span class="si">}</span><span class="s2">&quot;</span>
+
+  <span class="n">all_msgs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="n">msg</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">)</span>
+  <span class="n">log_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">containers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">cfg</span> <span class="ow">in</span> <span class="n">cfgs</span><span class="p">:</span>
+      <span class="n">container</span> <span class="o">=</span> <span class="n">ProcessContainer</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+      <span class="n">containers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">container</span><span class="p">)</span>
+      <span class="n">container</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">params_config</span><span class="p">,</span> <span class="n">env_config</span><span class="p">,</span> <span class="n">all_msgs</span><span class="p">,</span> <span class="n">frs</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">,</span> <span class="n">captured_output_store</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">all_pubs</span> <span class="o">=</span> <span class="p">{</span><span class="n">pub</span> <span class="k">for</span> <span class="n">container</span> <span class="ow">in</span> <span class="n">containers</span> <span class="k">for</span> <span class="n">pub</span> <span class="ow">in</span> <span class="n">container</span><span class="o">.</span><span class="n">pubs</span><span class="p">}</span>
+    <span class="n">all_subs</span> <span class="o">=</span> <span class="p">{</span><span class="n">sub</span> <span class="k">for</span> <span class="n">container</span> <span class="ow">in</span> <span class="n">containers</span> <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">container</span><span class="o">.</span><span class="n">subs</span><span class="p">}</span>
+    <span class="n">lr_pubs</span> <span class="o">=</span> <span class="n">all_pubs</span> <span class="o">-</span> <span class="n">all_subs</span>
+    <span class="n">pubs_to_containers</span> <span class="o">=</span> <span class="p">{</span><span class="n">pub</span><span class="p">:</span> <span class="p">[</span><span class="n">container</span> <span class="k">for</span> <span class="n">container</span> <span class="ow">in</span> <span class="n">containers</span> <span class="k">if</span> <span class="n">pub</span> <span class="ow">in</span> <span class="n">container</span><span class="o">.</span><span class="n">pubs</span><span class="p">]</span> <span class="k">for</span> <span class="n">pub</span> <span class="ow">in</span> <span class="n">all_pubs</span><span class="p">}</span>
+
+    <span class="n">pub_msgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">msg</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">all_msgs</span> <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">in</span> <span class="n">lr_pubs</span><span class="p">]</span>
+    <span class="c1"># external queue for messages taken from logs; internal queue for messages generated by processes, which will be republished</span>
+    <span class="n">external_pub_queue</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructReader</span><span class="p">]</span> <span class="o">=</span> <span class="n">pub_msgs</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">internal_pub_queue</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">capnp</span><span class="o">.</span><span class="n">_DynamicStructReader</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># heap for maintaining the order of messages generated by processes, where each element: (logMonoTime, index in internal_pub_queue)</span>
+    <span class="n">internal_pub_index_heap</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">external_pub_queue</span><span class="p">),</span> <span class="n">disable</span><span class="o">=</span><span class="n">disable_progress</span><span class="p">)</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">external_pub_queue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">internal_pub_index_heap</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">has_empty_queue</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">containers</span><span class="p">)):</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">internal_pub_index_heap</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">external_pub_queue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">external_pub_queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">logMonoTime</span> <span class="o">&lt;</span> <span class="n">internal_pub_index_heap</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">external_pub_queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">internal_pub_index_heap</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">internal_pub_queue</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+      <span class="n">target_containers</span> <span class="o">=</span> <span class="n">pubs_to_containers</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()]</span>
+      <span class="k">for</span> <span class="n">container</span> <span class="ow">in</span> <span class="n">target_containers</span><span class="p">:</span>
+        <span class="n">output_msgs</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">run_step</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">frs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">output_msgs</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="ow">in</span> <span class="n">all_pubs</span><span class="p">:</span>
+            <span class="n">internal_pub_queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+            <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">internal_pub_index_heap</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">internal_pub_queue</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">log_msgs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">output_msgs</span><span class="p">)</span>
+  <span class="k">finally</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">container</span> <span class="ow">in</span> <span class="n">containers</span><span class="p">:</span>
+      <span class="n">container</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+      <span class="k">if</span> <span class="n">captured_output_store</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">container</span><span class="o">.</span><span class="n">capture</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">out</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">capture</span><span class="o">.</span><span class="n">read_outerr</span><span class="p">()</span>
+        <span class="n">captured_output_store</span><span class="p">[</span><span class="n">container</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;out&quot;</span><span class="p">:</span> <span class="n">out</span><span class="p">,</span> <span class="s2">&quot;err&quot;</span><span class="p">:</span> <span class="n">err</span><span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">log_msgs</span>
+
+
+<div class="viewcode-block" id="generate_params_config">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.generate_params_config">[docs]</a>
+<span class="k">def</span> <span class="nf">generate_params_config</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">CP</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fingerprint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">custom_params</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+  <span class="n">params_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;OpenpilotEnabledToggle&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;DisengageOnAccelerator&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;DisableLogging&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="n">custom_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">params_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">custom_params</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">lr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">has_ublox</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;ubloxGnss&quot;</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span><span class="p">)</span>
+    <span class="n">params_dict</span><span class="p">[</span><span class="s2">&quot;UbloxAvailable&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">has_ublox</span>
+    <span class="n">is_rhd</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">msg</span><span class="o">.</span><span class="n">driverMonitoringState</span><span class="o">.</span><span class="n">isRHD</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">lr</span> <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;driverMonitoringState&quot;</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">params_dict</span><span class="p">[</span><span class="s2">&quot;IsRhdDetected&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">is_rhd</span>
+
+  <span class="k">if</span> <span class="n">CP</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">alternativeExperience</span> <span class="o">==</span> <span class="n">ALTERNATIVE_EXPERIENCE</span><span class="o">.</span><span class="n">DISABLE_DISENGAGE_ON_GAS</span><span class="p">:</span>
+      <span class="n">params_dict</span><span class="p">[</span><span class="s2">&quot;DisengageOnAccelerator&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="n">fingerprint</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">fingerprintSource</span> <span class="o">==</span> <span class="s2">&quot;fw&quot;</span><span class="p">:</span>
+        <span class="n">params_dict</span><span class="p">[</span><span class="s2">&quot;CarParamsCache&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="n">params_dict</span><span class="p">[</span><span class="s2">&quot;ExperimentalLongitudinalEnabled&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">notCar</span><span class="p">:</span>
+      <span class="n">params_dict</span><span class="p">[</span><span class="s2">&quot;JoystickDebugMode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+  <span class="k">return</span> <span class="n">params_dict</span></div>
+
+
+
+<div class="viewcode-block" id="generate_environ_config">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.generate_environ_config">[docs]</a>
+<span class="k">def</span> <span class="nf">generate_environ_config</span><span class="p">(</span><span class="n">CP</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fingerprint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+  <span class="n">environ_dict</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;Darwin&quot;</span><span class="p">:</span>
+    <span class="n">environ_dict</span><span class="p">[</span><span class="s2">&quot;PARAMS_ROOT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;/dev/shm/params&quot;</span>
+  <span class="k">if</span> <span class="n">log_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">environ_dict</span><span class="p">[</span><span class="s2">&quot;LOG_ROOT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">log_dir</span>
+
+  <span class="n">environ_dict</span><span class="p">[</span><span class="s2">&quot;REPLAY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+
+  <span class="c1"># Regen or python process</span>
+  <span class="k">if</span> <span class="n">CP</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">fingerprint</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">fingerprintSource</span> <span class="o">==</span> <span class="s2">&quot;fw&quot;</span><span class="p">:</span>
+      <span class="n">environ_dict</span><span class="p">[</span><span class="s1">&#39;SKIP_FW_QUERY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+      <span class="n">environ_dict</span><span class="p">[</span><span class="s1">&#39;FINGERPRINT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">environ_dict</span><span class="p">[</span><span class="s1">&#39;SKIP_FW_QUERY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+      <span class="n">environ_dict</span><span class="p">[</span><span class="s1">&#39;FINGERPRINT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span>
+  <span class="k">elif</span> <span class="n">fingerprint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">environ_dict</span><span class="p">[</span><span class="s1">&#39;SKIP_FW_QUERY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+    <span class="n">environ_dict</span><span class="p">[</span><span class="s1">&#39;FINGERPRINT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fingerprint</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">environ_dict</span><span class="p">[</span><span class="s2">&quot;SKIP_FW_QUERY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">environ_dict</span><span class="p">[</span><span class="s2">&quot;FINGERPRINT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+  <span class="k">return</span> <span class="n">environ_dict</span></div>
+
+
+
+<div class="viewcode-block" id="check_openpilot_enabled">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.process_replay.check_openpilot_enabled">[docs]</a>
+<span class="k">def</span> <span class="nf">check_openpilot_enabled</span><span class="p">(</span><span class="n">msgs</span><span class="p">:</span> <span class="n">LogIterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="n">cur_enabled_count</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">max_enabled_count</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">msgs</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;carParams&quot;</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">carParams</span><span class="o">.</span><span class="n">notCar</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;controlsState&quot;</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">controlsState</span><span class="o">.</span><span class="n">active</span><span class="p">:</span>
+        <span class="n">cur_enabled_count</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">cur_enabled_count</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="n">max_enabled_count</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_enabled_count</span><span class="p">,</span> <span class="n">cur_enabled_count</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">max_enabled_count</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="mf">10.</span> <span class="o">/</span> <span class="n">DT_CTRL</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

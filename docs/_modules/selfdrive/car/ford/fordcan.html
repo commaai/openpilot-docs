@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.ford.fordcan &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/ford/fordcan.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.ford.fordcan</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.ford.fordcan</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">CanBusBase</span>
+
+<span class="n">HUDControl</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">HUDControl</span>
+
+
+<div class="viewcode-block" id="CanBus">
+<a class="viewcode-back" href="../../../../selfdrive.car.ford.html#selfdrive.car.ford.fordcan.CanBus">[docs]</a>
+<span class="k">class</span> <span class="nc">CanBus</span><span class="p">(</span><span class="n">CanBusBase</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fingerprint</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">)</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">radar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">+</span> <span class="mi">1</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">camera</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">+</span> <span class="mi">2</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_lat_ctl2_checksum">
+<a class="viewcode-back" href="../../../../selfdrive.car.ford.html#selfdrive.car.ford.fordcan.calculate_lat_ctl2_checksum">[docs]</a>
+<span class="k">def</span> <span class="nf">calculate_lat_ctl2_checksum</span><span class="p">(</span><span class="n">mode</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">counter</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dat</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+  <span class="n">curvature</span> <span class="o">=</span> <span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">dat</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span><span class="p">)</span>
+  <span class="n">curvature_rate</span> <span class="o">=</span> <span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">dat</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span><span class="p">)</span>
+  <span class="n">path_angle</span> <span class="o">=</span> <span class="p">((</span><span class="n">dat</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x1F</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">dat</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span>
+  <span class="n">path_offset</span> <span class="o">=</span> <span class="p">((</span><span class="n">dat</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">dat</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+
+  <span class="n">checksum</span> <span class="o">=</span> <span class="n">mode</span> <span class="o">+</span> <span class="n">counter</span>
+  <span class="k">for</span> <span class="n">sig_val</span> <span class="ow">in</span> <span class="p">(</span><span class="n">curvature</span><span class="p">,</span> <span class="n">curvature_rate</span><span class="p">,</span> <span class="n">path_angle</span><span class="p">,</span> <span class="n">path_offset</span><span class="p">):</span>
+    <span class="n">checksum</span> <span class="o">+=</span> <span class="n">sig_val</span> <span class="o">+</span> <span class="p">(</span><span class="n">sig_val</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="mh">0xFF</span> <span class="o">-</span> <span class="p">(</span><span class="n">checksum</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_lka_msg">
+<a class="viewcode-back" href="../../../../selfdrive.car.ford.html#selfdrive.car.ford.fordcan.create_lka_msg">[docs]</a>
+<span class="k">def</span> <span class="nf">create_lka_msg</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">CAN</span><span class="p">:</span> <span class="n">CanBus</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Creates an empty CAN message for the Ford LKA Command.</span>
+
+<span class="sd">  This command can apply &quot;Lane Keeping Aid&quot; manoeuvres, which are subject to the PSCM lockout.</span>
+
+<span class="sd">  Frequency is 33Hz.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;Lane_Assist_Data1&quot;</span><span class="p">,</span> <span class="n">CAN</span><span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="p">{})</span></div>
+
+
+
+<div class="viewcode-block" id="create_lat_ctl_msg">
+<a class="viewcode-back" href="../../../../selfdrive.car.ford.html#selfdrive.car.ford.fordcan.create_lat_ctl_msg">[docs]</a>
+<span class="k">def</span> <span class="nf">create_lat_ctl_msg</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">CAN</span><span class="p">:</span> <span class="n">CanBus</span><span class="p">,</span> <span class="n">lat_active</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">path_offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">path_angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">curvature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                       <span class="n">curvature_rate</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Creates a CAN message for the Ford TJA/LCA Command.</span>
+
+<span class="sd">  This command can apply &quot;Lane Centering&quot; manoeuvres: continuous lane centering for traffic jam assist and highway</span>
+<span class="sd">  driving. It is not subject to the PSCM lockout.</span>
+
+<span class="sd">  Ford lane centering command uses a third order polynomial to describe the road centerline. The polynomial is defined</span>
+<span class="sd">  by the following coefficients:</span>
+<span class="sd">    c0: lateral offset between the vehicle and the centerline (positive is right)</span>
+<span class="sd">    c1: heading angle between the vehicle and the centerline (positive is right)</span>
+<span class="sd">    c2: curvature of the centerline (positive is left)</span>
+<span class="sd">    c3: rate of change of curvature of the centerline</span>
+<span class="sd">  As the PSCM combines this information with other sensor data, such as the vehicle&#39;s yaw rate and speed, the steering</span>
+<span class="sd">  angle cannot be easily controlled.</span>
+
+<span class="sd">  The PSCM should be configured to accept TJA/LCA commands before these commands will be processed. This can be done</span>
+<span class="sd">  using tools such as Forscan.</span>
+
+<span class="sd">  Frequency is 20Hz.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;LatCtlRng_L_Max&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                       <span class="c1"># Unknown [0|126] meter</span>
+    <span class="s2">&quot;HandsOffCnfm_B_Rq&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                     <span class="c1"># Unknown: 0=Inactive, 1=Active [0|1]</span>
+    <span class="s2">&quot;LatCtl_D_Rq&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">lat_active</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>      <span class="c1"># Mode: 0=None, 1=ContinuousPathFollowing, 2=InterventionLeft,</span>
+                                                <span class="c1">#       3=InterventionRight, 4-7=NotUsed [0|7]</span>
+    <span class="s2">&quot;LatCtlRampType_D_Rq&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                   <span class="c1"># Ramp speed: 0=Slow, 1=Medium, 2=Fast, 3=Immediate [0|3]</span>
+                                                <span class="c1">#             Makes no difference with curvature control</span>
+    <span class="s2">&quot;LatCtlPrecision_D_Rq&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>                  <span class="c1"># Precision: 0=Comfortable, 1=Precise, 2/3=NotUsed [0|3]</span>
+                                                <span class="c1">#            The stock system always uses comfortable</span>
+    <span class="s2">&quot;LatCtlPathOffst_L_Actl&quot;</span><span class="p">:</span> <span class="n">path_offset</span><span class="p">,</span>      <span class="c1"># Path offset [-5.12|5.11] meter</span>
+    <span class="s2">&quot;LatCtlPath_An_Actl&quot;</span><span class="p">:</span> <span class="n">path_angle</span><span class="p">,</span>           <span class="c1"># Path angle [-0.5|0.5235] radians</span>
+    <span class="s2">&quot;LatCtlCurv_NoRate_Actl&quot;</span><span class="p">:</span> <span class="n">curvature_rate</span><span class="p">,</span>   <span class="c1"># Curvature rate [-0.001024|0.00102375] 1/meter^2</span>
+    <span class="s2">&quot;LatCtlCurv_No_Actl&quot;</span><span class="p">:</span> <span class="n">curvature</span><span class="p">,</span>            <span class="c1"># Curvature [-0.02|0.02094] 1/meter</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;LateralMotionControl&quot;</span><span class="p">,</span> <span class="n">CAN</span><span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_lat_ctl2_msg">
+<a class="viewcode-back" href="../../../../selfdrive.car.ford.html#selfdrive.car.ford.fordcan.create_lat_ctl2_msg">[docs]</a>
+<span class="k">def</span> <span class="nf">create_lat_ctl2_msg</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">CAN</span><span class="p">:</span> <span class="n">CanBus</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">path_offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">path_angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">curvature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="n">curvature_rate</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">counter</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Create a CAN message for the new Ford Lane Centering command.</span>
+
+<span class="sd">  This message is used on the CAN FD platform and replaces the old LateralMotionControl message. It is similar but has</span>
+<span class="sd">  additional signals for a counter and checksum.</span>
+
+<span class="sd">  Frequency is 20Hz.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;LatCtl_D2_Rq&quot;</span><span class="p">:</span> <span class="n">mode</span><span class="p">,</span>                       <span class="c1"># Mode: 0=None, 1=PathFollowingLimitedMode, 2=PathFollowingExtendedMode,</span>
+                                                <span class="c1">#       3=SafeRampOut, 4-7=NotUsed [0|7]</span>
+    <span class="s2">&quot;LatCtlRampType_D_Rq&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                   <span class="c1"># 0=Slow, 1=Medium, 2=Fast, 3=Immediate [0|3]</span>
+    <span class="s2">&quot;LatCtlPrecision_D_Rq&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>                  <span class="c1"># 0=Comfortable, 1=Precise, 2/3=NotUsed [0|3]</span>
+    <span class="s2">&quot;LatCtlPathOffst_L_Actl&quot;</span><span class="p">:</span> <span class="n">path_offset</span><span class="p">,</span>      <span class="c1"># [-5.12|5.11] meter</span>
+    <span class="s2">&quot;LatCtlPath_An_Actl&quot;</span><span class="p">:</span> <span class="n">path_angle</span><span class="p">,</span>           <span class="c1"># [-0.5|0.5235] radians</span>
+    <span class="s2">&quot;LatCtlCurv_No_Actl&quot;</span><span class="p">:</span> <span class="n">curvature</span><span class="p">,</span>            <span class="c1"># [-0.02|0.02094] 1/meter</span>
+    <span class="s2">&quot;LatCtlCrv_NoRate2_Actl&quot;</span><span class="p">:</span> <span class="n">curvature_rate</span><span class="p">,</span>   <span class="c1"># [-0.001024|0.001023] 1/meter^2</span>
+    <span class="s2">&quot;HandsOffCnfm_B_Rq&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                     <span class="c1"># 0=Inactive, 1=Active [0|1]</span>
+    <span class="s2">&quot;LatCtlPath_No_Cnt&quot;</span><span class="p">:</span> <span class="n">counter</span><span class="p">,</span>               <span class="c1"># [0|15]</span>
+    <span class="s2">&quot;LatCtlPath_No_Cs&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                      <span class="c1"># [0|255]</span>
+  <span class="p">}</span>
+
+  <span class="c1"># calculate checksum</span>
+  <span class="n">dat</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;LateralMotionControl2&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+  <span class="n">values</span><span class="p">[</span><span class="s2">&quot;LatCtlPath_No_Cs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">calculate_lat_ctl2_checksum</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">counter</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;LateralMotionControl2&quot;</span><span class="p">,</span> <span class="n">CAN</span><span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_acc_msg">
+<a class="viewcode-back" href="../../../../selfdrive.car.ford.html#selfdrive.car.ford.fordcan.create_acc_msg">[docs]</a>
+<span class="k">def</span> <span class="nf">create_acc_msg</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">CAN</span><span class="p">:</span> <span class="n">CanBus</span><span class="p">,</span> <span class="n">long_active</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">accel</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">stopping</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">v_ego_kph</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Creates a CAN message for the Ford ACC Command.</span>
+
+<span class="sd">  This command can be used to enable ACC, to set the ACC gas/brake/decel values</span>
+<span class="sd">  and to disable ACC.</span>
+
+<span class="sd">  Frequency is 50Hz.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">decel</span> <span class="o">=</span> <span class="n">accel</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">long_active</span>
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;AccBrkTot_A_Rq&quot;</span><span class="p">:</span> <span class="n">accel</span><span class="p">,</span>                          <span class="c1"># Brake total accel request: [-20|11.9449] m/s^2</span>
+    <span class="s2">&quot;Cmbb_B_Enbl&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">long_active</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>           <span class="c1"># Enabled: 0=No, 1=Yes</span>
+    <span class="s2">&quot;AccPrpl_A_Rq&quot;</span><span class="p">:</span> <span class="n">gas</span><span class="p">,</span>                              <span class="c1"># Acceleration request: [-5|5.23] m/s^2</span>
+    <span class="s2">&quot;AccPrpl_A_Pred&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">5.0</span><span class="p">,</span>                           <span class="c1"># Acceleration request: [-5|5.23] m/s^2</span>
+    <span class="s2">&quot;AccResumEnbl_B_Rq&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">long_active</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;AccVeh_V_Trg&quot;</span><span class="p">:</span> <span class="n">v_ego_kph</span><span class="p">,</span>                        <span class="c1"># Target speed: [0|255] km/h</span>
+    <span class="c1"># TODO: we may be able to improve braking response by utilizing pre-charging better</span>
+    <span class="s2">&quot;AccBrkPrchg_B_Rq&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">decel</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>            <span class="c1"># Pre-charge brake request: 0=No, 1=Yes</span>
+    <span class="s2">&quot;AccBrkDecel_B_Rq&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">decel</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>            <span class="c1"># Deceleration request: 0=Inactive, 1=Active</span>
+    <span class="s2">&quot;AccStopStat_B_Rq&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">stopping</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;ACCDATA&quot;</span><span class="p">,</span> <span class="n">CAN</span><span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_acc_ui_msg">
+<a class="viewcode-back" href="../../../../selfdrive.car.ford.html#selfdrive.car.ford.fordcan.create_acc_ui_msg">[docs]</a>
+<span class="k">def</span> <span class="nf">create_acc_ui_msg</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">CAN</span><span class="p">:</span> <span class="n">CanBus</span><span class="p">,</span> <span class="n">CP</span><span class="p">,</span> <span class="n">main_on</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">fcw_alert</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">standstill</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+                      <span class="n">hud_control</span><span class="p">,</span> <span class="n">stock_values</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Creates a CAN message for the Ford IPC adaptive cruise, forward collision warning and traffic jam</span>
+<span class="sd">  assist status.</span>
+
+<span class="sd">  Stock functionality is maintained by passing through unmodified signals.</span>
+
+<span class="sd">  Frequency is 5Hz.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="c1"># Tja_D_Stat</span>
+  <span class="k">if</span> <span class="n">enabled</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">leftLaneDepart</span><span class="p">:</span>
+      <span class="n">status</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># ActiveInterventionLeft</span>
+    <span class="k">elif</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">rightLaneDepart</span><span class="p">:</span>
+      <span class="n">status</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># ActiveInterventionRight</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">status</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Active</span>
+  <span class="k">elif</span> <span class="n">main_on</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">leftLaneDepart</span><span class="p">:</span>
+      <span class="n">status</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># ActiveWarningLeft</span>
+    <span class="k">elif</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">rightLaneDepart</span><span class="p">:</span>
+      <span class="n">status</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># ActiveWarningRight</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">status</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Standby</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># Off</span>
+
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">stock_values</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="s2">&quot;HaDsply_No_Cs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HaDsply_No_Cnt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AccStopStat_D_Dsply&quot;</span><span class="p">,</span>       <span class="c1"># ACC stopped status message</span>
+    <span class="s2">&quot;AccTrgDist2_D_Dsply&quot;</span><span class="p">,</span>       <span class="c1"># ACC target distance</span>
+    <span class="s2">&quot;AccStopRes_B_Dsply&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TjaWarn_D_Rq&quot;</span><span class="p">,</span>              <span class="c1"># TJA warning</span>
+    <span class="s2">&quot;TjaMsgTxt_D_Dsply&quot;</span><span class="p">,</span>         <span class="c1"># TJA text</span>
+    <span class="s2">&quot;IaccLamp_D_Rq&quot;</span><span class="p">,</span>             <span class="c1"># iACC status icon</span>
+    <span class="s2">&quot;AccMsgTxt_D2_Rq&quot;</span><span class="p">,</span>           <span class="c1"># ACC text</span>
+    <span class="s2">&quot;FcwDeny_B_Dsply&quot;</span><span class="p">,</span>           <span class="c1"># FCW disabled</span>
+    <span class="s2">&quot;FcwMemStat_B_Actl&quot;</span><span class="p">,</span>         <span class="c1"># FCW enabled setting</span>
+    <span class="s2">&quot;AccTGap_B_Dsply&quot;</span><span class="p">,</span>           <span class="c1"># ACC time gap display setting</span>
+    <span class="s2">&quot;CadsAlignIncplt_B_Actl&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AccFllwMde_B_Dsply&quot;</span><span class="p">,</span>        <span class="c1"># ACC follow mode display setting</span>
+    <span class="s2">&quot;CadsRadrBlck_B_Actl&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CmbbPostEvnt_B_Dsply&quot;</span><span class="p">,</span>      <span class="c1"># AEB event status</span>
+    <span class="s2">&quot;AccStopMde_B_Dsply&quot;</span><span class="p">,</span>        <span class="c1"># ACC stop mode display setting</span>
+    <span class="s2">&quot;FcwMemSens_D_Actl&quot;</span><span class="p">,</span>         <span class="c1"># FCW sensitivity setting</span>
+    <span class="s2">&quot;FcwMsgTxt_D_Rq&quot;</span><span class="p">,</span>            <span class="c1"># FCW text</span>
+    <span class="s2">&quot;AccWarn_D_Dsply&quot;</span><span class="p">,</span>           <span class="c1"># ACC warning</span>
+    <span class="s2">&quot;FcwVisblWarn_B_Rq&quot;</span><span class="p">,</span>         <span class="c1"># FCW visible alert</span>
+    <span class="s2">&quot;FcwAudioWarn_B_Rq&quot;</span><span class="p">,</span>         <span class="c1"># FCW audio alert</span>
+    <span class="s2">&quot;AccTGap_D_Dsply&quot;</span><span class="p">,</span>           <span class="c1"># ACC time gap</span>
+    <span class="s2">&quot;AccMemEnbl_B_RqDrv&quot;</span><span class="p">,</span>        <span class="c1"># ACC adaptive/normal setting</span>
+    <span class="s2">&quot;FdaMem_B_Stat&quot;</span><span class="p">,</span>             <span class="c1"># FDA enabled setting</span>
+  <span class="p">]}</span>
+
+  <span class="n">values</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+    <span class="s2">&quot;Tja_D_Stat&quot;</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>        <span class="c1"># TJA status</span>
+  <span class="p">})</span>
+
+  <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+    <span class="n">values</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+      <span class="s2">&quot;AccStopStat_D_Dsply&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">standstill</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>              <span class="c1"># Stopping status text</span>
+      <span class="s2">&quot;AccMsgTxt_D2_Rq&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                                       <span class="c1"># ACC text</span>
+      <span class="s2">&quot;AccTGap_B_Dsply&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                                       <span class="c1"># Show time gap control UI</span>
+      <span class="s2">&quot;AccFllwMde_B_Dsply&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">leadVisible</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>  <span class="c1"># Lead indicator</span>
+      <span class="s2">&quot;AccStopMde_B_Dsply&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">standstill</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;AccWarn_D_Dsply&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                                       <span class="c1"># ACC warning</span>
+      <span class="s2">&quot;AccTGap_D_Dsply&quot;</span><span class="p">:</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">leadDistanceBars</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>        <span class="c1"># Time gap</span>
+    <span class="p">})</span>
+
+  <span class="c1"># Forwards FCW alert from IPMA</span>
+  <span class="k">if</span> <span class="n">fcw_alert</span><span class="p">:</span>
+    <span class="n">values</span><span class="p">[</span><span class="s2">&quot;FcwVisblWarn_B_Rq&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># FCW visible alert</span>
+
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;ACCDATA_3&quot;</span><span class="p">,</span> <span class="n">CAN</span><span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_lkas_ui_msg">
+<a class="viewcode-back" href="../../../../selfdrive.car.ford.html#selfdrive.car.ford.fordcan.create_lkas_ui_msg">[docs]</a>
+<span class="k">def</span> <span class="nf">create_lkas_ui_msg</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">CAN</span><span class="p">:</span> <span class="n">CanBus</span><span class="p">,</span> <span class="n">main_on</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">steer_alert</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">hud_control</span><span class="p">,</span>
+                       <span class="n">stock_values</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Creates a CAN message for the Ford IPC IPMA/LKAS status.</span>
+
+<span class="sd">  Show the LKAS status with the &quot;driver assist&quot; lines in the IPC.</span>
+
+<span class="sd">  Stock functionality is maintained by passing through unmodified signals.</span>
+
+<span class="sd">  Frequency is 1Hz.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="c1"># LaActvStats_D_Dsply</span>
+  <span class="c1">#    R  Intvn Warn Supprs Avail No</span>
+  <span class="c1"># L</span>
+  <span class="c1"># Intvn  24    19    14     9   4</span>
+  <span class="c1"># Warn   23    18    13     8   3</span>
+  <span class="c1"># Supprs 22    17    12     7   2</span>
+  <span class="c1"># Avail  21    16    11     6   1</span>
+  <span class="c1"># No     20    15    10     5   0</span>
+  <span class="c1">#</span>
+  <span class="c1"># TODO: test suppress state</span>
+  <span class="k">if</span> <span class="n">enabled</span><span class="p">:</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># NoLeft_NoRight</span>
+    <span class="k">if</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">leftLaneDepart</span><span class="p">:</span>
+      <span class="n">lines</span> <span class="o">+=</span> <span class="mi">4</span>
+    <span class="k">elif</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">leftLaneVisible</span><span class="p">:</span>
+      <span class="n">lines</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">rightLaneDepart</span><span class="p">:</span>
+      <span class="n">lines</span> <span class="o">+=</span> <span class="mi">20</span>
+    <span class="k">elif</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">rightLaneVisible</span><span class="p">:</span>
+      <span class="n">lines</span> <span class="o">+=</span> <span class="mi">5</span>
+  <span class="k">elif</span> <span class="n">main_on</span><span class="p">:</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">leftLaneDepart</span><span class="p">:</span>
+      <span class="n">lines</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># WarnLeft_NoRight</span>
+    <span class="k">elif</span> <span class="n">hud_control</span><span class="o">.</span><span class="n">rightLaneDepart</span><span class="p">:</span>
+      <span class="n">lines</span> <span class="o">=</span> <span class="mi">15</span>  <span class="c1"># NoLeft_WarnRight</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">lines</span> <span class="o">=</span> <span class="mi">30</span>  <span class="c1"># LA_Off</span>
+
+  <span class="n">hands_on_wheel_dsply</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">steer_alert</span> <span class="k">else</span> <span class="mi">0</span>
+
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">stock_values</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="s2">&quot;FeatConfigIpmaActl&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FeatNoIpmaActl&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PersIndexIpma_D_Actl&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AhbcRampingV_D_Rq&quot;</span><span class="p">,</span>     <span class="c1"># AHB ramping</span>
+    <span class="s2">&quot;LaDenyStats_B_Dsply&quot;</span><span class="p">,</span>   <span class="c1"># LKAS error</span>
+    <span class="s2">&quot;CamraDefog_B_Req&quot;</span><span class="p">,</span>      <span class="c1"># Windshield heater?</span>
+    <span class="s2">&quot;CamraStats_D_Dsply&quot;</span><span class="p">,</span>    <span class="c1"># Camera status</span>
+    <span class="s2">&quot;DasAlrtLvl_D_Dsply&quot;</span><span class="p">,</span>    <span class="c1"># DAS alert level</span>
+    <span class="s2">&quot;DasStats_D_Dsply&quot;</span><span class="p">,</span>      <span class="c1"># DAS status</span>
+    <span class="s2">&quot;DasWarn_D_Dsply&quot;</span><span class="p">,</span>       <span class="c1"># DAS warning</span>
+    <span class="s2">&quot;AhbHiBeam_D_Rq&quot;</span><span class="p">,</span>        <span class="c1"># AHB status</span>
+    <span class="s2">&quot;Passthru_63&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Passthru_48&quot;</span><span class="p">,</span>
+  <span class="p">]}</span>
+
+  <span class="n">values</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+    <span class="s2">&quot;LaActvStats_D_Dsply&quot;</span><span class="p">:</span> <span class="n">lines</span><span class="p">,</span>                 <span class="c1"># LKAS status (lines) [0|31]</span>
+    <span class="s2">&quot;LaHandsOff_D_Dsply&quot;</span><span class="p">:</span> <span class="n">hands_on_wheel_dsply</span><span class="p">,</span>   <span class="c1"># 0=HandsOn, 1=Level1 (w/o chime), 2=Level2 (w/ chime), 3=Suppressed</span>
+  <span class="p">})</span>
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;IPMA_Data&quot;</span><span class="p">,</span> <span class="n">CAN</span><span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_button_msg">
+<a class="viewcode-back" href="../../../../selfdrive.car.ford.html#selfdrive.car.ford.fordcan.create_button_msg">[docs]</a>
+<span class="k">def</span> <span class="nf">create_button_msg</span><span class="p">(</span><span class="n">packer</span><span class="p">,</span> <span class="n">bus</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">stock_values</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">cancel</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">resume</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tja_toggle</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Creates a CAN message for the Ford SCCM buttons/switches.</span>
+
+<span class="sd">  Includes cruise control buttons, turn lights and more.</span>
+
+<span class="sd">  Frequency is 10Hz.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">stock_values</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="s2">&quot;HeadLghtHiFlash_D_Stat&quot;</span><span class="p">,</span>  <span class="c1"># SCCM Passthrough the remaining buttons</span>
+    <span class="s2">&quot;TurnLghtSwtch_D_Stat&quot;</span><span class="p">,</span>    <span class="c1"># SCCM Turn signal switch</span>
+    <span class="s2">&quot;WiprFront_D_Stat&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LghtAmb_D_Sns&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AccButtnGapDecPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AccButtnGapIncPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AslButtnOnOffCnclPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AslButtnOnOffPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LaSwtchPos_D_Stat&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcAslButtnCnclResPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcAslButtnDeny_B_Actl&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcAslButtnIndxDecPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcAslButtnIndxIncPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcAslButtnOffCnclPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcAslButtnOnOffCncl&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcAslButtnOnPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcAslButtnResDecPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcAslButtnResIncPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcAslButtnSetDecPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcAslButtnSetIncPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcAslButtnSetPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcButtnOffPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcButtnOnOffCnclPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcButtnOnOffPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CcButtnOnPress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HeadLghtHiFlash_D_Actl&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HeadLghtHiOn_B_StatAhb&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AhbStat_B_Dsply&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AccButtnGapTogglePress&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;WiprFrontSwtch_D_Stat&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HeadLghtHiCtrl_D_RqAhb&quot;</span><span class="p">,</span>
+  <span class="p">]}</span>
+
+  <span class="n">values</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+    <span class="s2">&quot;CcAslButtnCnclPress&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">cancel</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>      <span class="c1"># CC cancel button</span>
+    <span class="s2">&quot;CcAsllButtnResPress&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">resume</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>      <span class="c1"># CC resume button</span>
+    <span class="s2">&quot;TjaButtnOnOffPress&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">tja_toggle</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>   <span class="c1"># LCA/TJA toggle button</span>
+  <span class="p">})</span>
+  <span class="k">return</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;Steering_Data_FD1&quot;</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

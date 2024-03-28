@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.athena.registration &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/athena/registration.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.athena.registration</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.athena.registration</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">jwt</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.api</span> <span class="kn">import</span> <span class="n">api_get</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.spinner</span> <span class="kn">import</span> <span class="n">Spinner</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.alertmanager</span> <span class="kn">import</span> <span class="n">set_offroad_alert</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware</span> <span class="kn">import</span> <span class="n">HARDWARE</span><span class="p">,</span> <span class="n">PC</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware.hw</span> <span class="kn">import</span> <span class="n">Paths</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+
+
+<span class="n">UNREGISTERED_DONGLE_ID</span> <span class="o">=</span> <span class="s2">&quot;UnregisteredDevice&quot;</span>
+
+
+<div class="viewcode-block" id="is_registered_device">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.registration.is_registered_device">[docs]</a>
+<span class="k">def</span> <span class="nf">is_registered_device</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="n">dongle</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DongleId&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">dongle</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">UNREGISTERED_DONGLE_ID</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="register">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.registration.register">[docs]</a>
+<span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="n">show_spinner</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+
+  <span class="n">IMEI</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;IMEI&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+  <span class="n">HardwareSerial</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HardwareSerial&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+  <span class="n">dongle_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DongleId&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+  <span class="n">needs_registration</span> <span class="o">=</span> <span class="kc">None</span> <span class="ow">in</span> <span class="p">(</span><span class="n">IMEI</span><span class="p">,</span> <span class="n">HardwareSerial</span><span class="p">,</span> <span class="n">dongle_id</span><span class="p">)</span>
+
+  <span class="n">pubkey</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">persist_root</span><span class="p">()</span><span class="o">+</span><span class="s2">&quot;/comma/id_rsa.pub&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">pubkey</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+    <span class="n">dongle_id</span> <span class="o">=</span> <span class="n">UNREGISTERED_DONGLE_ID</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;missing public key: </span><span class="si">{</span><span class="n">pubkey</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">needs_registration</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">show_spinner</span><span class="p">:</span>
+      <span class="n">spinner</span> <span class="o">=</span> <span class="n">Spinner</span><span class="p">()</span>
+      <span class="n">spinner</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;registering device&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Create registration token, in the future, this key will make JWTs directly</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">persist_root</span><span class="p">()</span><span class="o">+</span><span class="s2">&quot;/comma/id_rsa.pub&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f1</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">persist_root</span><span class="p">()</span><span class="o">+</span><span class="s2">&quot;/comma/id_rsa&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f2</span><span class="p">:</span>
+      <span class="n">public_key</span> <span class="o">=</span> <span class="n">f1</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+      <span class="n">private_key</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="c1"># Block until we get the imei</span>
+    <span class="n">serial</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_serial</span><span class="p">()</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+    <span class="n">imei1</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">imei2</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">while</span> <span class="n">imei1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">imei2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">imei1</span><span class="p">,</span> <span class="n">imei2</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_imei</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_imei</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Error getting imei, trying again...&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span> <span class="o">&gt;</span> <span class="mi">60</span> <span class="ow">and</span> <span class="n">show_spinner</span><span class="p">:</span>
+        <span class="n">spinner</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;registering device - serial: </span><span class="si">{</span><span class="n">serial</span><span class="si">}</span><span class="s2">, IMEI: (</span><span class="si">{</span><span class="n">imei1</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">imei2</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+    <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;IMEI&quot;</span><span class="p">,</span> <span class="n">imei1</span><span class="p">)</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;HardwareSerial&quot;</span><span class="p">,</span> <span class="n">serial</span><span class="p">)</span>
+
+    <span class="n">backoff</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">register_token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">({</span><span class="s1">&#39;register&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;exp&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)},</span> <span class="n">private_key</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;RS256&#39;</span><span class="p">)</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;getting pilotauth&quot;</span><span class="p">)</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">api_get</span><span class="p">(</span><span class="s2">&quot;v2/pilotauth/&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+                       <span class="n">imei</span><span class="o">=</span><span class="n">imei1</span><span class="p">,</span> <span class="n">imei2</span><span class="o">=</span><span class="n">imei2</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="n">serial</span><span class="p">,</span> <span class="n">public_key</span><span class="o">=</span><span class="n">public_key</span><span class="p">,</span> <span class="n">register_token</span><span class="o">=</span><span class="n">register_token</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">402</span><span class="p">,</span> <span class="mi">403</span><span class="p">):</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to register device, got </span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+          <span class="n">dongle_id</span> <span class="o">=</span> <span class="n">UNREGISTERED_DONGLE_ID</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">dongleauth</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+          <span class="n">dongle_id</span> <span class="o">=</span> <span class="n">dongleauth</span><span class="p">[</span><span class="s2">&quot;dongle_id&quot;</span><span class="p">]</span>
+        <span class="k">break</span>
+      <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;failed to authenticate&quot;</span><span class="p">)</span>
+        <span class="n">backoff</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">backoff</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">backoff</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span> <span class="o">&gt;</span> <span class="mi">60</span> <span class="ow">and</span> <span class="n">show_spinner</span><span class="p">:</span>
+        <span class="n">spinner</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;registering device - serial: </span><span class="si">{</span><span class="n">serial</span><span class="si">}</span><span class="s2">, IMEI: (</span><span class="si">{</span><span class="n">imei1</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">imei2</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">show_spinner</span><span class="p">:</span>
+      <span class="n">spinner</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+  <span class="k">if</span> <span class="n">dongle_id</span><span class="p">:</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;DongleId&quot;</span><span class="p">,</span> <span class="n">dongle_id</span><span class="p">)</span>
+    <span class="n">set_offroad_alert</span><span class="p">(</span><span class="s2">&quot;Offroad_UnofficialHardware&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">dongle_id</span> <span class="o">==</span> <span class="n">UNREGISTERED_DONGLE_ID</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">PC</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">dongle_id</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">register</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

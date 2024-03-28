@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>panda.python.ccp &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/panda/python/ccp.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../python.html">panda.python</a></li>
+      <li class="breadcrumb-item active">panda.python.ccp</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for panda.python.ccp</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span><span class="p">,</span> <span class="n">Enum</span>
+
+<div class="viewcode-block" id="COMMAND_CODE">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.COMMAND_CODE">[docs]</a>
+<span class="k">class</span> <span class="nc">COMMAND_CODE</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="n">CONNECT</span> <span class="o">=</span> <span class="mh">0x01</span>
+  <span class="n">SET_MTA</span> <span class="o">=</span> <span class="mh">0x02</span>
+  <span class="n">DNLOAD</span> <span class="o">=</span> <span class="mh">0x03</span>
+  <span class="n">UPLOAD</span> <span class="o">=</span> <span class="mh">0x04</span>
+  <span class="n">TEST</span> <span class="o">=</span> <span class="mh">0x05</span>
+  <span class="n">START_STOP</span> <span class="o">=</span> <span class="mh">0x06</span>
+  <span class="n">DISCONNECT</span> <span class="o">=</span> <span class="mh">0x07</span>
+  <span class="n">START_STOP_ALL</span> <span class="o">=</span> <span class="mh">0x08</span>
+  <span class="n">GET_ACTIVE_CAL_PAGE</span> <span class="o">=</span> <span class="mh">0x09</span>
+  <span class="n">SET_S_STATUS</span> <span class="o">=</span> <span class="mh">0x0C</span>
+  <span class="n">GET_S_STATUS</span> <span class="o">=</span> <span class="mh">0x0D</span>
+  <span class="n">BUILD_CHKSUM</span> <span class="o">=</span> <span class="mh">0x0E</span>
+  <span class="n">SHORT_UP</span> <span class="o">=</span> <span class="mh">0x0F</span>
+  <span class="n">CLEAR_MEMORY</span> <span class="o">=</span> <span class="mh">0x10</span>
+  <span class="n">SELECT_CAL_PAGE</span> <span class="o">=</span> <span class="mh">0x11</span>
+  <span class="n">GET_SEED</span> <span class="o">=</span> <span class="mh">0x12</span>
+  <span class="n">UNLOCK</span> <span class="o">=</span> <span class="mh">0x13</span>
+  <span class="n">GET_DAQ_SIZE</span> <span class="o">=</span> <span class="mh">0x14</span>
+  <span class="n">SET_DAQ_PTR</span> <span class="o">=</span> <span class="mh">0x15</span>
+  <span class="n">WRITE_DAQ</span> <span class="o">=</span> <span class="mh">0x16</span>
+  <span class="n">EXCHANGE_ID</span> <span class="o">=</span> <span class="mh">0x17</span>
+  <span class="n">PROGRAM</span> <span class="o">=</span> <span class="mh">0x18</span>
+  <span class="n">MOVE</span> <span class="o">=</span> <span class="mh">0x19</span>
+  <span class="n">GET_CCP_VERSION</span> <span class="o">=</span> <span class="mh">0x1B</span>
+  <span class="n">DIAG_SERVICE</span> <span class="o">=</span> <span class="mh">0x20</span>
+  <span class="n">ACTION_SERVICE</span> <span class="o">=</span> <span class="mh">0x21</span>
+  <span class="n">PROGRAM_6</span> <span class="o">=</span> <span class="mh">0x22</span>
+  <span class="n">DNLOAD_6</span> <span class="o">=</span> <span class="mh">0x23</span></div>
+
+
+<span class="n">COMMAND_RETURN_CODES</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="mh">0x00</span><span class="p">:</span> <span class="s2">&quot;acknowledge / no error&quot;</span><span class="p">,</span>
+  <span class="mh">0x01</span><span class="p">:</span> <span class="s2">&quot;DAQ processor overload&quot;</span><span class="p">,</span>
+  <span class="mh">0x10</span><span class="p">:</span> <span class="s2">&quot;command processor busy&quot;</span><span class="p">,</span>
+  <span class="mh">0x11</span><span class="p">:</span> <span class="s2">&quot;DAQ processor busy&quot;</span><span class="p">,</span>
+  <span class="mh">0x12</span><span class="p">:</span> <span class="s2">&quot;internal timeout&quot;</span><span class="p">,</span>
+  <span class="mh">0x18</span><span class="p">:</span> <span class="s2">&quot;key request&quot;</span><span class="p">,</span>
+  <span class="mh">0x19</span><span class="p">:</span> <span class="s2">&quot;session status request&quot;</span><span class="p">,</span>
+  <span class="mh">0x20</span><span class="p">:</span> <span class="s2">&quot;cold start request&quot;</span><span class="p">,</span>
+  <span class="mh">0x21</span><span class="p">:</span> <span class="s2">&quot;cal. data init. request&quot;</span><span class="p">,</span>
+  <span class="mh">0x22</span><span class="p">:</span> <span class="s2">&quot;DAQ list init. request&quot;</span><span class="p">,</span>
+  <span class="mh">0x23</span><span class="p">:</span> <span class="s2">&quot;code update request&quot;</span><span class="p">,</span>
+  <span class="mh">0x30</span><span class="p">:</span> <span class="s2">&quot;unknown command&quot;</span><span class="p">,</span>
+  <span class="mh">0x31</span><span class="p">:</span> <span class="s2">&quot;command syntax&quot;</span><span class="p">,</span>
+  <span class="mh">0x32</span><span class="p">:</span> <span class="s2">&quot;parameter(s) out of range&quot;</span><span class="p">,</span>
+  <span class="mh">0x33</span><span class="p">:</span> <span class="s2">&quot;access denied&quot;</span><span class="p">,</span>
+  <span class="mh">0x34</span><span class="p">:</span> <span class="s2">&quot;overload&quot;</span><span class="p">,</span>
+  <span class="mh">0x35</span><span class="p">:</span> <span class="s2">&quot;access locked&quot;</span><span class="p">,</span>
+  <span class="mh">0x36</span><span class="p">:</span> <span class="s2">&quot;resource/function not available&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<div class="viewcode-block" id="BYTE_ORDER">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.BYTE_ORDER">[docs]</a>
+<span class="k">class</span> <span class="nc">BYTE_ORDER</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+  <span class="n">LITTLE_ENDIAN</span> <span class="o">=</span> <span class="s1">&#39;&lt;&#39;</span>
+  <span class="n">BIG_ENDIAN</span> <span class="o">=</span> <span class="s1">&#39;&gt;&#39;</span></div>
+
+
+<div class="viewcode-block" id="CommandTimeoutError">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CommandTimeoutError">[docs]</a>
+<span class="k">class</span> <span class="nc">CommandTimeoutError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="CommandCounterError">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CommandCounterError">[docs]</a>
+<span class="k">class</span> <span class="nc">CommandCounterError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="CommandResponseError">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CommandResponseError">[docs]</a>
+<span class="k">class</span> <span class="nc">CommandResponseError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">return_code</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">return_code</span> <span class="o">=</span> <span class="n">return_code</span>
+
+  <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span></div>
+
+
+<div class="viewcode-block" id="CcpClient">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient">[docs]</a>
+<span class="k">class</span> <span class="nc">CcpClient</span><span class="p">():</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">panda</span><span class="p">,</span> <span class="n">tx_addr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rx_addr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bus</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">byte_order</span><span class="p">:</span> <span class="n">BYTE_ORDER</span><span class="o">=</span><span class="n">BYTE_ORDER</span><span class="o">.</span><span class="n">BIG_ENDIAN</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tx_addr</span> <span class="o">=</span> <span class="n">tx_addr</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rx_addr</span> <span class="o">=</span> <span class="n">rx_addr</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">can_bus</span> <span class="o">=</span> <span class="n">bus</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span> <span class="o">=</span> <span class="n">byte_order</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_panda</span> <span class="o">=</span> <span class="n">panda</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_command_counter</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+  <span class="k">def</span> <span class="nf">_send_cro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dat</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_command_counter</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_command_counter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span>
+    <span class="n">tx_data</span> <span class="o">=</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">([</span><span class="n">cmd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command_counter</span><span class="p">])</span> <span class="o">+</span> <span class="n">dat</span><span class="p">)</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CAN-TX: </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2"> - 0x</span><span class="si">{</span><span class="nb">bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">(</span><span class="n">tx_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">tx_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;data is not 8 bytes&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_panda</span><span class="o">.</span><span class="n">can_clear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">can_bus</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_panda</span><span class="o">.</span><span class="n">can_clear</span><span class="p">(</span><span class="mh">0xFFFF</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_panda</span><span class="o">.</span><span class="n">can_send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tx_addr</span><span class="p">,</span> <span class="n">tx_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_bus</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_recv_dto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span> <span class="o">&lt;</span> <span class="n">timeout</span><span class="p">:</span>
+      <span class="n">msgs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panda</span><span class="o">.</span><span class="n">can_recv</span><span class="p">()</span> <span class="ow">or</span> <span class="p">[]</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msgs</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">256</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CAN RX buffer overflow!!!&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">rx_addr</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">rx_data_bytearray</span><span class="p">,</span> <span class="n">rx_bus</span> <span class="ow">in</span> <span class="n">msgs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rx_bus</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_bus</span> <span class="ow">and</span> <span class="n">rx_addr</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_addr</span><span class="p">:</span>
+          <span class="n">rx_data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">rx_data_bytearray</span><span class="p">)</span>
+          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CAN-RX: </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">rx_addr</span><span class="p">)</span><span class="si">}</span><span class="s2"> - 0x</span><span class="si">{</span><span class="nb">bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">(</span><span class="n">rx_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+          <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rx_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;message length not 8: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">rx_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+
+          <span class="n">pid</span> <span class="o">=</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+          <span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mh">0xFF</span> <span class="ow">or</span> <span class="n">pid</span> <span class="o">==</span> <span class="mh">0xFE</span><span class="p">:</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">err_desc</span> <span class="o">=</span> <span class="n">COMMAND_RETURN_CODES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="s2">&quot;unknown error&quot;</span><span class="p">)</span>
+            <span class="n">ctr</span> <span class="o">=</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">dat</span> <span class="o">=</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+
+            <span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mh">0xFF</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command_counter</span> <span class="o">!=</span> <span class="n">ctr</span><span class="p">:</span>
+              <span class="k">raise</span> <span class="n">CommandCounterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;counter invalid: </span><span class="si">{</span><span class="n">ctr</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_command_counter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">err</span> <span class="o">&gt;=</span> <span class="mh">0x10</span> <span class="ow">and</span> <span class="n">err</span> <span class="o">&lt;=</span> <span class="mh">0x12</span><span class="p">:</span>
+              <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CCP-WAIT: </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">err_desc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+              <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+              <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">err</span> <span class="o">&gt;=</span> <span class="mh">0x30</span><span class="p">:</span>
+              <span class="k">raise</span> <span class="n">CommandResponseError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">err_desc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+          <span class="k">else</span><span class="p">:</span>
+            <span class="n">dat</span> <span class="o">=</span> <span class="n">rx_data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+          <span class="k">return</span> <span class="n">dat</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.001</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="n">CommandTimeoutError</span><span class="p">(</span><span class="s2">&quot;timeout waiting for response&quot;</span><span class="p">)</span>
+
+  <span class="c1"># commands</span>
+<div class="viewcode-block" id="CcpClient.connect">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.connect">[docs]</a>
+  <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_addr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">station_addr</span> <span class="o">&gt;</span> <span class="mi">65535</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;station address must be less than 65536&quot;</span><span class="p">)</span>
+    <span class="c1"># NOTE: station address is always little endian</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">CONNECT</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;H&quot;</span><span class="p">,</span> <span class="n">station_addr</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.exchange_station_ids">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.exchange_station_ids">[docs]</a>
+  <span class="k">def</span> <span class="nf">exchange_station_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id_info</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">EXCHANGE_ID</span><span class="p">,</span> <span class="n">device_id_info</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="c1"># TODO: define a type</span>
+      <span class="s2">&quot;id_length&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+      <span class="s2">&quot;data_type&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+      <span class="s2">&quot;available&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+      <span class="s2">&quot;protected&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.get_seed">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.get_seed">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_seed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_mask</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">resource_mask</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;resource mask must be less than 256&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">GET_SEED</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
+    <span class="c1"># protected = resp[0] == 0</span>
+    <span class="n">seed</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">seed</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.unlock">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.unlock">[docs]</a>
+  <span class="k">def</span> <span class="nf">unlock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;max key size is 6 bytes&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">UNLOCK</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">status</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.set_memory_transfer_address">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.set_memory_transfer_address">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_memory_transfer_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mta_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">addr_ext</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">mta_num</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;MTA number must be less than 256&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">addr_ext</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;address extension must be less than 256&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">SET_MTA</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">mta_num</span><span class="p">,</span> <span class="n">addr_ext</span><span class="p">])</span> <span class="o">+</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">I&quot;</span><span class="p">,</span> <span class="n">addr</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.download">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.download">[docs]</a>
+  <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;max data size is 5 bytes&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">DNLOAD</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)])</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
+    <span class="c1"># mta_addr_ext = resp[0]</span>
+    <span class="n">mta_addr</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">I&quot;</span><span class="p">,</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">mta_addr</span>  <span class="c1"># type: ignore</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.download_6_bytes">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.download_6_bytes">[docs]</a>
+  <span class="k">def</span> <span class="nf">download_6_bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">6</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;data size must be 6 bytes&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">DNLOAD_6</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
+    <span class="c1"># mta_addr_ext = resp[0]</span>
+    <span class="n">mta_addr</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">I&quot;</span><span class="p">,</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">mta_addr</span>  <span class="c1"># type: ignore</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.upload">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.upload">[docs]</a>
+  <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;size must be less than 6&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">UPLOAD</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">size</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.short_upload">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.short_upload">[docs]</a>
+  <span class="k">def</span> <span class="nf">short_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">addr_ext</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;size must be less than 6&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">addr_ext</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;address extension must be less than 256&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">SHORT_UP</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">size</span><span class="p">,</span> <span class="n">addr_ext</span><span class="p">])</span> <span class="o">+</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">I&quot;</span><span class="p">,</span> <span class="n">addr</span><span class="p">))</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.select_calibration_page">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.select_calibration_page">[docs]</a>
+  <span class="k">def</span> <span class="nf">select_calibration_page</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">SELECT_CAL_PAGE</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.get_daq_list_size">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.get_daq_list_size">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_daq_list_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">can_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">list_num</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;list number must be less than 256&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">GET_DAQ_SIZE</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">list_num</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">I&quot;</span><span class="p">,</span> <span class="n">can_id</span><span class="p">))</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="c1"># TODO: define a type</span>
+      <span class="s2">&quot;list_size&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+      <span class="s2">&quot;first_pid&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.set_daq_list_pointer">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.set_daq_list_pointer">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_daq_list_pointer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">odt_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">element_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">list_num</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;list number must be less than 256&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">odt_num</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ODT number must be less than 256&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">element_num</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;element number must be less than 256&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">SET_DAQ_PTR</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">list_num</span><span class="p">,</span> <span class="n">odt_num</span><span class="p">,</span> <span class="n">element_num</span><span class="p">]))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.write_daq_list_entry">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.write_daq_list_entry">[docs]</a>
+  <span class="k">def</span> <span class="nf">write_daq_list_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">addr_ext</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;size must be less than 256&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">addr_ext</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;address extension must be less than 256&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">WRITE_DAQ</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">size</span><span class="p">,</span> <span class="n">addr_ext</span><span class="p">])</span> <span class="o">+</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">I&quot;</span><span class="p">,</span> <span class="n">addr</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.start_stop_transmission">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.start_stop_transmission">[docs]</a>
+  <span class="k">def</span> <span class="nf">start_stop_transmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">list_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">odt_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">channel_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rate_prescaler</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;mode must be less than 256&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">list_num</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;list number must be less than 256&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">odt_num</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ODT number must be less than 256&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">channel_num</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;channel number must be less than 256&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rate_prescaler</span> <span class="o">&gt;</span> <span class="mi">65535</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;rate prescaler must be less than 65536&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">START_STOP</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">mode</span><span class="p">,</span> <span class="n">list_num</span><span class="p">,</span> <span class="n">odt_num</span><span class="p">,</span> <span class="n">channel_num</span><span class="p">])</span> <span class="o">+</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">H&quot;</span><span class="p">,</span> <span class="n">rate_prescaler</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.disconnect">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.disconnect">[docs]</a>
+  <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_addr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">temporary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">station_addr</span> <span class="o">&gt;</span> <span class="mi">65535</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;station address must be less than 65536&quot;</span><span class="p">)</span>
+    <span class="c1"># NOTE: station address is always little endian</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">DISCONNECT</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="ow">not</span> <span class="n">temporary</span><span class="p">),</span> <span class="mh">0x00</span><span class="p">])</span> <span class="o">+</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;H&quot;</span><span class="p">,</span> <span class="n">station_addr</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.set_session_status">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.set_session_status">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_session_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">status</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;status must be less than 256&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">SET_S_STATUS</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">status</span><span class="p">]))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.get_session_status">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.get_session_status">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_session_status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">GET_S_STATUS</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="c1"># TODO: define a type</span>
+      <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+      <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.build_checksum">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.build_checksum">[docs]</a>
+  <span class="k">def</span> <span class="nf">build_checksum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">BUILD_CHKSUM</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">I&quot;</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">30.0</span><span class="p">)</span>
+    <span class="n">chksum_size</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">chksum_size</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;checksum more than 4 bytes&quot;</span>
+    <span class="n">chksum</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="o">+</span><span class="n">chksum_size</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">chksum</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.clear_memory">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.clear_memory">[docs]</a>
+  <span class="k">def</span> <span class="nf">clear_memory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">CLEAR_MEMORY</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">I&quot;</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">30.0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.program">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.program">[docs]</a>
+  <span class="k">def</span> <span class="nf">program</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;size must be less than 6&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;max data size is 5 bytes&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">PROGRAM</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">size</span><span class="p">])</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="c1"># mta_addr_ext = resp[0]</span>
+    <span class="n">mta_addr</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">I&quot;</span><span class="p">,</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">mta_addr</span>  <span class="c1"># type: ignore</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.program_6_bytes">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.program_6_bytes">[docs]</a>
+  <span class="k">def</span> <span class="nf">program_6_bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">6</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;data size must be 6 bytes&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">PROGRAM_6</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="c1"># mta_addr_ext = resp[0]</span>
+    <span class="n">mta_addr</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">I&quot;</span><span class="p">,</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">mta_addr</span>  <span class="c1"># type: ignore</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.move_memory_block">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.move_memory_block">[docs]</a>
+  <span class="k">def</span> <span class="nf">move_memory_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">MOVE</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">I&quot;</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.diagnostic_service">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.diagnostic_service">[docs]</a>
+  <span class="k">def</span> <span class="nf">diagnostic_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">service_num</span> <span class="o">&gt;</span> <span class="mi">65535</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;service number must be less than 65536&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;max data size is 4 bytes&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">DIAG_SERVICE</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">H&quot;</span><span class="p">,</span> <span class="n">service_num</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="c1"># TODO: define a type</span>
+      <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.action_service">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.action_service">[docs]</a>
+  <span class="k">def</span> <span class="nf">action_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">service_num</span> <span class="o">&gt;</span> <span class="mi">65535</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;service number must be less than 65536&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;max data size is 4 bytes&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">ACTION_SERVICE</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">H&quot;</span><span class="p">,</span> <span class="n">service_num</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="c1"># TODO: define a type</span>
+      <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.test_availability">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.test_availability">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_availability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_addr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">station_addr</span> <span class="o">&gt;</span> <span class="mi">65535</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;station address must be less than 65536&quot;</span><span class="p">)</span>
+    <span class="c1"># NOTE: station address is always little endian</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">TEST</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;H&quot;</span><span class="p">,</span> <span class="n">station_addr</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.start_stop_synchronised_transmission">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.start_stop_synchronised_transmission">[docs]</a>
+  <span class="k">def</span> <span class="nf">start_stop_synchronised_transmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;mode must be less than 256&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">START_STOP_ALL</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">mode</span><span class="p">]))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.get_active_calibration_page">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.get_active_calibration_page">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_active_calibration_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">GET_ACTIVE_CAL_PAGE</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
+    <span class="c1"># cal_addr_ext = resp[0]</span>
+    <span class="n">cal_addr</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_order</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">I&quot;</span><span class="p">,</span> <span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">cal_addr</span></div>
+
+
+<div class="viewcode-block" id="CcpClient.get_version">
+<a class="viewcode-back" href="../../../panda.python.html#panda.python.ccp.CcpClient.get_version">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">desired_version</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">major</span><span class="p">,</span> <span class="n">minor</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">desired_version</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_send_cro</span><span class="p">(</span><span class="n">COMMAND_CODE</span><span class="o">.</span><span class="n">GET_CCP_VERSION</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">major</span><span class="p">,</span> <span class="n">minor</span><span class="p">]))</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recv_dto</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.test.process_replay.test_processes &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/test/process_replay/test_processes.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.test.process_replay.test_processes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.test.process_replay.test_processes</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">concurrent.futures</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.common.git</span> <span class="kn">import</span> <span class="n">get_commit</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.car_helpers</span> <span class="kn">import</span> <span class="n">interface_names</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.openpilotci</span> <span class="kn">import</span> <span class="n">get_url</span><span class="p">,</span> <span class="n">upload_file</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.process_replay.compare_logs</span> <span class="kn">import</span> <span class="n">compare_logs</span><span class="p">,</span> <span class="n">format_diff</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.test.process_replay.process_replay</span> <span class="kn">import</span> <span class="n">CONFIGS</span><span class="p">,</span> <span class="n">PROC_REPLAY_DIR</span><span class="p">,</span> <span class="n">FAKEDATA</span><span class="p">,</span> <span class="n">check_openpilot_enabled</span><span class="p">,</span> <span class="n">replay_process</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.filereader</span> <span class="kn">import</span> <span class="n">FileReader</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.logreader</span> <span class="kn">import</span> <span class="n">LogReader</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.helpers</span> <span class="kn">import</span> <span class="n">save_log</span>
+
+<span class="n">source_segments</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">(</span><span class="s2">&quot;BODY&quot;</span><span class="p">,</span> <span class="s2">&quot;937ccb7243511b65|2022-05-24--16-03-09--1&quot;</span><span class="p">),</span>        <span class="c1"># COMMA.COMMA_BODY</span>
+  <span class="p">(</span><span class="s2">&quot;HYUNDAI&quot;</span><span class="p">,</span> <span class="s2">&quot;02c45f73a2e5c6e9|2021-01-01--19-08-22--1&quot;</span><span class="p">),</span>     <span class="c1"># HYUNDAI.HYUNDAI_SONATA</span>
+  <span class="p">(</span><span class="s2">&quot;HYUNDAI2&quot;</span><span class="p">,</span> <span class="s2">&quot;d545129f3ca90f28|2022-11-07--20-43-08--3&quot;</span><span class="p">),</span>    <span class="c1"># HYUNDAI.HYUNDAI_KIA_EV6 (+ QCOM GPS)</span>
+  <span class="p">(</span><span class="s2">&quot;TOYOTA&quot;</span><span class="p">,</span> <span class="s2">&quot;0982d79ebb0de295|2021-01-04--17-13-21--13&quot;</span><span class="p">),</span>     <span class="c1"># TOYOTA.TOYOTA_PRIUS</span>
+  <span class="p">(</span><span class="s2">&quot;TOYOTA2&quot;</span><span class="p">,</span> <span class="s2">&quot;0982d79ebb0de295|2021-01-03--20-03-36--6&quot;</span><span class="p">),</span>     <span class="c1"># TOYOTA.TOYOTA_RAV4</span>
+  <span class="p">(</span><span class="s2">&quot;TOYOTA3&quot;</span><span class="p">,</span> <span class="s2">&quot;f7d7e3538cda1a2a|2021-08-16--08-55-34--6&quot;</span><span class="p">),</span>     <span class="c1"># TOYOTA.TOYOTA_COROLLA_TSS2</span>
+  <span class="p">(</span><span class="s2">&quot;HONDA&quot;</span><span class="p">,</span> <span class="s2">&quot;eb140f119469d9ab|2021-06-12--10-46-24--27&quot;</span><span class="p">),</span>      <span class="c1"># HONDA.HONDA_CIVIC (NIDEC)</span>
+  <span class="p">(</span><span class="s2">&quot;HONDA2&quot;</span><span class="p">,</span> <span class="s2">&quot;7d2244f34d1bbcda|2021-06-25--12-25-37--26&quot;</span><span class="p">),</span>     <span class="c1"># HONDA.HONDA_ACCORD (BOSCH)</span>
+  <span class="p">(</span><span class="s2">&quot;CHRYSLER&quot;</span><span class="p">,</span> <span class="s2">&quot;4deb27de11bee626|2021-02-20--11-28-55--8&quot;</span><span class="p">),</span>    <span class="c1"># CHRYSLER.CHRYSLER_PACIFICA_2018_HYBRID</span>
+  <span class="p">(</span><span class="s2">&quot;RAM&quot;</span><span class="p">,</span> <span class="s2">&quot;17fc16d840fe9d21|2023-04-26--13-28-44--5&quot;</span><span class="p">),</span>         <span class="c1"># CHRYSLER.RAM_1500_5TH_GEN</span>
+  <span class="p">(</span><span class="s2">&quot;SUBARU&quot;</span><span class="p">,</span> <span class="s2">&quot;341dccd5359e3c97|2022-09-12--10-35-33--3&quot;</span><span class="p">),</span>      <span class="c1"># SUBARU.SUBARU_OUTBACK</span>
+  <span class="p">(</span><span class="s2">&quot;GM&quot;</span><span class="p">,</span> <span class="s2">&quot;0c58b6a25109da2b|2021-02-23--16-35-50--11&quot;</span><span class="p">),</span>         <span class="c1"># GM.CHEVROLET_VOLT</span>
+  <span class="p">(</span><span class="s2">&quot;GM2&quot;</span><span class="p">,</span> <span class="s2">&quot;376bf99325883932|2022-10-27--13-41-22--1&quot;</span><span class="p">),</span>         <span class="c1"># GM.CHEVROLET_BOLT_EUV</span>
+  <span class="p">(</span><span class="s2">&quot;NISSAN&quot;</span><span class="p">,</span> <span class="s2">&quot;35336926920f3571|2021-02-12--18-38-48--46&quot;</span><span class="p">),</span>     <span class="c1"># NISSAN.NISSAN_XTRAIL</span>
+  <span class="p">(</span><span class="s2">&quot;VOLKSWAGEN&quot;</span><span class="p">,</span> <span class="s2">&quot;de9592456ad7d144|2021-06-29--11-00-15--6&quot;</span><span class="p">),</span>  <span class="c1"># VOLKSWAGEN.VOLKSWAGEN_GOLF</span>
+  <span class="p">(</span><span class="s2">&quot;MAZDA&quot;</span><span class="p">,</span> <span class="s2">&quot;bd6a637565e91581|2021-10-30--15-14-53--4&quot;</span><span class="p">),</span>       <span class="c1"># MAZDA.MAZDA_CX9_2021</span>
+  <span class="p">(</span><span class="s2">&quot;FORD&quot;</span><span class="p">,</span> <span class="s2">&quot;54827bf84c38b14f|2023-01-26--21-59-07--4&quot;</span><span class="p">),</span>        <span class="c1"># FORD.FORD_BRONCO_SPORT_MK1</span>
+
+  <span class="c1"># Enable when port is tested and dashcamOnly is no longer set</span>
+  <span class="c1">#(&quot;TESLA&quot;, &quot;bb50caf5f0945ab1|2021-06-19--17-20-18--3&quot;),      # TESLA.TESLA_AP2_MODELS</span>
+  <span class="c1">#(&quot;VOLKSWAGEN2&quot;, &quot;3cfdec54aa035f3f|2022-07-19--23-45-10--2&quot;),  # VOLKSWAGEN.VOLKSWAGEN_PASSAT_NMS</span>
+<span class="p">]</span>
+
+<span class="n">segments</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">(</span><span class="s2">&quot;BODY&quot;</span><span class="p">,</span> <span class="s2">&quot;regen997DF2697CB|2023-10-30--23-14-29--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;HYUNDAI&quot;</span><span class="p">,</span> <span class="s2">&quot;regen2A9D2A8E0B4|2023-10-30--23-13-34--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;HYUNDAI2&quot;</span><span class="p">,</span> <span class="s2">&quot;regen6CA24BC3035|2023-10-30--23-14-28--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;TOYOTA&quot;</span><span class="p">,</span> <span class="s2">&quot;regen5C019D76307|2023-10-30--23-13-31--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;TOYOTA2&quot;</span><span class="p">,</span> <span class="s2">&quot;regen5DCADA88A96|2023-10-30--23-14-57--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;TOYOTA3&quot;</span><span class="p">,</span> <span class="s2">&quot;regen7204CA3A498|2023-10-30--23-15-55--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;HONDA&quot;</span><span class="p">,</span> <span class="s2">&quot;regen048F8FA0B24|2023-10-30--23-15-53--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;HONDA2&quot;</span><span class="p">,</span> <span class="s2">&quot;regen7D2D3F82D5B|2023-10-30--23-15-55--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;CHRYSLER&quot;</span><span class="p">,</span> <span class="s2">&quot;regen7125C42780C|2023-10-30--23-16-21--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;RAM&quot;</span><span class="p">,</span> <span class="s2">&quot;regen2731F3213D2|2023-10-30--23-18-11--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;SUBARU&quot;</span><span class="p">,</span> <span class="s2">&quot;regen86E4C1B4DDD|2023-10-30--23-18-14--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;GM&quot;</span><span class="p">,</span> <span class="s2">&quot;regenF6393D64745|2023-10-30--23-17-18--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;GM2&quot;</span><span class="p">,</span> <span class="s2">&quot;regen220F830C05B|2023-10-30--23-18-39--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;NISSAN&quot;</span><span class="p">,</span> <span class="s2">&quot;regen4F671F7C435|2023-10-30--23-18-40--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;VOLKSWAGEN&quot;</span><span class="p">,</span> <span class="s2">&quot;regen8BDFE7307A0|2023-10-30--23-19-36--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;MAZDA&quot;</span><span class="p">,</span> <span class="s2">&quot;regen2E9F1A15FD5|2023-10-30--23-20-36--0&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;FORD&quot;</span><span class="p">,</span> <span class="s2">&quot;regen6D39E54606E|2023-10-30--23-20-54--0&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="c1"># dashcamOnly makes don&#39;t need to be tested until a full port is done</span>
+<span class="n">excluded_interfaces</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mock&quot;</span><span class="p">,</span> <span class="s2">&quot;tesla&quot;</span><span class="p">]</span>
+
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://commadataci.blob.core.windows.net/openpilotci/&quot;</span>
+<span class="n">REF_COMMIT_FN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PROC_REPLAY_DIR</span><span class="p">,</span> <span class="s2">&quot;ref_commit&quot;</span><span class="p">)</span>
+<span class="n">EXCLUDED_PROCS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;modeld&quot;</span><span class="p">,</span> <span class="s2">&quot;dmonitoringmodeld&quot;</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="run_test_process">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.test_processes.run_test_process">[docs]</a>
+<span class="k">def</span> <span class="nf">run_test_process</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+  <span class="n">segment</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cur_log_fn</span><span class="p">,</span> <span class="n">ref_log_path</span><span class="p">,</span> <span class="n">lr_dat</span> <span class="o">=</span> <span class="n">data</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">upload_only</span><span class="p">:</span>
+    <span class="n">lr</span> <span class="o">=</span> <span class="n">LogReader</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">lr_dat</span><span class="p">)</span>
+    <span class="n">res</span><span class="p">,</span> <span class="n">log_msgs</span> <span class="o">=</span> <span class="n">test_process</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">segment</span><span class="p">,</span> <span class="n">ref_log_path</span><span class="p">,</span> <span class="n">cur_log_fn</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">ignore_fields</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">ignore_msgs</span><span class="p">)</span>
+    <span class="c1"># save logs so we can upload when updating refs</span>
+    <span class="n">save_log</span><span class="p">(</span><span class="n">cur_log_fn</span><span class="p">,</span> <span class="n">log_msgs</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">update_refs</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">upload_only</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Uploading: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">cur_log_fn</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cur_log_fn</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Cannot find log to upload: </span><span class="si">{</span><span class="n">cur_log_fn</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">upload_file</span><span class="p">(</span><span class="n">cur_log_fn</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">cur_log_fn</span><span class="p">))</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">cur_log_fn</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">segment</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_log_data">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.test_processes.get_log_data">[docs]</a>
+<span class="k">def</span> <span class="nf">get_log_data</span><span class="p">(</span><span class="n">segment</span><span class="p">):</span>
+  <span class="n">r</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="k">with</span> <span class="n">FileReader</span><span class="p">(</span><span class="n">get_url</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">segment</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="test_process">
+<a class="viewcode-back" href="../../../../selfdrive.test.process_replay.html#selfdrive.test.process_replay.test_processes.test_process">[docs]</a>
+<span class="k">def</span> <span class="nf">test_process</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">segment</span><span class="p">,</span> <span class="n">ref_log_path</span><span class="p">,</span> <span class="n">new_log_path</span><span class="p">,</span> <span class="n">ignore_fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_msgs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">ignore_fields</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">ignore_fields</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">if</span> <span class="n">ignore_msgs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">ignore_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="n">ref_log_msgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">LogReader</span><span class="p">(</span><span class="n">ref_log_path</span><span class="p">))</span>
+
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">log_msgs</span> <span class="o">=</span> <span class="n">replay_process</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">disable_progress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;failed on segment: &quot;</span> <span class="o">+</span> <span class="n">segment</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+  <span class="c1"># check to make sure openpilot is engaged in the route</span>
+  <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span> <span class="o">==</span> <span class="s2">&quot;controlsd&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">check_openpilot_enabled</span><span class="p">(</span><span class="n">log_msgs</span><span class="p">):</span>
+      <span class="c1"># FIXME: these segments should work, but the replay enabling logic is too brittle</span>
+      <span class="k">if</span> <span class="n">segment</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;regen6CA24BC3035|2023-10-30--23-14-28--0&quot;</span><span class="p">,</span> <span class="s2">&quot;regen7D2D3F82D5B|2023-10-30--23-15-55--0&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Route did not enable at all or for long enough: </span><span class="si">{</span><span class="n">new_log_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">log_msgs</span>
+
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">compare_logs</span><span class="p">(</span><span class="n">ref_log_msgs</span><span class="p">,</span> <span class="n">log_msgs</span><span class="p">,</span> <span class="n">ignore_fields</span> <span class="o">+</span> <span class="n">cfg</span><span class="o">.</span><span class="n">ignore</span><span class="p">,</span> <span class="n">ignore_msgs</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">tolerance</span><span class="p">),</span> <span class="n">log_msgs</span>
+  <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="n">log_msgs</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">all_cars</span> <span class="o">=</span> <span class="p">{</span><span class="n">car</span> <span class="k">for</span> <span class="n">car</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">segments</span><span class="p">}</span>
+  <span class="n">all_procs</span> <span class="o">=</span> <span class="p">{</span><span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span> <span class="k">for</span> <span class="n">cfg</span> <span class="ow">in</span> <span class="n">CONFIGS</span> <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">EXCLUDED_PROCS</span><span class="p">}</span>
+
+  <span class="n">cpu_count</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">1</span>
+
+  <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Regression test to identify changes in a process&#39;s output&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--whitelist-procs&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">all_procs</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Whitelist given processes from the test (e.g. controlsd)&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--whitelist-cars&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">all_cars</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Whitelist given cars from the test (e.g. HONDA)&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--blacklist-procs&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Blacklist given processes from the test (e.g. controlsd)&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--blacklist-cars&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Blacklist given cars from the test (e.g. HONDA)&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ignore-fields&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Extra fields or msgs to ignore (e.g. carState.events)&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ignore-msgs&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Msgs to ignore (e.g. carEvents)&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--update-refs&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Updates reference logs using current commit&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--upload-only&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Skips testing processes and uploads logs from previous test run&quot;</span><span class="p">)</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-j&quot;</span><span class="p">,</span> <span class="s2">&quot;--jobs&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">cpu_count</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Max amount of parallel jobs&quot;</span><span class="p">)</span>
+  <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+  <span class="n">tested_procs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">whitelist_procs</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">blacklist_procs</span><span class="p">)</span>
+  <span class="n">tested_cars</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">whitelist_cars</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">blacklist_cars</span><span class="p">)</span>
+  <span class="n">tested_cars</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">tested_cars</span><span class="p">}</span>
+
+  <span class="n">full_test</span> <span class="o">=</span> <span class="p">(</span><span class="n">tested_procs</span> <span class="o">==</span> <span class="n">all_procs</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">tested_cars</span> <span class="o">==</span> <span class="n">all_cars</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">ignore_fields</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">ignore_msgs</span><span class="p">))</span>
+  <span class="n">upload</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">update_refs</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">upload_only</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">FAKEDATA</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">upload</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">full_test</span><span class="p">,</span> <span class="s2">&quot;Need to run full test when updating refs&quot;</span>
+
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">REF_COMMIT_FN</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">ref_commit</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+  <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t find reference commit&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+  <span class="n">cur_commit</span> <span class="o">=</span> <span class="n">get_commit</span><span class="p">()</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">cur_commit</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t get current commit&quot;</span><span class="p">)</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;***** testing against commit </span><span class="si">{</span><span class="n">ref_commit</span><span class="si">}</span><span class="s2"> *****&quot;</span><span class="p">)</span>
+
+  <span class="c1"># check to make sure all car brands are tested</span>
+  <span class="k">if</span> <span class="n">full_test</span><span class="p">:</span>
+    <span class="n">untested</span> <span class="o">=</span> <span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">interface_names</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">excluded_interfaces</span><span class="p">))</span> <span class="o">-</span> <span class="p">{</span><span class="n">c</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">tested_cars</span><span class="p">}</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">untested</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Cars missing routes: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">untested</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+
+  <span class="n">log_paths</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">))</span>
+  <span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">jobs</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">upload_only</span><span class="p">:</span>
+      <span class="n">download_segments</span> <span class="o">=</span> <span class="p">[</span><span class="n">seg</span> <span class="k">for</span> <span class="n">car</span><span class="p">,</span> <span class="n">seg</span> <span class="ow">in</span> <span class="n">segments</span> <span class="k">if</span> <span class="n">car</span> <span class="ow">in</span> <span class="n">tested_cars</span><span class="p">]</span>
+      <span class="n">log_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">LogReader</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+      <span class="n">p1</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">get_log_data</span><span class="p">,</span> <span class="n">download_segments</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">segment</span><span class="p">,</span> <span class="n">lr</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Getting Logs&quot;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">download_segments</span><span class="p">)):</span>
+        <span class="n">log_data</span><span class="p">[</span><span class="n">segment</span><span class="p">]</span> <span class="o">=</span> <span class="n">lr</span>
+
+    <span class="n">pool_args</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">car_brand</span><span class="p">,</span> <span class="n">segment</span> <span class="ow">in</span> <span class="n">segments</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">car_brand</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tested_cars</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+      <span class="k">for</span> <span class="n">cfg</span> <span class="ow">in</span> <span class="n">CONFIGS</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tested_procs</span><span class="p">:</span>
+          <span class="k">continue</span>
+
+        <span class="n">cur_log_fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FAKEDATA</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">segment</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">cur_commit</span><span class="si">}</span><span class="s2">.bz2&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">update_refs</span><span class="p">:</span>  <span class="c1"># reference logs will not exist if routes were just regenerated</span>
+          <span class="n">ref_log_path</span> <span class="o">=</span> <span class="n">get_url</span><span class="p">(</span><span class="o">*</span><span class="n">segment</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">ref_log_fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FAKEDATA</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">segment</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">ref_commit</span><span class="si">}</span><span class="s2">.bz2&quot;</span><span class="p">)</span>
+          <span class="n">ref_log_path</span> <span class="o">=</span> <span class="n">ref_log_fn</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ref_log_fn</span><span class="p">)</span> <span class="k">else</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">ref_log_fn</span><span class="p">)</span>
+
+        <span class="n">dat</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">upload_only</span> <span class="k">else</span> <span class="n">log_data</span><span class="p">[</span><span class="n">segment</span><span class="p">]</span>
+        <span class="n">pool_args</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">segment</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cur_log_fn</span><span class="p">,</span> <span class="n">ref_log_path</span><span class="p">,</span> <span class="n">dat</span><span class="p">))</span>
+
+        <span class="n">log_paths</span><span class="p">[</span><span class="n">segment</span><span class="p">][</span><span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span><span class="p">][</span><span class="s1">&#39;ref&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ref_log_path</span>
+        <span class="n">log_paths</span><span class="p">[</span><span class="n">segment</span><span class="p">][</span><span class="n">cfg</span><span class="o">.</span><span class="n">proc_name</span><span class="p">][</span><span class="s1">&#39;new&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_log_fn</span>
+
+    <span class="n">results</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">run_test_process</span><span class="p">,</span> <span class="n">pool_args</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">segment</span><span class="p">,</span> <span class="n">proc</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">p2</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Running Tests&quot;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">pool_args</span><span class="p">)):</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">upload_only</span><span class="p">:</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">segment</span><span class="p">][</span><span class="n">proc</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+
+  <span class="n">diff_short</span><span class="p">,</span> <span class="n">diff_long</span><span class="p">,</span> <span class="n">failed</span> <span class="o">=</span> <span class="n">format_diff</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">log_paths</span><span class="p">,</span> <span class="n">ref_commit</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">upload</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PROC_REPLAY_DIR</span><span class="p">,</span> <span class="s2">&quot;diff.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">diff_long</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">diff_short</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">failed</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TEST FAILED&quot;</span><span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">To push the new reference logs for this commit run:&quot;</span><span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;./test_processes.py --upload-only&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TEST SUCCEEDED&quot;</span><span class="p">)</span>
+
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">REF_COMMIT_FN</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cur_commit</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Updated reference logs for commit: </span><span class="si">{</span><span class="n">cur_commit</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">failed</span><span class="p">))</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

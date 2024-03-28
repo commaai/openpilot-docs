@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.volkswagen.carstate &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/volkswagen/carstate.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.volkswagen.carstate</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.volkswagen.carstate</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.interfaces</span> <span class="kn">import</span> <span class="n">CarStateBase</span>
+<span class="kn">from</span> <span class="nn">opendbc.can.parser</span> <span class="kn">import</span> <span class="n">CANParser</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.volkswagen.values</span> <span class="kn">import</span> <span class="n">DBC</span><span class="p">,</span> <span class="n">CANBUS</span><span class="p">,</span> <span class="n">NetworkLocation</span><span class="p">,</span> <span class="n">TransmissionType</span><span class="p">,</span> <span class="n">GearShifter</span><span class="p">,</span> \
+                                            <span class="n">CarControllerParams</span><span class="p">,</span> <span class="n">VolkswagenFlags</span>
+
+
+<div class="viewcode-block" id="CarState">
+<a class="viewcode-back" href="../../../../selfdrive.car.volkswagen.html#selfdrive.car.volkswagen.carstate.CarState">[docs]</a>
+<span class="k">class</span> <span class="nc">CarState</span><span class="p">(</span><span class="n">CarStateBase</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">eps_init_complete</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CCP</span> <span class="o">=</span> <span class="n">CarControllerParams</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">button_states</span> <span class="o">=</span> <span class="p">{</span><span class="n">button</span><span class="o">.</span><span class="n">event_type</span><span class="p">:</span> <span class="kc">False</span> <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">CCP</span><span class="o">.</span><span class="n">BUTTONS</span><span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">esp_hold_confirmation</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">upscale_lead_car_signal</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">eps_stock_values</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="CarState.create_button_events">
+<a class="viewcode-back" href="../../../../selfdrive.car.volkswagen.html#selfdrive.car.volkswagen.carstate.CarState.create_button_events">[docs]</a>
+  <span class="k">def</span> <span class="nf">create_button_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pt_cp</span><span class="p">,</span> <span class="n">buttons</span><span class="p">):</span>
+    <span class="n">button_events</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="n">buttons</span><span class="p">:</span>
+      <span class="n">state</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="n">button</span><span class="o">.</span><span class="n">can_addr</span><span class="p">][</span><span class="n">button</span><span class="o">.</span><span class="n">can_msg</span><span class="p">]</span> <span class="ow">in</span> <span class="n">button</span><span class="o">.</span><span class="n">values</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_states</span><span class="p">[</span><span class="n">button</span><span class="o">.</span><span class="n">event_type</span><span class="p">]</span> <span class="o">!=</span> <span class="n">state</span><span class="p">:</span>
+        <span class="n">event</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">ButtonEvent</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">button</span><span class="o">.</span><span class="n">event_type</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">pressed</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="n">button_events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">button_states</span><span class="p">[</span><span class="n">button</span><span class="o">.</span><span class="n">event_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
+
+    <span class="k">return</span> <span class="n">button_events</span></div>
+
+
+<div class="viewcode-block" id="CarState.update">
+<a class="viewcode-back" href="../../../../selfdrive.car.volkswagen.html#selfdrive.car.volkswagen.carstate.CarState.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pt_cp</span><span class="p">,</span> <span class="n">cam_cp</span><span class="p">,</span> <span class="n">ext_cp</span><span class="p">,</span> <span class="n">trans_type</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">VolkswagenFlags</span><span class="o">.</span><span class="n">PQ</span><span class="p">:</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_pq</span><span class="p">(</span><span class="n">pt_cp</span><span class="p">,</span> <span class="n">cam_cp</span><span class="p">,</span> <span class="n">ext_cp</span><span class="p">,</span> <span class="n">trans_type</span><span class="p">)</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="c1"># Update vehicle speed and acceleration from ABS wheel speeds.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wheel_speeds</span><span class="p">(</span>
+      <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ESP_19&quot;</span><span class="p">][</span><span class="s2">&quot;ESP_VL_Radgeschw_02&quot;</span><span class="p">],</span>
+      <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ESP_19&quot;</span><span class="p">][</span><span class="s2">&quot;ESP_VR_Radgeschw_02&quot;</span><span class="p">],</span>
+      <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ESP_19&quot;</span><span class="p">][</span><span class="s2">&quot;ESP_HL_Radgeschw_02&quot;</span><span class="p">],</span>
+      <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ESP_19&quot;</span><span class="p">][</span><span class="s2">&quot;ESP_HR_Radgeschw_02&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">fl</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">fr</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rl</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span><span class="o">.</span><span class="n">rr</span><span class="p">]))</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">aEgo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_speed_kf</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="c1"># Update EPS position and state info. For signed values, VW sends the sign in a separate signal.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringAngleDeg</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LWI_01&quot;</span><span class="p">][</span><span class="s2">&quot;LWI_Lenkradwinkel&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="nb">int</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LWI_01&quot;</span><span class="p">][</span><span class="s2">&quot;LWI_VZ_Lenkradwinkel&quot;</span><span class="p">])]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringRateDeg</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LWI_01&quot;</span><span class="p">][</span><span class="s2">&quot;LWI_Lenkradw_Geschw&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="nb">int</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LWI_01&quot;</span><span class="p">][</span><span class="s2">&quot;LWI_VZ_Lenkradw_Geschw&quot;</span><span class="p">])]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringTorque</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LH_EPS_03&quot;</span><span class="p">][</span><span class="s2">&quot;EPS_Lenkmoment&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="nb">int</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LH_EPS_03&quot;</span><span class="p">][</span><span class="s2">&quot;EPS_VZ_Lenkmoment&quot;</span><span class="p">])]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringPressed</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">steeringTorque</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CCP</span><span class="o">.</span><span class="n">STEER_DRIVER_ALLOWANCE</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">yawRate</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ESP_02&quot;</span><span class="p">][</span><span class="s2">&quot;ESP_Gierrate&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="nb">int</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ESP_02&quot;</span><span class="p">][</span><span class="s2">&quot;ESP_VZ_Gierrate&quot;</span><span class="p">])]</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">DEG_TO_RAD</span>
+    <span class="n">hca_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CCP</span><span class="o">.</span><span class="n">hca_status_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LH_EPS_03&quot;</span><span class="p">][</span><span class="s2">&quot;EPS_HCA_Status&quot;</span><span class="p">])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerFaultTemporary</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">steerFaultPermanent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_hca_state</span><span class="p">(</span><span class="n">hca_status</span><span class="p">)</span>
+
+    <span class="c1"># VW Emergency Assist status tracking and mitigation</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">eps_stock_values</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LH_EPS_03&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">VolkswagenFlags</span><span class="o">.</span><span class="n">STOCK_HCA_PRESENT</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">carFaultedNonCritical</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">cam_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;HCA_01&quot;</span><span class="p">][</span><span class="s2">&quot;EA_Ruckfreigabe&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="n">cam_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;HCA_01&quot;</span><span class="p">][</span><span class="s2">&quot;EA_ACC_Sollstatus&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+    <span class="c1"># Update gas, brakes, and gearshift.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Motor_20&quot;</span><span class="p">][</span><span class="s2">&quot;MO_Fahrpedalrohwert_01&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">100.0</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">gasPressed</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">brake</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ESP_05&quot;</span><span class="p">][</span><span class="s2">&quot;ESP_Bremsdruck&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">250.0</span>  <span class="c1"># FIXME: this is pressure in Bar, not sure what OP expects</span>
+    <span class="n">brake_pedal_pressed</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Motor_14&quot;</span><span class="p">][</span><span class="s2">&quot;MO_Fahrer_bremst&quot;</span><span class="p">])</span>
+    <span class="n">brake_pressure_detected</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ESP_05&quot;</span><span class="p">][</span><span class="s2">&quot;ESP_Fahrer_bremst&quot;</span><span class="p">])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">brakePressed</span> <span class="o">=</span> <span class="n">brake_pedal_pressed</span> <span class="ow">or</span> <span class="n">brake_pressure_detected</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">parkingBrake</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Kombi_01&quot;</span><span class="p">][</span><span class="s2">&quot;KBI_Handbremse&quot;</span><span class="p">])</span>  <span class="c1"># FIXME: need to include an EPB check as well</span>
+
+    <span class="c1"># Update gear and/or clutch position data.</span>
+    <span class="k">if</span> <span class="n">trans_type</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">automatic</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_gear_shifter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CCP</span><span class="o">.</span><span class="n">shifter_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Getriebe_11&quot;</span><span class="p">][</span><span class="s2">&quot;GE_Fahrstufe&quot;</span><span class="p">],</span> <span class="kc">None</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">trans_type</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">direct</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_gear_shifter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CCP</span><span class="o">.</span><span class="n">shifter_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;EV_Gearshift&quot;</span><span class="p">][</span><span class="s2">&quot;GearPosition&quot;</span><span class="p">],</span> <span class="kc">None</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">trans_type</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">manual</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">clutchPressed</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Motor_14&quot;</span><span class="p">][</span><span class="s2">&quot;MO_Kuppl_schalter&quot;</span><span class="p">]</span>
+      <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gateway_72&quot;</span><span class="p">][</span><span class="s2">&quot;BCM1_Rueckfahrlicht_Schalter&quot;</span><span class="p">]):</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">reverse</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">drive</span>
+
+    <span class="c1"># Update door and trunk/hatch lid open status.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">doorOpen</span> <span class="o">=</span> <span class="nb">any</span><span class="p">([</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gateway_72&quot;</span><span class="p">][</span><span class="s2">&quot;ZV_FT_offen&quot;</span><span class="p">],</span>
+                        <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gateway_72&quot;</span><span class="p">][</span><span class="s2">&quot;ZV_BT_offen&quot;</span><span class="p">],</span>
+                        <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gateway_72&quot;</span><span class="p">][</span><span class="s2">&quot;ZV_HFS_offen&quot;</span><span class="p">],</span>
+                        <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gateway_72&quot;</span><span class="p">][</span><span class="s2">&quot;ZV_HBFS_offen&quot;</span><span class="p">],</span>
+                        <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gateway_72&quot;</span><span class="p">][</span><span class="s2">&quot;ZV_HD_offen&quot;</span><span class="p">]])</span>
+
+    <span class="c1"># Update seatbelt fastened status.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">seatbeltUnlatched</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Airbag_02&quot;</span><span class="p">][</span><span class="s2">&quot;AB_Gurtschloss_FA&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span>
+
+    <span class="c1"># Consume blind-spot monitoring info/warning LED states, if available.</span>
+    <span class="c1"># Infostufe: BSM LED on, Warnung: BSM LED flashing</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">leftBlindspot</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SWA_01&quot;</span><span class="p">][</span><span class="s2">&quot;SWA_Infostufe_SWA_li&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SWA_01&quot;</span><span class="p">][</span><span class="s2">&quot;SWA_Warnung_SWA_li&quot;</span><span class="p">])</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">rightBlindspot</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SWA_01&quot;</span><span class="p">][</span><span class="s2">&quot;SWA_Infostufe_SWA_re&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SWA_01&quot;</span><span class="p">][</span><span class="s2">&quot;SWA_Warnung_SWA_re&quot;</span><span class="p">])</span>
+
+    <span class="c1"># Consume factory LDW data relevant for factory SWA (Lane Change Assist)</span>
+    <span class="c1"># and capture it for forwarding to the blind spot radar controller</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ldw_stock_values</span> <span class="o">=</span> <span class="n">cam_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LDW_02&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span> <span class="k">else</span> <span class="p">{}</span>
+
+    <span class="c1"># Stock FCW is considered active if the release bit for brake-jerk warning</span>
+    <span class="c1"># is set. Stock AEB considered active if the partial braking or target</span>
+    <span class="c1"># braking release bits are set.</span>
+    <span class="c1"># Refer to VW Self Study Program 890253: Volkswagen Driver Assistance</span>
+    <span class="c1"># Systems, chapter on Front Assist with Braking: Golf Family for all MQB</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">stockFcw</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ACC_10&quot;</span><span class="p">][</span><span class="s2">&quot;AWV2_Freigabe&quot;</span><span class="p">])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">stockAeb</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ACC_10&quot;</span><span class="p">][</span><span class="s2">&quot;ANB_Teilbremsung_Freigabe&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ACC_10&quot;</span><span class="p">][</span><span class="s2">&quot;ANB_Zielbremsung_Freigabe&quot;</span><span class="p">])</span>
+
+    <span class="c1"># Update ACC radar status.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">acc_type</span> <span class="o">=</span> <span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ACC_06&quot;</span><span class="p">][</span><span class="s2">&quot;ACC_Typ&quot;</span><span class="p">]</span>
+
+    <span class="c1"># ACC okay but disabled (1), ACC ready (2), a radar visibility or other fault/disruption (6 or 7)</span>
+    <span class="c1"># currently regulating speed (3), driver accel override (4), brake only (5)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">available</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TSK_06&quot;</span><span class="p">][</span><span class="s2">&quot;TSK_Status&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TSK_06&quot;</span><span class="p">][</span><span class="s2">&quot;TSK_Status&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">accFaulted</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;TSK_06&quot;</span><span class="p">][</span><span class="s2">&quot;TSK_Status&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">esp_hold_confirmation</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ESP_21&quot;</span><span class="p">][</span><span class="s2">&quot;ESP_Haltebestaetigung&quot;</span><span class="p">])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">esp_hold_confirmation</span>
+
+    <span class="c1"># Update ACC setpoint. When the setpoint is zero or there&#39;s an error, the</span>
+    <span class="c1"># radar sends a set-speed of ~90.69 m/s / 203mph.</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ACC_02&quot;</span><span class="p">][</span><span class="s2">&quot;ACC_Wunschgeschw_02&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span>
+      <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speed</span> <span class="o">&gt;</span> <span class="mi">90</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Update button states for turn signals and ACC controls, capture all ACC button state/config for passthrough</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">leftBlinker</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Blinkmodi_02&quot;</span><span class="p">][</span><span class="s2">&quot;Comfort_Signal_Left&quot;</span><span class="p">])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">rightBlinker</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Blinkmodi_02&quot;</span><span class="p">][</span><span class="s2">&quot;Comfort_Signal_Right&quot;</span><span class="p">])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">buttonEvents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_button_events</span><span class="p">(</span><span class="n">pt_cp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CCP</span><span class="o">.</span><span class="n">BUTTONS</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">gra_stock_values</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;GRA_ACC_01&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Additional safety checks performed in CarInterface.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">espDisabled</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ESP_21&quot;</span><span class="p">][</span><span class="s2">&quot;ESP_Tastung_passiv&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+
+    <span class="c1"># Digital instrument clusters expect the ACC HUD lead car distance to be scaled differently</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">upscale_lead_car_signal</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Kombi_03&quot;</span><span class="p">][</span><span class="s2">&quot;KBI_Variante&quot;</span><span class="p">])</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="CarState.update_pq">
+<a class="viewcode-back" href="../../../../selfdrive.car.volkswagen.html#selfdrive.car.volkswagen.carstate.CarState.update_pq">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_pq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pt_cp</span><span class="p">,</span> <span class="n">cam_cp</span><span class="p">,</span> <span class="n">ext_cp</span><span class="p">,</span> <span class="n">trans_type</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="c1"># Update vehicle speed and acceleration from ABS wheel speeds.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wheel_speeds</span><span class="p">(</span>
+      <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Bremse_3&quot;</span><span class="p">][</span><span class="s2">&quot;Radgeschw__VL_4_1&quot;</span><span class="p">],</span>
+      <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Bremse_3&quot;</span><span class="p">][</span><span class="s2">&quot;Radgeschw__VR_4_1&quot;</span><span class="p">],</span>
+      <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Bremse_3&quot;</span><span class="p">][</span><span class="s2">&quot;Radgeschw__HL_4_1&quot;</span><span class="p">],</span>
+      <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Bremse_3&quot;</span><span class="p">][</span><span class="s2">&quot;Radgeschw__HR_4_1&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="c1"># vEgo obtained from Bremse_1 vehicle speed rather than Bremse_3 wheel speeds because Bremse_3 isn&#39;t present on NSF</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Bremse_1&quot;</span><span class="p">][</span><span class="s2">&quot;Geschwindigkeit_neu__Bremse_1_&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">aEgo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_speed_kf</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span><span class="p">)</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">standstill</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgoRaw</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="c1"># Update EPS position and state info. For signed values, VW sends the sign in a separate signal.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringAngleDeg</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Lenkhilfe_3&quot;</span><span class="p">][</span><span class="s2">&quot;LH3_BLW&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="nb">int</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Lenkhilfe_3&quot;</span><span class="p">][</span><span class="s2">&quot;LH3_BLWSign&quot;</span><span class="p">])]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringRateDeg</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Lenkwinkel_1&quot;</span><span class="p">][</span><span class="s2">&quot;Lenkradwinkel_Geschwindigkeit&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="nb">int</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Lenkwinkel_1&quot;</span><span class="p">][</span><span class="s2">&quot;Lenkradwinkel_Geschwindigkeit_S&quot;</span><span class="p">])]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringTorque</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Lenkhilfe_3&quot;</span><span class="p">][</span><span class="s2">&quot;LH3_LM&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="nb">int</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Lenkhilfe_3&quot;</span><span class="p">][</span><span class="s2">&quot;LH3_LMSign&quot;</span><span class="p">])]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steeringPressed</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">steeringTorque</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CCP</span><span class="o">.</span><span class="n">STEER_DRIVER_ALLOWANCE</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">yawRate</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Bremse_5&quot;</span><span class="p">][</span><span class="s2">&quot;Giergeschwindigkeit&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="nb">int</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Bremse_5&quot;</span><span class="p">][</span><span class="s2">&quot;Vorzeichen_der_Giergeschwindigk&quot;</span><span class="p">])]</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">DEG_TO_RAD</span>
+    <span class="n">hca_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CCP</span><span class="o">.</span><span class="n">hca_status_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Lenkhilfe_2&quot;</span><span class="p">][</span><span class="s2">&quot;LH2_Sta_HCA&quot;</span><span class="p">])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerFaultTemporary</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">steerFaultPermanent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_hca_state</span><span class="p">(</span><span class="n">hca_status</span><span class="p">)</span>
+
+    <span class="c1"># Update gas, brakes, and gearshift.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Motor_3&quot;</span><span class="p">][</span><span class="s2">&quot;Fahrpedal_Rohsignal&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">100.0</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">gasPressed</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">gas</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">brake</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Bremse_5&quot;</span><span class="p">][</span><span class="s2">&quot;Bremsdruck&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">250.0</span>  <span class="c1"># FIXME: this is pressure in Bar, not sure what OP expects</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">brakePressed</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Motor_2&quot;</span><span class="p">][</span><span class="s2">&quot;Bremslichtschalter&quot;</span><span class="p">])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">parkingBrake</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Kombi_1&quot;</span><span class="p">][</span><span class="s2">&quot;Bremsinfo&quot;</span><span class="p">])</span>
+
+    <span class="c1"># Update gear and/or clutch position data.</span>
+    <span class="k">if</span> <span class="n">trans_type</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">automatic</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_gear_shifter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CCP</span><span class="o">.</span><span class="n">shifter_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Getriebe_1&quot;</span><span class="p">][</span><span class="s2">&quot;Waehlhebelposition__Getriebe_1_&quot;</span><span class="p">],</span> <span class="kc">None</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">trans_type</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">manual</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">clutchPressed</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Motor_1&quot;</span><span class="p">][</span><span class="s2">&quot;Kupplungsschalter&quot;</span><span class="p">]</span>
+      <span class="n">reverse_light</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gate_Komf_1&quot;</span><span class="p">][</span><span class="s2">&quot;GK1_Rueckfahr&quot;</span><span class="p">])</span>
+      <span class="k">if</span> <span class="n">reverse_light</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">reverse</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">gearShifter</span> <span class="o">=</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">drive</span>
+
+    <span class="c1"># Update door and trunk/hatch lid open status.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">doorOpen</span> <span class="o">=</span> <span class="nb">any</span><span class="p">([</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gate_Komf_1&quot;</span><span class="p">][</span><span class="s2">&quot;GK1_Fa_Tuerkont&quot;</span><span class="p">],</span>
+                        <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gate_Komf_1&quot;</span><span class="p">][</span><span class="s2">&quot;BSK_BT_geoeffnet&quot;</span><span class="p">],</span>
+                        <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gate_Komf_1&quot;</span><span class="p">][</span><span class="s2">&quot;BSK_HL_geoeffnet&quot;</span><span class="p">],</span>
+                        <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gate_Komf_1&quot;</span><span class="p">][</span><span class="s2">&quot;BSK_HR_geoeffnet&quot;</span><span class="p">],</span>
+                        <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gate_Komf_1&quot;</span><span class="p">][</span><span class="s2">&quot;BSK_HD_Hauptraste&quot;</span><span class="p">]])</span>
+
+    <span class="c1"># Update seatbelt fastened status.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">seatbeltUnlatched</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Airbag_1&quot;</span><span class="p">][</span><span class="s2">&quot;Gurtschalter_Fahrer&quot;</span><span class="p">])</span>
+
+    <span class="c1"># Consume blind-spot monitoring info/warning LED states, if available.</span>
+    <span class="c1"># Infostufe: BSM LED on, Warnung: BSM LED flashing</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">leftBlindspot</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SWA_1&quot;</span><span class="p">][</span><span class="s2">&quot;SWA_Infostufe_SWA_li&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SWA_1&quot;</span><span class="p">][</span><span class="s2">&quot;SWA_Warnung_SWA_li&quot;</span><span class="p">])</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">rightBlindspot</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SWA_1&quot;</span><span class="p">][</span><span class="s2">&quot;SWA_Infostufe_SWA_re&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;SWA_1&quot;</span><span class="p">][</span><span class="s2">&quot;SWA_Warnung_SWA_re&quot;</span><span class="p">])</span>
+
+    <span class="c1"># Consume factory LDW data relevant for factory SWA (Lane Change Assist)</span>
+    <span class="c1"># and capture it for forwarding to the blind spot radar controller</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ldw_stock_values</span> <span class="o">=</span> <span class="n">cam_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;LDW_Status&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span> <span class="k">else</span> <span class="p">{}</span>
+
+    <span class="c1"># Stock FCW is considered active if the release bit for brake-jerk warning</span>
+    <span class="c1"># is set. Stock AEB considered active if the partial braking or target</span>
+    <span class="c1"># braking release bits are set.</span>
+    <span class="c1"># Refer to VW Self Study Program 890253: Volkswagen Driver Assistance</span>
+    <span class="c1"># Systems, chapters on Front Assist with Braking and City Emergency</span>
+    <span class="c1"># Braking for the 2016 Passat NMS</span>
+    <span class="c1"># TODO: deferred until we can collect data on pre-MY2016 behavior, AWV message may be shorter with fewer signals</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">stockFcw</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">stockAeb</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># Update ACC radar status.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">acc_type</span> <span class="o">=</span> <span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ACC_System&quot;</span><span class="p">][</span><span class="s2">&quot;ACS_Typ_ACC&quot;</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">available</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Motor_5&quot;</span><span class="p">][</span><span class="s2">&quot;GRA_Hauptschalter&quot;</span><span class="p">])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Motor_2&quot;</span><span class="p">][</span><span class="s2">&quot;GRA_Status&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">accFaulted</span> <span class="o">=</span> <span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ACC_GRA_Anzeige&quot;</span><span class="p">][</span><span class="s2">&quot;ACA_StaACC&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">accFaulted</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Motor_2&quot;</span><span class="p">][</span><span class="s2">&quot;GRA_Status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="c1"># Update ACC setpoint. When the setpoint reads as 255, the driver has not</span>
+    <span class="c1"># yet established an ACC setpoint, so treat it as zero.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">ext_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ACC_GRA_Anzeige&quot;</span><span class="p">][</span><span class="s2">&quot;ACA_V_Wunsch&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span>
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speed</span> <span class="o">&gt;</span> <span class="mi">70</span><span class="p">:</span>  <span class="c1"># 255 kph in m/s == no current setpoint</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Update button states for turn signals and ACC controls, capture all ACC button state/config for passthrough</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">leftBlinker</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">rightBlinker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_blinker_from_stalk</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gate_Komf_1&quot;</span><span class="p">][</span><span class="s2">&quot;GK1_Blinker_li&quot;</span><span class="p">],</span>
+                                                                            <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Gate_Komf_1&quot;</span><span class="p">][</span><span class="s2">&quot;GK1_Blinker_re&quot;</span><span class="p">])</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">buttonEvents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_button_events</span><span class="p">(</span><span class="n">pt_cp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CCP</span><span class="o">.</span><span class="n">BUTTONS</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">gra_stock_values</span> <span class="o">=</span> <span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;GRA_Neu&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Additional safety checks performed in CarInterface.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">espDisabled</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pt_cp</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;Bremse_1&quot;</span><span class="p">][</span><span class="s2">&quot;ESP_Passiv_getastet&quot;</span><span class="p">])</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="CarState.update_hca_state">
+<a class="viewcode-back" href="../../../../selfdrive.car.volkswagen.html#selfdrive.car.volkswagen.carstate.CarState.update_hca_state">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_hca_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hca_status</span><span class="p">):</span>
+    <span class="c1"># Treat INITIALIZING and FAULT as temporary for worst likely EPS recovery time, for cars without factory Lane Assist</span>
+    <span class="c1"># DISABLED means the EPS hasn&#39;t been configured to support Lane Assist</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">eps_init_complete</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps_init_complete</span> <span class="ow">or</span> <span class="p">(</span><span class="n">hca_status</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;DISABLED&quot;</span><span class="p">,</span> <span class="s2">&quot;READY&quot;</span><span class="p">,</span> <span class="s2">&quot;ACTIVE&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">&gt;</span> <span class="mi">600</span><span class="p">)</span>
+    <span class="n">perm_fault</span> <span class="o">=</span> <span class="n">hca_status</span> <span class="o">==</span> <span class="s2">&quot;DISABLED&quot;</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_init_complete</span> <span class="ow">and</span> <span class="n">hca_status</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;INITIALIZING&quot;</span><span class="p">,</span> <span class="s2">&quot;FAULT&quot;</span><span class="p">))</span>
+    <span class="n">temp_fault</span> <span class="o">=</span> <span class="n">hca_status</span> <span class="o">==</span> <span class="s2">&quot;REJECTED&quot;</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps_init_complete</span>
+    <span class="k">return</span> <span class="n">temp_fault</span><span class="p">,</span> <span class="n">perm_fault</span></div>
+
+
+<div class="viewcode-block" id="CarState.get_can_parser">
+<a class="viewcode-back" href="../../../../selfdrive.car.volkswagen.html#selfdrive.car.volkswagen.carstate.CarState.get_can_parser">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">VolkswagenFlags</span><span class="o">.</span><span class="n">PQ</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">CarState</span><span class="o">.</span><span class="n">get_can_parser_pq</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="c1"># sig_address, frequency</span>
+      <span class="p">(</span><span class="s2">&quot;LWI_01&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>      <span class="c1"># From J500 Steering Assist with integrated sensors</span>
+      <span class="p">(</span><span class="s2">&quot;LH_EPS_03&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>   <span class="c1"># From J500 Steering Assist with integrated sensors</span>
+      <span class="p">(</span><span class="s2">&quot;ESP_19&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>      <span class="c1"># From J104 ABS/ESP controller</span>
+      <span class="p">(</span><span class="s2">&quot;ESP_05&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>       <span class="c1"># From J104 ABS/ESP controller</span>
+      <span class="p">(</span><span class="s2">&quot;ESP_21&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>       <span class="c1"># From J104 ABS/ESP controller</span>
+      <span class="p">(</span><span class="s2">&quot;Motor_20&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>     <span class="c1"># From J623 Engine control module</span>
+      <span class="p">(</span><span class="s2">&quot;TSK_06&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>       <span class="c1"># From J623 Engine control module</span>
+      <span class="p">(</span><span class="s2">&quot;ESP_02&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>       <span class="c1"># From J104 ABS/ESP controller</span>
+      <span class="p">(</span><span class="s2">&quot;GRA_ACC_01&quot;</span><span class="p">,</span> <span class="mi">33</span><span class="p">),</span>   <span class="c1"># From J533 CAN gateway (via LIN from steering wheel controls)</span>
+      <span class="p">(</span><span class="s2">&quot;Gateway_72&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>   <span class="c1"># From J533 CAN gateway (aggregated data)</span>
+      <span class="p">(</span><span class="s2">&quot;Motor_14&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>     <span class="c1"># From J623 Engine control module</span>
+      <span class="p">(</span><span class="s2">&quot;Airbag_02&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>     <span class="c1"># From J234 Airbag control module</span>
+      <span class="p">(</span><span class="s2">&quot;Kombi_01&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>      <span class="c1"># From J285 Instrument cluster</span>
+      <span class="p">(</span><span class="s2">&quot;Blinkmodi_02&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>  <span class="c1"># From J519 BCM (sent at 1Hz when no lights active, 50Hz when active)</span>
+      <span class="p">(</span><span class="s2">&quot;Kombi_03&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>      <span class="c1"># From J285 instrument cluster (not present on older cars, 1Hz when present)</span>
+    <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">automatic</span><span class="p">:</span>
+      <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;Getriebe_11&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>  <span class="c1"># From J743 Auto transmission control module</span>
+    <span class="k">elif</span> <span class="n">CP</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">direct</span><span class="p">:</span>
+      <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;EV_Gearshift&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>  <span class="c1"># From J??? unknown EV control module</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">:</span>
+      <span class="c1"># Radars are here on CANBUS.pt</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="n">MqbExtraSignals</span><span class="o">.</span><span class="n">fwd_radar_messages</span>
+      <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span><span class="p">:</span>
+        <span class="n">messages</span> <span class="o">+=</span> <span class="n">MqbExtraSignals</span><span class="o">.</span><span class="n">bsm_radar_messages</span>
+
+    <span class="k">return</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="n">messages</span><span class="p">,</span> <span class="n">CANBUS</span><span class="o">.</span><span class="n">pt</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarState.get_cam_can_parser">
+<a class="viewcode-back" href="../../../../selfdrive.car.volkswagen.html#selfdrive.car.volkswagen.carstate.CarState.get_cam_can_parser">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_cam_can_parser</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">VolkswagenFlags</span><span class="o">.</span><span class="n">PQ</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">CarState</span><span class="o">.</span><span class="n">get_cam_can_parser_pq</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">VolkswagenFlags</span><span class="o">.</span><span class="n">STOCK_HCA_PRESENT</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;HCA_01&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>  <span class="c1"># From R242 Driver assistance camera, 50Hz if steering/1Hz if not</span>
+      <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="c1"># sig_address, frequency</span>
+        <span class="p">(</span><span class="s2">&quot;LDW_02&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>      <span class="c1"># From R242 Driver assistance camera</span>
+      <span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># Radars are here on CANBUS.cam</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="n">MqbExtraSignals</span><span class="o">.</span><span class="n">fwd_radar_messages</span>
+      <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span><span class="p">:</span>
+        <span class="n">messages</span> <span class="o">+=</span> <span class="n">MqbExtraSignals</span><span class="o">.</span><span class="n">bsm_radar_messages</span>
+
+    <span class="k">return</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="n">messages</span><span class="p">,</span> <span class="n">CANBUS</span><span class="o">.</span><span class="n">cam</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarState.get_can_parser_pq">
+<a class="viewcode-back" href="../../../../selfdrive.car.volkswagen.html#selfdrive.car.volkswagen.carstate.CarState.get_can_parser_pq">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_can_parser_pq</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="c1"># sig_address, frequency</span>
+      <span class="p">(</span><span class="s2">&quot;Bremse_1&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>    <span class="c1"># From J104 ABS/ESP controller</span>
+      <span class="p">(</span><span class="s2">&quot;Bremse_3&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>    <span class="c1"># From J104 ABS/ESP controller</span>
+      <span class="p">(</span><span class="s2">&quot;Lenkhilfe_3&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>  <span class="c1"># From J500 Steering Assist with integrated sensors</span>
+      <span class="p">(</span><span class="s2">&quot;Lenkwinkel_1&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>  <span class="c1"># From J500 Steering Assist with integrated sensors</span>
+      <span class="p">(</span><span class="s2">&quot;Motor_3&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>     <span class="c1"># From J623 Engine control module</span>
+      <span class="p">(</span><span class="s2">&quot;Airbag_1&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>     <span class="c1"># From J234 Airbag control module</span>
+      <span class="p">(</span><span class="s2">&quot;Bremse_5&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>     <span class="c1"># From J104 ABS/ESP controller</span>
+      <span class="p">(</span><span class="s2">&quot;GRA_Neu&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>      <span class="c1"># From J??? steering wheel control buttons</span>
+      <span class="p">(</span><span class="s2">&quot;Kombi_1&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>      <span class="c1"># From J285 Instrument cluster</span>
+      <span class="p">(</span><span class="s2">&quot;Motor_2&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>      <span class="c1"># From J623 Engine control module</span>
+      <span class="p">(</span><span class="s2">&quot;Motor_5&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>      <span class="c1"># From J623 Engine control module</span>
+      <span class="p">(</span><span class="s2">&quot;Lenkhilfe_2&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>  <span class="c1"># From J500 Steering Assist with integrated sensors</span>
+      <span class="p">(</span><span class="s2">&quot;Gate_Komf_1&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># From J533 CAN gateway</span>
+    <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">automatic</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[(</span><span class="s2">&quot;Getriebe_1&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)]</span>  <span class="c1"># From J743 Auto transmission control module</span>
+    <span class="k">elif</span> <span class="n">CP</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">==</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">manual</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[(</span><span class="s2">&quot;Motor_1&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)]</span>  <span class="c1"># From J623 Engine control module</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">:</span>
+      <span class="c1"># Extended CAN devices other than the camera are here on CANBUS.pt</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="n">PqExtraSignals</span><span class="o">.</span><span class="n">fwd_radar_messages</span>
+      <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span><span class="p">:</span>
+        <span class="n">messages</span> <span class="o">+=</span> <span class="n">PqExtraSignals</span><span class="o">.</span><span class="n">bsm_radar_messages</span>
+
+    <span class="k">return</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="n">messages</span><span class="p">,</span> <span class="n">CANBUS</span><span class="o">.</span><span class="n">pt</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarState.get_cam_can_parser_pq">
+<a class="viewcode-back" href="../../../../selfdrive.car.volkswagen.html#selfdrive.car.volkswagen.carstate.CarState.get_cam_can_parser_pq">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_cam_can_parser_pq</span><span class="p">(</span><span class="n">CP</span><span class="p">):</span>
+
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">:</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="c1"># sig_address, frequency</span>
+        <span class="p">(</span><span class="s2">&quot;LDW_Status&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>      <span class="c1"># From R242 Driver assistance camera</span>
+      <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">gateway</span><span class="p">:</span>
+      <span class="c1"># Radars are here on CANBUS.cam</span>
+      <span class="n">messages</span> <span class="o">+=</span> <span class="n">PqExtraSignals</span><span class="o">.</span><span class="n">fwd_radar_messages</span>
+      <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">enableBsm</span><span class="p">:</span>
+        <span class="n">messages</span> <span class="o">+=</span> <span class="n">PqExtraSignals</span><span class="o">.</span><span class="n">bsm_radar_messages</span>
+
+    <span class="k">return</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">DBC</span><span class="p">[</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span> <span class="n">messages</span><span class="p">,</span> <span class="n">CANBUS</span><span class="o">.</span><span class="n">cam</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MqbExtraSignals">
+<a class="viewcode-back" href="../../../../selfdrive.car.volkswagen.html#selfdrive.car.volkswagen.carstate.MqbExtraSignals">[docs]</a>
+<span class="k">class</span> <span class="nc">MqbExtraSignals</span><span class="p">:</span>
+  <span class="c1"># Additional signal and message lists for optional or bus-portable controllers</span>
+  <span class="n">fwd_radar_messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;ACC_06&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>                              <span class="c1"># From J428 ACC radar control module</span>
+    <span class="p">(</span><span class="s2">&quot;ACC_10&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>                              <span class="c1"># From J428 ACC radar control module</span>
+    <span class="p">(</span><span class="s2">&quot;ACC_02&quot;</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span>                              <span class="c1"># From J428 ACC radar control module</span>
+  <span class="p">]</span>
+  <span class="n">bsm_radar_messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;SWA_01&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>                              <span class="c1"># From J1086 Lane Change Assist</span>
+  <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="PqExtraSignals">
+<a class="viewcode-back" href="../../../../selfdrive.car.volkswagen.html#selfdrive.car.volkswagen.carstate.PqExtraSignals">[docs]</a>
+<span class="k">class</span> <span class="nc">PqExtraSignals</span><span class="p">:</span>
+  <span class="c1"># Additional signal and message lists for optional or bus-portable controllers</span>
+  <span class="n">fwd_radar_messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;ACC_System&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>                          <span class="c1"># From J428 ACC radar control module</span>
+    <span class="p">(</span><span class="s2">&quot;ACC_GRA_Anzeige&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span>                     <span class="c1"># From J428 ACC radar control module</span>
+  <span class="p">]</span>
+  <span class="n">bsm_radar_messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;SWA_1&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>                               <span class="c1"># From J1086 Lane Change Assist</span>
+  <span class="p">]</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

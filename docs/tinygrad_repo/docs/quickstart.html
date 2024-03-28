@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="openpilot docs" name="description" />
+<meta content="op, openpilot, docs, documentation" name="keywords" />
+<meta content="all,follow" name="robots" />
+<meta content="index,follow,snippet,archive" name="googlebot" />
+<meta content="en_US" property="og:locale" />
+<meta content="docs.comma.ai" property="og:site_name" />
+<meta content="https://docs.comma.ai" property="og:url" />
+<meta content="openpilot Documentation" property="og:title" />
+<meta content="website" property="og:type" />
+<meta content="image/jpeg" property="og:image:type" />
+<meta content="400" property="og:image:width" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image:url" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image:secure_url" />
+<meta content="openpilot Documentation" property="og:description" />
+<meta content="summary_large_image" property="twitter:card" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="twitter:logo" />
+<meta content="openpilot Documentation" property="twitter:title" />
+<meta content="openpilot Documentation" property="twitter:description" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tinygrad Quick Start Guide &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/tinygrad_repo/docs/quickstart.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">tinygrad Quick Start Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/tinygrad_repo/docs/quickstart.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tinygrad-quick-start-guide">
+<h1>tinygrad Quick Start Guide<a class="headerlink" href="#tinygrad-quick-start-guide" title="Link to this heading"></a></h1>
+<p>This guide assumes no prior knowledge of pytorch or any other deep learning framework, but does assume some basic knowledge of neural networks.
+It is intended to be a very quick overview of the high level API that tinygrad provides.</p>
+<p>This guide is also structured as a tutorial which at the end of it you will have a working model that can classify handwritten digits.</p>
+<p>We need some imports to get started:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tinygrad.helpers</span> <span class="kn">import</span> <span class="n">Timing</span>
+</pre></div>
+</div>
+<section id="tensors">
+<h2>Tensors<a class="headerlink" href="#tensors" title="Link to this heading"></a></h2>
+<p>Tensors are the base data structure in tinygrad. They can be thought of as a multidimensional array of a specific data type.
+All high level operations in tinygrad operate on these tensors.</p>
+<p>The tensor class can be imported like so:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tinygrad.tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+</pre></div>
+</div>
+<p>Tensors can be created from an existing data structure like a python list or numpy ndarray:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t1</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">na</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">na</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Tensors can also be created using one of the many factory methods:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">full</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># create a tensor of shape (2, 3) filled with 5</span>
+<span class="n">zeros</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># create a tensor of shape (2, 3) filled with 0</span>
+<span class="n">ones</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># create a tensor of shape (2, 3) filled with 1</span>
+
+<span class="n">full_like</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">full</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># create a tensor of the same shape as `full` filled with 2</span>
+<span class="n">zeros_like</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">full</span><span class="p">)</span> <span class="c1"># create a tensor of the same shape as `full` filled with 0</span>
+<span class="n">ones_like</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">full</span><span class="p">)</span> <span class="c1"># create a tensor of the same shape as `full` filled with 1</span>
+
+<span class="n">eye</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># create a 3x3 identity matrix</span>
+<span class="n">arange</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># create a tensor of shape (10,) filled with values from 0 to 9</span>
+
+<span class="n">rand</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># create a tensor of shape (2, 3) filled with random values from a uniform distribution</span>
+<span class="n">randn</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># create a tensor of shape (2, 3) filled with random values from a normal distribution</span>
+<span class="n">uniform</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># create a tensor of shape (2, 3) filled with random values from a uniform distribution between 0 and 10</span>
+</pre></div>
+</div>
+<p>There are even more of these factory methods, you can find them in the <a class="reference internal" href="#/tinygrad/tensor.py"><span class="xref myst">tensor.py</span></a> file.</p>
+<p>All the tensors creation methods can take a <code class="docutils literal notranslate"><span class="pre">dtype</span></code> argument to specify the data type of the tensor.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tinygrad.helpers</span> <span class="kn">import</span> <span class="n">dtypes</span>
+
+<span class="n">t3</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Tensors allow you to perform operations on them like so:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t4</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">t5</span> <span class="o">=</span> <span class="p">(</span><span class="n">t4</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="n">t6</span> <span class="o">=</span> <span class="p">(</span><span class="n">t5</span> <span class="o">*</span> <span class="n">t4</span><span class="p">)</span><span class="o">.</span><span class="n">relu</span><span class="p">()</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>All of these operations are lazy and are only executed when you realize the tensor using <code class="docutils literal notranslate"><span class="pre">.realize()</span></code> or <code class="docutils literal notranslate"><span class="pre">.numpy()</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">t6</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+<span class="c1"># [-56. -48. -36. -20.   0.]</span>
+</pre></div>
+</div>
+<p>There are a lot more operations that can be performed on tensors, you can find them in the <a class="reference internal" href="#/tinygrad/tensor.py"><span class="xref myst">tensor.py</span></a> file.
+Additionally reading through <a class="reference internal" href="#/docs/abstractions.py"><span class="xref myst">abstractions.py</span></a> will help you understand how operations on these tensors make their way down to your hardware.</p>
+</section>
+<section id="models">
+<h2>Models<a class="headerlink" href="#models" title="Link to this heading"></a></h2>
+<p>Neural networks in tinygrad are really just represented by the operations performed on tensors.
+These operations are commonly grouped into the <code class="docutils literal notranslate"><span class="pre">__call__</span></code> method of a class which allows modularization and reuse of these groups of operations.
+These classes do not need to inherit from any base class, in fact if they don’t need any trainable parameters they don’t even need to be a class!</p>
+<p>An example of this would be the <code class="docutils literal notranslate"><span class="pre">nn.Linear</span></code> class which represents a linear layer in a neural network.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># from tinygrad.nn import Linear</span>
+<span class="k">class</span> <span class="nc">Linear</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_features</span><span class="p">,</span> <span class="n">out_features</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">initialization</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;kaiming_uniform&#39;</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">initialization</span><span class="p">)(</span><span class="n">out_features</span><span class="p">,</span> <span class="n">in_features</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">out_features</span><span class="p">)</span> <span class="k">if</span> <span class="n">bias</span> <span class="k">else</span> <span class="kc">None</span>
+
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">transpose</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are more neural network modules already implemented in <a class="reference internal" href="#/tinygrad/nn/__init__.py"><span class="xref myst">nn</span></a>, and you can also implement your own.</p>
+<p>We will be implementing a simple neural network that can classify handwritten digits from the MNIST dataset.
+Our classifier will be a simple 2 layer neural network with a Leaky ReLU activation function.
+It will use a hidden layer size of 128 and an output layer size of 10 (one for each digit) with no bias on either Linear layer.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tinygrad.nn</span> <span class="kn">import</span> <span class="n">Linear</span>
+
+<span class="k">class</span> <span class="nc">TinyNet</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">l1</span> <span class="o">=</span> <span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">l2</span> <span class="o">=</span> <span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">leakyrelu</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+<span class="n">net</span> <span class="o">=</span> <span class="n">TinyNet</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We can see that the forward pass of our neural network is just the sequence of operations performed on the input tensor <code class="docutils literal notranslate"><span class="pre">x</span></code>.
+We can also see that functional operations like <code class="docutils literal notranslate"><span class="pre">leakyrelu</span></code> are not defined as classes and instead are just methods we can just call.
+Finally, we just initialize an instance of our neural network, and we are ready to start training it.</p>
+</section>
+<section id="training">
+<h2>Training<a class="headerlink" href="#training" title="Link to this heading"></a></h2>
+<p>Now that we have our neural network defined we can start training it.
+Training neural networks in tinygrad is super simple.
+All we need to do is define our neural network, define our loss function, and then call <code class="docutils literal notranslate"><span class="pre">.backward()</span></code> on the loss function to compute the gradients.
+They can then be used to update the parameters of our neural network using one of the many optimizers in <a class="reference internal" href="#/tinygrad/nn/optim.py"><span class="xref myst">optim.py</span></a>.</p>
+<p>For our loss function we will be using sparse categorical cross entropy loss.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># from tinygrad.tensor import sparse_categorical_crossentropy</span>
+<span class="k">def</span> <span class="nf">sparse_categorical_crossentropy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="n">loss_mask</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">!=</span> <span class="n">ignore_index</span>
+    <span class="n">y_counter</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">numel</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">((</span><span class="n">y_counter</span> <span class="o">==</span> <span class="n">Y</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">loss_mask</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">*</span><span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">()</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">loss_mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>As we can see in this implementation of cross entropy loss, there are certain operations that tinygrad does not support.
+Namely, operations that are load/store or assigning a value to a tensor at a certain index.
+Load/store ops are not supported in tinygrad because they add complexity when trying to port to different backends and 90% of the models out there don’t use/need them.</p>
+<p>For our optimizer we will be using the traditional stochastic gradient descent optimizer with a learning rate of 3e-4.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tinygrad.nn.optim</span> <span class="kn">import</span> <span class="n">SGD</span>
+
+<span class="n">opt</span> <span class="o">=</span> <span class="n">SGD</span><span class="p">([</span><span class="n">net</span><span class="o">.</span><span class="n">l1</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="n">net</span><span class="o">.</span><span class="n">l2</span><span class="o">.</span><span class="n">weight</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">3e-4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can see that we are passing in the parameters of our neural network to the optimizer.
+This is due to the fact that the optimizer needs to know which parameters to update.
+There is a simpler way to do this just by using <code class="docutils literal notranslate"><span class="pre">get_parameters(net)</span></code> from <code class="docutils literal notranslate"><span class="pre">tinygrad.nn.state</span></code> which will return a list of all the parameters in the neural network.
+The parameters are just listed out explicitly here for clarity.</p>
+<p>Now that we have our network, loss function, and optimizer defined all we are missing is the data to train on!
+There are a couple of dataset loaders in tinygrad located in <a class="reference internal" href="#/extra/datasets"><span class="xref myst">/extra/datasets</span></a>.
+We will be using the MNIST dataset loader.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">extra.datasets</span> <span class="kn">import</span> <span class="n">fetch_mnist</span>
+</pre></div>
+</div>
+<p>Now we have everything we need to start training our neural network.
+We will be training for 1000 steps with a batch size of 64.</p>
+<p>We use <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">Tensor.train()</span></code> set the internal flag <code class="docutils literal notranslate"><span class="pre">Tensor.training</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> during training.
+Upon exit, the flag is restored to its previous value by the context manager.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">fetch_mnist</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">train</span><span class="p">():</span>
+  <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="c1"># random sample a batch</span>
+    <span class="n">samp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span>
+    <span class="n">batch</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">samp</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># get the corresponding labels</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">Y_train</span><span class="p">[</span><span class="n">samp</span><span class="p">])</span>
+
+    <span class="c1"># forward pass</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+    <span class="c1"># compute loss</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">sparse_categorical_crossentropy</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+
+    <span class="c1"># zero gradients</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+    <span class="c1"># backward pass</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+    <span class="c1"># update parameters</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="c1"># calculate accuracy</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="p">(</span><span class="n">pred</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">step</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Step </span><span class="si">{</span><span class="n">step</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> | Loss: </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s2"> | Accuracy: </span><span class="si">{</span><span class="n">acc</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="evaluation">
+<h2>Evaluation<a class="headerlink" href="#evaluation" title="Link to this heading"></a></h2>
+<p>Now that we have trained our neural network we can evaluate it on the test set.
+We will be using the same batch size of 64 and will be evaluating for 1000 of those batches.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Timing</span><span class="p">(</span><span class="s2">&quot;Time: &quot;</span><span class="p">):</span>
+  <span class="n">avg_acc</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="c1"># random sample a batch</span>
+    <span class="n">samp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span>
+    <span class="n">batch</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">samp</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># get the corresponding labels</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">Y_test</span><span class="p">[</span><span class="n">samp</span><span class="p">]</span>
+
+    <span class="c1"># forward pass</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+    <span class="c1"># calculate accuracy</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">avg_acc</span> <span class="o">+=</span> <span class="p">(</span><span class="n">pred</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test Accuracy: </span><span class="si">{</span><span class="n">avg_acc</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="and-that-s-it">
+<h2>And that’s it<a class="headerlink" href="#and-that-s-it" title="Link to this heading"></a></h2>
+<p>Highly recommend you check out the <a class="reference internal" href="#/examples"><span class="xref myst">examples/</span></a> folder for more examples of using tinygrad.
+Reading the source code of tinygrad is also a great way to learn how it works.
+Specifically the tests in <a class="reference internal" href="#/test"><span class="xref myst">test/</span></a> are a great place to see how to use and the semantics of the different operations.
+There are also a bunch of models implemented in <a class="reference internal" href="#/models"><span class="xref myst">models/</span></a> that you can use as a reference.</p>
+<p>Additionally, feel free to ask questions in the <code class="docutils literal notranslate"><span class="pre">#learn-tinygrad</span></code> channel on the <a class="reference external" href="https://discord.gg/beYbxwxVdx">discord</a>. Don’t ask to ask, just ask!</p>
+</section>
+<section id="extras">
+<h2>Extras<a class="headerlink" href="#extras" title="Link to this heading"></a></h2>
+<section id="jit">
+<h3>JIT<a class="headerlink" href="#jit" title="Link to this heading"></a></h3>
+<p>Additionally, it is possible to speed up the computation of certain neural networks by using the JIT.
+Currently, this does not support models with varying input sizes and non tinygrad operations.</p>
+<p>To use the JIT we just need to add a function decorator to the forward pass of our neural network and ensure that the input and output are realized tensors.
+Or in this case we will create a wrapper function and decorate the wrapper function to speed up the evaluation of our neural network.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tinygrad.jit</span> <span class="kn">import</span> <span class="n">TinyJit</span>
+
+<span class="nd">@TinyJit</span>
+<span class="k">def</span> <span class="nf">jit</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">realize</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">Timing</span><span class="p">(</span><span class="s2">&quot;Time: &quot;</span><span class="p">):</span>
+  <span class="n">avg_acc</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="c1"># random sample a batch</span>
+    <span class="n">samp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span>
+    <span class="n">batch</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">samp</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># get the corresponding labels</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">Y_test</span><span class="p">[</span><span class="n">samp</span><span class="p">]</span>
+
+    <span class="c1"># forward pass with jit</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">jit</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+    <span class="c1"># calculate accuracy</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">avg_acc</span> <span class="o">+=</span> <span class="p">(</span><span class="n">pred</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test Accuracy: </span><span class="si">{</span><span class="n">avg_acc</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You will find that the evaluation time is much faster than before and that your accelerator utilization is much higher.</p>
+</section>
+<section id="saving-and-loading-models">
+<h3>Saving and Loading Models<a class="headerlink" href="#saving-and-loading-models" title="Link to this heading"></a></h3>
+<p>The standard weight format for tinygrad is <a class="reference external" href="https://github.com/huggingface/safetensors">safetensors</a>. This means that you can load the weights of any model also using safetensors into tinygrad.
+There are functions in <a class="reference internal" href="#/tinygrad/nn/state.py"><span class="xref myst">state.py</span></a> to save and load models to and from this format.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tinygrad.nn.state</span> <span class="kn">import</span> <span class="n">safe_save</span><span class="p">,</span> <span class="n">safe_load</span><span class="p">,</span> <span class="n">get_state_dict</span><span class="p">,</span> <span class="n">load_state_dict</span>
+
+<span class="c1"># first we need the state dict of our model</span>
+<span class="n">state_dict</span> <span class="o">=</span> <span class="n">get_state_dict</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
+
+<span class="c1"># then we can just save it to a file</span>
+<span class="n">safe_save</span><span class="p">(</span><span class="n">state_dict</span><span class="p">,</span> <span class="s2">&quot;model.safetensors&quot;</span><span class="p">)</span>
+
+<span class="c1"># and load it back in</span>
+<span class="n">state_dict</span> <span class="o">=</span> <span class="n">safe_load</span><span class="p">(</span><span class="s2">&quot;model.safetensors&quot;</span><span class="p">)</span>
+<span class="n">load_state_dict</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Many of the models in the <a class="reference internal" href="#/models"><span class="xref myst">models/</span></a> folder have a <code class="docutils literal notranslate"><span class="pre">load_from_pretrained</span></code> method that will download and load the weights for you. These usually are pytorch weights meaning that you would need pytorch installed to load them.</p>
+</section>
+<section id="environment-variables">
+<h3>Environment Variables<a class="headerlink" href="#environment-variables" title="Link to this heading"></a></h3>
+<p>There exist a bunch of environment variables that control the runtime behavior of tinygrad.
+Some of the commons ones are <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> and the different backend enablement variables.</p>
+<p>You can find a full list and their descriptions in <a class="reference internal" href="#/docs/env_vars.md"><span class="xref myst">env_vars.md</span></a>.</p>
+</section>
+<section id="visualizing-the-computation-graph">
+<h3>Visualizing the Computation Graph<a class="headerlink" href="#visualizing-the-computation-graph" title="Link to this heading"></a></h3>
+<p>It is possible to visualize the computation graph of a neural network using <a class="reference external" href="https://graphviz.org/">graphviz</a>.</p>
+<p>This is easily done by running a single pass (forward or backward!) of the neural network with the environment variable <code class="docutils literal notranslate"><span class="pre">GRAPH</span></code> set to <code class="docutils literal notranslate"><span class="pre">1</span></code>.
+The graph will be saved to <code class="docutils literal notranslate"><span class="pre">/tmp/net.svg</span></code> by default.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

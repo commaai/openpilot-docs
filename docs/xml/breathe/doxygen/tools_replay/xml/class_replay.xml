@@ -1,0 +1,1242 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="class_replay" kind="class" language="C++" prot="public">
+    <compoundname>Replay</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">QObject</basecompoundref>
+      <sectiondef kind="protected-type">
+      <memberdef kind="typedef" id="class_replay_1a760491226845d2b03b5dd9cc746f7ca3" prot="protected" static="no">
+        <type>std::map&lt; int, std::unique_ptr&lt; <ref refid="class_segment" kindref="compound">Segment</ref> &gt; &gt;</type>
+        <definition>typedef std::map&lt;int, std::unique_ptr&lt;Segment&gt; &gt; Replay::SegmentMap</definition>
+        <argsstring></argsstring>
+        <name>SegmentMap</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="100" column="20" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="class_replay_1ac2994a86aa73bd066f638ac92dc679d3" prot="protected" static="no" mutable="no">
+        <type>QThread *</type>
+        <definition>QThread* Replay::stream_thread_</definition>
+        <argsstring></argsstring>
+        <name>stream_thread_</name>
+        <initializer>= nullptr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="115" column="11" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a851f70dfddd79a010876d30a59411ca3" prot="protected" static="no" mutable="no">
+        <type>std::mutex</type>
+        <definition>std::mutex Replay::stream_lock_</definition>
+        <argsstring></argsstring>
+        <name>stream_lock_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="116" column="14" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a844d52c914cfe33a1109548ab7640c4e" prot="protected" static="no" mutable="no">
+        <type>std::condition_variable</type>
+        <definition>std::condition_variable Replay::stream_cv_</definition>
+        <argsstring></argsstring>
+        <name>stream_cv_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="117" column="27" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1ae030d7b7b3a961aa0f2e88dbbc91b0b6" prot="protected" static="no" mutable="no">
+        <type>std::atomic&lt; bool &gt;</type>
+        <definition>std::atomic&lt;bool&gt; Replay::updating_events_</definition>
+        <argsstring></argsstring>
+        <name>updating_events_</name>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="118" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a85fdabdc5a0cc6b2c5eafc9537b07c72" prot="protected" static="no" mutable="no">
+        <type>std::atomic&lt; int &gt;</type>
+        <definition>std::atomic&lt;int&gt; Replay::current_segment_</definition>
+        <argsstring></argsstring>
+        <name>current_segment_</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="119" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a42288d246fb808d944e72c1414b0d205" prot="protected" static="no" mutable="no">
+        <type>SegmentMap</type>
+        <definition>SegmentMap Replay::segments_</definition>
+        <argsstring></argsstring>
+        <name>segments_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="120" column="14" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1aeb226e1cce3b9036e8a9c186fff0d5b5" prot="protected" static="no" mutable="no">
+        <type>std::atomic&lt; bool &gt;</type>
+        <definition>std::atomic&lt;bool&gt; Replay::exit_</definition>
+        <argsstring></argsstring>
+        <name>exit_</name>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="122" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1af010edb62843be2a62adc274ec03cab1" prot="protected" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool Replay::paused_</definition>
+        <argsstring></argsstring>
+        <name>paused_</name>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="123" column="8" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a7249a1e590dd965fe2cb3a150f24dc39" prot="protected" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool Replay::events_updated_</definition>
+        <argsstring></argsstring>
+        <name>events_updated_</name>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="124" column="8" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a597da6d4887e4cf92b5abd5a3aec99ab" prot="protected" static="no" mutable="no">
+        <type>QDateTime</type>
+        <definition>QDateTime Replay::route_date_time_</definition>
+        <argsstring></argsstring>
+        <name>route_date_time_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="125" column="13" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a977a48f6b3c98b7e588b520530198d9a" prot="protected" static="no" mutable="no">
+        <type>uint64_t</type>
+        <definition>uint64_t Replay::route_start_ts_</definition>
+        <argsstring></argsstring>
+        <name>route_start_ts_</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="126" column="12" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a4eedc2e6cf587fb422798c52da05842c" prot="protected" static="no" mutable="no">
+        <type>std::atomic&lt; uint64_t &gt;</type>
+        <definition>std::atomic&lt;uint64_t&gt; Replay::cur_mono_time_</definition>
+        <argsstring></argsstring>
+        <name>cur_mono_time_</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="127" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1ade41a8c42280fdbf0a5dd66f2ec5466c" prot="protected" static="no" mutable="no">
+        <type>std::unique_ptr&lt; std::vector&lt; <ref refid="class_event" kindref="compound">Event</ref> * &gt; &gt;</type>
+        <definition>std::unique_ptr&lt;std::vector&lt;Event *&gt; &gt; Replay::events_</definition>
+        <argsstring></argsstring>
+        <name>events_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="128" column="19" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="128" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1ac953f9fb040966b486677beb299464f1" prot="protected" static="no" mutable="no">
+        <type>std::unique_ptr&lt; std::vector&lt; <ref refid="class_event" kindref="compound">Event</ref> * &gt; &gt;</type>
+        <definition>std::unique_ptr&lt;std::vector&lt;Event *&gt; &gt; Replay::new_events_</definition>
+        <argsstring></argsstring>
+        <name>new_events_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="129" column="19" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="129" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a4be2c453c1d0deb39309442a4dab457e" prot="protected" static="no" mutable="no">
+        <type>std::vector&lt; int &gt;</type>
+        <definition>std::vector&lt;int&gt; Replay::segments_merged_</definition>
+        <argsstring></argsstring>
+        <name>segments_merged_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="130" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a483afe87939d9116d46c2fc5e4a3e3ae" prot="protected" static="no" mutable="no">
+        <type>SubMaster *</type>
+        <definition>SubMaster* Replay::sm</definition>
+        <argsstring></argsstring>
+        <name>sm</name>
+        <initializer>= nullptr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="133" column="13" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="133" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a39b271f09545a38e006b8e6d7d0e4801" prot="protected" static="no" mutable="no">
+        <type>std::unique_ptr&lt; PubMaster &gt;</type>
+        <definition>std::unique_ptr&lt;PubMaster&gt; Replay::pm</definition>
+        <argsstring></argsstring>
+        <name>pm</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="134" column="19" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="134" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a9364a4872ddd311d93f8cdb21cf5863a" prot="protected" static="no" mutable="no">
+        <type>std::vector&lt; const char * &gt;</type>
+        <definition>std::vector&lt;const char*&gt; Replay::sockets_</definition>
+        <argsstring></argsstring>
+        <name>sockets_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="135" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="135" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a72e545b881eebf9251f8372e18c00f17" prot="protected" static="no" mutable="no">
+        <type>std::unique_ptr&lt; <ref refid="class_route" kindref="compound">Route</ref> &gt;</type>
+        <definition>std::unique_ptr&lt;Route&gt; Replay::route_</definition>
+        <argsstring></argsstring>
+        <name>route_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="136" column="19" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="136" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a5600716282e9a00408e15b29ae6d05df" prot="protected" static="no" mutable="no">
+        <type>std::unique_ptr&lt; <ref refid="class_camera_server" kindref="compound">CameraServer</ref> &gt;</type>
+        <definition>std::unique_ptr&lt;CameraServer&gt; Replay::camera_server_</definition>
+        <argsstring></argsstring>
+        <name>camera_server_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="137" column="19" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="137" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a33f485dff27aac2efe5952273f626d2a" prot="protected" static="no" mutable="no">
+        <type>std::atomic&lt; uint32_t &gt;</type>
+        <definition>std::atomic&lt;uint32_t&gt; Replay::flags_</definition>
+        <argsstring></argsstring>
+        <name>flags_</name>
+        <initializer>= REPLAY_FLAG_NONE</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="138" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="138" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1ab9c3cbacd9ad374112eb766f6fd8253e" prot="protected" static="no" mutable="no">
+        <type>std::mutex</type>
+        <definition>std::mutex Replay::timeline_lock</definition>
+        <argsstring></argsstring>
+        <name>timeline_lock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="140" column="14" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="140" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a9a256b4734852a4f3a71864724b9abfa" prot="protected" static="no" mutable="no">
+        <type>QFuture&lt; void &gt;</type>
+        <definition>QFuture&lt;void&gt; Replay::timeline_future</definition>
+        <argsstring></argsstring>
+        <name>timeline_future</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="141" column="11" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="141" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a70859e5e0fb32918402935da83a82b68" prot="protected" static="no" mutable="no">
+        <type>std::vector&lt; std::tuple&lt; double, double, TimelineType &gt; &gt;</type>
+        <definition>std::vector&lt;std::tuple&lt;double, double, TimelineType&gt; &gt; Replay::timeline</definition>
+        <argsstring></argsstring>
+        <name>timeline</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="142" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="142" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1ac931ac6ef53e0cb147078cdf252ac4b2" prot="protected" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string Replay::car_fingerprint_</definition>
+        <argsstring></argsstring>
+        <name>car_fingerprint_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="143" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="143" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a6a19d1a119c243cec8ee1b65ceee515c" prot="protected" static="no" mutable="no">
+        <type>std::atomic&lt; float &gt;</type>
+        <definition>std::atomic&lt;float&gt; Replay::speed_</definition>
+        <argsstring></argsstring>
+        <name>speed_</name>
+        <initializer>= 1.0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="144" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="144" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a6b70c442a4f289697e1dc52fff612f7f" prot="protected" static="no" mutable="no">
+        <type>replayEventFilter</type>
+        <definition>replayEventFilter Replay::event_filter</definition>
+        <argsstring></argsstring>
+        <name>event_filter</name>
+        <initializer>= nullptr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="145" column="21" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="145" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1a566b5950390d04e0348171c489f26a26" prot="protected" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* Replay::filter_opaque</definition>
+        <argsstring></argsstring>
+        <name>filter_opaque</name>
+        <initializer>= nullptr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="146" column="8" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="146" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_replay_1ad43330618ad20da546b97bbf5fa223eb" prot="protected" static="no" mutable="no">
+        <type>int</type>
+        <definition>int Replay::segment_cache_limit</definition>
+        <argsstring></argsstring>
+        <name>segment_cache_limit</name>
+        <initializer>= MIN_SEGMENTS_CACHE</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="147" column="7" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="147" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_replay_1ac8f14a938316a89dbf48a1e612351ab0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>Replay::Replay</definition>
+        <argsstring>(QString route, QStringList allow, QStringList block, SubMaster *sm=nullptr, uint32_t flags=REPLAY_FLAG_NONE, QString data_dir=&quot;&quot;, QObject *parent=0)</argsstring>
+        <name>Replay</name>
+        <param>
+          <type>QString</type>
+          <declname>route</declname>
+        </param>
+        <param>
+          <type>QStringList</type>
+          <declname>allow</declname>
+        </param>
+        <param>
+          <type>QStringList</type>
+          <declname>block</declname>
+        </param>
+        <param>
+          <type>SubMaster *</type>
+          <declname>sm</declname>
+          <defval>nullptr</defval>
+        </param>
+        <param>
+          <type>uint32_t</type>
+          <declname>flags</declname>
+          <defval>REPLAY_FLAG_NONE</defval>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>data_dir</declname>
+          <defval>&quot;&quot;</defval>
+        </param>
+        <param>
+          <type>QObject *</type>
+          <declname>parent</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="51" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a07cc68069b303806ba52e6f78e36c212" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>Replay::~Replay</definition>
+        <argsstring>()</argsstring>
+        <name>~Replay</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="53" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a40df4cc3f15a9304a58d8cd11501629e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Replay::load</definition>
+        <argsstring>()</argsstring>
+        <name>load</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="54" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a064cc9172137b9c52de80ec65d2175f1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::start</definition>
+        <argsstring>(int seconds=0)</argsstring>
+        <name>start</name>
+        <param>
+          <type>int</type>
+          <declname>seconds</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="55" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a951cda9e7a8c252bc76a4505d1201106" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::stop</definition>
+        <argsstring>()</argsstring>
+        <name>stop</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="56" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a59f1e1c443738f081d7f130cea055c13" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::pause</definition>
+        <argsstring>(bool pause)</argsstring>
+        <name>pause</name>
+        <param>
+          <type>bool</type>
+          <declname>pause</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="57" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1aae94f5309999939415630187e154d6ce" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::seekToFlag</definition>
+        <argsstring>(FindFlag flag)</argsstring>
+        <name>seekToFlag</name>
+        <param>
+          <type>FindFlag</type>
+          <declname>flag</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="58" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1acb7b46c816ad3afc03d72511b7e558fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::seekTo</definition>
+        <argsstring>(double seconds, bool relative)</argsstring>
+        <name>seekTo</name>
+        <param>
+          <type>double</type>
+          <declname>seconds</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>relative</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="59" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a81cb7fbe9307ad04cc0f7cfec48b453d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Replay::isPaused</definition>
+        <argsstring>() const</argsstring>
+        <name>isPaused</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="60" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="60" bodyend="60"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1ac9382537e061bcec34fe49227fbf85d6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::installEventFilter</definition>
+        <argsstring>(replayEventFilter filter, void *opaque)</argsstring>
+        <name>installEventFilter</name>
+        <param>
+          <type>replayEventFilter</type>
+          <declname>filter</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>opaque</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="64" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="64" bodyend="67"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a714c39579896b7118afe236559dc988d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int Replay::segmentCacheLimit</definition>
+        <argsstring>() const</argsstring>
+        <name>segmentCacheLimit</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="68" column="14" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="68" bodyend="68"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a24fc5299f09a94b67d2a6c7b78fb3001" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::setSegmentCacheLimit</definition>
+        <argsstring>(int n)</argsstring>
+        <name>setSegmentCacheLimit</name>
+        <param>
+          <type>int</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="69" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="69" bodyend="69"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a1db2dd8757786617bd5d832e91bc69a2" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Replay::hasFlag</definition>
+        <argsstring>(REPLAY_FLAGS flag) const</argsstring>
+        <name>hasFlag</name>
+        <param>
+          <type>REPLAY_FLAGS</type>
+          <declname>flag</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="70" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="70" bodyend="70"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a0448f0fc2870de4fe0d4c45962eb70a4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::addFlag</definition>
+        <argsstring>(REPLAY_FLAGS flag)</argsstring>
+        <name>addFlag</name>
+        <param>
+          <type>REPLAY_FLAGS</type>
+          <declname>flag</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="71" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="71" bodyend="71"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a867bcd0c995eaefd9b45e162546fc74a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::removeFlag</definition>
+        <argsstring>(REPLAY_FLAGS flag)</argsstring>
+        <name>removeFlag</name>
+        <param>
+          <type>REPLAY_FLAGS</type>
+          <declname>flag</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="72" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="72" bodyend="72"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a50a6f4aee803332bfd7403eba276abe9" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const <ref refid="class_route" kindref="compound">Route</ref> *</type>
+        <definition>const Route* Replay::route</definition>
+        <argsstring>() const</argsstring>
+        <name>route</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="73" column="22" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="73" bodyend="73"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1af47a71eb10b192b807ad00c7b4071742" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double Replay::currentSeconds</definition>
+        <argsstring>() const</argsstring>
+        <name>currentSeconds</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="74" column="17" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="74" bodyend="74"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a053f45d1a07dfa78e1f256408a6be004" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>QDateTime</type>
+        <definition>QDateTime Replay::routeDateTime</definition>
+        <argsstring>() const</argsstring>
+        <name>routeDateTime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="75" column="20" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="75" bodyend="75"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a6fcf97ee8cf6221e5c2594797b6a9cb3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>QDateTime</type>
+        <definition>QDateTime Replay::currentDateTime</definition>
+        <argsstring>() const</argsstring>
+        <name>currentDateTime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="76" column="20" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="76" bodyend="76"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a789abcdd4b15dc6ae2e78cf1721d8d9a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>uint64_t</type>
+        <definition>uint64_t Replay::routeStartTime</definition>
+        <argsstring>() const</argsstring>
+        <name>routeStartTime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="77" column="19" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="77" bodyend="77"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1ad6dc5d917ea14bb367fd362be94f64bd" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double Replay::toSeconds</definition>
+        <argsstring>(uint64_t mono_time) const</argsstring>
+        <name>toSeconds</name>
+        <param>
+          <type>uint64_t</type>
+          <declname>mono_time</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="78" column="17" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="78" bodyend="78"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a5d4c686a71d6dc9e8492ff00ee500dcf" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int Replay::totalSeconds</definition>
+        <argsstring>() const</argsstring>
+        <name>totalSeconds</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="79" column="14" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="79" bodyend="79"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a8229ecfc72936c62f5bcf14f40a4e824" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::setSpeed</definition>
+        <argsstring>(float speed)</argsstring>
+        <name>setSpeed</name>
+        <param>
+          <type>float</type>
+          <declname>speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="80" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="80" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1ae03a5f9ad93a49ef9844d4ea9c4495d3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float Replay::getSpeed</definition>
+        <argsstring>() const</argsstring>
+        <name>getSpeed</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="81" column="16" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="81" bodyend="81"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a12d0a16669795958cbb596ab7c4b016f" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const std::vector&lt; <ref refid="class_event" kindref="compound">Event</ref> * &gt; *</type>
+        <definition>const std::vector&lt;Event *&gt;* Replay::events</definition>
+        <argsstring>() const</argsstring>
+        <name>events</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="82" column="28" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="82" bodyend="82"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a71e71f65b4d2ee2d11c7a2eb2b19e56b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const std::map&lt; int, std::unique_ptr&lt; <ref refid="class_segment" kindref="compound">Segment</ref> &gt; &gt; &amp;</type>
+        <definition>const std::map&lt;int, std::unique_ptr&lt;Segment&gt; &gt;&amp; Replay::segments</definition>
+        <argsstring>() const</argsstring>
+        <name>segments</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="83" column="25" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="83" bodyend="83"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a28f22af6f647cf0bf373ba8d7e765538" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const std::string &amp;</type>
+        <definition>const std::string&amp; Replay::carFingerprint</definition>
+        <argsstring>() const</argsstring>
+        <name>carFingerprint</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="84" column="28" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="84" bodyend="84"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a57a1016473aa4a80666ee92daa57c331" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>const std::vector&lt; std::tuple&lt; double, double, TimelineType &gt; &gt;</type>
+        <definition>const std::vector&lt;std::tuple&lt;double, double, TimelineType&gt; &gt; Replay::getTimeline</definition>
+        <argsstring>()</argsstring>
+        <name>getTimeline</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="85" column="28" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="85" bodyend="88"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="signal">
+      <memberdef kind="signal" id="class_replay_1af2ed702bd9cb5baaf1d75aaaf2dd4f7d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::streamStarted</definition>
+        <argsstring>()</argsstring>
+        <name>streamStarted</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="91" column="8"/>
+      </memberdef>
+      <memberdef kind="signal" id="class_replay_1a50ceb9cc1211bccf117414936f98d483" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::segmentsMerged</definition>
+        <argsstring>()</argsstring>
+        <name>segmentsMerged</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="92" column="8"/>
+      </memberdef>
+      <memberdef kind="signal" id="class_replay_1addd330142a2c03e8db783b8edd30d758" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::seekedTo</definition>
+        <argsstring>(double sec)</argsstring>
+        <name>seekedTo</name>
+        <param>
+          <type>double</type>
+          <declname>sec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="93" column="8"/>
+      </memberdef>
+      <memberdef kind="signal" id="class_replay_1a3841d73706a3ede5d5b90f868f19d16c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::qLogLoaded</definition>
+        <argsstring>(int segnum, std::shared_ptr&lt; LogReader &gt; qlog)</argsstring>
+        <name>qLogLoaded</name>
+        <param>
+          <type>int</type>
+          <declname>segnum</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="class_log_reader" kindref="compound">LogReader</ref> &gt;</type>
+          <declname>qlog</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="94" column="8"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-slot">
+      <memberdef kind="slot" id="class_replay_1add3c6033d9d0f89b9da8167002457438" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::segmentLoadFinished</definition>
+        <argsstring>(bool success)</argsstring>
+        <name>segmentLoadFinished</name>
+        <param>
+          <type>bool</type>
+          <declname>success</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="97" column="8"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="class_replay_1a1fc66727fcd3c1a133087a7fc48ca236" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::optional&lt; uint64_t &gt;</type>
+        <definition>std::optional&lt;uint64_t&gt; Replay::find</definition>
+        <argsstring>(FindFlag flag)</argsstring>
+        <name>find</name>
+        <param>
+          <type>FindFlag</type>
+          <declname>flag</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="101" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a1419a45120e2cbda7032784d77521ff9" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::startStream</definition>
+        <argsstring>(const Segment *cur_segment)</argsstring>
+        <name>startStream</name>
+        <param>
+          <type>const <ref refid="class_segment" kindref="compound">Segment</ref> *</type>
+          <declname>cur_segment</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="102" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a7b0a08fe13b56cabe91a5a4aaa2181cf" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::stream</definition>
+        <argsstring>()</argsstring>
+        <name>stream</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="103" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a84c79695313d6f42177de09c442eaa6f" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::setCurrentSegment</definition>
+        <argsstring>(int n)</argsstring>
+        <name>setCurrentSegment</name>
+        <param>
+          <type>int</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="104" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a5bd26f90dd940ad7d2390b980ffca00d" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::queueSegment</definition>
+        <argsstring>()</argsstring>
+        <name>queueSegment</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="105" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a6bb0e82926b20d018759805161745c89" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::mergeSegments</definition>
+        <argsstring>(const SegmentMap::iterator &amp;begin, const SegmentMap::iterator &amp;end)</argsstring>
+        <name>mergeSegments</name>
+        <param>
+          <type>const SegmentMap::iterator &amp;</type>
+          <declname>begin</declname>
+        </param>
+        <param>
+          <type>const SegmentMap::iterator &amp;</type>
+          <declname>end</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="106" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a2db2f6e9d37af804f7d913bb9ef65fa3" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::updateEvents</definition>
+        <argsstring>(const std::function&lt; bool()&gt; &amp;lambda)</argsstring>
+        <name>updateEvents</name>
+        <param>
+          <type>const std::function&lt; bool()&gt; &amp;</type>
+          <declname>lambda</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="107" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a99d2123a17fbe8075f418873d1c4fca2" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::publishMessage</definition>
+        <argsstring>(const Event *e)</argsstring>
+        <name>publishMessage</name>
+        <param>
+          <type>const <ref refid="class_event" kindref="compound">Event</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="108" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1ae4d634cca138ed97797484763b1bfd43" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::publishFrame</definition>
+        <argsstring>(const Event *e)</argsstring>
+        <name>publishFrame</name>
+        <param>
+          <type>const <ref refid="class_event" kindref="compound">Event</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="109" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1ade5b3997e0ebe42bc34eba8a320f93ec" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Replay::buildTimeline</definition>
+        <argsstring>()</argsstring>
+        <name>buildTimeline</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="110" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_replay_1a3dba95e9a38a5cd22037f0ec17ae5499" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Replay::isSegmentMerged</definition>
+        <argsstring>(int n)</argsstring>
+        <name>isSegmentMerged</name>
+        <param>
+          <type>int</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/replay/replay.h" line="111" column="15" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="111" bodyend="113"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>Replay</label>
+        <link refid="class_replay"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>QObject</label>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>Replay</label>
+        <link refid="class_replay"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>event_filter</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>QObject</label>
+      </node>
+      <node id="3">
+        <label>Event</label>
+        <link refid="class_event"/>
+      </node>
+    </collaborationgraph>
+    <location file="/tmp/openpilot/tools/replay/replay.h" line="47" column="28" bodyfile="/tmp/openpilot/tools/replay/replay.h" bodystart="47" bodyend="148"/>
+    <listofallmembers>
+      <member refid="class_replay_1a0448f0fc2870de4fe0d4c45962eb70a4" prot="public" virt="non-virtual"><scope>Replay</scope><name>addFlag</name></member>
+      <member refid="class_replay_1ade5b3997e0ebe42bc34eba8a320f93ec" prot="protected" virt="non-virtual"><scope>Replay</scope><name>buildTimeline</name></member>
+      <member refid="class_replay_1a5600716282e9a00408e15b29ae6d05df" prot="protected" virt="non-virtual"><scope>Replay</scope><name>camera_server_</name></member>
+      <member refid="class_replay_1ac931ac6ef53e0cb147078cdf252ac4b2" prot="protected" virt="non-virtual"><scope>Replay</scope><name>car_fingerprint_</name></member>
+      <member refid="class_replay_1a28f22af6f647cf0bf373ba8d7e765538" prot="public" virt="non-virtual"><scope>Replay</scope><name>carFingerprint</name></member>
+      <member refid="class_replay_1a4eedc2e6cf587fb422798c52da05842c" prot="protected" virt="non-virtual"><scope>Replay</scope><name>cur_mono_time_</name></member>
+      <member refid="class_replay_1a85fdabdc5a0cc6b2c5eafc9537b07c72" prot="protected" virt="non-virtual"><scope>Replay</scope><name>current_segment_</name></member>
+      <member refid="class_replay_1a6fcf97ee8cf6221e5c2594797b6a9cb3" prot="public" virt="non-virtual"><scope>Replay</scope><name>currentDateTime</name></member>
+      <member refid="class_replay_1af47a71eb10b192b807ad00c7b4071742" prot="public" virt="non-virtual"><scope>Replay</scope><name>currentSeconds</name></member>
+      <member refid="class_replay_1a6b70c442a4f289697e1dc52fff612f7f" prot="protected" virt="non-virtual"><scope>Replay</scope><name>event_filter</name></member>
+      <member refid="class_replay_1a12d0a16669795958cbb596ab7c4b016f" prot="public" virt="non-virtual"><scope>Replay</scope><name>events</name></member>
+      <member refid="class_replay_1ade41a8c42280fdbf0a5dd66f2ec5466c" prot="protected" virt="non-virtual"><scope>Replay</scope><name>events_</name></member>
+      <member refid="class_replay_1a7249a1e590dd965fe2cb3a150f24dc39" prot="protected" virt="non-virtual"><scope>Replay</scope><name>events_updated_</name></member>
+      <member refid="class_replay_1aeb226e1cce3b9036e8a9c186fff0d5b5" prot="protected" virt="non-virtual"><scope>Replay</scope><name>exit_</name></member>
+      <member refid="class_replay_1a566b5950390d04e0348171c489f26a26" prot="protected" virt="non-virtual"><scope>Replay</scope><name>filter_opaque</name></member>
+      <member refid="class_replay_1a1fc66727fcd3c1a133087a7fc48ca236" prot="protected" virt="non-virtual"><scope>Replay</scope><name>find</name></member>
+      <member refid="class_replay_1a33f485dff27aac2efe5952273f626d2a" prot="protected" virt="non-virtual"><scope>Replay</scope><name>flags_</name></member>
+      <member refid="class_replay_1ae03a5f9ad93a49ef9844d4ea9c4495d3" prot="public" virt="non-virtual"><scope>Replay</scope><name>getSpeed</name></member>
+      <member refid="class_replay_1a57a1016473aa4a80666ee92daa57c331" prot="public" virt="non-virtual"><scope>Replay</scope><name>getTimeline</name></member>
+      <member refid="class_replay_1a1db2dd8757786617bd5d832e91bc69a2" prot="public" virt="non-virtual"><scope>Replay</scope><name>hasFlag</name></member>
+      <member refid="class_replay_1ac9382537e061bcec34fe49227fbf85d6" prot="public" virt="non-virtual"><scope>Replay</scope><name>installEventFilter</name></member>
+      <member refid="class_replay_1a81cb7fbe9307ad04cc0f7cfec48b453d" prot="public" virt="non-virtual"><scope>Replay</scope><name>isPaused</name></member>
+      <member refid="class_replay_1a3dba95e9a38a5cd22037f0ec17ae5499" prot="protected" virt="non-virtual"><scope>Replay</scope><name>isSegmentMerged</name></member>
+      <member refid="class_replay_1a40df4cc3f15a9304a58d8cd11501629e" prot="public" virt="non-virtual"><scope>Replay</scope><name>load</name></member>
+      <member refid="class_replay_1a6bb0e82926b20d018759805161745c89" prot="protected" virt="non-virtual"><scope>Replay</scope><name>mergeSegments</name></member>
+      <member refid="class_replay_1ac953f9fb040966b486677beb299464f1" prot="protected" virt="non-virtual"><scope>Replay</scope><name>new_events_</name></member>
+      <member refid="class_replay_1a59f1e1c443738f081d7f130cea055c13" prot="public" virt="non-virtual"><scope>Replay</scope><name>pause</name></member>
+      <member refid="class_replay_1af010edb62843be2a62adc274ec03cab1" prot="protected" virt="non-virtual"><scope>Replay</scope><name>paused_</name></member>
+      <member refid="class_replay_1a39b271f09545a38e006b8e6d7d0e4801" prot="protected" virt="non-virtual"><scope>Replay</scope><name>pm</name></member>
+      <member refid="class_replay_1ae4d634cca138ed97797484763b1bfd43" prot="protected" virt="non-virtual"><scope>Replay</scope><name>publishFrame</name></member>
+      <member refid="class_replay_1a99d2123a17fbe8075f418873d1c4fca2" prot="protected" virt="non-virtual"><scope>Replay</scope><name>publishMessage</name></member>
+      <member refid="class_replay_1a3841d73706a3ede5d5b90f868f19d16c" prot="public" virt="non-virtual"><scope>Replay</scope><name>qLogLoaded</name></member>
+      <member refid="class_replay_1a5bd26f90dd940ad7d2390b980ffca00d" prot="protected" virt="non-virtual"><scope>Replay</scope><name>queueSegment</name></member>
+      <member refid="class_replay_1a867bcd0c995eaefd9b45e162546fc74a" prot="public" virt="non-virtual"><scope>Replay</scope><name>removeFlag</name></member>
+      <member refid="class_replay_1ac8f14a938316a89dbf48a1e612351ab0" prot="public" virt="non-virtual"><scope>Replay</scope><name>Replay</name></member>
+      <member refid="class_replay_1a50a6f4aee803332bfd7403eba276abe9" prot="public" virt="non-virtual"><scope>Replay</scope><name>route</name></member>
+      <member refid="class_replay_1a72e545b881eebf9251f8372e18c00f17" prot="protected" virt="non-virtual"><scope>Replay</scope><name>route_</name></member>
+      <member refid="class_replay_1a597da6d4887e4cf92b5abd5a3aec99ab" prot="protected" virt="non-virtual"><scope>Replay</scope><name>route_date_time_</name></member>
+      <member refid="class_replay_1a977a48f6b3c98b7e588b520530198d9a" prot="protected" virt="non-virtual"><scope>Replay</scope><name>route_start_ts_</name></member>
+      <member refid="class_replay_1a053f45d1a07dfa78e1f256408a6be004" prot="public" virt="non-virtual"><scope>Replay</scope><name>routeDateTime</name></member>
+      <member refid="class_replay_1a789abcdd4b15dc6ae2e78cf1721d8d9a" prot="public" virt="non-virtual"><scope>Replay</scope><name>routeStartTime</name></member>
+      <member refid="class_replay_1addd330142a2c03e8db783b8edd30d758" prot="public" virt="non-virtual"><scope>Replay</scope><name>seekedTo</name></member>
+      <member refid="class_replay_1acb7b46c816ad3afc03d72511b7e558fb" prot="public" virt="non-virtual"><scope>Replay</scope><name>seekTo</name></member>
+      <member refid="class_replay_1aae94f5309999939415630187e154d6ce" prot="public" virt="non-virtual"><scope>Replay</scope><name>seekToFlag</name></member>
+      <member refid="class_replay_1ad43330618ad20da546b97bbf5fa223eb" prot="protected" virt="non-virtual"><scope>Replay</scope><name>segment_cache_limit</name></member>
+      <member refid="class_replay_1a714c39579896b7118afe236559dc988d" prot="public" virt="non-virtual"><scope>Replay</scope><name>segmentCacheLimit</name></member>
+      <member refid="class_replay_1add3c6033d9d0f89b9da8167002457438" prot="protected" virt="non-virtual"><scope>Replay</scope><name>segmentLoadFinished</name></member>
+      <member refid="class_replay_1a760491226845d2b03b5dd9cc746f7ca3" prot="protected" virt="non-virtual"><scope>Replay</scope><name>SegmentMap</name></member>
+      <member refid="class_replay_1a71e71f65b4d2ee2d11c7a2eb2b19e56b" prot="public" virt="non-virtual"><scope>Replay</scope><name>segments</name></member>
+      <member refid="class_replay_1a42288d246fb808d944e72c1414b0d205" prot="protected" virt="non-virtual"><scope>Replay</scope><name>segments_</name></member>
+      <member refid="class_replay_1a4be2c453c1d0deb39309442a4dab457e" prot="protected" virt="non-virtual"><scope>Replay</scope><name>segments_merged_</name></member>
+      <member refid="class_replay_1a50ceb9cc1211bccf117414936f98d483" prot="public" virt="non-virtual"><scope>Replay</scope><name>segmentsMerged</name></member>
+      <member refid="class_replay_1a84c79695313d6f42177de09c442eaa6f" prot="protected" virt="non-virtual"><scope>Replay</scope><name>setCurrentSegment</name></member>
+      <member refid="class_replay_1a24fc5299f09a94b67d2a6c7b78fb3001" prot="public" virt="non-virtual"><scope>Replay</scope><name>setSegmentCacheLimit</name></member>
+      <member refid="class_replay_1a8229ecfc72936c62f5bcf14f40a4e824" prot="public" virt="non-virtual"><scope>Replay</scope><name>setSpeed</name></member>
+      <member refid="class_replay_1a483afe87939d9116d46c2fc5e4a3e3ae" prot="protected" virt="non-virtual"><scope>Replay</scope><name>sm</name></member>
+      <member refid="class_replay_1a9364a4872ddd311d93f8cdb21cf5863a" prot="protected" virt="non-virtual"><scope>Replay</scope><name>sockets_</name></member>
+      <member refid="class_replay_1a6a19d1a119c243cec8ee1b65ceee515c" prot="protected" virt="non-virtual"><scope>Replay</scope><name>speed_</name></member>
+      <member refid="class_replay_1a064cc9172137b9c52de80ec65d2175f1" prot="public" virt="non-virtual"><scope>Replay</scope><name>start</name></member>
+      <member refid="class_replay_1a1419a45120e2cbda7032784d77521ff9" prot="protected" virt="non-virtual"><scope>Replay</scope><name>startStream</name></member>
+      <member refid="class_replay_1a951cda9e7a8c252bc76a4505d1201106" prot="public" virt="non-virtual"><scope>Replay</scope><name>stop</name></member>
+      <member refid="class_replay_1a7b0a08fe13b56cabe91a5a4aaa2181cf" prot="protected" virt="non-virtual"><scope>Replay</scope><name>stream</name></member>
+      <member refid="class_replay_1a844d52c914cfe33a1109548ab7640c4e" prot="protected" virt="non-virtual"><scope>Replay</scope><name>stream_cv_</name></member>
+      <member refid="class_replay_1a851f70dfddd79a010876d30a59411ca3" prot="protected" virt="non-virtual"><scope>Replay</scope><name>stream_lock_</name></member>
+      <member refid="class_replay_1ac2994a86aa73bd066f638ac92dc679d3" prot="protected" virt="non-virtual"><scope>Replay</scope><name>stream_thread_</name></member>
+      <member refid="class_replay_1af2ed702bd9cb5baaf1d75aaaf2dd4f7d" prot="public" virt="non-virtual"><scope>Replay</scope><name>streamStarted</name></member>
+      <member refid="class_replay_1a70859e5e0fb32918402935da83a82b68" prot="protected" virt="non-virtual"><scope>Replay</scope><name>timeline</name></member>
+      <member refid="class_replay_1a9a256b4734852a4f3a71864724b9abfa" prot="protected" virt="non-virtual"><scope>Replay</scope><name>timeline_future</name></member>
+      <member refid="class_replay_1ab9c3cbacd9ad374112eb766f6fd8253e" prot="protected" virt="non-virtual"><scope>Replay</scope><name>timeline_lock</name></member>
+      <member refid="class_replay_1ad6dc5d917ea14bb367fd362be94f64bd" prot="public" virt="non-virtual"><scope>Replay</scope><name>toSeconds</name></member>
+      <member refid="class_replay_1a5d4c686a71d6dc9e8492ff00ee500dcf" prot="public" virt="non-virtual"><scope>Replay</scope><name>totalSeconds</name></member>
+      <member refid="class_replay_1a2db2f6e9d37af804f7d913bb9ef65fa3" prot="protected" virt="non-virtual"><scope>Replay</scope><name>updateEvents</name></member>
+      <member refid="class_replay_1ae030d7b7b3a961aa0f2e88dbbc91b0b6" prot="protected" virt="non-virtual"><scope>Replay</scope><name>updating_events_</name></member>
+      <member refid="class_replay_1a07cc68069b303806ba52e6f78e36c212" prot="public" virt="non-virtual"><scope>Replay</scope><name>~Replay</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

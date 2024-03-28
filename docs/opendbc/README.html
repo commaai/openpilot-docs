@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="openpilot docs" name="description" />
+<meta content="op, openpilot, docs, documentation" name="keywords" />
+<meta content="all,follow" name="robots" />
+<meta content="index,follow,snippet,archive" name="googlebot" />
+<meta content="en_US" property="og:locale" />
+<meta content="docs.comma.ai" property="og:site_name" />
+<meta content="https://docs.comma.ai" property="og:url" />
+<meta content="openpilot Documentation" property="og:title" />
+<meta content="website" property="og:type" />
+<meta content="image/jpeg" property="og:image:type" />
+<meta content="400" property="og:image:width" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image:url" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image:secure_url" />
+<meta content="openpilot Documentation" property="og:description" />
+<meta content="summary_large_image" property="twitter:card" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="twitter:logo" />
+<meta content="openpilot Documentation" property="twitter:title" />
+<meta content="openpilot Documentation" property="twitter:description" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DBC file basics &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/opendbc/README.html" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Welcome to panda" href="../panda/README.html" />
+    <link rel="prev" title="MSGQ: A lock free single producer multi consumer message queue" href="../cereal/messaging/msgq.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#models">models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../overview.html#opendbc">opendbc</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">DBC file basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-start-reverse-engineering-cars">How to start reverse engineering cars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-use-reverse-engineered-dbc">How to use reverse engineered DBC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dbc-file-preprocessor">DBC file preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#good-practices-for-contributing-to-opendbc">Good practices for contributing to opendbc</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../overview.html">openpilot</a></li>
+      <li class="breadcrumb-item active">DBC file basics</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/opendbc/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dbc-file-basics">
+<h1>DBC file basics<a class="headerlink" href="#dbc-file-basics" title="Link to this heading"></a></h1>
+<p>A DBC file encodes, in a humanly readable way, the information needed to understand a vehicle’s CAN bus traffic. A vehicle might have multiple CAN buses and every CAN bus is represented by its own dbc file.
+Wondering what’s the DBC file format? <a class="reference external" href="http://www.socialledge.com/sjsu/index.php?title=DBC_Format">Here</a> and <a class="reference external" href="https://github.com/stefanhoelzl/CANpy/blob/master/docs/DBC_Specification.md">Here</a> a couple of good overviews.</p>
+</section>
+<section id="how-to-start-reverse-engineering-cars">
+<h1>How to start reverse engineering cars<a class="headerlink" href="#how-to-start-reverse-engineering-cars" title="Link to this heading"></a></h1>
+<p><a class="reference external" href="https://github.com/commaai/opendbc">opendbc</a> is integrated with <a class="reference external" href="https://github.com/commaai/openpilot/tree/master/tools/cabana">cabana</a>.</p>
+<p>Use <a class="reference external" href="https://github.com/commaai/panda">panda</a> to connect your car to a computer.</p>
+</section>
+<section id="how-to-use-reverse-engineered-dbc">
+<h1>How to use reverse engineered DBC<a class="headerlink" href="#how-to-use-reverse-engineered-dbc" title="Link to this heading"></a></h1>
+<p>To create custom CAN simulations or send reverse engineered signals back to the car you can use <a class="reference external" href="https://github.com/GENIVI/CANdevStudio">CANdevStudio</a> project.</p>
+</section>
+<section id="dbc-file-preprocessor">
+<h1>DBC file preprocessor<a class="headerlink" href="#dbc-file-preprocessor" title="Link to this heading"></a></h1>
+<p>DBC files for different models of the same brand have a lot of overlap. Therefore, we wrote a preprocessor to create DBC files from a brand DBC file and a model specific DBC file. The source DBC files can be found in the generator folder. After changing one of the files run the generator.py script to regenerate the output files. These output files will be placed in the root of the opendbc repository and are suffixed by _generated.</p>
+</section>
+<section id="good-practices-for-contributing-to-opendbc">
+<h1>Good practices for contributing to opendbc<a class="headerlink" href="#good-practices-for-contributing-to-opendbc" title="Link to this heading"></a></h1>
+<ul>
+<li><p>Comments: the best way to store comments is to add them directly to the DBC files. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CM_</span> <span class="n">SG_</span> <span class="mi">490</span> <span class="n">LONG_ACCEL</span> <span class="s2">&quot;wheel speed derivative, noisy and zero snapping&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>is a comment that refers to signal <code class="docutils literal notranslate"><span class="pre">LONG_ACCEL</span></code> in message <code class="docutils literal notranslate"><span class="pre">490</span></code>. Using comments is highly recommended, especially for doubts and uncertainties. <a class="reference external" href="https://community.comma.ai/cabana/">cabana</a> can easily display/add/edit comments to signals and messages.</p>
+</li>
+<li><p>Units: when applicable, it’s recommended to convert signals into physical units, by using a proper signal factor. Using a SI unit is preferred, unless a non-SI unit rounds the signal factor much better.
+For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SG_</span> <span class="n">VEHICLE_SPEED</span> <span class="p">:</span> <span class="mi">7</span><span class="o">|</span><span class="mi">15</span><span class="o">@</span><span class="mi">0</span><span class="o">+</span> <span class="p">(</span><span class="mf">0.00278</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">[</span><span class="mi">0</span><span class="o">|</span><span class="mi">70</span><span class="p">]</span> <span class="s2">&quot;m/s&quot;</span> <span class="n">PCM</span>
+</pre></div>
+</div>
+<p>is better than:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SG_</span> <span class="n">VEHICLE_SPEED</span> <span class="p">:</span> <span class="mi">7</span><span class="o">|</span><span class="mi">15</span><span class="o">@</span><span class="mi">0</span><span class="o">+</span> <span class="p">(</span><span class="mf">0.00620</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">[</span><span class="mi">0</span><span class="o">|</span><span class="mi">115</span><span class="p">]</span> <span class="s2">&quot;mph&quot;</span> <span class="n">PCM</span>
+</pre></div>
+</div>
+<p>However, the cleanest option is really:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SG_</span> <span class="n">VEHICLE_SPEED</span> <span class="p">:</span> <span class="mi">7</span><span class="o">|</span><span class="mi">15</span><span class="o">@</span><span class="mi">0</span><span class="o">+</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">[</span><span class="mi">0</span><span class="o">|</span><span class="mi">250</span><span class="p">]</span> <span class="s2">&quot;kph&quot;</span> <span class="n">PCM</span>
+</pre></div>
+</div>
+</li>
+<li><p>Signal size: always use the smallest amount of bits possible. For example, let’s say I’m reverse engineering the gas pedal position and I’ve determined that it’s in a 3 bytes message. For 0% pedal position I read a message value of <code class="docutils literal notranslate"><span class="pre">0x00</span> <span class="pre">0x00</span> <span class="pre">0x00</span></code>, while for 100% of pedal position I read <code class="docutils literal notranslate"><span class="pre">0x64</span> <span class="pre">0x00</span> <span class="pre">0x00</span></code>: clearly, the gas pedal position is within the first byte of the message and I might be tempted to define the signal <code class="docutils literal notranslate"><span class="pre">GAS_POS</span></code> as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SG_</span> <span class="n">GAS_POS</span> <span class="p">:</span> <span class="mi">7</span><span class="o">|</span><span class="mi">8</span><span class="o">@</span><span class="mi">0</span><span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">[</span><span class="mi">0</span><span class="o">|</span><span class="mi">100</span><span class="p">]</span> <span class="s2">&quot;%&quot;</span> <span class="n">PCM</span>
+</pre></div>
+</div>
+<p>However, I can’t be sure that the very first bit of the message is referred to the pedal position: I haven’t seen it changing! Therefore, a safer way of defining the signal is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SG_</span> <span class="n">GAS_POS</span> <span class="p">:</span> <span class="mi">6</span><span class="o">|</span><span class="mi">7</span><span class="o">@</span><span class="mi">0</span><span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">[</span><span class="mi">0</span><span class="o">|</span><span class="mi">100</span><span class="p">]</span> <span class="s2">&quot;%&quot;</span> <span class="n">PCM</span>
+</pre></div>
+</div>
+<p>which leaves the first bit unallocated. This prevents from very erroneous reading of the gas pedal position, in case the first bit is indeed used for something else.</p>
+</li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../cereal/messaging/msgq.html" class="btn btn-neutral float-left" title="MSGQ: A lock free single producer multi consumer message queue" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../panda/README.html" class="btn btn-neutral float-right" title="Welcome to panda" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>common.transformations package &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/common.transformations.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="common.transformations.tests package" href="common.transformations.tests.html" />
+    <link rel="prev" title="common.tests package" href="common.tests.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            openpilot docs
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">openpilot</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cereal.html">cereal package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="common.html">common package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="common.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="common.api.html">common.api package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="common.mock.html">common.mock package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="common.tests.html">common.tests package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">common.transformations package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.basedir">common.basedir module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.conversions">common.conversions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.dict_helpers">common.dict_helpers module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.ffi_wrapper">common.ffi_wrapper module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.file_helpers">common.file_helpers module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.filter_simple">common.filter_simple module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.git">common.git module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.gpio">common.gpio module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.logging_extra">common.logging_extra module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.numpy_fast">common.numpy_fast module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.params">common.params module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.params_pyx">common.params_pyx module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.prefix">common.prefix module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.realtime">common.realtime module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.retry">common.retry module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.run">common.run module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.simple_kalman">common.simple_kalman module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.spinner">common.spinner module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.stat_live">common.stat_live module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.swaglog">common.swaglog module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.text_window">common.text_window module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.time">common.time module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.timeout">common.timeout module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common.utils">common.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.html#module-common">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="conftest.html">conftest module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opendbc.html">opendbc package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openpilot.html">openpilot package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="panda.html">panda package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selfdrive.html">selfdrive package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="system.html">system package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">tools package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">openpilot</a></li>
+          <li class="breadcrumb-item"><a href="common.html">common package</a></li>
+      <li class="breadcrumb-item active">common.transformations package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/common.transformations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="common-transformations-package">
+<h1>common.transformations package<a class="headerlink" href="#common-transformations-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="common.transformations.tests.html">common.transformations.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common.transformations.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.transformations.tests.html#module-common.transformations.tests.test_coordinates">common.transformations.tests.test_coordinates module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="common.transformations.tests.html#common.transformations.tests.test_coordinates.TestNED"><code class="docutils literal notranslate"><span class="pre">TestNED</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="common.transformations.tests.html#common.transformations.tests.test_coordinates.TestNED.test_ecef_geodetic"><code class="docutils literal notranslate"><span class="pre">TestNED.test_ecef_geodetic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="common.transformations.tests.html#common.transformations.tests.test_coordinates.TestNED.test_ned"><code class="docutils literal notranslate"><span class="pre">TestNED.test_ned()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="common.transformations.tests.html#common.transformations.tests.test_coordinates.TestNED.test_ned_batch"><code class="docutils literal notranslate"><span class="pre">TestNED.test_ned_batch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="common.transformations.tests.html#common.transformations.tests.test_coordinates.TestNED.test_ned_saved_results"><code class="docutils literal notranslate"><span class="pre">TestNED.test_ned_saved_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="common.transformations.tests.html#common.transformations.tests.test_coordinates.TestNED.test_small_distances"><code class="docutils literal notranslate"><span class="pre">TestNED.test_small_distances()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="common.transformations.tests.html#module-common.transformations.tests.test_orientation">common.transformations.tests.test_orientation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="common.transformations.tests.html#common.transformations.tests.test_orientation.TestOrientation"><code class="docutils literal notranslate"><span class="pre">TestOrientation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="common.transformations.tests.html#common.transformations.tests.test_orientation.TestOrientation.test_euler_ned"><code class="docutils literal notranslate"><span class="pre">TestOrientation.test_euler_ned()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="common.transformations.tests.html#common.transformations.tests.test_orientation.TestOrientation.test_quat_euler"><code class="docutils literal notranslate"><span class="pre">TestOrientation.test_quat_euler()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="common.transformations.tests.html#common.transformations.tests.test_orientation.TestOrientation.test_rot_euler"><code class="docutils literal notranslate"><span class="pre">TestOrientation.test_rot_euler()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="common.transformations.tests.html#common.transformations.tests.test_orientation.TestOrientation.test_rot_quat"><code class="docutils literal notranslate"><span class="pre">TestOrientation.test_rot_quat()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="common.transformations.tests.html#module-common.transformations.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-common.transformations.camera">
+<span id="common-transformations-camera-module"></span><h2>common.transformations.camera module<a class="headerlink" href="#module-common.transformations.camera" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.transformations.camera.CameraConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">common.transformations.camera.</span></span><span class="sig-name descname"><span class="pre">CameraConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/transformations/camera.html#CameraConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.camera.CameraConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.transformations.camera.CameraConfig.focal_length">
+<span class="sig-name descname"><span class="pre">focal_length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#common.transformations.camera.CameraConfig.focal_length" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.transformations.camera.CameraConfig.height">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#common.transformations.camera.CameraConfig.height" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="common.transformations.camera.CameraConfig.intrinsics">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">intrinsics</span></span><a class="headerlink" href="#common.transformations.camera.CameraConfig.intrinsics" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="common.transformations.camera.CameraConfig.intrinsics_inv">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">intrinsics_inv</span></span><a class="headerlink" href="#common.transformations.camera.CameraConfig.intrinsics_inv" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="common.transformations.camera.CameraConfig.size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#common.transformations.camera.CameraConfig.size" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.transformations.camera.CameraConfig.width">
+<span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#common.transformations.camera.CameraConfig.width" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="common.transformations.camera.DeviceCameraConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">common.transformations.camera.</span></span><span class="sig-name descname"><span class="pre">DeviceCameraConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fcam</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#common.transformations.camera.CameraConfig" title="common.transformations.camera.CameraConfig"><span class="pre">common.transformations.camera.CameraConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dcam</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#common.transformations.camera.CameraConfig" title="common.transformations.camera.CameraConfig"><span class="pre">common.transformations.camera.CameraConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ecam</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#common.transformations.camera.CameraConfig" title="common.transformations.camera.CameraConfig"><span class="pre">common.transformations.camera.CameraConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/transformations/camera.html#DeviceCameraConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.camera.DeviceCameraConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="common.transformations.camera.DeviceCameraConfig.all_cams">
+<span class="sig-name descname"><span class="pre">all_cams</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/transformations/camera.html#DeviceCameraConfig.all_cams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.camera.DeviceCameraConfig.all_cams" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.transformations.camera.DeviceCameraConfig.dcam">
+<span class="sig-name descname"><span class="pre">dcam</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#common.transformations.camera.CameraConfig" title="common.transformations.camera.CameraConfig"><span class="pre">CameraConfig</span></a></em><a class="headerlink" href="#common.transformations.camera.DeviceCameraConfig.dcam" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.transformations.camera.DeviceCameraConfig.ecam">
+<span class="sig-name descname"><span class="pre">ecam</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#common.transformations.camera.CameraConfig" title="common.transformations.camera.CameraConfig"><span class="pre">CameraConfig</span></a></em><a class="headerlink" href="#common.transformations.camera.DeviceCameraConfig.ecam" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.transformations.camera.DeviceCameraConfig.fcam">
+<span class="sig-name descname"><span class="pre">fcam</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#common.transformations.camera.CameraConfig" title="common.transformations.camera.CameraConfig"><span class="pre">CameraConfig</span></a></em><a class="headerlink" href="#common.transformations.camera.DeviceCameraConfig.fcam" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.camera.denormalize">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.camera.</span></span><span class="sig-name descname"><span class="pre">denormalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intrinsics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/transformations/camera.html#denormalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.camera.denormalize" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.camera.device_from_ecef">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.camera.</span></span><span class="sig-name descname"><span class="pre">device_from_ecef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos_ecef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation_ecef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pt_ecef</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/transformations/camera.html#device_from_ecef"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.camera.device_from_ecef" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.camera.get_calib_from_vp">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.camera.</span></span><span class="sig-name descname"><span class="pre">get_calib_from_vp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intrinsics</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/transformations/camera.html#get_calib_from_vp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.camera.get_calib_from_vp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.camera.get_view_frame_from_calib_frame">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.camera.</span></span><span class="sig-name descname"><span class="pre">get_view_frame_from_calib_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roll</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pitch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/transformations/camera.html#get_view_frame_from_calib_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.camera.get_view_frame_from_calib_frame" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.camera.get_view_frame_from_road_frame">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.camera.</span></span><span class="sig-name descname"><span class="pre">get_view_frame_from_road_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roll</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pitch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/transformations/camera.html#get_view_frame_from_road_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.camera.get_view_frame_from_road_frame" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.camera.img_from_device">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.camera.</span></span><span class="sig-name descname"><span class="pre">img_from_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pt_device</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/transformations/camera.html#img_from_device"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.camera.img_from_device" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.camera.normalize">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.camera.</span></span><span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intrinsics</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/transformations/camera.html#normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.camera.normalize" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.camera.roll_from_ke">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.camera.</span></span><span class="sig-name descname"><span class="pre">roll_from_ke</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/transformations/camera.html#roll_from_ke"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.camera.roll_from_ke" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.camera.vp_from_ke">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.camera.</span></span><span class="sig-name descname"><span class="pre">vp_from_ke</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/transformations/camera.html#vp_from_ke"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.camera.vp_from_ke" title="Link to this definition"></a></dt>
+<dd><p>Computes the vanishing point from the product of the intrinsic and extrinsic
+matrices C = KE.</p>
+<p>The vanishing point is defined as lim x-&gt;infinity C (x, 0, 0, 1).T</p>
+</dd></dl>
+
+</section>
+<section id="module-common.transformations.coordinates">
+<span id="common-transformations-coordinates-module"></span><h2>common.transformations.coordinates module<a class="headerlink" href="#module-common.transformations.coordinates" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.transformations.coordinates.LocalCoord">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">common.transformations.coordinates.</span></span><span class="sig-name descname"><span class="pre">LocalCoord</span></span><a class="reference internal" href="_modules/common/transformations/coordinates.html#LocalCoord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.coordinates.LocalCoord" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#common.transformations.transformations.LocalCoord" title="common.transformations.transformations.LocalCoord"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalCoord</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="common.transformations.coordinates.LocalCoord.ecef2ned">
+<span class="sig-name descname"><span class="pre">ecef2ned</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.coordinates.LocalCoord.ecef2ned" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.transformations.coordinates.LocalCoord.geodetic2ned">
+<span class="sig-name descname"><span class="pre">geodetic2ned</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.coordinates.LocalCoord.geodetic2ned" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.transformations.coordinates.LocalCoord.ned2ecef">
+<span class="sig-name descname"><span class="pre">ned2ecef</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.coordinates.LocalCoord.ned2ecef" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.transformations.coordinates.LocalCoord.ned2geodetic">
+<span class="sig-name descname"><span class="pre">ned2geodetic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.coordinates.LocalCoord.ned2geodetic" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-common.transformations.model">
+<span id="common-transformations-model-module"></span><h2>common.transformations.model module<a class="headerlink" href="#module-common.transformations.model" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.model.get_warp_matrix">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.model.</span></span><span class="sig-name descname"><span class="pre">get_warp_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_from_calib_euler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intrinsics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bigmodel_frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/common/transformations/model.html#get_warp_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.model.get_warp_matrix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-common.transformations.orientation">
+<span id="common-transformations-orientation-module"></span><h2>common.transformations.orientation module<a class="headerlink" href="#module-common.transformations.orientation" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.ecef_euler_from_ned">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">ecef_euler_from_ned</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.ecef_euler_from_ned" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.euler2quat">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">euler2quat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.euler2quat" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.euler2rot">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">euler2rot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.euler2rot" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.euler_from_quat">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">euler_from_quat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.euler_from_quat" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.euler_from_rot">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">euler_from_rot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.euler_from_rot" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.ned_euler_from_ecef">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">ned_euler_from_ecef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.ned_euler_from_ecef" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.numpy_wrap">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">numpy_wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_shape</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/common/transformations/orientation.html#numpy_wrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.transformations.orientation.numpy_wrap" title="Link to this definition"></a></dt>
+<dd><p>Wrap a function to take either an input or list of inputs and return the correct shape</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.quat2euler">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">quat2euler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.quat2euler" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.quat2rot">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">quat2rot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.quat2rot" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.quat_from_euler">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">quat_from_euler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.quat_from_euler" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.quat_from_rot">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">quat_from_rot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.quat_from_rot" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.quats_from_rotations">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">quats_from_rotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.quats_from_rotations" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.rot2euler">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">rot2euler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.rot2euler" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.rot2quat">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">rot2quat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.rot2quat" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.rot_from_euler">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">rot_from_euler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.rot_from_euler" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.rot_from_quat">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">rot_from_quat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.rot_from_quat" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.orientation.rotations_from_quats">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.orientation.</span></span><span class="sig-name descname"><span class="pre">rotations_from_quats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">inps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.orientation.rotations_from_quats" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-common.transformations.transformations">
+<span id="common-transformations-transformations-module"></span><h2>common.transformations.transformations module<a class="headerlink" href="#module-common.transformations.transformations" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.transformations.transformations.LocalCoord">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">common.transformations.transformations.</span></span><span class="sig-name descname"><span class="pre">LocalCoord</span></span><a class="headerlink" href="#common.transformations.transformations.LocalCoord" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.transformations.transformations.LocalCoord.ecef2ned_matrix">
+<span class="sig-name descname"><span class="pre">ecef2ned_matrix</span></span><a class="headerlink" href="#common.transformations.transformations.LocalCoord.ecef2ned_matrix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.transformations.transformations.LocalCoord.ecef2ned_single">
+<span class="sig-name descname"><span class="pre">ecef2ned_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ecef</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.LocalCoord.ecef2ned_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.transformations.transformations.LocalCoord.ecef_from_ned_matrix">
+<span class="sig-name descname"><span class="pre">ecef_from_ned_matrix</span></span><a class="headerlink" href="#common.transformations.transformations.LocalCoord.ecef_from_ned_matrix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.transformations.transformations.LocalCoord.from_ecef">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_ecef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ecef</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.LocalCoord.from_ecef" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.transformations.transformations.LocalCoord.from_geodetic">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_geodetic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geodetic</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.LocalCoord.from_geodetic" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.transformations.transformations.LocalCoord.geodetic2ned_single">
+<span class="sig-name descname"><span class="pre">geodetic2ned_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geodetic</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.LocalCoord.geodetic2ned_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.transformations.transformations.LocalCoord.ned2ecef_matrix">
+<span class="sig-name descname"><span class="pre">ned2ecef_matrix</span></span><a class="headerlink" href="#common.transformations.transformations.LocalCoord.ned2ecef_matrix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.transformations.transformations.LocalCoord.ned2ecef_single">
+<span class="sig-name descname"><span class="pre">ned2ecef_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ned</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.LocalCoord.ned2ecef_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.transformations.transformations.LocalCoord.ned2geodetic_single">
+<span class="sig-name descname"><span class="pre">ned2geodetic_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ned</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.LocalCoord.ned2geodetic_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.transformations.transformations.LocalCoord.ned_from_ecef_matrix">
+<span class="sig-name descname"><span class="pre">ned_from_ecef_matrix</span></span><a class="headerlink" href="#common.transformations.transformations.LocalCoord.ned_from_ecef_matrix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.transformations.ecef2geodetic_single">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.transformations.</span></span><span class="sig-name descname"><span class="pre">ecef2geodetic_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ecef</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.ecef2geodetic_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.transformations.ecef_euler_from_ned_single">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.transformations.</span></span><span class="sig-name descname"><span class="pre">ecef_euler_from_ned_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ecef_init</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ned_pose</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.ecef_euler_from_ned_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.transformations.euler2quat_single">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.transformations.</span></span><span class="sig-name descname"><span class="pre">euler2quat_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">euler</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.euler2quat_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.transformations.euler2rot_single">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.transformations.</span></span><span class="sig-name descname"><span class="pre">euler2rot_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">euler</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.euler2rot_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.transformations.geodetic2ecef_single">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.transformations.</span></span><span class="sig-name descname"><span class="pre">geodetic2ecef_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geodetic</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.geodetic2ecef_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.transformations.ned_euler_from_ecef_single">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.transformations.</span></span><span class="sig-name descname"><span class="pre">ned_euler_from_ecef_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ecef_init</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ecef_pose</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.ned_euler_from_ecef_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.transformations.quat2euler_single">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.transformations.</span></span><span class="sig-name descname"><span class="pre">quat2euler_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.quat2euler_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.transformations.quat2rot_single">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.transformations.</span></span><span class="sig-name descname"><span class="pre">quat2rot_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.quat2rot_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.transformations.rot2euler_single">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.transformations.</span></span><span class="sig-name descname"><span class="pre">rot2euler_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rot</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.rot2euler_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.transformations.rot2quat_single">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.transformations.</span></span><span class="sig-name descname"><span class="pre">rot2quat_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rot</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.rot2quat_single" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="common.transformations.transformations.rot_matrix">
+<span class="sig-prename descclassname"><span class="pre">common.transformations.transformations.</span></span><span class="sig-name descname"><span class="pre">rot_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roll</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pitch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#common.transformations.transformations.rot_matrix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-common.transformations">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-common.transformations" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="common.tests.html" class="btn btn-neutral float-left" title="common.tests package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="common.transformations.tests.html" class="btn btn-neutral float-right" title="common.transformations.tests package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.athena.athenad &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/athena/athenad.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.athena.athenad</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.athena.athenad</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">bz2</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">queue</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">select</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">replace</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">cast</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">jsonrpc</span> <span class="kn">import</span> <span class="n">JSONRPCResponseManager</span><span class="p">,</span> <span class="n">dispatcher</span>
+<span class="kn">from</span> <span class="nn">websocket</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ABNF</span><span class="p">,</span> <span class="n">WebSocket</span><span class="p">,</span> <span class="n">WebSocketException</span><span class="p">,</span> <span class="n">WebSocketTimeoutException</span><span class="p">,</span>
+                       <span class="n">create_connection</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">cereal.services</span> <span class="kn">import</span> <span class="n">SERVICE_LIST</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.api</span> <span class="kn">import</span> <span class="n">Api</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.file_helpers</span> <span class="kn">import</span> <span class="n">CallbackReader</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">set_core_affinity</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware</span> <span class="kn">import</span> <span class="n">HARDWARE</span><span class="p">,</span> <span class="n">PC</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.loggerd.xattr_cache</span> <span class="kn">import</span> <span class="n">getxattr</span><span class="p">,</span> <span class="n">setxattr</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.version</span> <span class="kn">import</span> <span class="n">get_build_metadata</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware.hw</span> <span class="kn">import</span> <span class="n">Paths</span>
+
+
+<span class="n">ATHENA_HOST</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;ATHENA_HOST&#39;</span><span class="p">,</span> <span class="s1">&#39;wss://athena.comma.ai&#39;</span><span class="p">)</span>
+<span class="n">HANDLER_THREADS</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;HANDLER_THREADS&#39;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">))</span>
+<span class="n">LOCAL_PORT_WHITELIST</span> <span class="o">=</span> <span class="p">{</span><span class="mi">8022</span><span class="p">}</span>
+
+<span class="n">LOG_ATTR_NAME</span> <span class="o">=</span> <span class="s1">&#39;user.upload&#39;</span>
+<span class="n">LOG_ATTR_VALUE_MAX_UNIX_TIME</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">2147483647</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">byteorder</span><span class="p">)</span>
+<span class="n">RECONNECT_TIMEOUT_S</span> <span class="o">=</span> <span class="mi">70</span>
+
+<span class="n">RETRY_DELAY</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># seconds</span>
+<span class="n">MAX_RETRY_COUNT</span> <span class="o">=</span> <span class="mi">30</span>  <span class="c1"># Try for at most 5 minutes if upload fails immediately</span>
+<span class="n">MAX_AGE</span> <span class="o">=</span> <span class="mi">31</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">3600</span>  <span class="c1"># seconds</span>
+<span class="n">WS_FRAME_SIZE</span> <span class="o">=</span> <span class="mi">4096</span>
+
+<span class="n">NetworkType</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">DeviceState</span><span class="o">.</span><span class="n">NetworkType</span>
+
+<span class="n">UploadFileDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">bool</span><span class="p">]</span>
+<span class="n">UploadItemDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
+
+<span class="n">UploadFilesToUrlResponse</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">UploadItemDict</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+
+
+<div class="viewcode-block" id="UploadFile">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.UploadFile">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">UploadFile</span><span class="p">:</span>
+  <span class="n">fn</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+  <span class="n">allow_cellular</span><span class="p">:</span> <span class="nb">bool</span>
+
+<div class="viewcode-block" id="UploadFile.from_dict">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.UploadFile.from_dict">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UploadFile</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;headers&quot;</span><span class="p">,</span> <span class="p">{}),</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;allow_cellular&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UploadItem">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.UploadItem">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">UploadItem</span><span class="p">:</span>
+  <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+  <span class="n">created_at</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+  <span class="n">retry_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">current</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">progress</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">allow_cellular</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="UploadItem.from_dict">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.UploadItem.from_dict">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UploadItem</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;headers&quot;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;created_at&quot;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;retry_count&quot;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;current&quot;</span><span class="p">],</span>
+               <span class="n">d</span><span class="p">[</span><span class="s2">&quot;progress&quot;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;allow_cellular&quot;</span><span class="p">])</span></div>
+</div>
+
+
+
+<span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;echo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span>
+<span class="n">recv_queue</span><span class="p">:</span> <span class="n">Queue</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="n">send_queue</span><span class="p">:</span> <span class="n">Queue</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="n">upload_queue</span><span class="p">:</span> <span class="n">Queue</span><span class="p">[</span><span class="n">UploadItem</span><span class="p">]</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="n">low_priority_send_queue</span><span class="p">:</span> <span class="n">Queue</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="n">log_recv_queue</span><span class="p">:</span> <span class="n">Queue</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="n">cancelled_uploads</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+<span class="n">cur_upload_items</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">UploadItem</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<div class="viewcode-block" id="strip_bz2_extension">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.strip_bz2_extension">[docs]</a>
+<span class="k">def</span> <span class="nf">strip_bz2_extension</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">fn</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.bz2&#39;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fn</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+  <span class="k">return</span> <span class="n">fn</span></div>
+
+
+
+<div class="viewcode-block" id="AbortTransferException">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.AbortTransferException">[docs]</a>
+<span class="k">class</span> <span class="nc">AbortTransferException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="UploadQueueCache">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.UploadQueueCache">[docs]</a>
+<span class="k">class</span> <span class="nc">UploadQueueCache</span><span class="p">:</span>
+
+<div class="viewcode-block" id="UploadQueueCache.initialize">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.UploadQueueCache.initialize">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">upload_queue</span><span class="p">:</span> <span class="n">Queue</span><span class="p">[</span><span class="n">UploadItem</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">upload_queue_json</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;AthenadUploadQueue&quot;</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">upload_queue_json</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">upload_queue_json</span><span class="p">):</span>
+          <span class="n">upload_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">UploadItem</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;athena.UploadQueueCache.initialize.exception&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UploadQueueCache.cache">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.UploadQueueCache.cache">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="n">upload_queue</span><span class="p">:</span> <span class="n">Queue</span><span class="p">[</span><span class="n">UploadItem</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">queue</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">UploadItem</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">queue</span><span class="p">)</span>
+      <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">asdict</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">queue</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cancelled_uploads</span><span class="p">)]</span>
+      <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;AthenadUploadQueue&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">items</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;athena.UploadQueueCache.cache.exception&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="handle_long_poll">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.handle_long_poll">[docs]</a>
+<span class="k">def</span> <span class="nf">handle_long_poll</span><span class="p">(</span><span class="n">ws</span><span class="p">:</span> <span class="n">WebSocket</span><span class="p">,</span> <span class="n">exit_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">end_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+
+  <span class="n">threads</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">ws_manage</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">end_event</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ws_manage&#39;</span><span class="p">),</span>
+    <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">ws_recv</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">end_event</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ws_recv&#39;</span><span class="p">),</span>
+    <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">ws_send</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">end_event</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ws_send&#39;</span><span class="p">),</span>
+    <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">upload_handler</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">end_event</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;upload_handler&#39;</span><span class="p">),</span>
+    <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">log_handler</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">end_event</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;log_handler&#39;</span><span class="p">),</span>
+    <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">stat_handler</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">end_event</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;stat_handler&#39;</span><span class="p">),</span>
+  <span class="p">]</span> <span class="o">+</span> <span class="p">[</span>
+    <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">jsonrpc_handler</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">end_event</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;worker_</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">HANDLER_THREADS</span><span class="p">)</span>
+  <span class="p">]</span>
+
+  <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">end_event</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mf">0.1</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">exit_event</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">exit_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+        <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+  <span class="k">except</span> <span class="p">(</span><span class="ne">KeyboardInterrupt</span><span class="p">,</span> <span class="ne">SystemExit</span><span class="p">):</span>
+    <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+    <span class="k">raise</span>
+  <span class="k">finally</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;athena.joining </span><span class="si">{</span><span class="n">thread</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="jsonrpc_handler">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.jsonrpc_handler">[docs]</a>
+<span class="k">def</span> <span class="nf">jsonrpc_handler</span><span class="p">(</span><span class="n">end_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">dispatcher</span><span class="p">[</span><span class="s2">&quot;startLocalProxy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">startLocalProxy</span><span class="p">,</span> <span class="n">end_event</span><span class="p">)</span>
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="n">recv_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+      <span class="k">if</span> <span class="s2">&quot;method&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;athena.jsonrpc_handler.call_method&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">JSONRPCResponseManager</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dispatcher</span><span class="p">)</span>
+        <span class="n">send_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="s2">&quot;id&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;result&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">or</span> <span class="s2">&quot;error&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">log_recv_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;not a valid request or response&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+      <span class="k">pass</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;athena jsonrpc handler failed&quot;</span><span class="p">)</span>
+      <span class="n">send_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}))</span></div>
+
+
+
+<div class="viewcode-block" id="retry_upload">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.retry_upload">[docs]</a>
+<span class="k">def</span> <span class="nf">retry_upload</span><span class="p">(</span><span class="n">tid</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">end_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span> <span class="n">increase_count</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">item</span> <span class="o">=</span> <span class="n">cur_upload_items</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">retry_count</span> <span class="o">&lt;</span> <span class="n">MAX_RETRY_COUNT</span><span class="p">:</span>
+    <span class="n">new_retry_count</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">retry_count</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">increase_count</span> <span class="k">else</span> <span class="n">item</span><span class="o">.</span><span class="n">retry_count</span>
+
+    <span class="n">item</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span>
+      <span class="n">item</span><span class="p">,</span>
+      <span class="n">retry_count</span><span class="o">=</span><span class="n">new_retry_count</span><span class="p">,</span>
+      <span class="n">progress</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+      <span class="n">current</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="n">upload_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="n">UploadQueueCache</span><span class="o">.</span><span class="n">cache</span><span class="p">(</span><span class="n">upload_queue</span><span class="p">)</span>
+
+    <span class="n">cur_upload_items</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">RETRY_DELAY</span><span class="p">):</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+        <span class="k">break</span></div>
+
+
+
+<div class="viewcode-block" id="cb">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.cb">[docs]</a>
+<span class="k">def</span> <span class="nf">cb</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">tid</span><span class="p">,</span> <span class="n">end_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span> <span class="n">sz</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">cur</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="c1"># Abort transfer if connection changed to metered after starting upload</span>
+  <span class="c1"># or if athenad is shutting down to re-connect the websocket</span>
+  <span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">metered</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">networkMetered</span>
+  <span class="k">if</span> <span class="n">metered</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">allow_cellular</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="n">AbortTransferException</span>
+
+  <span class="k">if</span> <span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="n">AbortTransferException</span>
+
+  <span class="n">cur_upload_items</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="n">cur</span> <span class="o">/</span> <span class="n">sz</span> <span class="k">if</span> <span class="n">sz</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="upload_handler">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.upload_handler">[docs]</a>
+<span class="k">def</span> <span class="nf">upload_handler</span><span class="p">(</span><span class="n">end_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="s1">&#39;deviceState&#39;</span><span class="p">])</span>
+  <span class="n">tid</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">get_ident</span><span class="p">()</span>
+
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+    <span class="n">cur_upload_items</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">cur_upload_items</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">current</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">cancelled_uploads</span><span class="p">:</span>
+        <span class="n">cancelled_uploads</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">continue</span>
+
+      <span class="c1"># Remove item if too old</span>
+      <span class="n">age</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">created_at</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">age</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">MAX_AGE</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;athena.upload_handler.expired&quot;</span><span class="p">,</span> <span class="n">item</span><span class="o">=</span><span class="n">item</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">continue</span>
+
+      <span class="c1"># Check if uploading over metered connection is allowed</span>
+      <span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+      <span class="n">metered</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">networkMetered</span>
+      <span class="n">network_type</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">networkType</span><span class="o">.</span><span class="n">raw</span>
+      <span class="k">if</span> <span class="n">metered</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">allow_cellular</span><span class="p">):</span>
+        <span class="n">retry_upload</span><span class="p">(</span><span class="n">tid</span><span class="p">,</span> <span class="n">end_event</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">continue</span>
+
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">path</span>
+        <span class="k">try</span><span class="p">:</span>
+          <span class="n">sz</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+          <span class="n">sz</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;athena.upload_handler.upload_start&quot;</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">sz</span><span class="o">=</span><span class="n">sz</span><span class="p">,</span> <span class="n">network_type</span><span class="o">=</span><span class="n">network_type</span><span class="p">,</span> <span class="n">metered</span><span class="o">=</span><span class="n">metered</span><span class="p">,</span> <span class="n">retry_count</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">retry_count</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">_do_upload</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="n">sm</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">tid</span><span class="p">,</span> <span class="n">end_event</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">401</span><span class="p">,</span> <span class="mi">403</span><span class="p">,</span> <span class="mi">412</span><span class="p">):</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;athena.upload_handler.retry&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">sz</span><span class="o">=</span><span class="n">sz</span><span class="p">,</span> <span class="n">network_type</span><span class="o">=</span><span class="n">network_type</span><span class="p">,</span> <span class="n">metered</span><span class="o">=</span><span class="n">metered</span><span class="p">)</span>
+          <span class="n">retry_upload</span><span class="p">(</span><span class="n">tid</span><span class="p">,</span> <span class="n">end_event</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;athena.upload_handler.success&quot;</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">sz</span><span class="o">=</span><span class="n">sz</span><span class="p">,</span> <span class="n">network_type</span><span class="o">=</span><span class="n">network_type</span><span class="p">,</span> <span class="n">metered</span><span class="o">=</span><span class="n">metered</span><span class="p">)</span>
+
+        <span class="n">UploadQueueCache</span><span class="o">.</span><span class="n">cache</span><span class="p">(</span><span class="n">upload_queue</span><span class="p">)</span>
+      <span class="k">except</span> <span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">Timeout</span><span class="p">,</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span><span class="p">,</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">SSLError</span><span class="p">):</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;athena.upload_handler.timeout&quot;</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">sz</span><span class="o">=</span><span class="n">sz</span><span class="p">,</span> <span class="n">network_type</span><span class="o">=</span><span class="n">network_type</span><span class="p">,</span> <span class="n">metered</span><span class="o">=</span><span class="n">metered</span><span class="p">)</span>
+        <span class="n">retry_upload</span><span class="p">(</span><span class="n">tid</span><span class="p">,</span> <span class="n">end_event</span><span class="p">)</span>
+      <span class="k">except</span> <span class="n">AbortTransferException</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;athena.upload_handler.abort&quot;</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">sz</span><span class="o">=</span><span class="n">sz</span><span class="p">,</span> <span class="n">network_type</span><span class="o">=</span><span class="n">network_type</span><span class="p">,</span> <span class="n">metered</span><span class="o">=</span><span class="n">metered</span><span class="p">)</span>
+        <span class="n">retry_upload</span><span class="p">(</span><span class="n">tid</span><span class="p">,</span> <span class="n">end_event</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+      <span class="k">pass</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;athena.upload_handler.exception&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_do_upload</span><span class="p">(</span><span class="n">upload_item</span><span class="p">:</span> <span class="n">UploadItem</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
+  <span class="n">path</span> <span class="o">=</span> <span class="n">upload_item</span><span class="o">.</span><span class="n">path</span>
+  <span class="n">compress</span> <span class="o">=</span> <span class="kc">False</span>
+
+  <span class="c1"># If file does not exist, but does exist without the .bz2 extension we will compress on the fly</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">strip_bz2_extension</span><span class="p">(</span><span class="n">path</span><span class="p">)):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">strip_bz2_extension</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">compress</span> <span class="o">=</span> <span class="kc">True</span>
+
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">compress</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;athena.upload_handler.compress&quot;</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">fn_orig</span><span class="o">=</span><span class="n">upload_item</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+      <span class="n">content</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+  <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">upload_item</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                        <span class="n">data</span><span class="o">=</span><span class="n">CallbackReader</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">))</span> <span class="k">if</span> <span class="n">callback</span> <span class="k">else</span> <span class="n">data</span><span class="p">,</span>
+                        <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="o">**</span><span class="n">upload_item</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="s1">&#39;Content-Length&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">))},</span>
+                        <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+
+<span class="c1"># security: user should be able to request any message from their car</span>
+<div class="viewcode-block" id="getMessage">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.getMessage">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">getMessage</span><span class="p">(</span><span class="n">service</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">service</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">service</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SERVICE_LIST</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;invalid service&quot;</span><span class="p">)</span>
+
+  <span class="n">socket</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">sub_sock</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+  <span class="n">ret</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">recv_one</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">TimeoutError</span>
+
+  <span class="c1"># this is because capnp._DynamicStructReader doesn&#39;t have typing information</span>
+  <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="getVersion">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.getVersion">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">getVersion</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+  <span class="n">build_metadata</span> <span class="o">=</span> <span class="n">get_build_metadata</span><span class="p">()</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="n">build_metadata</span><span class="o">.</span><span class="n">openpilot</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+    <span class="s2">&quot;remote&quot;</span><span class="p">:</span> <span class="n">build_metadata</span><span class="o">.</span><span class="n">openpilot</span><span class="o">.</span><span class="n">git_normalized_origin</span><span class="p">,</span>
+    <span class="s2">&quot;branch&quot;</span><span class="p">:</span> <span class="n">build_metadata</span><span class="o">.</span><span class="n">channel</span><span class="p">,</span>
+    <span class="s2">&quot;commit&quot;</span><span class="p">:</span> <span class="n">build_metadata</span><span class="o">.</span><span class="n">openpilot</span><span class="o">.</span><span class="n">git_commit</span><span class="p">,</span>
+  <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="setNavDestination">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.setNavDestination">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">setNavDestination</span><span class="p">(</span><span class="n">latitude</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">longitude</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">place_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">place_details</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+  <span class="n">destination</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;latitude&quot;</span><span class="p">:</span> <span class="n">latitude</span><span class="p">,</span>
+    <span class="s2">&quot;longitude&quot;</span><span class="p">:</span> <span class="n">longitude</span><span class="p">,</span>
+    <span class="s2">&quot;place_name&quot;</span><span class="p">:</span> <span class="n">place_name</span><span class="p">,</span>
+    <span class="s2">&quot;place_details&quot;</span><span class="p">:</span> <span class="n">place_details</span><span class="p">,</span>
+  <span class="p">}</span>
+  <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;NavDestination&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">destination</span><span class="p">))</span>
+
+  <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="scan_dir">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.scan_dir">[docs]</a>
+<span class="k">def</span> <span class="nf">scan_dir</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+  <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="c1"># only walk directories that match the prefix</span>
+  <span class="c1"># (glob and friends traverse entire dir tree)</span>
+  <span class="k">with</span> <span class="n">os</span><span class="o">.</span><span class="n">scandir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">i</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
+      <span class="n">rel_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">Paths</span><span class="o">.</span><span class="n">log_root</span><span class="p">())</span>
+      <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">is_dir</span><span class="p">(</span><span class="n">follow_symlinks</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="c1"># add trailing slash</span>
+        <span class="n">rel_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rel_path</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="c1"># if prefix is a partial dir name, current dir will start with prefix</span>
+        <span class="c1"># if prefix is a partial file name, prefix with start with dir name</span>
+        <span class="k">if</span> <span class="n">rel_path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span> <span class="ow">or</span> <span class="n">prefix</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">rel_path</span><span class="p">):</span>
+          <span class="n">files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">scan_dir</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">prefix</span><span class="p">))</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rel_path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+          <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rel_path</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">files</span></div>
+
+
+<div class="viewcode-block" id="listDataDirectory">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.listDataDirectory">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">listDataDirectory</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+  <span class="k">return</span> <span class="n">scan_dir</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">log_root</span><span class="p">(),</span> <span class="n">prefix</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="uploadFileToUrl">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.uploadFileToUrl">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">uploadFileToUrl</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">UploadFilesToUrlResponse</span><span class="p">:</span>
+  <span class="c1"># this is because mypy doesn&#39;t understand that the decorator doesn&#39;t change the return type</span>
+  <span class="n">response</span><span class="p">:</span> <span class="n">UploadFilesToUrlResponse</span> <span class="o">=</span> <span class="n">uploadFilesToUrls</span><span class="p">([{</span>
+    <span class="s2">&quot;fn&quot;</span><span class="p">:</span> <span class="n">fn</span><span class="p">,</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span>
+    <span class="s2">&quot;headers&quot;</span><span class="p">:</span> <span class="n">headers</span><span class="p">,</span>
+  <span class="p">}])</span>
+  <span class="k">return</span> <span class="n">response</span></div>
+
+
+
+<div class="viewcode-block" id="uploadFilesToUrls">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.uploadFilesToUrls">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">uploadFilesToUrls</span><span class="p">(</span><span class="n">files_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">UploadFileDict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">UploadFilesToUrlResponse</span><span class="p">:</span>
+  <span class="n">files</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">UploadFile</span><span class="o">.</span><span class="n">from_dict</span><span class="p">,</span> <span class="n">files_data</span><span class="p">)</span>
+
+  <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">UploadItemDict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">failed</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">fn</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">file</span><span class="o">.</span><span class="n">fn</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;/&#39;</span> <span class="ow">or</span> <span class="s1">&#39;..&#39;</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">fn</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">url</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">failed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">fn</span><span class="p">)</span>
+      <span class="k">continue</span>
+
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">log_root</span><span class="p">(),</span> <span class="n">file</span><span class="o">.</span><span class="n">fn</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">strip_bz2_extension</span><span class="p">(</span><span class="n">path</span><span class="p">)):</span>
+      <span class="n">failed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">fn</span><span class="p">)</span>
+      <span class="k">continue</span>
+
+    <span class="c1"># Skip item if already in queue</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">url</span> <span class="o">==</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">listUploadQueue</span><span class="p">()):</span>
+      <span class="k">continue</span>
+
+    <span class="n">item</span> <span class="o">=</span> <span class="n">UploadItem</span><span class="p">(</span>
+      <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+      <span class="n">url</span><span class="o">=</span><span class="n">file</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+      <span class="n">headers</span><span class="o">=</span><span class="n">file</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span>
+      <span class="n">created_at</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">),</span>
+      <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">allow_cellular</span><span class="o">=</span><span class="n">file</span><span class="o">.</span><span class="n">allow_cellular</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">upload_id</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">upload_id</span><span class="p">)</span>
+    <span class="n">upload_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asdict</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+
+  <span class="n">UploadQueueCache</span><span class="o">.</span><span class="n">cache</span><span class="p">(</span><span class="n">upload_queue</span><span class="p">)</span>
+
+  <span class="n">resp</span><span class="p">:</span> <span class="n">UploadFilesToUrlResponse</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;enqueued&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span> <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="n">items</span><span class="p">}</span>
+  <span class="k">if</span> <span class="n">failed</span><span class="p">:</span>
+    <span class="n">resp</span><span class="p">[</span><span class="s2">&quot;failed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">failed</span>
+
+  <span class="k">return</span> <span class="n">resp</span></div>
+
+
+
+<div class="viewcode-block" id="listUploadQueue">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.listUploadQueue">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">listUploadQueue</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">UploadItemDict</span><span class="p">]:</span>
+  <span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">queue</span><span class="p">)</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">cur_upload_items</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">asdict</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">items</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cancelled_uploads</span><span class="p">)]</span></div>
+
+
+
+<div class="viewcode-block" id="cancelUpload">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.cancelUpload">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">cancelUpload</span><span class="p">(</span><span class="n">upload_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]:</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">upload_id</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="n">upload_id</span> <span class="o">=</span> <span class="p">[</span><span class="n">upload_id</span><span class="p">]</span>
+
+  <span class="n">uploading_ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">item</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">upload_queue</span><span class="o">.</span><span class="n">queue</span><span class="p">)}</span>
+  <span class="n">cancelled_ids</span> <span class="o">=</span> <span class="n">uploading_ids</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">upload_id</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cancelled_ids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;not found&quot;</span><span class="p">}</span>
+
+  <span class="n">cancelled_uploads</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cancelled_ids</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="setRouteViewed">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.setRouteViewed">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">setRouteViewed</span><span class="p">(</span><span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]:</span>
+  <span class="c1"># maintain a list of the last 10 routes viewed in connect</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+
+  <span class="n">r</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;AthenadRecentlyViewedRoutes&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
+  <span class="n">routes</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">r</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+  <span class="n">routes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">route</span><span class="p">)</span>
+
+  <span class="c1"># remove duplicates</span>
+  <span class="n">routes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">routes</span><span class="p">))</span>
+
+  <span class="n">params</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;AthenadRecentlyViewedRoutes&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">routes</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">:]))</span>
+  <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="startLocalProxy">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.startLocalProxy">[docs]</a>
+<span class="k">def</span> <span class="nf">startLocalProxy</span><span class="p">(</span><span class="n">global_end_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span> <span class="n">remote_ws_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">local_port</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">local_port</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">LOCAL_PORT_WHITELIST</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Requested local port not whitelisted&quot;</span><span class="p">)</span>
+
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;athena.startLocalProxy.starting&quot;</span><span class="p">)</span>
+
+    <span class="n">dongle_id</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DongleId&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+    <span class="n">identity_token</span> <span class="o">=</span> <span class="n">Api</span><span class="p">(</span><span class="n">dongle_id</span><span class="p">)</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span>
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">create_connection</span><span class="p">(</span><span class="n">remote_ws_uri</span><span class="p">,</span>
+                           <span class="n">cookie</span><span class="o">=</span><span class="s2">&quot;jwt=&quot;</span> <span class="o">+</span> <span class="n">identity_token</span><span class="p">,</span>
+                           <span class="n">enable_multithread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">ssock</span><span class="p">,</span> <span class="n">csock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socketpair</span><span class="p">()</span>
+    <span class="n">local_sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+    <span class="n">local_sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="n">local_port</span><span class="p">))</span>
+    <span class="n">local_sock</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">proxy_end_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+    <span class="n">threads</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">ws_proxy_recv</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">local_sock</span><span class="p">,</span> <span class="n">ssock</span><span class="p">,</span> <span class="n">proxy_end_event</span><span class="p">,</span> <span class="n">global_end_event</span><span class="p">)),</span>
+      <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">ws_proxy_send</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">local_sock</span><span class="p">,</span> <span class="n">csock</span><span class="p">,</span> <span class="n">proxy_end_event</span><span class="p">))</span>
+    <span class="p">]</span>
+    <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+      <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;athena.startLocalProxy.started&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+  <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;athenad.startLocalProxy.exception&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">e</span></div>
+
+
+
+<div class="viewcode-block" id="getPublicKey">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.getPublicKey">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">getPublicKey</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">persist_root</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;/comma/id_rsa.pub&#39;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">persist_root</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;/comma/id_rsa.pub&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="getSshAuthorizedKeys">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.getSshAuthorizedKeys">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">getSshAuthorizedKeys</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;GithubSshKeys&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="getGithubUsername">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.getGithubUsername">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">getGithubUsername</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;GithubUsername&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="getSimInfo">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.getSimInfo">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">getSimInfo</span><span class="p">():</span>
+  <span class="k">return</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_sim_info</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="getNetworkType">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.getNetworkType">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">getNetworkType</span><span class="p">():</span>
+  <span class="k">return</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_network_type</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="getNetworkMetered">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.getNetworkMetered">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">getNetworkMetered</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="n">network_type</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_network_type</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_network_metered</span><span class="p">(</span><span class="n">network_type</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="getNetworks">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.getNetworks">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">getNetworks</span><span class="p">():</span>
+  <span class="k">return</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_networks</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="takeSnapshot">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.takeSnapshot">[docs]</a>
+<span class="nd">@dispatcher</span><span class="o">.</span><span class="n">add_method</span>
+<span class="k">def</span> <span class="nf">takeSnapshot</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="kn">from</span> <span class="nn">openpilot.system.camerad.snapshot.snapshot</span> <span class="kn">import</span> <span class="n">jpeg_write</span><span class="p">,</span> <span class="n">snapshot</span>
+  <span class="n">ret</span> <span class="o">=</span> <span class="n">snapshot</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">b64jpeg</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+        <span class="n">jpeg_write</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;jpegBack&#39;</span><span class="p">:</span> <span class="n">b64jpeg</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s1">&#39;jpegFront&#39;</span><span class="p">:</span> <span class="n">b64jpeg</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="mi">1</span><span class="p">])}</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;not available while camerad is started&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_logs_to_send_sorted">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.get_logs_to_send_sorted">[docs]</a>
+<span class="k">def</span> <span class="nf">get_logs_to_send_sorted</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+  <span class="c1"># TODO: scan once then use inotify to detect file creation/deletion</span>
+  <span class="n">curr_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+  <span class="n">logs</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">log_entry</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">swaglog_root</span><span class="p">()):</span>
+    <span class="n">log_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">swaglog_root</span><span class="p">(),</span> <span class="n">log_entry</span><span class="p">)</span>
+    <span class="n">time_sent</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">value</span> <span class="o">=</span> <span class="n">getxattr</span><span class="p">(</span><span class="n">log_path</span><span class="p">,</span> <span class="n">LOG_ATTR_NAME</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">time_sent</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">byteorder</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+      <span class="k">pass</span>
+    <span class="c1"># assume send failed and we lost the response if sent more than one hour ago</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">time_sent</span> <span class="ow">or</span> <span class="n">curr_time</span> <span class="o">-</span> <span class="n">time_sent</span> <span class="o">&gt;</span> <span class="mi">3600</span><span class="p">:</span>
+      <span class="n">logs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">log_entry</span><span class="p">)</span>
+  <span class="c1"># excluding most recent (active) log file</span>
+  <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">logs</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="log_handler">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.log_handler">[docs]</a>
+<span class="k">def</span> <span class="nf">log_handler</span><span class="p">(</span><span class="n">end_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">PC</span><span class="p">:</span>
+    <span class="k">return</span>
+
+  <span class="n">log_files</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">last_scan</span> <span class="o">=</span> <span class="mf">0.</span>
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">curr_scan</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+      <span class="k">if</span> <span class="n">curr_scan</span> <span class="o">-</span> <span class="n">last_scan</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="n">log_files</span> <span class="o">=</span> <span class="n">get_logs_to_send_sorted</span><span class="p">()</span>
+        <span class="n">last_scan</span> <span class="o">=</span> <span class="n">curr_scan</span>
+
+      <span class="c1"># send one log</span>
+      <span class="n">curr_log</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">log_files</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">log_entry</span> <span class="o">=</span> <span class="n">log_files</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c1"># newest log file</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;athena.log_handler.forward_request </span><span class="si">{</span><span class="n">log_entry</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+          <span class="n">curr_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+          <span class="n">log_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">swaglog_root</span><span class="p">(),</span> <span class="n">log_entry</span><span class="p">)</span>
+          <span class="n">setxattr</span><span class="p">(</span><span class="n">log_path</span><span class="p">,</span> <span class="n">LOG_ATTR_NAME</span><span class="p">,</span> <span class="nb">int</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="n">curr_time</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">byteorder</span><span class="p">))</span>
+          <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">log_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">jsonrpc</span> <span class="o">=</span> <span class="p">{</span>
+              <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;forwardLogs&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;logs&quot;</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+              <span class="p">},</span>
+              <span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span> <span class="s2">&quot;2.0&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">log_entry</span>
+            <span class="p">}</span>
+            <span class="n">low_priority_send_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">jsonrpc</span><span class="p">))</span>
+            <span class="n">curr_log</span> <span class="o">=</span> <span class="n">log_entry</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+          <span class="k">pass</span>  <span class="c1"># file could be deleted by log rotation</span>
+
+      <span class="c1"># wait for response up to ~100 seconds</span>
+      <span class="c1"># always read queue at least once to process any old responses that arrive</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+          <span class="k">break</span>
+        <span class="k">try</span><span class="p">:</span>
+          <span class="n">log_resp</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">log_recv_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+          <span class="n">log_entry</span> <span class="o">=</span> <span class="n">log_resp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+          <span class="n">log_success</span> <span class="o">=</span> <span class="s2">&quot;result&quot;</span> <span class="ow">in</span> <span class="n">log_resp</span> <span class="ow">and</span> <span class="n">log_resp</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;success&quot;</span><span class="p">)</span>
+          <span class="n">cloudlog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;athena.log_handler.forward_response </span><span class="si">{</span><span class="n">log_entry</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">log_success</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+          <span class="k">if</span> <span class="n">log_entry</span> <span class="ow">and</span> <span class="n">log_success</span><span class="p">:</span>
+            <span class="n">log_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">swaglog_root</span><span class="p">(),</span> <span class="n">log_entry</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+              <span class="n">setxattr</span><span class="p">(</span><span class="n">log_path</span><span class="p">,</span> <span class="n">LOG_ATTR_NAME</span><span class="p">,</span> <span class="n">LOG_ATTR_VALUE_MAX_UNIX_TIME</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+              <span class="k">pass</span>  <span class="c1"># file could be deleted by log rotation</span>
+          <span class="k">if</span> <span class="n">curr_log</span> <span class="o">==</span> <span class="n">log_entry</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">curr_log</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;athena.log_handler.exception&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="stat_handler">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.stat_handler">[docs]</a>
+<span class="k">def</span> <span class="nf">stat_handler</span><span class="p">(</span><span class="n">end_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">STATS_DIR</span> <span class="o">=</span> <span class="n">Paths</span><span class="o">.</span><span class="n">stats_root</span><span class="p">()</span>
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+    <span class="n">last_scan</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">curr_scan</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">curr_scan</span> <span class="o">-</span> <span class="n">last_scan</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="n">stat_filenames</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">name</span><span class="p">:</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">gettempprefix</span><span class="p">()),</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">STATS_DIR</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stat_filenames</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="n">stat_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">STATS_DIR</span><span class="p">,</span> <span class="n">stat_filenames</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+          <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">stat_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">jsonrpc</span> <span class="o">=</span> <span class="p">{</span>
+              <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;storeStats&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;stats&quot;</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+              <span class="p">},</span>
+              <span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span> <span class="s2">&quot;2.0&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">stat_filenames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="p">}</span>
+            <span class="n">low_priority_send_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">jsonrpc</span><span class="p">))</span>
+          <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">stat_path</span><span class="p">)</span>
+        <span class="n">last_scan</span> <span class="o">=</span> <span class="n">curr_scan</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;athena.stat_handler.exception&quot;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ws_proxy_recv">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.ws_proxy_recv">[docs]</a>
+<span class="k">def</span> <span class="nf">ws_proxy_recv</span><span class="p">(</span><span class="n">ws</span><span class="p">:</span> <span class="n">WebSocket</span><span class="p">,</span> <span class="n">local_sock</span><span class="p">:</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">,</span> <span class="n">ssock</span><span class="p">:</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">,</span> <span class="n">end_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span> <span class="n">global_end_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">while</span> <span class="ow">not</span> <span class="p">(</span><span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">()</span> <span class="ow">or</span> <span class="n">global_end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">()):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="n">ws</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+      <span class="n">local_sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">WebSocketTimeoutException</span><span class="p">:</span>
+      <span class="k">pass</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;athenad.ws_proxy_recv.exception&quot;</span><span class="p">)</span>
+      <span class="k">break</span>
+
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;athena.ws_proxy_recv closing sockets&quot;</span><span class="p">)</span>
+  <span class="n">ssock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+  <span class="n">local_sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;athena.ws_proxy_recv done closing sockets&quot;</span><span class="p">)</span>
+
+  <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ws_proxy_send">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.ws_proxy_send">[docs]</a>
+<span class="k">def</span> <span class="nf">ws_proxy_send</span><span class="p">(</span><span class="n">ws</span><span class="p">:</span> <span class="n">WebSocket</span><span class="p">,</span> <span class="n">local_sock</span><span class="p">:</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">,</span> <span class="n">signal_sock</span><span class="p">:</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">,</span> <span class="n">end_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">r</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">select</span><span class="p">((</span><span class="n">local_sock</span><span class="p">,</span> <span class="n">signal_sock</span><span class="p">),</span> <span class="p">(),</span> <span class="p">())</span>
+      <span class="k">if</span> <span class="n">r</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span> <span class="o">==</span> <span class="n">signal_sock</span><span class="o">.</span><span class="n">fileno</span><span class="p">():</span>
+          <span class="c1"># got end signal from ws_proxy_recv</span>
+          <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+          <span class="k">break</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">local_sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+          <span class="c1"># local_sock is dead</span>
+          <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+          <span class="k">break</span>
+
+        <span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ABNF</span><span class="o">.</span><span class="n">OPCODE_BINARY</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;athenad.ws_proxy_send.exception&quot;</span><span class="p">)</span>
+      <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;athena.ws_proxy_send closing sockets&quot;</span><span class="p">)</span>
+  <span class="n">signal_sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+  <span class="n">cloudlog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;athena.ws_proxy_send done closing sockets&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ws_recv">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.ws_recv">[docs]</a>
+<span class="k">def</span> <span class="nf">ws_recv</span><span class="p">(</span><span class="n">ws</span><span class="p">:</span> <span class="n">WebSocket</span><span class="p">,</span> <span class="n">end_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">last_ping</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">)</span>
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">opcode</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">ws</span><span class="o">.</span><span class="n">recv_data</span><span class="p">(</span><span class="n">control_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">opcode</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ABNF</span><span class="o">.</span><span class="n">OPCODE_TEXT</span><span class="p">,</span> <span class="n">ABNF</span><span class="o">.</span><span class="n">OPCODE_BINARY</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">opcode</span> <span class="o">==</span> <span class="n">ABNF</span><span class="o">.</span><span class="n">OPCODE_TEXT</span><span class="p">:</span>
+          <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="n">recv_queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="n">ABNF</span><span class="o">.</span><span class="n">OPCODE_PING</span><span class="p">:</span>
+        <span class="n">last_ping</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">)</span>
+        <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;LastAthenaPingTime&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">last_ping</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">WebSocketTimeoutException</span><span class="p">:</span>
+      <span class="n">ns_since_last_ping</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">)</span> <span class="o">-</span> <span class="n">last_ping</span>
+      <span class="k">if</span> <span class="n">ns_since_last_ping</span> <span class="o">&gt;</span> <span class="n">RECONNECT_TIMEOUT_S</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;athenad.ws_recv.timeout&quot;</span><span class="p">)</span>
+        <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;athenad.ws_recv.exception&quot;</span><span class="p">)</span>
+      <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ws_send">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.ws_send">[docs]</a>
+<span class="k">def</span> <span class="nf">ws_send</span><span class="p">(</span><span class="n">ws</span><span class="p">:</span> <span class="n">WebSocket</span><span class="p">,</span> <span class="n">end_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">end_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">send_queue</span><span class="o">.</span><span class="n">get_nowait</span><span class="p">()</span>
+      <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">low_priority_send_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">WS_FRAME_SIZE</span><span class="p">):</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">WS_FRAME_SIZE</span><span class="p">]</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">WS_FRAME_SIZE</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">opcode</span> <span class="o">=</span> <span class="n">ABNF</span><span class="o">.</span><span class="n">OPCODE_TEXT</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">ABNF</span><span class="o">.</span><span class="n">OPCODE_CONT</span>
+        <span class="n">ws</span><span class="o">.</span><span class="n">send_frame</span><span class="p">(</span><span class="n">ABNF</span><span class="o">.</span><span class="n">create_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">opcode</span><span class="p">,</span> <span class="n">last</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+      <span class="k">pass</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;athenad.ws_send.exception&quot;</span><span class="p">)</span>
+      <span class="n">end_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ws_manage">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.ws_manage">[docs]</a>
+<span class="k">def</span> <span class="nf">ws_manage</span><span class="p">(</span><span class="n">ws</span><span class="p">:</span> <span class="n">WebSocket</span><span class="p">,</span> <span class="n">end_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+  <span class="n">onroad_prev</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">sock</span> <span class="o">=</span> <span class="n">ws</span><span class="o">.</span><span class="n">sock</span>
+
+  <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">onroad</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;IsOnroad&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">onroad</span> <span class="o">!=</span> <span class="n">onroad_prev</span><span class="p">:</span>
+      <span class="n">onroad_prev</span> <span class="o">=</span> <span class="n">onroad</span>
+
+      <span class="k">if</span> <span class="n">sock</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># While not sending data, onroad, we can expect to time out in 7 + (7 * 2) = 21s</span>
+        <span class="c1">#                         offroad, we can expect to time out in 30 + (10 * 3) = 60s</span>
+        <span class="c1"># FIXME: TCP_USER_TIMEOUT is effectively 2x for some reason (32s), so it&#39;s mostly unused</span>
+        <span class="n">sock</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">IPPROTO_TCP</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">TCP_USER_TIMEOUT</span><span class="p">,</span> <span class="mi">16000</span> <span class="k">if</span> <span class="n">onroad</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">sock</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">IPPROTO_TCP</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">TCP_KEEPIDLE</span><span class="p">,</span> <span class="mi">7</span> <span class="k">if</span> <span class="n">onroad</span> <span class="k">else</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="n">sock</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">IPPROTO_TCP</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">TCP_KEEPINTVL</span><span class="p">,</span> <span class="mi">7</span> <span class="k">if</span> <span class="n">onroad</span> <span class="k">else</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">sock</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">IPPROTO_TCP</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">TCP_KEEPCNT</span><span class="p">,</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">onroad</span> <span class="k">else</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">end_event</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+      <span class="k">break</span></div>
+
+
+
+<div class="viewcode-block" id="backoff">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.backoff">[docs]</a>
+<span class="k">def</span> <span class="nf">backoff</span><span class="p">(</span><span class="n">retries</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">retries</span><span class="p">)))</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../selfdrive.athena.html#selfdrive.athena.athenad.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">exit_event</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">set_core_affinity</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+  <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;failed to set core affinity&quot;</span><span class="p">)</span>
+
+  <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+  <span class="n">dongle_id</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DongleId&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+  <span class="n">UploadQueueCache</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">upload_queue</span><span class="p">)</span>
+
+  <span class="n">ws_uri</span> <span class="o">=</span> <span class="n">ATHENA_HOST</span> <span class="o">+</span> <span class="s2">&quot;/ws/v2/&quot;</span> <span class="o">+</span> <span class="n">dongle_id</span>
+  <span class="n">api</span> <span class="o">=</span> <span class="n">Api</span><span class="p">(</span><span class="n">dongle_id</span><span class="p">)</span>
+
+  <span class="n">conn_start</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">conn_retries</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">while</span> <span class="n">exit_event</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">exit_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">conn_start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">conn_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;athenad.main.connecting_ws&quot;</span><span class="p">,</span> <span class="n">ws_uri</span><span class="o">=</span><span class="n">ws_uri</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="n">conn_retries</span><span class="p">)</span>
+      <span class="n">ws</span> <span class="o">=</span> <span class="n">create_connection</span><span class="p">(</span><span class="n">ws_uri</span><span class="p">,</span>
+                             <span class="n">cookie</span><span class="o">=</span><span class="s2">&quot;jwt=&quot;</span> <span class="o">+</span> <span class="n">api</span><span class="o">.</span><span class="n">get_token</span><span class="p">(),</span>
+                             <span class="n">enable_multithread</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                             <span class="n">timeout</span><span class="o">=</span><span class="mf">30.0</span><span class="p">)</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;athenad.main.connected_ws&quot;</span><span class="p">,</span> <span class="n">ws_uri</span><span class="o">=</span><span class="n">ws_uri</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="n">conn_retries</span><span class="p">,</span>
+                     <span class="n">duration</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">conn_start</span><span class="p">)</span>
+      <span class="n">conn_start</span> <span class="o">=</span> <span class="kc">None</span>
+
+      <span class="n">conn_retries</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="n">cur_upload_items</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+      <span class="n">handle_long_poll</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">exit_event</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">KeyboardInterrupt</span><span class="p">,</span> <span class="ne">SystemExit</span><span class="p">):</span>
+      <span class="k">break</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ConnectionError</span><span class="p">,</span> <span class="ne">TimeoutError</span><span class="p">,</span> <span class="n">WebSocketException</span><span class="p">):</span>
+      <span class="n">conn_retries</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="n">params</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;LastAthenaPingTime&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">cloudlog</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;athenad.main.exception&quot;</span><span class="p">)</span>
+
+      <span class="n">conn_retries</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="n">params</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;LastAthenaPingTime&quot;</span><span class="p">)</span>
+
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">backoff</span><span class="p">(</span><span class="n">conn_retries</span><span class="p">))</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

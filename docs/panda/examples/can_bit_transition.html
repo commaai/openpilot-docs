@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="openpilot docs" name="description" />
+<meta content="op, openpilot, docs, documentation" name="keywords" />
+<meta content="all,follow" name="robots" />
+<meta content="index,follow,snippet,archive" name="googlebot" />
+<meta content="en_US" property="og:locale" />
+<meta content="docs.comma.ai" property="og:site_name" />
+<meta content="https://docs.comma.ai" property="og:url" />
+<meta content="openpilot Documentation" property="og:title" />
+<meta content="website" property="og:type" />
+<meta content="image/jpeg" property="og:image:type" />
+<meta content="400" property="og:image:width" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image:url" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="og:image:secure_url" />
+<meta content="openpilot Documentation" property="og:description" />
+<meta content="summary_large_image" property="twitter:card" />
+<meta content="https://docs.comma.ai/_static/logo.png" property="twitter:logo" />
+<meta content="openpilot Documentation" property="twitter:title" />
+<meta content="openpilot Documentation" property="twitter:description" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to use can_bit_transition.py to reverse engineer a single bit field &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/panda/examples/can_bit_transition.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">How to use can_bit_transition.py to reverse engineer a single bit field</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/panda/examples/can_bit_transition.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="how-to-use-can-bit-transition-py-to-reverse-engineer-a-single-bit-field">
+<h1>How to use can_bit_transition.py to reverse engineer a single bit field<a class="headerlink" href="#how-to-use-can-bit-transition-py-to-reverse-engineer-a-single-bit-field" title="Link to this heading"></a></h1>
+<p>Let’s say our goal is to find a brake pedal signal (caused by your foot pressing the brake pedal vs adaptive cruise control braking).</p>
+<p>The following process will allow you to quickly find bits that are always 0 during a period of time (when you know you were not pressing the brake with your foot) and always 1 in a different period of time (when you know you were pressing the brake with your foot).</p>
+<p>Open up a drive in cabana where you can find a place you used the brake pedal and another place where you did not use the brake pedal (and you can identify when you were on the brake pedal and when you were not).  You may want to go out for a drive and put something in front of the camera after you put your foot on the brake and take it away before you take your foot off the brake so you can easily identify exactly when you had your foot on the brake based on the video in cabana.  This is critical because this script needs the brake signal to always be high the entire time for one of the time frames.  A 10 second time frame worked well for me.</p>
+<p>I found a drive where I knew I was not pressing the brake between timestamp 50.0 thru 65.0 and I was pressing the brake between timestamp 69.0 thru 79.0. Determine what the timestamps are in cabana by plotting any message and putting your mouse over the plot at the location you want to discover the timestamp.  The tool tip on mouse hover has the format: timestamp: value</p>
+<p>Now download the log from cabana (Save Log button) and run the script passing in the timestamps
+(replace csv file name with cabana log you downloaded and time ranges with your own)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">can_bit_transition</span><span class="o">.</span><span class="n">py</span> <span class="o">./</span><span class="n">honda_crv_ex_2017_can</span><span class="o">-</span><span class="mf">1520354796875.</span><span class="n">csv</span> <span class="mf">50.0</span><span class="o">-</span><span class="mf">65.0</span> <span class="mf">69.0</span><span class="o">-</span><span class="mf">79.0</span>
+</pre></div>
+</div>
+<p>The script will output bits that were always low in the first time range and always high in the second time range (and vice versa)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span> <span class="mi">17</span><span class="n">c</span> <span class="mi">0</span> <span class="o">-&gt;</span> <span class="mi">1</span> <span class="n">at</span> <span class="n">byte</span> <span class="mi">4</span> <span class="n">bitmask</span> <span class="mi">1</span>
+<span class="nb">id</span> <span class="mi">17</span><span class="n">c</span> <span class="mi">0</span> <span class="o">-&gt;</span> <span class="mi">1</span> <span class="n">at</span> <span class="n">byte</span> <span class="mi">6</span> <span class="n">bitmask</span> <span class="mi">32</span>
+<span class="nb">id</span> <span class="mi">221</span> <span class="mi">1</span> <span class="o">-&gt;</span> <span class="mi">0</span> <span class="n">at</span> <span class="n">byte</span> <span class="mi">0</span> <span class="n">bitmask</span> <span class="mi">4</span>
+<span class="nb">id</span> <span class="mi">1</span><span class="n">be</span> <span class="mi">0</span> <span class="o">-&gt;</span> <span class="mi">1</span> <span class="n">at</span> <span class="n">byte</span> <span class="mi">0</span> <span class="n">bitmask</span> <span class="mi">16</span>
+</pre></div>
+</div>
+<p>Now I go back to cabana and graph the above bits by searching for the message by id, double clicking on the appropriate bit, and then selecting “show plot”. I already knew that message id 0x17c is both user brake and adaptive cruise control braking combined, so I plotted one of those signals along side 0x221 and 0x1be.  By replaying a drive I could see that 0x221 was not a brake signal (when high at random times that did not correspond to braking).  Next I looked at 0x1be and I found it was the brake pedal signal I was looking for (went high whenever I pressed the brake pedal and did not go high when adaptive cruise control was braking).</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

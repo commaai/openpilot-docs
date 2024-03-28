@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>panda.python &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/panda/python.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">panda.python</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for panda.python</h1><div class="highlight"><pre>
+<span></span><span class="c1"># python library to interface with panda</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">usb1</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span><span class="p">,</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">accumulate</span>
+
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">BaseHandle</span>
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">FW_PATH</span><span class="p">,</span> <span class="n">McuType</span>
+<span class="kn">from</span> <span class="nn">.dfu</span> <span class="kn">import</span> <span class="n">PandaDFU</span>
+<span class="kn">from</span> <span class="nn">.isotp</span> <span class="kn">import</span> <span class="n">isotp_send</span><span class="p">,</span> <span class="n">isotp_recv</span>
+<span class="kn">from</span> <span class="nn">.spi</span> <span class="kn">import</span> <span class="n">PandaSpiHandle</span><span class="p">,</span> <span class="n">PandaSpiException</span><span class="p">,</span> <span class="n">PandaProtocolMismatch</span>
+<span class="kn">from</span> <span class="nn">.usb</span> <span class="kn">import</span> <span class="n">PandaUsbHandle</span>
+
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.10&#39;</span>
+
+<span class="c1"># setup logging</span>
+<span class="n">LOGLEVEL</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;LOGLEVEL&#39;</span><span class="p">,</span> <span class="s1">&#39;INFO&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">LOGLEVEL</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">CANPACKET_HEAD_SIZE</span> <span class="o">=</span> <span class="mh">0x6</span>
+<span class="n">DLC_TO_LEN</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">64</span><span class="p">]</span>
+<span class="n">LEN_TO_DLC</span> <span class="o">=</span> <span class="p">{</span><span class="n">length</span><span class="p">:</span> <span class="n">dlc</span> <span class="k">for</span> <span class="p">(</span><span class="n">dlc</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">DLC_TO_LEN</span><span class="p">)}</span>
+<span class="n">PANDA_BUS_CNT</span> <span class="o">=</span> <span class="mi">4</span>
+
+
+<div class="viewcode-block" id="calculate_checksum">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.calculate_checksum">[docs]</a>
+<span class="k">def</span> <span class="nf">calculate_checksum</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">^=</span> <span class="n">b</span>
+  <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="pack_can_buffer">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.pack_can_buffer">[docs]</a>
+<span class="k">def</span> <span class="nf">pack_can_buffer</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+  <span class="n">snds</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
+  <span class="k">for</span> <span class="n">address</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">bus</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="ow">in</span> <span class="n">LEN_TO_DLC</span>
+    <span class="c1">#logging.debug(&quot;  W 0x%x: 0x%s&quot;, address, dat.hex())</span>
+
+    <span class="n">extended</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">address</span> <span class="o">&gt;=</span> <span class="mh">0x800</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="n">data_len_code</span> <span class="o">=</span> <span class="n">LEN_TO_DLC</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)]</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">CANPACKET_HEAD_SIZE</span><span class="p">)</span>
+    <span class="n">word_4b</span> <span class="o">=</span> <span class="n">address</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span> <span class="o">|</span> <span class="n">extended</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>
+    <span class="n">header</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_len_code</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">bus</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">header</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">word_4b</span> <span class="o">&amp;</span> <span class="mh">0xFF</span>
+    <span class="n">header</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">word_4b</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span>
+    <span class="n">header</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">word_4b</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span>
+    <span class="n">header</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">word_4b</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span>
+    <span class="n">header</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">calculate_checksum</span><span class="p">(</span><span class="n">header</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">dat</span><span class="p">)</span>
+
+    <span class="n">snds</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">header</span> <span class="o">+</span> <span class="n">dat</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">snds</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">256</span><span class="p">:</span> <span class="c1"># Limit chunks to 256 bytes</span>
+      <span class="n">snds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">snds</span></div>
+
+
+<div class="viewcode-block" id="unpack_can_buffer">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.unpack_can_buffer">[docs]</a>
+<span class="k">def</span> <span class="nf">unpack_can_buffer</span><span class="p">(</span><span class="n">dat</span><span class="p">):</span>
+  <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">CANPACKET_HEAD_SIZE</span><span class="p">:</span>
+    <span class="n">data_len</span> <span class="o">=</span> <span class="n">DLC_TO_LEN</span><span class="p">[(</span><span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;&gt;</span><span class="mi">4</span><span class="p">)]</span>
+
+    <span class="n">header</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[:</span><span class="n">CANPACKET_HEAD_SIZE</span><span class="p">]</span>
+
+    <span class="n">bus</span> <span class="o">=</span> <span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x7</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">24</span> <span class="o">|</span> <span class="n">header</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span> <span class="o">|</span> <span class="n">header</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">|</span> <span class="n">header</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x1</span><span class="p">:</span>
+      <span class="c1"># returned</span>
+      <span class="n">bus</span> <span class="o">+=</span> <span class="mi">128</span>
+    <span class="k">if</span> <span class="n">header</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x1</span><span class="p">:</span>
+      <span class="c1"># rejected</span>
+      <span class="n">bus</span> <span class="o">+=</span> <span class="mi">192</span>
+
+    <span class="c1"># we need more from the next transfer</span>
+    <span class="k">if</span> <span class="n">data_len</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="o">-</span> <span class="n">CANPACKET_HEAD_SIZE</span><span class="p">:</span>
+      <span class="k">break</span>
+
+    <span class="k">assert</span> <span class="n">calculate_checksum</span><span class="p">(</span><span class="n">dat</span><span class="p">[:(</span><span class="n">CANPACKET_HEAD_SIZE</span><span class="o">+</span><span class="n">data_len</span><span class="p">)])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;CAN packet checksum incorrect&quot;</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="n">CANPACKET_HEAD_SIZE</span><span class="p">:(</span><span class="n">CANPACKET_HEAD_SIZE</span><span class="o">+</span><span class="n">data_len</span><span class="p">)]</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[(</span><span class="n">CANPACKET_HEAD_SIZE</span><span class="o">+</span><span class="n">data_len</span><span class="p">):]</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">address</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">bus</span><span class="p">))</span>
+
+  <span class="k">return</span> <span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ensure_version">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.ensure_version">[docs]</a>
+<span class="k">def</span> <span class="nf">ensure_version</span><span class="p">(</span><span class="n">desc</span><span class="p">,</span> <span class="n">lib_field</span><span class="p">,</span> <span class="n">panda_field</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+  <span class="nd">@wraps</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">lib_version</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lib_field</span><span class="p">)</span>
+    <span class="n">panda_version</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">panda_field</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lib_version</span> <span class="o">!=</span> <span class="n">panda_version</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">desc</span><span class="si">}</span><span class="s2"> packet version mismatch: panda&#39;s firmware v</span><span class="si">{</span><span class="n">panda_version</span><span class="si">}</span><span class="s2">, library v</span><span class="si">{</span><span class="n">lib_version</span><span class="si">}</span><span class="s2">. Reflash panda.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">wrapper</span></div>
+
+<span class="n">ensure_can_packet_version</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">ensure_version</span><span class="p">,</span> <span class="s2">&quot;CAN&quot;</span><span class="p">,</span> <span class="s2">&quot;CAN_PACKET_VERSION&quot;</span><span class="p">,</span> <span class="s2">&quot;can_version&quot;</span><span class="p">)</span>
+<span class="n">ensure_can_health_packet_version</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">ensure_version</span><span class="p">,</span> <span class="s2">&quot;CAN health&quot;</span><span class="p">,</span> <span class="s2">&quot;CAN_HEALTH_PACKET_VERSION&quot;</span><span class="p">,</span> <span class="s2">&quot;can_health_version&quot;</span><span class="p">)</span>
+<span class="n">ensure_health_packet_version</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">ensure_version</span><span class="p">,</span> <span class="s2">&quot;health&quot;</span><span class="p">,</span> <span class="s2">&quot;HEALTH_PACKET_VERSION&quot;</span><span class="p">,</span> <span class="s2">&quot;health_version&quot;</span><span class="p">)</span>
+
+
+
+<div class="viewcode-block" id="ALTERNATIVE_EXPERIENCE">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.ALTERNATIVE_EXPERIENCE">[docs]</a>
+<span class="k">class</span> <span class="nc">ALTERNATIVE_EXPERIENCE</span><span class="p">:</span>
+  <span class="n">DEFAULT</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">DISABLE_DISENGAGE_ON_GAS</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">DISABLE_STOCK_AEB</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">RAISE_LONGITUDINAL_LIMITS_TO_ISO_MAX</span> <span class="o">=</span> <span class="mi">8</span>
+  <span class="n">ALLOW_AEB</span> <span class="o">=</span> <span class="mi">16</span></div>
+
+
+<div class="viewcode-block" id="Panda">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda">[docs]</a>
+<span class="k">class</span> <span class="nc">Panda</span><span class="p">:</span>
+
+  <span class="c1"># matches cereal.car.CarParams.SafetyModel</span>
+  <span class="n">SAFETY_SILENT</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">SAFETY_HONDA_NIDEC</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">SAFETY_TOYOTA</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">SAFETY_ELM327</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">SAFETY_GM</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">SAFETY_HONDA_BOSCH_GIRAFFE</span> <span class="o">=</span> <span class="mi">5</span>
+  <span class="n">SAFETY_FORD</span> <span class="o">=</span> <span class="mi">6</span>
+  <span class="n">SAFETY_HYUNDAI</span> <span class="o">=</span> <span class="mi">8</span>
+  <span class="n">SAFETY_CHRYSLER</span> <span class="o">=</span> <span class="mi">9</span>
+  <span class="n">SAFETY_TESLA</span> <span class="o">=</span> <span class="mi">10</span>
+  <span class="n">SAFETY_SUBARU</span> <span class="o">=</span> <span class="mi">11</span>
+  <span class="n">SAFETY_MAZDA</span> <span class="o">=</span> <span class="mi">13</span>
+  <span class="n">SAFETY_NISSAN</span> <span class="o">=</span> <span class="mi">14</span>
+  <span class="n">SAFETY_VOLKSWAGEN_MQB</span> <span class="o">=</span> <span class="mi">15</span>
+  <span class="n">SAFETY_ALLOUTPUT</span> <span class="o">=</span> <span class="mi">17</span>
+  <span class="n">SAFETY_GM_ASCM</span> <span class="o">=</span> <span class="mi">18</span>
+  <span class="n">SAFETY_NOOUTPUT</span> <span class="o">=</span> <span class="mi">19</span>
+  <span class="n">SAFETY_HONDA_BOSCH</span> <span class="o">=</span> <span class="mi">20</span>
+  <span class="n">SAFETY_VOLKSWAGEN_PQ</span> <span class="o">=</span> <span class="mi">21</span>
+  <span class="n">SAFETY_SUBARU_PREGLOBAL</span> <span class="o">=</span> <span class="mi">22</span>
+  <span class="n">SAFETY_HYUNDAI_LEGACY</span> <span class="o">=</span> <span class="mi">23</span>
+  <span class="n">SAFETY_HYUNDAI_COMMUNITY</span> <span class="o">=</span> <span class="mi">24</span>
+  <span class="n">SAFETY_STELLANTIS</span> <span class="o">=</span> <span class="mi">25</span>
+  <span class="n">SAFETY_FAW</span> <span class="o">=</span> <span class="mi">26</span>
+  <span class="n">SAFETY_BODY</span> <span class="o">=</span> <span class="mi">27</span>
+  <span class="n">SAFETY_HYUNDAI_CANFD</span> <span class="o">=</span> <span class="mi">28</span>
+
+  <span class="n">SERIAL_DEBUG</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">SERIAL_ESP</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">SERIAL_LIN1</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">SERIAL_LIN2</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">SERIAL_SOM_DEBUG</span> <span class="o">=</span> <span class="mi">4</span>
+
+  <span class="n">USB_PIDS</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0xddee</span><span class="p">,</span> <span class="mh">0xddcc</span><span class="p">)</span>
+  <span class="n">REQUEST_IN</span> <span class="o">=</span> <span class="n">usb1</span><span class="o">.</span><span class="n">ENDPOINT_IN</span> <span class="o">|</span> <span class="n">usb1</span><span class="o">.</span><span class="n">TYPE_VENDOR</span> <span class="o">|</span> <span class="n">usb1</span><span class="o">.</span><span class="n">RECIPIENT_DEVICE</span>
+  <span class="n">REQUEST_OUT</span> <span class="o">=</span> <span class="n">usb1</span><span class="o">.</span><span class="n">ENDPOINT_OUT</span> <span class="o">|</span> <span class="n">usb1</span><span class="o">.</span><span class="n">TYPE_VENDOR</span> <span class="o">|</span> <span class="n">usb1</span><span class="o">.</span><span class="n">RECIPIENT_DEVICE</span>
+
+  <span class="n">HW_TYPE_UNKNOWN</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span>
+  <span class="n">HW_TYPE_WHITE_PANDA</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x01</span><span class="s1">&#39;</span>
+  <span class="n">HW_TYPE_GREY_PANDA</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x02</span><span class="s1">&#39;</span>
+  <span class="n">HW_TYPE_BLACK_PANDA</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x03</span><span class="s1">&#39;</span>
+  <span class="n">HW_TYPE_PEDAL</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x04</span><span class="s1">&#39;</span>
+  <span class="n">HW_TYPE_UNO</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x05</span><span class="s1">&#39;</span>
+  <span class="n">HW_TYPE_DOS</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x06</span><span class="s1">&#39;</span>
+  <span class="n">HW_TYPE_RED_PANDA</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x07</span><span class="s1">&#39;</span>
+  <span class="n">HW_TYPE_RED_PANDA_V2</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x08</span><span class="s1">&#39;</span>
+  <span class="n">HW_TYPE_TRES</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x09</span><span class="s1">&#39;</span>
+  <span class="n">HW_TYPE_CUATRO</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x0a</span><span class="s1">&#39;</span>
+
+  <span class="n">CAN_PACKET_VERSION</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">HEALTH_PACKET_VERSION</span> <span class="o">=</span> <span class="mi">16</span>
+  <span class="n">CAN_HEALTH_PACKET_VERSION</span> <span class="o">=</span> <span class="mi">5</span>
+  <span class="n">HEALTH_STRUCT</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="s2">&quot;&lt;IIIIIIIIBBBBBHBBBHfBBHBHHB&quot;</span><span class="p">)</span>
+  <span class="n">CAN_HEALTH_STRUCT</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="s2">&quot;&lt;BIBBBBBBBBIIIIIIIHHBBBIIII&quot;</span><span class="p">)</span>
+
+  <span class="n">F4_DEVICES</span> <span class="o">=</span> <span class="p">[</span><span class="n">HW_TYPE_WHITE_PANDA</span><span class="p">,</span> <span class="n">HW_TYPE_GREY_PANDA</span><span class="p">,</span> <span class="n">HW_TYPE_BLACK_PANDA</span><span class="p">,</span> <span class="n">HW_TYPE_UNO</span><span class="p">,</span> <span class="n">HW_TYPE_DOS</span><span class="p">]</span>
+  <span class="n">H7_DEVICES</span> <span class="o">=</span> <span class="p">[</span><span class="n">HW_TYPE_RED_PANDA</span><span class="p">,</span> <span class="n">HW_TYPE_RED_PANDA_V2</span><span class="p">,</span> <span class="n">HW_TYPE_TRES</span><span class="p">,</span> <span class="n">HW_TYPE_CUATRO</span><span class="p">]</span>
+
+  <span class="n">INTERNAL_DEVICES</span> <span class="o">=</span> <span class="p">(</span><span class="n">HW_TYPE_UNO</span><span class="p">,</span> <span class="n">HW_TYPE_DOS</span><span class="p">,</span> <span class="n">HW_TYPE_TRES</span><span class="p">,</span> <span class="n">HW_TYPE_CUATRO</span><span class="p">)</span>
+  <span class="n">HAS_OBD</span> <span class="o">=</span> <span class="p">(</span><span class="n">HW_TYPE_BLACK_PANDA</span><span class="p">,</span> <span class="n">HW_TYPE_UNO</span><span class="p">,</span> <span class="n">HW_TYPE_DOS</span><span class="p">,</span> <span class="n">HW_TYPE_RED_PANDA</span><span class="p">,</span> <span class="n">HW_TYPE_RED_PANDA_V2</span><span class="p">,</span> <span class="n">HW_TYPE_TRES</span><span class="p">,</span> <span class="n">HW_TYPE_CUATRO</span><span class="p">)</span>
+
+  <span class="n">MAX_FAN_RPMs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">HW_TYPE_UNO</span><span class="p">:</span> <span class="mi">5100</span><span class="p">,</span>
+    <span class="n">HW_TYPE_DOS</span><span class="p">:</span> <span class="mi">6500</span><span class="p">,</span>
+    <span class="n">HW_TYPE_TRES</span><span class="p">:</span> <span class="mi">6600</span><span class="p">,</span>
+    <span class="n">HW_TYPE_CUATRO</span><span class="p">:</span> <span class="mi">6600</span><span class="p">,</span>
+  <span class="p">}</span>
+
+  <span class="n">HARNESS_STATUS_NC</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">HARNESS_STATUS_NORMAL</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">HARNESS_STATUS_FLIPPED</span> <span class="o">=</span> <span class="mi">2</span>
+
+  <span class="c1"># first byte is for EPS scaling factor</span>
+  <span class="n">FLAG_TOYOTA_ALT_BRAKE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span>
+  <span class="n">FLAG_TOYOTA_STOCK_LONGITUDINAL</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span>
+  <span class="n">FLAG_TOYOTA_LTA</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span>
+
+  <span class="n">FLAG_HONDA_ALT_BRAKE</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">FLAG_HONDA_BOSCH_LONG</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">FLAG_HONDA_NIDEC_ALT</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">FLAG_HONDA_RADARLESS</span> <span class="o">=</span> <span class="mi">8</span>
+
+  <span class="n">FLAG_HYUNDAI_EV_GAS</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">FLAG_HYUNDAI_HYBRID_GAS</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">FLAG_HYUNDAI_LONG</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">FLAG_HYUNDAI_CAMERA_SCC</span> <span class="o">=</span> <span class="mi">8</span>
+  <span class="n">FLAG_HYUNDAI_CANFD_HDA2</span> <span class="o">=</span> <span class="mi">16</span>
+  <span class="n">FLAG_HYUNDAI_CANFD_ALT_BUTTONS</span> <span class="o">=</span> <span class="mi">32</span>
+  <span class="n">FLAG_HYUNDAI_ALT_LIMITS</span> <span class="o">=</span> <span class="mi">64</span>
+  <span class="n">FLAG_HYUNDAI_CANFD_HDA2_ALT_STEERING</span> <span class="o">=</span> <span class="mi">128</span>
+
+  <span class="n">FLAG_TESLA_POWERTRAIN</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">FLAG_TESLA_LONG_CONTROL</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">FLAG_TESLA_RAVEN</span> <span class="o">=</span> <span class="mi">4</span>
+
+  <span class="n">FLAG_VOLKSWAGEN_LONG_CONTROL</span> <span class="o">=</span> <span class="mi">1</span>
+
+  <span class="n">FLAG_CHRYSLER_RAM_DT</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">FLAG_CHRYSLER_RAM_HD</span> <span class="o">=</span> <span class="mi">2</span>
+
+  <span class="n">FLAG_SUBARU_GEN2</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">FLAG_SUBARU_LONG</span> <span class="o">=</span> <span class="mi">2</span>
+
+  <span class="n">FLAG_SUBARU_PREGLOBAL_REVERSED_DRIVER_TORQUE</span> <span class="o">=</span> <span class="mi">1</span>
+
+  <span class="n">FLAG_NISSAN_ALT_EPS_BUS</span> <span class="o">=</span> <span class="mi">1</span>
+
+  <span class="n">FLAG_GM_HW_CAM</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">FLAG_GM_HW_CAM_LONG</span> <span class="o">=</span> <span class="mi">2</span>
+
+  <span class="n">FLAG_FORD_LONG_CONTROL</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">FLAG_FORD_CANFD</span> <span class="o">=</span> <span class="mi">2</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serial</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">claim</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">disable_checks</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">can_speed_kbps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_connect_serial</span> <span class="o">=</span> <span class="n">serial</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_disable_checks</span> <span class="o">=</span> <span class="n">disable_checks</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">:</span> <span class="n">BaseHandle</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle_open</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">can_rx_overflow_buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_can_speed_kbps</span> <span class="o">=</span> <span class="n">can_speed_kbps</span>
+
+    <span class="c1"># connect and set mcu type</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">claim</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span>
+
+  <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Panda.close">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.close">[docs]</a>
+  <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_open</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_handle_open</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Panda.connect">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.connect">[docs]</a>
+  <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">claim</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="c1"># try USB first, then SPI</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">serial</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bootstub</span><span class="p">,</span> <span class="n">bcd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">usb_connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connect_serial</span><span class="p">,</span> <span class="n">claim</span><span class="o">=</span><span class="n">claim</span><span class="p">)</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">serial</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bootstub</span><span class="p">,</span> <span class="n">bcd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spi_connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connect_serial</span><span class="p">)</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">wait</span><span class="p">:</span>
+        <span class="k">break</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;failed to connect to panda&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Some fallback logic to determine panda and MCU type for old bootstubs,</span>
+    <span class="c1"># since we now support multiple MCUs and need to know which fw to flash.</span>
+    <span class="c1"># Three cases to consider:</span>
+    <span class="c1"># A) oldest bootstubs don&#39;t have any way to distinguish</span>
+    <span class="c1">#    MCU or panda type</span>
+    <span class="c1"># B) slightly newer (~2 weeks after first C3&#39;s built) bootstubs</span>
+    <span class="c1">#    have the panda type set in the USB bcdDevice</span>
+    <span class="c1"># C) latest bootstubs also implement the endpoint for panda type</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_bcd_hw_type</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xc1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">)</span>
+    <span class="n">missing_hw_type_endpoint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bootstub</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\x00\xc1\x3e\xde\xad\xd0\x0d</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">missing_hw_type_endpoint</span> <span class="ow">and</span> <span class="n">bcd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_bcd_hw_type</span> <span class="o">=</span> <span class="n">bcd</span>
+
+    <span class="c1"># For case A, we assume F4 MCU type, since all H7 pandas should be case B at worst</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_assume_f4_mcu</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bcd_hw_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="n">missing_hw_type_endpoint</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span> <span class="o">=</span> <span class="n">serial</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_connect_serial</span> <span class="o">=</span> <span class="n">serial</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle_open</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_mcu_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mcu_type</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">health_version</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_version</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_health_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_packets_versions</span><span class="p">()</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;connected&quot;</span><span class="p">)</span>
+
+    <span class="c1"># disable openpilot&#39;s heartbeat checks</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_disable_checks</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">set_heartbeat_disabled</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">set_power_save</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># reset comms</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">can_reset_communications</span><span class="p">()</span>
+
+    <span class="c1"># set CAN speed</span>
+    <span class="k">for</span> <span class="n">bus</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">PANDA_BUS_CNT</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">set_can_speed_kbps</span><span class="p">(</span><span class="n">bus</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_can_speed_kbps</span><span class="p">)</span></div>
+
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">spi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">PandaSpiHandle</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Panda.spi_connect">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.spi_connect">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">spi_connect</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">serial</span><span class="p">,</span> <span class="n">ignore_version</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="c1"># get UID to confirm slave is present and up</span>
+    <span class="n">handle</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">spi_serial</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">bootstub</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">spi_version</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">handle</span> <span class="o">=</span> <span class="n">PandaSpiHandle</span><span class="p">()</span>
+
+      <span class="c1"># connect by protcol version</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">dat</span> <span class="o">=</span> <span class="n">handle</span><span class="o">.</span><span class="n">get_protocol_version</span><span class="p">()</span>
+        <span class="n">spi_serial</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">dat</span><span class="p">[:</span><span class="mi">12</span><span class="p">])</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="n">pid</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">pid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mh">0xcc</span><span class="p">,</span> <span class="mh">0xee</span><span class="p">):</span>
+          <span class="k">raise</span> <span class="n">PandaSpiException</span><span class="p">(</span><span class="s2">&quot;invalid bootstub status&quot;</span><span class="p">)</span>
+        <span class="n">bootstub</span> <span class="o">=</span> <span class="n">pid</span> <span class="o">==</span> <span class="mh">0xee</span>
+        <span class="n">spi_version</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span>
+      <span class="k">except</span> <span class="n">PandaSpiException</span><span class="p">:</span>
+        <span class="c1"># fallback, we&#39;ll raise a protocol mismatch below</span>
+        <span class="n">dat</span> <span class="o">=</span> <span class="n">handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xc3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">spi_serial</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="n">bootstub</span> <span class="o">=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">flasher_present</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+        <span class="n">spi_version</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">except</span> <span class="n">PandaSpiException</span><span class="p">:</span>
+      <span class="k">pass</span>
+
+    <span class="c1"># no connection or wrong panda</span>
+    <span class="k">if</span> <span class="kc">None</span> <span class="ow">in</span> <span class="p">(</span><span class="n">spi_serial</span><span class="p">,</span> <span class="n">bootstub</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">serial</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">spi_serial</span> <span class="o">!=</span> <span class="n">serial</span><span class="p">)):</span>
+      <span class="n">handle</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="n">spi_serial</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="n">bootstub</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># ensure our protocol version matches the panda</span>
+    <span class="k">if</span> <span class="n">handle</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ignore_version</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">spi_version</span> <span class="o">!=</span> <span class="n">handle</span><span class="o">.</span><span class="n">PROTOCOL_VERSION</span><span class="p">:</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;panda protocol mismatch: expected </span><span class="si">{</span><span class="n">handle</span><span class="o">.</span><span class="n">PROTOCOL_VERSION</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">spi_version</span><span class="si">}</span><span class="s2">. reflash panda&quot;</span>
+        <span class="k">raise</span> <span class="n">PandaProtocolMismatch</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">spi_serial</span><span class="p">,</span> <span class="n">bootstub</span><span class="p">,</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Panda.usb_connect">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.usb_connect">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">usb_connect</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">serial</span><span class="p">,</span> <span class="n">claim</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">handle</span><span class="p">,</span> <span class="n">usb_serial</span><span class="p">,</span> <span class="n">bootstub</span><span class="p">,</span> <span class="n">bcd</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="n">usb1</span><span class="o">.</span><span class="n">USBContext</span><span class="p">()</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">getDeviceList</span><span class="p">(</span><span class="n">skip_on_error</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">device</span><span class="o">.</span><span class="n">getVendorID</span><span class="p">()</span> <span class="o">==</span> <span class="mh">0xbbaa</span> <span class="ow">and</span> <span class="n">device</span><span class="o">.</span><span class="n">getProductID</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">USB_PIDS</span><span class="p">:</span>
+          <span class="k">try</span><span class="p">:</span>
+            <span class="n">this_serial</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">getSerialNumber</span><span class="p">()</span>
+          <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+          <span class="k">if</span> <span class="n">serial</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">this_serial</span> <span class="o">==</span> <span class="n">serial</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;opening device </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">this_serial</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">getProductID</span><span class="p">()))</span>
+
+            <span class="n">usb_serial</span> <span class="o">=</span> <span class="n">this_serial</span>
+            <span class="n">bootstub</span> <span class="o">=</span> <span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">getProductID</span><span class="p">()</span> <span class="o">&amp;</span> <span class="mh">0xF0</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0xe0</span>
+            <span class="n">handle</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;win32&quot;</span><span class="p">,</span> <span class="s2">&quot;cygwin&quot;</span><span class="p">,</span> <span class="s2">&quot;msys&quot;</span><span class="p">,</span> <span class="s2">&quot;darwin&quot;</span><span class="p">):</span>
+              <span class="n">handle</span><span class="o">.</span><span class="n">setAutoDetachKernelDriver</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">claim</span><span class="p">:</span>
+              <span class="n">handle</span><span class="o">.</span><span class="n">claimInterface</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+              <span class="c1"># handle.setInterfaceAltSetting(0, 0)  # Issue in USB stack</span>
+
+            <span class="c1"># bcdDevice wasn&#39;t always set to the hw type, ignore if it&#39;s the old constant</span>
+            <span class="n">this_bcd</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">getbcdDevice</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">this_bcd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">this_bcd</span> <span class="o">!=</span> <span class="mh">0x2300</span><span class="p">:</span>
+              <span class="n">bcd</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">([</span><span class="n">this_bcd</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">,</span> <span class="p">])</span>
+
+            <span class="k">break</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;USB connect error&quot;</span><span class="p">)</span>
+
+    <span class="n">usb_handle</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">handle</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">usb_handle</span> <span class="o">=</span> <span class="n">PandaUsbHandle</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">context</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">context</span><span class="p">,</span> <span class="n">usb_handle</span><span class="p">,</span> <span class="n">usb_serial</span><span class="p">,</span> <span class="n">bootstub</span><span class="p">,</span> <span class="n">bcd</span></div>
+
+
+<div class="viewcode-block" id="Panda.list">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.list">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">usb_list</span><span class="p">()</span>
+    <span class="n">ret</span> <span class="o">+=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">spi_list</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Panda.usb_list">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.usb_list">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">usb_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">with</span> <span class="n">usb1</span><span class="o">.</span><span class="n">USBContext</span><span class="p">()</span> <span class="k">as</span> <span class="n">context</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">getDeviceList</span><span class="p">(</span><span class="n">skip_on_error</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+          <span class="k">if</span> <span class="n">device</span><span class="o">.</span><span class="n">getVendorID</span><span class="p">()</span> <span class="o">==</span> <span class="mh">0xbbaa</span> <span class="ow">and</span> <span class="n">device</span><span class="o">.</span><span class="n">getProductID</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">USB_PIDS</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+              <span class="n">serial</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">getSerialNumber</span><span class="p">()</span>
+              <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">serial</span><span class="p">)</span> <span class="o">==</span> <span class="mi">24</span><span class="p">:</span>
+                <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">serial</span><span class="p">)</span>
+              <span class="k">else</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;found device with panda descriptors but invalid serial: </span><span class="si">{</span><span class="n">serial</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+              <span class="k">continue</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;exception while listing pandas&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="Panda.spi_list">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.spi_list">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">spi_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">serial</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">spi_connect</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_version</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">serial</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">[</span><span class="n">serial</span><span class="p">,</span> <span class="p">]</span>
+    <span class="k">return</span> <span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="Panda.reset">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.reset">[docs]</a>
+  <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enter_bootstub</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">enter_bootloader</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">reconnect</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="c1"># no response is expected since it resets right away</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">5000</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">PandaSpiHandle</span><span class="p">)</span> <span class="k">else</span> <span class="mi">15000</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">enter_bootloader</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xd1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">expect_disconnect</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">enter_bootstub</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xd1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">expect_disconnect</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xd8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">expect_disconnect</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">pass</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">enter_bootloader</span> <span class="ow">and</span> <span class="n">reconnect</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">reconnect</span><span class="p">()</span></div>
+
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_open</span>
+
+<div class="viewcode-block" id="Panda.reconnect">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.reconnect">[docs]</a>
+  <span class="k">def</span> <span class="nf">reconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_open</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="c1"># wait up to 15 seconds</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="o">*</span><span class="mi">10</span><span class="p">):</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">break</span>
+      <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">pass</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;reconnect failed&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.flasher_present">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.flasher_present">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">flasher_present</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="n">BaseHandle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">fr</span> <span class="o">=</span> <span class="n">handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xb0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0xc</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fr</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xde\xad\xd0\x0d</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="Panda.flash_static">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.flash_static">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">flash_static</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">mcu_type</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">mcu_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;must set valid mcu_type to flash&quot;</span>
+
+    <span class="c1"># confirm flasher is present</span>
+    <span class="k">assert</span> <span class="n">Panda</span><span class="o">.</span><span class="n">flasher_present</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+
+    <span class="c1"># determine sectors to erase</span>
+    <span class="n">apps_sectors_cumsum</span> <span class="o">=</span> <span class="n">accumulate</span><span class="p">(</span><span class="n">mcu_type</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">sector_sizes</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="n">last_sector</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">apps_sectors_cumsum</span><span class="p">)</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">code</span><span class="p">)),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">last_sector</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Binary too small? No sector to erase.&quot;</span>
+    <span class="k">assert</span> <span class="n">last_sector</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;Binary too large! Risk of overwriting provisioning chunk.&quot;</span>
+
+    <span class="c1"># unlock flash</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;flash: unlocking&quot;</span><span class="p">)</span>
+    <span class="n">handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xb1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c1"># erase sectors</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;flash: erasing sectors 1 - </span><span class="si">{</span><span class="n">last_sector</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">last_sector</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+      <span class="n">handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xb2</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c1"># flash over EP2</span>
+    <span class="n">STEP</span> <span class="o">=</span> <span class="mh">0x10</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;flash: flashing&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">code</span><span class="p">),</span> <span class="n">STEP</span><span class="p">):</span>
+      <span class="n">handle</span><span class="o">.</span><span class="n">bulkWrite</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">code</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">STEP</span><span class="p">])</span>
+
+    <span class="c1"># reset</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;flash: resetting&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xd8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">expect_disconnect</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+      <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Panda.flash">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.flash">[docs]</a>
+  <span class="k">def</span> <span class="nf">flash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reconnect</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">up_to_date</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">):</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;flash: already up to date&quot;</span><span class="p">)</span>
+      <span class="k">return</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">fn</span><span class="p">:</span>
+      <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FW_PATH</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mcu_type</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">app_fn</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;flash: main version is </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_version</span><span class="p">())</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bootstub</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">enter_bootstub</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bootstub</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">code</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="c1"># get version</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;flash: bootstub version is </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_version</span><span class="p">())</span>
+
+    <span class="c1"># do flash</span>
+    <span class="n">Panda</span><span class="o">.</span><span class="n">flash_static</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">mcu_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_mcu_type</span><span class="p">)</span>
+
+    <span class="c1"># reconnect</span>
+    <span class="k">if</span> <span class="n">reconnect</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">reconnect</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Panda.recover">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.recover">[docs]</a>
+  <span class="k">def</span> <span class="nf">recover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span> <span class="n">reset</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">dfu_serial</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dfu_serial</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">reset</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">enter_bootstub</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">enter_bootloader</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_dfu</span><span class="p">(</span><span class="n">dfu_serial</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">):</span>
+      <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">dfu</span> <span class="o">=</span> <span class="n">PandaDFU</span><span class="p">(</span><span class="n">dfu_serial</span><span class="p">)</span>
+    <span class="n">dfu</span><span class="o">.</span><span class="n">recover</span><span class="p">()</span>
+
+    <span class="c1"># reflash after recover</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">flash</span><span class="p">()</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="Panda.wait_for_dfu">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.wait_for_dfu">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">wait_for_dfu</span><span class="p">(</span><span class="n">dfu_serial</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">t_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+    <span class="n">dfu_list</span> <span class="o">=</span> <span class="n">PandaDFU</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">dfu_serial</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfu_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">dfu_serial</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dfu_serial</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dfu_list</span><span class="p">):</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;waiting for DFU...&quot;</span><span class="p">)</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">t_start</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+      <span class="n">dfu_list</span> <span class="o">=</span> <span class="n">PandaDFU</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="Panda.wait_for_panda">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.wait_for_panda">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">wait_for_panda</span><span class="p">(</span><span class="n">serial</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">t_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+    <span class="n">serials</span> <span class="o">=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">serial</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">serials</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">serial</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">serial</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">serials</span><span class="p">):</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;waiting for panda...&quot;</span><span class="p">)</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">t_start</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+      <span class="n">serials</span> <span class="o">=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="Panda.up_to_date">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.up_to_date">[docs]</a>
+  <span class="k">def</span> <span class="nf">up_to_date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_signature</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FW_PATH</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mcu_type</span><span class="p">()</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">app_fn</span><span class="p">)</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">get_signature_from_firmware</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">current</span> <span class="o">==</span> <span class="n">expected</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.call_control_api">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.call_control_api">[docs]</a>
+  <span class="k">def</span> <span class="nf">call_control_api</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+  <span class="c1"># ******************* health *******************</span>
+
+<div class="viewcode-block" id="Panda.health">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.health">[docs]</a>
+  <span class="nd">@ensure_health_packet_version</span>
+  <span class="k">def</span> <span class="nf">health</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xd2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HEALTH_STRUCT</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HEALTH_STRUCT</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="s2">&quot;uptime&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+      <span class="s2">&quot;voltage&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+      <span class="s2">&quot;current&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+      <span class="s2">&quot;safety_tx_blocked&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+      <span class="s2">&quot;safety_rx_invalid&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+      <span class="s2">&quot;tx_buffer_overflow&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+      <span class="s2">&quot;rx_buffer_overflow&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span>
+      <span class="s2">&quot;faults&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span>
+      <span class="s2">&quot;ignition_line&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span>
+      <span class="s2">&quot;ignition_can&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span>
+      <span class="s2">&quot;controls_allowed&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span>
+      <span class="s2">&quot;car_harness_status&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">11</span><span class="p">],</span>
+      <span class="s2">&quot;safety_mode&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span>
+      <span class="s2">&quot;safety_param&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">13</span><span class="p">],</span>
+      <span class="s2">&quot;fault_status&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">14</span><span class="p">],</span>
+      <span class="s2">&quot;power_save_enabled&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">15</span><span class="p">],</span>
+      <span class="s2">&quot;heartbeat_lost&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span>
+      <span class="s2">&quot;alternative_experience&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">17</span><span class="p">],</span>
+      <span class="s2">&quot;interrupt_load&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">18</span><span class="p">],</span>
+      <span class="s2">&quot;fan_power&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">19</span><span class="p">],</span>
+      <span class="s2">&quot;safety_rx_checks_invalid&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">20</span><span class="p">],</span>
+      <span class="s2">&quot;spi_checksum_error_count&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">21</span><span class="p">],</span>
+      <span class="s2">&quot;fan_stall_count&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">22</span><span class="p">],</span>
+      <span class="s2">&quot;sbu1_voltage_mV&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">23</span><span class="p">],</span>
+      <span class="s2">&quot;sbu2_voltage_mV&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">24</span><span class="p">],</span>
+      <span class="s2">&quot;som_reset_triggered&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">25</span><span class="p">],</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="Panda.can_health">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.can_health">[docs]</a>
+  <span class="nd">@ensure_can_health_packet_version</span>
+  <span class="k">def</span> <span class="nf">can_health</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">can_number</span><span class="p">):</span>
+    <span class="n">LEC_ERROR_CODE</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;No error&quot;</span><span class="p">,</span>
+      <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;Stuff error&quot;</span><span class="p">,</span>
+      <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;Form error&quot;</span><span class="p">,</span>
+      <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;AckError&quot;</span><span class="p">,</span>
+      <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;Bit1Error&quot;</span><span class="p">,</span>
+      <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;Bit0Error&quot;</span><span class="p">,</span>
+      <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;CRCError&quot;</span><span class="p">,</span>
+      <span class="mi">7</span><span class="p">:</span> <span class="s2">&quot;NoChange&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xc2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">can_number</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CAN_HEALTH_STRUCT</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CAN_HEALTH_STRUCT</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="s2">&quot;bus_off&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+      <span class="s2">&quot;bus_off_cnt&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+      <span class="s2">&quot;error_warning&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+      <span class="s2">&quot;error_passive&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+      <span class="s2">&quot;last_error&quot;</span><span class="p">:</span> <span class="n">LEC_ERROR_CODE</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">4</span><span class="p">]],</span>
+      <span class="s2">&quot;last_stored_error&quot;</span><span class="p">:</span> <span class="n">LEC_ERROR_CODE</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">]],</span>
+      <span class="s2">&quot;last_data_error&quot;</span><span class="p">:</span> <span class="n">LEC_ERROR_CODE</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">6</span><span class="p">]],</span>
+      <span class="s2">&quot;last_data_stored_error&quot;</span><span class="p">:</span> <span class="n">LEC_ERROR_CODE</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">7</span><span class="p">]],</span>
+      <span class="s2">&quot;receive_error_cnt&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span>
+      <span class="s2">&quot;transmit_error_cnt&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span>
+      <span class="s2">&quot;total_error_cnt&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span>
+      <span class="s2">&quot;total_tx_lost_cnt&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">11</span><span class="p">],</span>
+      <span class="s2">&quot;total_rx_lost_cnt&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span>
+      <span class="s2">&quot;total_tx_cnt&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">13</span><span class="p">],</span>
+      <span class="s2">&quot;total_rx_cnt&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">14</span><span class="p">],</span>
+      <span class="s2">&quot;total_fwd_cnt&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">15</span><span class="p">],</span>
+      <span class="s2">&quot;total_tx_checksum_error_cnt&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span>
+      <span class="s2">&quot;can_speed&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">17</span><span class="p">],</span>
+      <span class="s2">&quot;can_data_speed&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">18</span><span class="p">],</span>
+      <span class="s2">&quot;canfd_enabled&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">19</span><span class="p">],</span>
+      <span class="s2">&quot;brs_enabled&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">20</span><span class="p">],</span>
+      <span class="s2">&quot;canfd_non_iso&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">21</span><span class="p">],</span>
+      <span class="s2">&quot;irq0_call_rate&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">22</span><span class="p">],</span>
+      <span class="s2">&quot;irq1_call_rate&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">23</span><span class="p">],</span>
+      <span class="s2">&quot;irq2_call_rate&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">24</span><span class="p">],</span>
+      <span class="s2">&quot;can_core_reset_count&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">25</span><span class="p">],</span>
+    <span class="p">}</span></div>
+
+
+  <span class="c1"># ******************* control *******************</span>
+
+<div class="viewcode-block" id="Panda.get_version">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_version">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xd6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.get_signature_from_firmware">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_signature_from_firmware">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_signature_from_firmware</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="o">-</span><span class="mi">128</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># Seek from end of file</span>
+      <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.get_signature">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_signature">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_signature</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">part_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xd3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">)</span>
+    <span class="n">part_2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xd4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">part_1</span> <span class="o">+</span> <span class="n">part_2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.get_type">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_type">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xc1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">)</span>
+
+    <span class="c1"># old bootstubs don&#39;t implement this endpoint, see comment in Panda.device</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bcd_hw_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">):</span>
+      <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bcd_hw_type</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+  <span class="c1"># Returns tuple with health packet version and CAN packet/USB packet version</span>
+<div class="viewcode-block" id="Panda.get_packets_versions">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_packets_versions">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_packets_versions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xdd</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dat</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+      <span class="n">a</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;BBB&quot;</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
+      <span class="k">return</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.get_mcu_type">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_mcu_type">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_mcu_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">McuType</span><span class="p">:</span>
+    <span class="n">hw_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">hw_type</span> <span class="ow">in</span> <span class="n">Panda</span><span class="o">.</span><span class="n">F4_DEVICES</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">McuType</span><span class="o">.</span><span class="n">F4</span>
+    <span class="k">elif</span> <span class="n">hw_type</span> <span class="ow">in</span> <span class="n">Panda</span><span class="o">.</span><span class="n">H7_DEVICES</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">McuType</span><span class="o">.</span><span class="n">H7</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># have to assume F4, see comment in Panda.connect</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_assume_f4_mcu</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">McuType</span><span class="o">.</span><span class="n">F4</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown HW type: </span><span class="si">{</span><span class="n">hw_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.has_obd">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.has_obd">[docs]</a>
+  <span class="k">def</span> <span class="nf">has_obd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="ow">in</span> <span class="n">Panda</span><span class="o">.</span><span class="n">HAS_OBD</span></div>
+
+
+<div class="viewcode-block" id="Panda.is_internal">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.is_internal">[docs]</a>
+  <span class="k">def</span> <span class="nf">is_internal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="ow">in</span> <span class="n">Panda</span><span class="o">.</span><span class="n">INTERNAL_DEVICES</span></div>
+
+
+<div class="viewcode-block" id="Panda.get_serial">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_serial">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_serial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      Returns the comma-issued dongle ID from our provisioning</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xd0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">)</span>
+    <span class="n">hashsig</span><span class="p">,</span> <span class="n">calc_hash</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="mh">0x1c</span><span class="p">:],</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mh">0x1c</span><span class="p">])</span><span class="o">.</span><span class="n">digest</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">hashsig</span> <span class="o">==</span> <span class="n">calc_hash</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mh">0x10</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">),</span> <span class="n">dat</span><span class="p">[</span><span class="mh">0x10</span><span class="p">:</span><span class="mh">0x10</span> <span class="o">+</span> <span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="Panda.get_usb_serial">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_usb_serial">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_usb_serial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      Returns the serial number reported from the USB descriptor;</span>
+<span class="sd">      matches the MCU UID</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span></div>
+
+
+<div class="viewcode-block" id="Panda.get_dfu_serial">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_dfu_serial">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_dfu_serial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">PandaDFU</span><span class="o">.</span><span class="n">st_serial_to_dfu_serial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_serial</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mcu_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.get_uid">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_uid">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      Returns the UID from the MCU</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xc3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Panda.get_secret">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_secret">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xd0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.get_interrupt_call_rate">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_interrupt_call_rate">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_interrupt_call_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irqnum</span><span class="p">):</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xc4</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">irqnum</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="n">dat</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+  <span class="c1"># ******************* configuration *******************</span>
+
+<div class="viewcode-block" id="Panda.set_power_save">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_power_save">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_power_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power_save_enabled</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xe7</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">power_save_enabled</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.set_safety_mode">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_safety_mode">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_safety_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">SAFETY_SILENT</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xdc</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.set_obd">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_obd">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_obd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obd</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xdb</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">obd</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.set_can_loopback">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_can_loopback">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_can_loopback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable</span><span class="p">):</span>
+    <span class="c1"># set can loopback mode for all buses</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xe5</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">enable</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.set_can_enable">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_can_enable">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_can_enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus_num</span><span class="p">,</span> <span class="n">enable</span><span class="p">):</span>
+    <span class="c1"># sets the can transceiver enable pin</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xf4</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">bus_num</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">enable</span><span class="p">),</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.set_can_speed_kbps">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_can_speed_kbps">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_can_speed_kbps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xde</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">speed</span> <span class="o">*</span> <span class="mi">10</span><span class="p">),</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.set_can_data_speed_kbps">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_can_data_speed_kbps">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_can_data_speed_kbps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xf9</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">speed</span> <span class="o">*</span> <span class="mi">10</span><span class="p">),</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.set_canfd_non_iso">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_canfd_non_iso">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_canfd_non_iso</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">non_iso</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xfc</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">non_iso</span><span class="p">),</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.set_uart_baud">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_uart_baud">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_uart_baud</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uart</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xe4</span><span class="p">,</span> <span class="n">uart</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">rate</span> <span class="o">/</span> <span class="mi">300</span><span class="p">),</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.set_uart_parity">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_uart_parity">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_uart_parity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uart</span><span class="p">,</span> <span class="n">parity</span><span class="p">):</span>
+    <span class="c1"># parity, 0=off, 1=even, 2=odd</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xe2</span><span class="p">,</span> <span class="n">uart</span><span class="p">,</span> <span class="n">parity</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.set_uart_callback">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_uart_callback">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_uart_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uart</span><span class="p">,</span> <span class="n">install</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xe3</span><span class="p">,</span> <span class="n">uart</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">install</span><span class="p">),</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+  <span class="c1"># ******************* can *******************</span>
+
+  <span class="c1"># The panda will NAK CAN writes when there is CAN congestion.</span>
+  <span class="c1"># libusb will try to send it again, with a max timeout.</span>
+  <span class="c1"># Timeout is in ms. If set to 0, the timeout is infinite.</span>
+  <span class="n">CAN_SEND_TIMEOUT_MS</span> <span class="o">=</span> <span class="mi">10</span>
+
+<div class="viewcode-block" id="Panda.can_reset_communications">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.can_reset_communications">[docs]</a>
+  <span class="k">def</span> <span class="nf">can_reset_communications</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xc0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.can_send_many">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.can_send_many">[docs]</a>
+  <span class="nd">@ensure_can_packet_version</span>
+  <span class="k">def</span> <span class="nf">can_send_many</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">CAN_SEND_TIMEOUT_MS</span><span class="p">):</span>
+    <span class="n">snds</span> <span class="o">=</span> <span class="n">pack_can_buffer</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">tx</span> <span class="ow">in</span> <span class="n">snds</span><span class="p">:</span>
+          <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">bs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">bulkWrite</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">tx</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="n">tx</span> <span class="o">=</span> <span class="n">tx</span><span class="p">[</span><span class="n">bs</span><span class="p">:]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+              <span class="k">break</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;CAN: PARTIAL SEND MANY, RETRYING&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+      <span class="k">except</span> <span class="p">(</span><span class="n">usb1</span><span class="o">.</span><span class="n">USBErrorIO</span><span class="p">,</span> <span class="n">usb1</span><span class="o">.</span><span class="n">USBErrorOverflow</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;CAN: BAD SEND MANY, RETRYING&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.can_send">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.can_send">[docs]</a>
+  <span class="k">def</span> <span class="nf">can_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">CAN_SEND_TIMEOUT_MS</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">can_send_many</span><span class="p">([[</span><span class="n">addr</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">bus</span><span class="p">]],</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.can_recv">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.can_recv">[docs]</a>
+  <span class="nd">@ensure_can_packet_version</span>
+  <span class="k">def</span> <span class="nf">can_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">bulkRead</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16384</span><span class="p">)</span> <span class="c1"># Max receive batch size + 2 extra reserve frames</span>
+        <span class="k">break</span>
+      <span class="k">except</span> <span class="p">(</span><span class="n">usb1</span><span class="o">.</span><span class="n">USBErrorIO</span><span class="p">,</span> <span class="n">usb1</span><span class="o">.</span><span class="n">USBErrorOverflow</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;CAN: BAD RECV, RETRYING&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">msgs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_rx_overflow_buffer</span> <span class="o">=</span> <span class="n">unpack_can_buffer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">can_rx_overflow_buffer</span> <span class="o">+</span> <span class="n">dat</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">msgs</span></div>
+
+
+<div class="viewcode-block" id="Panda.can_clear">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.can_clear">[docs]</a>
+  <span class="k">def</span> <span class="nf">can_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Clears all messages from the specified internal CAN ringbuffer as</span>
+<span class="sd">    though it were drained.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      bus (int): can bus number to clear a tx queue, or 0xFFFF to clear the</span>
+<span class="sd">        global can rx queue.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xf1</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+  <span class="c1"># ******************* isotp *******************</span>
+
+<div class="viewcode-block" id="Panda.isotp_send">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.isotp_send">[docs]</a>
+  <span class="k">def</span> <span class="nf">isotp_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">recvaddr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subaddr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">isotp_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">recvaddr</span><span class="p">,</span> <span class="n">subaddr</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.isotp_recv">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.isotp_recv">[docs]</a>
+  <span class="k">def</span> <span class="nf">isotp_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">bus</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sendaddr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subaddr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">isotp_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">bus</span><span class="p">,</span> <span class="n">sendaddr</span><span class="p">,</span> <span class="n">subaddr</span><span class="p">)</span></div>
+
+
+  <span class="c1"># ******************* serial *******************</span>
+
+<div class="viewcode-block" id="Panda.serial_read">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.serial_read">[docs]</a>
+  <span class="k">def</span> <span class="nf">serial_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port_number</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="n">lret</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xe0</span><span class="p">,</span> <span class="n">port_number</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">))</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lret</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">break</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lret</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.serial_write">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.serial_write">[docs]</a>
+  <span class="k">def</span> <span class="nf">serial_write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port_number</span><span class="p">,</span> <span class="n">ln</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+      <span class="n">ln</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ln</span><span class="p">),</span> <span class="mh">0x20</span><span class="p">):</span>
+      <span class="n">ret</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">bulkWrite</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">port_number</span><span class="p">)</span> <span class="o">+</span> <span class="n">ln</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mh">0x20</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="Panda.serial_clear">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.serial_clear">[docs]</a>
+  <span class="k">def</span> <span class="nf">serial_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port_number</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Clears all messages (tx and rx) from the specified internal uart</span>
+<span class="sd">    ringbuffer as though it were drained.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      port_number (int): port number of the uart to clear.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xf2</span><span class="p">,</span> <span class="n">port_number</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.send_heartbeat">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.send_heartbeat">[docs]</a>
+  <span class="k">def</span> <span class="nf">send_heartbeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">engaged</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xf3</span><span class="p">,</span> <span class="n">engaged</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+  <span class="c1"># disable heartbeat checks for use outside of openpilot</span>
+  <span class="c1"># sending a heartbeat will reenable the checks</span>
+<div class="viewcode-block" id="Panda.set_heartbeat_disabled">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_heartbeat_disabled">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_heartbeat_disabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xf8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+  <span class="c1"># ****************** Timer *****************</span>
+<div class="viewcode-block" id="Panda.get_microsecond_timer">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_microsecond_timer">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_microsecond_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xa8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="n">dat</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+  <span class="c1"># ******************* IR *******************</span>
+<div class="viewcode-block" id="Panda.set_ir_power">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_ir_power">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_ir_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">percentage</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xb0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">percentage</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+  <span class="c1"># ******************* Fan ******************</span>
+<div class="viewcode-block" id="Panda.set_fan_power">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_fan_power">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_fan_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">percentage</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xb1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">percentage</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.get_fan_rpm">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.get_fan_rpm">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_fan_rpm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xb2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+  <span class="c1"># ****************** Siren *****************</span>
+<div class="viewcode-block" id="Panda.set_siren">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_siren">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_siren</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xf6</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">enabled</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+  <span class="c1"># ****************** Debug *****************</span>
+<div class="viewcode-block" id="Panda.set_green_led">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_green_led">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_green_led</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xf7</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">enabled</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.set_clock_source_period">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.set_clock_source_period">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_clock_source_period</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xe6</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.force_relay_drive">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.force_relay_drive">[docs]</a>
+  <span class="k">def</span> <span class="nf">force_relay_drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intercept_relay_drive</span><span class="p">,</span> <span class="n">ignition_relay_drive</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlWrite</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_OUT</span><span class="p">,</span> <span class="mh">0xc5</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">intercept_relay_drive</span><span class="p">)</span> <span class="o">|</span> <span class="nb">int</span><span class="p">(</span><span class="n">ignition_relay_drive</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Panda.read_som_gpio">
+<a class="viewcode-back" href="../../panda.python.html#panda.python.Panda.read_som_gpio">[docs]</a>
+  <span class="k">def</span> <span class="nf">read_som_gpio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="o">.</span><span class="n">controlRead</span><span class="p">(</span><span class="n">Panda</span><span class="o">.</span><span class="n">REQUEST_IN</span><span class="p">,</span> <span class="mh">0xc6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

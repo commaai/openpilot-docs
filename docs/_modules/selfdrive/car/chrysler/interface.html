@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.chrysler.interface &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/chrysler/interface.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.chrysler.interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.chrysler.interface</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">panda</span> <span class="kn">import</span> <span class="n">Panda</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">create_button_events</span><span class="p">,</span> <span class="n">get_safety_config</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.chrysler.values</span> <span class="kn">import</span> <span class="n">CAR</span><span class="p">,</span> <span class="n">RAM_HD</span><span class="p">,</span> <span class="n">RAM_DT</span><span class="p">,</span> <span class="n">RAM_CARS</span><span class="p">,</span> <span class="n">ChryslerFlags</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.interfaces</span> <span class="kn">import</span> <span class="n">CarInterfaceBase</span>
+
+<span class="n">ButtonType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">ButtonEvent</span><span class="o">.</span><span class="n">Type</span>
+
+
+<div class="viewcode-block" id="CarInterface">
+<a class="viewcode-back" href="../../../../selfdrive.car.chrysler.html#selfdrive.car.chrysler.interface.CarInterface">[docs]</a>
+<span class="k">class</span> <span class="nc">CarInterface</span><span class="p">(</span><span class="n">CarInterfaceBase</span><span class="p">):</span>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">_get_params</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">,</span> <span class="n">car_fw</span><span class="p">,</span> <span class="n">experimental_long</span><span class="p">,</span> <span class="n">docs</span><span class="p">):</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">carName</span> <span class="o">=</span> <span class="s2">&quot;chrysler&quot;</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">dashcamOnly</span> <span class="o">=</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">RAM_HD</span>
+
+    <span class="c1"># radar parsing needs some work, see https://github.com/commaai/openpilot/issues/26842</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">radarUnavailable</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># DBC[candidate][&#39;radar&#39;] is None</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerLimitTimer</span> <span class="o">=</span> <span class="mf">0.4</span>
+
+    <span class="c1"># safety config</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_safety_config</span><span class="p">(</span><span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SafetyModel</span><span class="o">.</span><span class="n">chrysler</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">RAM_HD</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_CHRYSLER_RAM_HD</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">RAM_DT</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_CHRYSLER_RAM_DT</span>
+
+    <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">RAM_CARS</span><span class="p">:</span>
+      <span class="c1"># Newer FW versions standard on the following platforms, or flashed by a dealer onto older platforms have a higher minimum steering speed.</span>
+      <span class="n">new_eps_platform</span> <span class="o">=</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">CHRYSLER_PACIFICA_2019_HYBRID</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHRYSLER_PACIFICA_2020</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">JEEP_GRAND_CHEROKEE_2019</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">DODGE_DURANGO</span><span class="p">)</span>
+      <span class="n">new_eps_firmware</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">fw</span><span class="o">.</span><span class="n">ecu</span> <span class="o">==</span> <span class="s1">&#39;eps&#39;</span> <span class="ow">and</span> <span class="n">fw</span><span class="o">.</span><span class="n">fwVersion</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="sa">b</span><span class="s2">&quot;6841&quot;</span> <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">car_fw</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">new_eps_platform</span> <span class="ow">or</span> <span class="n">new_eps_firmware</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">ChryslerFlags</span><span class="o">.</span><span class="n">HIGHER_MIN_STEERING_SPEED</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="c1"># Chrysler</span>
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">CHRYSLER_PACIFICA_2017_HYBRID</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHRYSLER_PACIFICA_2018</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHRYSLER_PACIFICA_2018_HYBRID</span><span class="p">,</span> \
+                     <span class="n">CAR</span><span class="o">.</span><span class="n">CHRYSLER_PACIFICA_2019_HYBRID</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHRYSLER_PACIFICA_2020</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">DODGE_DURANGO</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s1">&#39;pid&#39;</span><span class="p">)</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiBP</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">9.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">],</span> <span class="p">[</span><span class="mf">9.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">]]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="mf">0.00006</span>
+
+    <span class="c1"># Jeep</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">JEEP_GRAND_CHEROKEE</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">JEEP_GRAND_CHEROKEE_2019</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.2</span>
+
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s1">&#39;pid&#39;</span><span class="p">)</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiBP</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">9.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">],</span> <span class="p">[</span><span class="mf">9.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">]]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="mf">0.00006</span>
+
+    <span class="c1"># Ram</span>
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAM_1500_5TH_GEN</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.2</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">=</span> <span class="mf">3.88</span>
+      <span class="c1"># Older EPS FW allow steer to zero</span>
+      <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">fw</span><span class="o">.</span><span class="n">ecu</span> <span class="o">==</span> <span class="s1">&#39;eps&#39;</span> <span class="ow">and</span> <span class="sa">b</span><span class="s2">&quot;68&quot;</span> <span class="o">&lt;</span> <span class="n">fw</span><span class="o">.</span><span class="n">fwVersion</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="sa">b</span><span class="s2">&quot;6831&quot;</span> <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">car_fw</span><span class="p">):</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">=</span> <span class="mf">0.</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">RAM_HD_5TH_GEN</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.2</span>
+      <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported car: </span><span class="si">{</span><span class="n">candidate</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">ChryslerFlags</span><span class="o">.</span><span class="n">HIGHER_MIN_STEERING_SPEED</span><span class="p">:</span>
+      <span class="c1"># TODO: allow these cars to steer down to 13 m/s if already engaged.</span>
+      <span class="c1"># TODO: Durango 2020 may be able to steer to zero once above 38 kph</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">=</span> <span class="mf">17.5</span>  <span class="c1"># m/s 17 on the way up, 13 on the way down once engaged.</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">centerToFront</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">wheelbase</span> <span class="o">*</span> <span class="mf">0.44</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">enableBsm</span> <span class="o">=</span> <span class="mi">720</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">ret</span>
+
+  <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_cam</span><span class="p">)</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">buttonEvents</span> <span class="o">=</span> <span class="n">create_button_events</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">distance_button</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">prev_distance_button</span><span class="p">,</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">gapAdjustCruise</span><span class="p">})</span>
+
+    <span class="c1"># events</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_common_events</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">extra_gears</span><span class="o">=</span><span class="p">[</span><span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">GearShifter</span><span class="o">.</span><span class="n">low</span><span class="p">])</span>
+
+    <span class="c1"># Low speed steer alert hysteresis logic</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">&gt;</span> <span class="mf">0.</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&lt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">low_speed_alert</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&gt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">+</span> <span class="mf">1.</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">low_speed_alert</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">low_speed_alert</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">EventName</span><span class="o">.</span><span class="n">belowSteerSpeed</span><span class="p">)</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">to_msg</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

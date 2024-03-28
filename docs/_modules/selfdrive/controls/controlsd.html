@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.controls.controlsd &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/controls/controlsd.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.controls.controlsd</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.controls.controlsd</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">SupportsFloat</span>
+
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span><span class="p">,</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">cereal.visionipc</span> <span class="kn">import</span> <span class="n">VisionIpcClient</span><span class="p">,</span> <span class="n">VisionStreamType</span>
+
+
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.git</span> <span class="kn">import</span> <span class="n">get_short_branch</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.numpy_fast</span> <span class="kn">import</span> <span class="n">clip</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.realtime</span> <span class="kn">import</span> <span class="n">config_realtime_process</span><span class="p">,</span> <span class="n">Priority</span><span class="p">,</span> <span class="n">Ratekeeper</span><span class="p">,</span> <span class="n">DT_CTRL</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.swaglog</span> <span class="kn">import</span> <span class="n">cloudlog</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.car_helpers</span> <span class="kn">import</span> <span class="n">get_startup_event</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.card</span> <span class="kn">import</span> <span class="n">CarD</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.alertmanager</span> <span class="kn">import</span> <span class="n">AlertManager</span><span class="p">,</span> <span class="n">set_offroad_alert</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.drive_helpers</span> <span class="kn">import</span> <span class="n">VCruiseHelper</span><span class="p">,</span> <span class="n">clip_curvature</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.events</span> <span class="kn">import</span> <span class="n">Events</span><span class="p">,</span> <span class="n">ET</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.latcontrol</span> <span class="kn">import</span> <span class="n">LatControl</span><span class="p">,</span> <span class="n">MIN_LATERAL_CONTROL_SPEED</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.latcontrol_pid</span> <span class="kn">import</span> <span class="n">LatControlPID</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.latcontrol_angle</span> <span class="kn">import</span> <span class="n">LatControlAngle</span><span class="p">,</span> <span class="n">STEER_ANGLE_SATURATION_THRESHOLD</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.latcontrol_torque</span> <span class="kn">import</span> <span class="n">LatControlTorque</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.longcontrol</span> <span class="kn">import</span> <span class="n">LongControl</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.vehicle_model</span> <span class="kn">import</span> <span class="n">VehicleModel</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware</span> <span class="kn">import</span> <span class="n">HARDWARE</span>
+
+<span class="n">SOFT_DISABLE_TIME</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># seconds</span>
+<span class="n">LDW_MIN_SPEED</span> <span class="o">=</span> <span class="mi">31</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span>
+<span class="n">LANE_DEPARTURE_THRESHOLD</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">CAMERA_OFFSET</span> <span class="o">=</span> <span class="mf">0.04</span>
+
+<span class="n">REPLAY</span> <span class="o">=</span> <span class="s2">&quot;REPLAY&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
+<span class="n">SIMULATION</span> <span class="o">=</span> <span class="s2">&quot;SIMULATION&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
+<span class="n">TESTING_CLOSET</span> <span class="o">=</span> <span class="s2">&quot;TESTING_CLOSET&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
+<span class="n">IGNORE_PROCESSES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;loggerd&quot;</span><span class="p">,</span> <span class="s2">&quot;encoderd&quot;</span><span class="p">,</span> <span class="s2">&quot;statsd&quot;</span><span class="p">}</span>
+
+<span class="n">ThermalStatus</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">DeviceState</span><span class="o">.</span><span class="n">ThermalStatus</span>
+<span class="n">State</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">ControlsState</span><span class="o">.</span><span class="n">OpenpilotState</span>
+<span class="n">PandaType</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">PandaState</span><span class="o">.</span><span class="n">PandaType</span>
+<span class="n">Desire</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">Desire</span>
+<span class="n">LaneChangeState</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">LaneChangeState</span>
+<span class="n">LaneChangeDirection</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">LaneChangeDirection</span>
+<span class="n">EventName</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">EventName</span>
+<span class="n">ButtonType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">ButtonEvent</span><span class="o">.</span><span class="n">Type</span>
+<span class="n">SafetyModel</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SafetyModel</span>
+
+<span class="n">IGNORED_SAFETY_MODES</span> <span class="o">=</span> <span class="p">(</span><span class="n">SafetyModel</span><span class="o">.</span><span class="n">silent</span><span class="p">,</span> <span class="n">SafetyModel</span><span class="o">.</span><span class="n">noOutput</span><span class="p">)</span>
+<span class="n">CSID_MAP</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="n">EventName</span><span class="o">.</span><span class="n">roadCameraError</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span> <span class="n">EventName</span><span class="o">.</span><span class="n">wideRoadCameraError</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="n">EventName</span><span class="o">.</span><span class="n">driverCameraError</span><span class="p">}</span>
+<span class="n">ACTUATOR_FIELDS</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">Actuators</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">ACTIVE_STATES</span> <span class="o">=</span> <span class="p">(</span><span class="n">State</span><span class="o">.</span><span class="n">enabled</span><span class="p">,</span> <span class="n">State</span><span class="o">.</span><span class="n">softDisabling</span><span class="p">,</span> <span class="n">State</span><span class="o">.</span><span class="n">overriding</span><span class="p">)</span>
+<span class="n">ENABLED_STATES</span> <span class="o">=</span> <span class="p">(</span><span class="n">State</span><span class="o">.</span><span class="n">preEnabled</span><span class="p">,</span> <span class="o">*</span><span class="n">ACTIVE_STATES</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Controls">
+<a class="viewcode-back" href="../../../selfdrive.controls.html#selfdrive.controls.controlsd.Controls">[docs]</a>
+<span class="k">class</span> <span class="nc">Controls</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CI</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">card</span> <span class="o">=</span> <span class="n">CarD</span><span class="p">(</span><span class="n">CI</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CarParams&quot;</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>
+      <span class="c1"># TODO: this shouldn&#39;t need to be a builder</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">CP</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_builder</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">CI</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">CI</span>
+
+
+    <span class="c1"># Ensure the current branch is cached, otherwise the first iteration of controlsd lags</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">branch</span> <span class="o">=</span> <span class="n">get_short_branch</span><span class="p">()</span>
+
+    <span class="c1"># Setup sockets</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">PubMaster</span><span class="p">([</span><span class="s1">&#39;controlsState&#39;</span><span class="p">,</span> <span class="s1">&#39;carControl&#39;</span><span class="p">,</span> <span class="s1">&#39;onroadEvents&#39;</span><span class="p">])</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">sensor_packets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;accelerometer&quot;</span><span class="p">,</span> <span class="s2">&quot;gyroscope&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">camera_packets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;roadCameraState&quot;</span><span class="p">,</span> <span class="s2">&quot;driverCameraState&quot;</span><span class="p">,</span> <span class="s2">&quot;wideRoadCameraState&quot;</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">log_sock</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">sub_sock</span><span class="p">(</span><span class="s1">&#39;androidLog&#39;</span><span class="p">)</span>
+
+    <span class="n">ignore</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_packets</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;testJoystick&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">SIMULATION</span><span class="p">:</span>
+      <span class="n">ignore</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;driverCameraState&#39;</span><span class="p">,</span> <span class="s1">&#39;managerState&#39;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sm</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">SubMaster</span><span class="p">([</span><span class="s1">&#39;deviceState&#39;</span><span class="p">,</span> <span class="s1">&#39;pandaStates&#39;</span><span class="p">,</span> <span class="s1">&#39;peripheralState&#39;</span><span class="p">,</span> <span class="s1">&#39;modelV2&#39;</span><span class="p">,</span> <span class="s1">&#39;liveCalibration&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;carOutput&#39;</span><span class="p">,</span> <span class="s1">&#39;driverMonitoringState&#39;</span><span class="p">,</span> <span class="s1">&#39;longitudinalPlan&#39;</span><span class="p">,</span> <span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;managerState&#39;</span><span class="p">,</span> <span class="s1">&#39;liveParameters&#39;</span><span class="p">,</span> <span class="s1">&#39;radarState&#39;</span><span class="p">,</span> <span class="s1">&#39;liveTorqueParameters&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;testJoystick&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_packets</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_packets</span><span class="p">,</span>
+                                  <span class="n">ignore_alive</span><span class="o">=</span><span class="n">ignore</span><span class="p">,</span> <span class="n">ignore_avg_freq</span><span class="o">=</span><span class="n">ignore</span><span class="o">+</span><span class="p">[</span><span class="s1">&#39;radarState&#39;</span><span class="p">,</span> <span class="s1">&#39;testJoystick&#39;</span><span class="p">],</span> <span class="n">ignore_valid</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;testJoystick&#39;</span><span class="p">,</span> <span class="p">],</span>
+                                  <span class="n">frequency</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">DT_CTRL</span><span class="p">))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">joystick_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;JoystickDebugMode&quot;</span><span class="p">)</span>
+
+    <span class="c1"># read params</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">disengage_on_accelerator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;DisengageOnAccelerator&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">is_metric</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;IsMetric&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">is_ldw_enabled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;IsLdwEnabled&quot;</span><span class="p">)</span>
+
+    <span class="c1"># detect sound card presence and ensure successful init</span>
+    <span class="n">sounds_available</span> <span class="o">=</span> <span class="n">HARDWARE</span><span class="o">.</span><span class="n">get_sound_card_online</span><span class="p">()</span>
+
+    <span class="n">car_recognized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carName</span> <span class="o">!=</span> <span class="s1">&#39;mock&#39;</span>
+
+    <span class="c1"># cleanup old params</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">experimentalLongitudinalAvailable</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;ExperimentalLongitudinalEnabled&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;ExperimentalMode&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">CC</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CS_prev</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">AM</span> <span class="o">=</span> <span class="n">AlertManager</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="n">Events</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">LoC</span> <span class="o">=</span> <span class="n">LongControl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">VM</span> <span class="o">=</span> <span class="n">VehicleModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">LaC</span><span class="p">:</span> <span class="n">LatControl</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">steerControlType</span> <span class="o">==</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SteerControlType</span><span class="o">.</span><span class="n">angle</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">LaC</span> <span class="o">=</span> <span class="n">LatControlAngle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CI</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;pid&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">LaC</span> <span class="o">=</span> <span class="n">LatControlPID</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CI</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;torque&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">LaC</span> <span class="o">=</span> <span class="n">LatControlTorque</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CI</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">initialized</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">disabled</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">soft_disable_timer</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mismatch_counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cruise_mismatch_counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_blinker_frame</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_steering_pressed_frame</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">distance_traveled</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_functional_fan_frame</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">events_prev</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logged_comm_issue</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">not_running_prev</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">steer_limited</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_actuators</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">Actuators</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">desired_curvature</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">experimental_mode</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">personality</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_personality_param</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_helper</span> <span class="o">=</span> <span class="n">VCruiseHelper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">recalibrating_seen</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">can_log_mono_time</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">startup_event</span> <span class="o">=</span> <span class="n">get_startup_event</span><span class="p">(</span><span class="n">car_recognized</span><span class="p">,</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">passive</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFw</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">sounds_available</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">soundsUnavailable</span><span class="p">,</span> <span class="n">static</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">car_recognized</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">carUnrecognized</span><span class="p">,</span> <span class="n">static</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFw</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">set_offroad_alert</span><span class="p">(</span><span class="s2">&quot;Offroad_CarUnrecognized&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">set_offroad_alert</span><span class="p">(</span><span class="s2">&quot;Offroad_NoFirmware&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">passive</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">dashcamMode</span><span class="p">,</span> <span class="n">static</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># controlsd is driven by can recv, expected at 100Hz</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rk</span> <span class="o">=</span> <span class="n">Ratekeeper</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">print_delay_threshold</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Controls.set_initial_state">
+<a class="viewcode-back" href="../../../selfdrive.controls.html#selfdrive.controls.controlsd.Controls.set_initial_state">[docs]</a>
+  <span class="k">def</span> <span class="nf">set_initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">REPLAY</span><span class="p">:</span>
+      <span class="n">controls_state</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ReplayControlsState&quot;</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">controls_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">log</span><span class="o">.</span><span class="n">ControlsState</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">controls_state</span><span class="p">)</span> <span class="k">as</span> <span class="n">controls_state</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_helper</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">=</span> <span class="n">controls_state</span><span class="o">.</span><span class="n">vCruise</span>
+
+      <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">ps</span><span class="o">.</span><span class="n">controlsAllowed</span> <span class="k">for</span> <span class="n">ps</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;pandaStates&#39;</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">enabled</span></div>
+
+
+<div class="viewcode-block" id="Controls.update_events">
+<a class="viewcode-back" href="../../../selfdrive.controls.html#selfdrive.controls.controlsd.Controls.update_events">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CS</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute onroadEvents from carState&quot;&quot;&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="c1"># Add joystick event, static on cars, dynamic on nonCars</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">joystick_mode</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">joystickDebug</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">startup_event</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Add startup event</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">startup_event</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">startup_event</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">startup_event</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Don&#39;t add any more events if not initialized</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialized</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">controlsInitializing</span><span class="p">)</span>
+      <span class="k">return</span>
+
+    <span class="c1"># no more events while in dashcam mode</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">passive</span><span class="p">:</span>
+      <span class="k">return</span>
+
+    <span class="c1"># Block resume if cruise never previously enabled</span>
+    <span class="n">resume_pressed</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">be</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ButtonType</span><span class="o">.</span><span class="n">accelCruise</span><span class="p">,</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">resumeCruise</span><span class="p">)</span> <span class="k">for</span> <span class="n">be</span> <span class="ow">in</span> <span class="n">CS</span><span class="o">.</span><span class="n">buttonEvents</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_helper</span><span class="o">.</span><span class="n">v_cruise_initialized</span> <span class="ow">and</span> <span class="n">resume_pressed</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">resumeBlocked</span><span class="p">)</span>
+
+    <span class="c1"># Disable on rising edge of accelerator or brake. Also disable on brake when speed &gt; 0</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">gasPressed</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS_prev</span><span class="o">.</span><span class="n">gasPressed</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">disengage_on_accelerator</span><span class="p">)</span> <span class="ow">or</span> \
+      <span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">brakePressed</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS_prev</span><span class="o">.</span><span class="n">brakePressed</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">CS</span><span class="o">.</span><span class="n">standstill</span><span class="p">))</span> <span class="ow">or</span> \
+      <span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">regenBraking</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS_prev</span><span class="o">.</span><span class="n">regenBraking</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">CS</span><span class="o">.</span><span class="n">standstill</span><span class="p">)):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">pedalPressed</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">CS</span><span class="o">.</span><span class="n">brakePressed</span> <span class="ow">and</span> <span class="n">CS</span><span class="o">.</span><span class="n">standstill</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">preEnableStandstill</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">CS</span><span class="o">.</span><span class="n">gasPressed</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">gasPressedOverride</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">notCar</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add_from_msg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;driverMonitoringState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
+
+    <span class="c1"># Add car events, ignore if CAN isn&#39;t valid</span>
+    <span class="k">if</span> <span class="n">CS</span><span class="o">.</span><span class="n">canValid</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add_from_msg</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
+
+    <span class="c1"># Create events for temperature, disk space, and memory</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">thermalStatus</span> <span class="o">&gt;=</span> <span class="n">ThermalStatus</span><span class="o">.</span><span class="n">red</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">overheat</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">freeSpacePercent</span> <span class="o">&lt;</span> <span class="mi">7</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">SIMULATION</span><span class="p">:</span>
+      <span class="c1"># under 7% of space free no enable allowed</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">outOfSpace</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">memoryUsagePercent</span> <span class="o">&gt;</span> <span class="mi">90</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">SIMULATION</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">lowMemory</span><span class="p">)</span>
+
+    <span class="c1"># TODO: enable this once loggerd CPU usage is more reasonable</span>
+    <span class="c1">#cpus = list(self.sm[&#39;deviceState&#39;].cpuUsagePercent)</span>
+    <span class="c1">#if max(cpus, default=0) &gt; 95 and not SIMULATION:</span>
+    <span class="c1">#  self.events.add(EventName.highCpuUsage)</span>
+
+    <span class="c1"># Alert if fan isn&#39;t spinning for 5 seconds</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;peripheralState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pandaType</span> <span class="o">!=</span> <span class="n">log</span><span class="o">.</span><span class="n">PandaState</span><span class="o">.</span><span class="n">PandaType</span><span class="o">.</span><span class="n">unknown</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;peripheralState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fanSpeedRpm</span> <span class="o">&lt;</span> <span class="mi">500</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;deviceState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fanSpeedPercentDesired</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+        <span class="c1"># allow enough time for the fan controller in the panda to recover from stalls</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_functional_fan_frame</span><span class="p">)</span> <span class="o">*</span> <span class="n">DT_CTRL</span> <span class="o">&gt;</span> <span class="mf">15.0</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">fanMalfunction</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_functional_fan_frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span>
+
+    <span class="c1"># Handle calibration status</span>
+    <span class="n">cal_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveCalibration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">calStatus</span>
+    <span class="k">if</span> <span class="n">cal_status</span> <span class="o">!=</span> <span class="n">log</span><span class="o">.</span><span class="n">LiveCalibrationData</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">calibrated</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">cal_status</span> <span class="o">==</span> <span class="n">log</span><span class="o">.</span><span class="n">LiveCalibrationData</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">uncalibrated</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">calibrationIncomplete</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">cal_status</span> <span class="o">==</span> <span class="n">log</span><span class="o">.</span><span class="n">LiveCalibrationData</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">recalibrating</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">recalibrating_seen</span><span class="p">:</span>
+          <span class="n">set_offroad_alert</span><span class="p">(</span><span class="s2">&quot;Offroad_Recalibration&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recalibrating_seen</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">calibrationRecalibrating</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">calibrationInvalid</span><span class="p">)</span>
+
+    <span class="c1"># Handle lane change</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;modelV2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">laneChangeState</span> <span class="o">==</span> <span class="n">LaneChangeState</span><span class="o">.</span><span class="n">preLaneChange</span><span class="p">:</span>
+      <span class="n">direction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;modelV2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">laneChangeDirection</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">leftBlindspot</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">LaneChangeDirection</span><span class="o">.</span><span class="n">left</span><span class="p">)</span> <span class="ow">or</span> \
+         <span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">rightBlindspot</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">LaneChangeDirection</span><span class="o">.</span><span class="n">right</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">laneChangeBlocked</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">LaneChangeDirection</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">preLaneChangeLeft</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">preLaneChangeRight</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;modelV2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">laneChangeState</span> <span class="ow">in</span> <span class="p">(</span><span class="n">LaneChangeState</span><span class="o">.</span><span class="n">laneChangeStarting</span><span class="p">,</span>
+                                                    <span class="n">LaneChangeState</span><span class="o">.</span><span class="n">laneChangeFinishing</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">laneChange</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pandaState</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;pandaStates&#39;</span><span class="p">]):</span>
+      <span class="c1"># All pandas must match the list of safetyConfigs, and if outside this list, must be silent or noOutput</span>
+      <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">):</span>
+        <span class="n">safety_mismatch</span> <span class="o">=</span> <span class="n">pandaState</span><span class="o">.</span><span class="n">safetyModel</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">safetyModel</span> <span class="ow">or</span> \
+                          <span class="n">pandaState</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="ow">or</span> \
+                          <span class="n">pandaState</span><span class="o">.</span><span class="n">alternativeExperience</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">alternativeExperience</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">safety_mismatch</span> <span class="o">=</span> <span class="n">pandaState</span><span class="o">.</span><span class="n">safetyModel</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">IGNORED_SAFETY_MODES</span>
+
+      <span class="c1"># safety mismatch allows some time for boardd to set the safety mode and publish it back from panda</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">safety_mismatch</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span><span class="o">*</span><span class="n">DT_CTRL</span> <span class="o">&gt;</span> <span class="mf">10.</span><span class="p">)</span> <span class="ow">or</span> <span class="n">pandaState</span><span class="o">.</span><span class="n">safetyRxChecksInvalid</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">mismatch_counter</span> <span class="o">&gt;=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">controlsMismatch</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="n">log</span><span class="o">.</span><span class="n">PandaState</span><span class="o">.</span><span class="n">FaultType</span><span class="o">.</span><span class="n">relayMalfunction</span> <span class="ow">in</span> <span class="n">pandaState</span><span class="o">.</span><span class="n">faults</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">relayMalfunction</span><span class="p">)</span>
+
+    <span class="c1"># Handle HW and system malfunctions</span>
+    <span class="c1"># Order is very intentional here. Be careful when modifying this.</span>
+    <span class="c1"># All events here should at least have NO_ENTRY and SOFT_DISABLE.</span>
+    <span class="n">num_events</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
+
+    <span class="n">not_running</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;managerState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">processes</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">running</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">shouldBeRunning</span><span class="p">}</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">recv_frame</span><span class="p">[</span><span class="s1">&#39;managerState&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="p">(</span><span class="n">not_running</span> <span class="o">-</span> <span class="n">IGNORE_PROCESSES</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">processNotRunning</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">not_running</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">not_running_prev</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;process_not_running&quot;</span><span class="p">,</span> <span class="n">not_running</span><span class="o">=</span><span class="n">not_running</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">not_running_prev</span> <span class="o">=</span> <span class="n">not_running</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">SIMULATION</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">rk</span><span class="o">.</span><span class="n">lagging</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">all_alive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_packets</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">cameraMalfunction</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">all_freq_ok</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_packets</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">cameraFrameRate</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">REPLAY</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">rk</span><span class="o">.</span><span class="n">lagging</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">controlsdLagging</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;radarState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">radarErrors</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">rk</span><span class="o">.</span><span class="n">lagging</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">all_checks</span><span class="p">([</span><span class="s1">&#39;radarState&#39;</span><span class="p">])):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">radarFault</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">valid</span><span class="p">[</span><span class="s1">&#39;pandaStates&#39;</span><span class="p">]:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">usbError</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">CS</span><span class="o">.</span><span class="n">canTimeout</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">canBusMissing</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">CS</span><span class="o">.</span><span class="n">canValid</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">canError</span><span class="p">)</span>
+
+    <span class="c1"># generic catch-all. ideally, a more specific event should be added above instead</span>
+    <span class="n">has_disable_events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">))</span>
+    <span class="n">no_system_errors</span> <span class="o">=</span> <span class="p">(</span><span class="ow">not</span> <span class="n">has_disable_events</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span> <span class="o">==</span> <span class="n">num_events</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">all_checks</span><span class="p">()</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">can_rcv_timeout</span><span class="p">)</span> <span class="ow">and</span> <span class="n">no_system_errors</span><span class="p">:</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">all_alive</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">commIssue</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">all_freq_ok</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">commIssueAvgFreq</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>  <span class="c1"># invalid or can_rcv_timeout.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">commIssue</span><span class="p">)</span>
+
+      <span class="n">logs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;invalid&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">valid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">valid</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">],</span>
+        <span class="s1">&#39;not_alive&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">alive</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">alive</span><span class="p">],</span>
+        <span class="s1">&#39;not_freq_ok&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">freq_ok</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">freq_ok</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">freq_ok</span><span class="p">],</span>
+        <span class="s1">&#39;can_rcv_timeout&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">can_rcv_timeout</span><span class="p">,</span>
+      <span class="p">}</span>
+      <span class="k">if</span> <span class="n">logs</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logged_comm_issue</span><span class="p">:</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;commIssue&quot;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">logs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logged_comm_issue</span> <span class="o">=</span> <span class="n">logs</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">logged_comm_issue</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">notCar</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">joystick_mode</span><span class="p">):</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">posenetOK</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">posenetInvalid</span><span class="p">)</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">deviceStable</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">deviceFalling</span><span class="p">)</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">inputsOK</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">locationdTemporaryError</span><span class="p">)</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveParameters&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">valid</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">TESTING_CLOSET</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">SIMULATION</span> <span class="ow">or</span> <span class="n">REPLAY</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">paramsdTemporaryError</span><span class="p">)</span>
+
+    <span class="c1"># conservative HW alert. if the data or frequency are off, locationd will throw an error</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">recv_frame</span><span class="p">[</span><span class="n">s</span><span class="p">])</span><span class="o">*</span><span class="n">DT_CTRL</span> <span class="o">&gt;</span> <span class="mf">10.</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_packets</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">sensorDataInvalid</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">REPLAY</span><span class="p">:</span>
+      <span class="c1"># Check for mismatch between openpilot and car&#39;s PCM</span>
+      <span class="n">cruise_mismatch</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cruise_mismatch_counter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cruise_mismatch_counter</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">cruise_mismatch</span> <span class="k">else</span> <span class="mi">0</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cruise_mismatch_counter</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="mf">6.</span> <span class="o">/</span> <span class="n">DT_CTRL</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">cruiseMismatch</span><span class="p">)</span>
+
+    <span class="c1"># Check for FCW</span>
+    <span class="n">stock_long_is_braking</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="ow">and</span> <span class="n">CS</span><span class="o">.</span><span class="n">aEgo</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">1.25</span>
+    <span class="n">model_fcw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;modelV2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">hardBrakePredicted</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">CS</span><span class="o">.</span><span class="n">brakePressed</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">stock_long_is_braking</span>
+    <span class="n">planner_fcw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;longitudinalPlan&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fcw</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span>
+    <span class="k">if</span> <span class="n">planner_fcw</span> <span class="ow">or</span> <span class="n">model_fcw</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">fcw</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">messaging</span><span class="o">.</span><span class="n">drain_sock</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_sock</span><span class="p">,</span> <span class="n">wait_for_one</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">androidLog</span><span class="o">.</span><span class="n">message</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">err</span> <span class="ow">in</span> <span class="n">msg</span> <span class="k">for</span> <span class="n">err</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;ERROR_CRC&quot;</span><span class="p">,</span> <span class="s2">&quot;ERROR_ECC&quot;</span><span class="p">,</span> <span class="s2">&quot;ERROR_STREAM_UNDERFLOW&quot;</span><span class="p">,</span> <span class="s2">&quot;APPLY FAILED&quot;</span><span class="p">)):</span>
+          <span class="n">csid</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;CSID:&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+          <span class="n">evt</span> <span class="o">=</span> <span class="n">CSID_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">csid</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+          <span class="k">if</span> <span class="n">evt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">evt</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># TODO: fix simulator</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">SIMULATION</span> <span class="ow">or</span> <span class="n">REPLAY</span><span class="p">:</span>
+      <span class="c1"># Not show in first 1 km to allow for driving out of garage. This event shows after 5 minutes</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">gpsOK</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">inputsOK</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distance_traveled</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">noGps</span><span class="p">)</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">gpsOK</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distance_traveled</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">distance_traveled</span> <span class="o">+=</span> <span class="n">CS</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">*</span> <span class="n">DT_CTRL</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;modelV2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">frameDropPerc</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">modeldLagging</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Controls.data_sample">
+<a class="viewcode-back" href="../../../selfdrive.controls.html#selfdrive.controls.controlsd.Controls.data_sample">[docs]</a>
+  <span class="k">def</span> <span class="nf">data_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Receive data from sockets and update carState&quot;&quot;&quot;</span>
+
+    <span class="n">CS</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">state_update</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialized</span><span class="p">:</span>
+      <span class="n">all_valid</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">canValid</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">all_checks</span><span class="p">()</span>
+      <span class="n">timed_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span> <span class="o">*</span> <span class="n">DT_CTRL</span> <span class="o">&gt;</span> <span class="mf">6.</span>
+      <span class="k">if</span> <span class="n">all_valid</span> <span class="ow">or</span> <span class="n">timed_out</span> <span class="ow">or</span> <span class="p">(</span><span class="n">SIMULATION</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">REPLAY</span><span class="p">):</span>
+        <span class="n">available_streams</span> <span class="o">=</span> <span class="n">VisionIpcClient</span><span class="o">.</span><span class="n">available_streams</span><span class="p">(</span><span class="s2">&quot;camerad&quot;</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">VisionStreamType</span><span class="o">.</span><span class="n">VISION_STREAM_ROAD</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_streams</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">ignore_alive</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;roadCameraState&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">VisionStreamType</span><span class="o">.</span><span class="n">VISION_STREAM_WIDE_ROAD</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_streams</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">ignore_alive</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;wideRoadCameraState&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">passive</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialized</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_initial_state</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put_bool_nonblocking</span><span class="p">(</span><span class="s2">&quot;ControlsReady&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">event</span><span class="p">(</span>
+          <span class="s2">&quot;controlsd.initialized&quot;</span><span class="p">,</span>
+          <span class="n">dt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span><span class="o">*</span><span class="n">DT_CTRL</span><span class="p">,</span>
+          <span class="n">timeout</span><span class="o">=</span><span class="n">timed_out</span><span class="p">,</span>
+          <span class="n">canValid</span><span class="o">=</span><span class="n">CS</span><span class="o">.</span><span class="n">canValid</span><span class="p">,</span>
+          <span class="n">invalid</span><span class="o">=</span><span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">valid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">valid</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">],</span>
+          <span class="n">not_alive</span><span class="o">=</span><span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">alive</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">alive</span><span class="p">],</span>
+          <span class="n">not_freq_ok</span><span class="o">=</span><span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">freq_ok</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">freq_ok</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">freq_ok</span><span class="p">],</span>
+          <span class="n">error</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># When the panda and controlsd do not agree on controls_allowed</span>
+    <span class="c1"># we want to disengage openpilot. However the status from the panda goes through</span>
+    <span class="c1"># another socket other than the CAN messages and one can arrive earlier than the other.</span>
+    <span class="c1"># Therefore we allow a mismatch for two samples, then we trigger the disengagement.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">mismatch_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># All pandas not in silent mode must have controlsAllowed when openpilot is enabled</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="n">ps</span><span class="o">.</span><span class="n">controlsAllowed</span> <span class="k">for</span> <span class="n">ps</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;pandaStates&#39;</span><span class="p">]</span>
+           <span class="k">if</span> <span class="n">ps</span><span class="o">.</span><span class="n">safetyModel</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">IGNORED_SAFETY_MODES</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">mismatch_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">CS</span></div>
+
+
+<div class="viewcode-block" id="Controls.state_transition">
+<a class="viewcode-back" href="../../../selfdrive.controls.html#selfdrive.controls.controlsd.Controls.state_transition">[docs]</a>
+  <span class="k">def</span> <span class="nf">state_transition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CS</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute conditional state transitions and execute actions on state transitions&quot;&quot;&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_helper</span><span class="o">.</span><span class="n">update_v_cruise</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_metric</span><span class="p">)</span>
+
+    <span class="c1"># decrement the soft disable timer at every step, as it&#39;s reset on</span>
+    <span class="c1"># entrance in SOFT_DISABLING state</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">soft_disable_timer</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">soft_disable_timer</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">ET</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">]</span>
+
+    <span class="c1"># ENABLED, SOFT DISABLING, PRE ENABLING, OVERRIDING</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">!=</span> <span class="n">State</span><span class="o">.</span><span class="n">disabled</span><span class="p">:</span>
+      <span class="c1"># user and immediate disable always have priority in a non-disabled state</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">USER_DISABLE</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">disabled</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">USER_DISABLE</span><span class="p">)</span>
+
+      <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">disabled</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">IMMEDIATE_DISABLE</span><span class="p">)</span>
+
+      <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># ENABLED</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">State</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">softDisabling</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">soft_disable_timer</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">SOFT_DISABLE_TIME</span> <span class="o">/</span> <span class="n">DT_CTRL</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">)</span>
+
+          <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">OVERRIDE_LATERAL</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">OVERRIDE_LONGITUDINAL</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">overriding</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span> <span class="o">+=</span> <span class="p">[</span><span class="n">ET</span><span class="o">.</span><span class="n">OVERRIDE_LATERAL</span><span class="p">,</span> <span class="n">ET</span><span class="o">.</span><span class="n">OVERRIDE_LONGITUDINAL</span><span class="p">]</span>
+
+        <span class="c1"># SOFT DISABLING</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">State</span><span class="o">.</span><span class="n">softDisabling</span><span class="p">:</span>
+          <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">):</span>
+            <span class="c1"># no more soft disabling condition, so go back to ENABLED</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">enabled</span>
+
+          <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">soft_disable_timer</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">)</span>
+
+          <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">soft_disable_timer</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">disabled</span>
+
+        <span class="c1"># PRE ENABLING</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">State</span><span class="o">.</span><span class="n">preEnabled</span><span class="p">:</span>
+          <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">PRE_ENABLE</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">enabled</span>
+          <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">PRE_ENABLE</span><span class="p">)</span>
+
+        <span class="c1"># OVERRIDING</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">State</span><span class="o">.</span><span class="n">overriding</span><span class="p">:</span>
+          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">softDisabling</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">soft_disable_timer</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">SOFT_DISABLE_TIME</span> <span class="o">/</span> <span class="n">DT_CTRL</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">SOFT_DISABLE</span><span class="p">)</span>
+          <span class="k">elif</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">OVERRIDE_LATERAL</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">OVERRIDE_LONGITUDINAL</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">enabled</span>
+          <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span> <span class="o">+=</span> <span class="p">[</span><span class="n">ET</span><span class="o">.</span><span class="n">OVERRIDE_LATERAL</span><span class="p">,</span> <span class="n">ET</span><span class="o">.</span><span class="n">OVERRIDE_LONGITUDINAL</span><span class="p">]</span>
+
+    <span class="c1"># DISABLED</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">State</span><span class="o">.</span><span class="n">disabled</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">ENABLE</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">PRE_ENABLE</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">preEnabled</span>
+          <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">OVERRIDE_LATERAL</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">OVERRIDE_LONGITUDINAL</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">overriding</span>
+          <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">enabled</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">ENABLE</span><span class="p">)</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_helper</span><span class="o">.</span><span class="n">initialize_v_cruise</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">experimental_mode</span><span class="p">)</span>
+
+    <span class="c1"># Check if openpilot is engaged and actuators are enabled</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">in</span> <span class="n">ENABLED_STATES</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">in</span> <span class="n">ACTIVE_STATES</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Controls.state_control">
+<a class="viewcode-back" href="../../../selfdrive.controls.html#selfdrive.controls.controlsd.Controls.state_control">[docs]</a>
+  <span class="k">def</span> <span class="nf">state_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CS</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Given the state, this function returns a CarControl packet&quot;&quot;&quot;</span>
+
+    <span class="c1"># Update VehicleModel</span>
+    <span class="n">lp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveParameters&#39;</span><span class="p">]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">lp</span><span class="o">.</span><span class="n">stiffnessFactor</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">sr</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">lp</span><span class="o">.</span><span class="n">steerRatio</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">VM</span><span class="o">.</span><span class="n">update_params</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+
+    <span class="c1"># Update Torque Params</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;torque&#39;</span><span class="p">:</span>
+      <span class="n">torque_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveTorqueParameters&#39;</span><span class="p">]</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">all_checks</span><span class="p">([</span><span class="s1">&#39;liveTorqueParameters&#39;</span><span class="p">])</span> <span class="ow">and</span> <span class="n">torque_params</span><span class="o">.</span><span class="n">useParams</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">LaC</span><span class="o">.</span><span class="n">update_live_torque_params</span><span class="p">(</span><span class="n">torque_params</span><span class="o">.</span><span class="n">latAccelFactorFiltered</span><span class="p">,</span> <span class="n">torque_params</span><span class="o">.</span><span class="n">latAccelOffsetFiltered</span><span class="p">,</span>
+                                           <span class="n">torque_params</span><span class="o">.</span><span class="n">frictionCoefficientFiltered</span><span class="p">)</span>
+
+    <span class="n">long_plan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;longitudinalPlan&#39;</span><span class="p">]</span>
+    <span class="n">model_v2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;modelV2&#39;</span><span class="p">]</span>
+
+    <span class="n">CC</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarControl</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+    <span class="n">CC</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span>
+
+    <span class="c1"># Check which actuators can be enabled</span>
+    <span class="n">standstill</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&lt;=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span><span class="p">,</span> <span class="n">MIN_LATERAL_CONTROL_SPEED</span><span class="p">)</span> <span class="ow">or</span> <span class="n">CS</span><span class="o">.</span><span class="n">standstill</span>
+    <span class="n">CC</span><span class="o">.</span><span class="n">latActive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">CS</span><span class="o">.</span><span class="n">steerFaultTemporary</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">CS</span><span class="o">.</span><span class="n">steerFaultPermanent</span> <span class="ow">and</span> \
+                   <span class="p">(</span><span class="ow">not</span> <span class="n">standstill</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">joystick_mode</span><span class="p">)</span>
+    <span class="n">CC</span><span class="o">.</span><span class="n">longActive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">OVERRIDE_LONGITUDINAL</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span>
+
+    <span class="n">actuators</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">actuators</span>
+    <span class="n">actuators</span><span class="o">.</span><span class="n">longControlState</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LoC</span><span class="o">.</span><span class="n">long_control_state</span>
+
+    <span class="c1"># Enable blinkers while lane changing</span>
+    <span class="k">if</span> <span class="n">model_v2</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">laneChangeState</span> <span class="o">!=</span> <span class="n">LaneChangeState</span><span class="o">.</span><span class="n">off</span><span class="p">:</span>
+      <span class="n">CC</span><span class="o">.</span><span class="n">leftBlinker</span> <span class="o">=</span> <span class="n">model_v2</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">laneChangeDirection</span> <span class="o">==</span> <span class="n">LaneChangeDirection</span><span class="o">.</span><span class="n">left</span>
+      <span class="n">CC</span><span class="o">.</span><span class="n">rightBlinker</span> <span class="o">=</span> <span class="n">model_v2</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">laneChangeDirection</span> <span class="o">==</span> <span class="n">LaneChangeDirection</span><span class="o">.</span><span class="n">right</span>
+
+    <span class="k">if</span> <span class="n">CS</span><span class="o">.</span><span class="n">leftBlinker</span> <span class="ow">or</span> <span class="n">CS</span><span class="o">.</span><span class="n">rightBlinker</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">last_blinker_frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span>
+
+    <span class="c1"># State specific actions</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">CC</span><span class="o">.</span><span class="n">latActive</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">LaC</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">CC</span><span class="o">.</span><span class="n">longActive</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">LoC</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">v_pid</span><span class="o">=</span><span class="n">CS</span><span class="o">.</span><span class="n">vEgo</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">joystick_mode</span><span class="p">:</span>
+      <span class="c1"># accel PID loop</span>
+      <span class="n">pid_accel_limits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CI</span><span class="o">.</span><span class="n">get_pid_accel_limits</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_helper</span><span class="o">.</span><span class="n">v_cruise_kph</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span><span class="p">)</span>
+      <span class="n">t_since_plan</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">recv_frame</span><span class="p">[</span><span class="s1">&#39;longitudinalPlan&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="n">DT_CTRL</span>
+      <span class="n">actuators</span><span class="o">.</span><span class="n">accel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LoC</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">CC</span><span class="o">.</span><span class="n">longActive</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="n">long_plan</span><span class="p">,</span> <span class="n">pid_accel_limits</span><span class="p">,</span> <span class="n">t_since_plan</span><span class="p">)</span>
+
+      <span class="c1"># Steering PID loop and lateral MPC</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">desired_curvature</span> <span class="o">=</span> <span class="n">clip_curvature</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">desired_curvature</span><span class="p">,</span> <span class="n">model_v2</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">desiredCurvature</span><span class="p">)</span>
+      <span class="n">actuators</span><span class="o">.</span><span class="n">curvature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">desired_curvature</span>
+      <span class="n">actuators</span><span class="o">.</span><span class="n">steer</span><span class="p">,</span> <span class="n">actuators</span><span class="o">.</span><span class="n">steeringAngleDeg</span><span class="p">,</span> <span class="n">lac_log</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LaC</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">CC</span><span class="o">.</span><span class="n">latActive</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">VM</span><span class="p">,</span> <span class="n">lp</span><span class="p">,</span>
+                                                                             <span class="bp">self</span><span class="o">.</span><span class="n">steer_limited</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">desired_curvature</span><span class="p">,</span>
+                                                                             <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">lac_log</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">ControlsState</span><span class="o">.</span><span class="n">LateralDebugState</span><span class="o">.</span><span class="n">new_message</span><span class="p">()</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">recv_frame</span><span class="p">[</span><span class="s1">&#39;testJoystick&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># reset joystick if it hasn&#39;t been received in a while</span>
+        <span class="n">should_reset_joystick</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">recv_frame</span><span class="p">[</span><span class="s1">&#39;testJoystick&#39;</span><span class="p">])</span><span class="o">*</span><span class="n">DT_CTRL</span> <span class="o">&gt;</span> <span class="mf">0.2</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">should_reset_joystick</span><span class="p">:</span>
+          <span class="n">joystick_axes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;testJoystick&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">axes</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">joystick_axes</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">CC</span><span class="o">.</span><span class="n">longActive</span><span class="p">:</span>
+          <span class="n">actuators</span><span class="o">.</span><span class="n">accel</span> <span class="o">=</span> <span class="mf">4.0</span><span class="o">*</span><span class="n">clip</span><span class="p">(</span><span class="n">joystick_axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">CC</span><span class="o">.</span><span class="n">latActive</span><span class="p">:</span>
+          <span class="n">steer</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">joystick_axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+          <span class="c1"># max angle is 45 for angle-based cars, max curvature is 0.02</span>
+          <span class="n">actuators</span><span class="o">.</span><span class="n">steer</span><span class="p">,</span> <span class="n">actuators</span><span class="o">.</span><span class="n">steeringAngleDeg</span><span class="p">,</span> <span class="n">actuators</span><span class="o">.</span><span class="n">curvature</span> <span class="o">=</span> <span class="n">steer</span><span class="p">,</span> <span class="n">steer</span> <span class="o">*</span> <span class="mf">90.</span><span class="p">,</span> <span class="n">steer</span> <span class="o">*</span> <span class="o">-</span><span class="mf">0.02</span>
+
+        <span class="n">lac_log</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span>
+        <span class="n">lac_log</span><span class="o">.</span><span class="n">steeringAngleDeg</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">steeringAngleDeg</span>
+        <span class="n">lac_log</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">actuators</span><span class="o">.</span><span class="n">steer</span>
+        <span class="n">lac_log</span><span class="o">.</span><span class="n">saturated</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">actuators</span><span class="o">.</span><span class="n">steer</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">0.9</span>
+
+    <span class="k">if</span> <span class="n">CS</span><span class="o">.</span><span class="n">steeringPressed</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">last_steering_pressed_frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span>
+    <span class="n">recent_steer_pressed</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_steering_pressed_frame</span><span class="p">)</span><span class="o">*</span><span class="n">DT_CTRL</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
+
+    <span class="c1"># Send a &quot;steering required alert&quot; if saturation count has reached the limit</span>
+    <span class="k">if</span> <span class="n">lac_log</span><span class="o">.</span><span class="n">active</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">recent_steer_pressed</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">notCar</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;torque&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">joystick_mode</span><span class="p">:</span>
+        <span class="n">undershooting</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">lac_log</span><span class="o">.</span><span class="n">desiredLateralAccel</span><span class="p">)</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="mf">1e-3</span> <span class="o">+</span> <span class="n">lac_log</span><span class="o">.</span><span class="n">actualLateralAccel</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1.2</span>
+        <span class="n">turning</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">lac_log</span><span class="o">.</span><span class="n">desiredLateralAccel</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1.0</span>
+        <span class="n">good_speed</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&gt;</span> <span class="mi">5</span>
+        <span class="n">max_torque</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_actuators</span><span class="o">.</span><span class="n">steer</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.99</span>
+        <span class="k">if</span> <span class="n">undershooting</span> <span class="ow">and</span> <span class="n">turning</span> <span class="ow">and</span> <span class="n">good_speed</span> <span class="ow">and</span> <span class="n">max_torque</span><span class="p">:</span>
+          <span class="n">lac_log</span><span class="o">.</span><span class="n">active</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">steerSaturated</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">lac_log</span><span class="o">.</span><span class="n">saturated</span><span class="p">:</span>
+        <span class="c1"># TODO probably should not use dpath_points but curvature</span>
+        <span class="n">dpath_points</span> <span class="o">=</span> <span class="n">model_v2</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dpath_points</span><span class="p">):</span>
+          <span class="c1"># Check if we deviated from the path</span>
+          <span class="c1"># TODO use desired vs actual curvature</span>
+          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">steerControlType</span> <span class="o">==</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SteerControlType</span><span class="o">.</span><span class="n">angle</span><span class="p">:</span>
+            <span class="n">steering_value</span> <span class="o">=</span> <span class="n">actuators</span><span class="o">.</span><span class="n">steeringAngleDeg</span>
+          <span class="k">else</span><span class="p">:</span>
+            <span class="n">steering_value</span> <span class="o">=</span> <span class="n">actuators</span><span class="o">.</span><span class="n">steer</span>
+
+          <span class="n">left_deviation</span> <span class="o">=</span> <span class="n">steering_value</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">dpath_points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.20</span>
+          <span class="n">right_deviation</span> <span class="o">=</span> <span class="n">steering_value</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">dpath_points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.20</span>
+
+          <span class="k">if</span> <span class="n">left_deviation</span> <span class="ow">or</span> <span class="n">right_deviation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">steerSaturated</span><span class="p">)</span>
+
+    <span class="c1"># Ensure no NaNs/Infs</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ACTUATOR_FIELDS</span><span class="p">:</span>
+      <span class="n">attr</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">actuators</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">SupportsFloat</span><span class="p">):</span>
+        <span class="k">continue</span>
+
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">attr</span><span class="p">):</span>
+        <span class="n">cloudlog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actuators.</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2"> not finite </span><span class="si">{</span><span class="n">actuators</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">actuators</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="c1"># decrement personality on distance button press</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="n">be</span><span class="o">.</span><span class="n">pressed</span> <span class="ow">and</span> <span class="n">be</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">gapAdjustCruise</span> <span class="k">for</span> <span class="n">be</span> <span class="ow">in</span> <span class="n">CS</span><span class="o">.</span><span class="n">buttonEvents</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">personality</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">personality</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">put_nonblocking</span><span class="p">(</span><span class="s1">&#39;LongitudinalPersonality&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">personality</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">CC</span><span class="p">,</span> <span class="n">lac_log</span></div>
+
+
+<div class="viewcode-block" id="Controls.publish_logs">
+<a class="viewcode-back" href="../../../selfdrive.controls.html#selfdrive.controls.controlsd.Controls.publish_logs">[docs]</a>
+  <span class="k">def</span> <span class="nf">publish_logs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">CC</span><span class="p">,</span> <span class="n">lac_log</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Send actuators and hud commands to the car, send controlsstate and MPC logging&quot;&quot;&quot;</span>
+
+    <span class="n">CO</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;carOutput&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Orientation and angle rates can be useful for carcontroller</span>
+    <span class="c1"># Only calibrated (car) frame is relevant for the carcontroller</span>
+    <span class="n">orientation_value</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">calibratedOrientationNED</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">orientation_value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+      <span class="n">CC</span><span class="o">.</span><span class="n">orientationNED</span> <span class="o">=</span> <span class="n">orientation_value</span>
+    <span class="n">angular_rate_value</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveLocationKalman&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">angularVelocityCalibrated</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">angular_rate_value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+      <span class="n">CC</span><span class="o">.</span><span class="n">angularVelocity</span> <span class="o">=</span> <span class="n">angular_rate_value</span>
+
+    <span class="n">CC</span><span class="o">.</span><span class="n">cruiseControl</span><span class="o">.</span><span class="n">override</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">CC</span><span class="o">.</span><span class="n">longActive</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span>
+    <span class="n">CC</span><span class="o">.</span><span class="n">cruiseControl</span><span class="o">.</span><span class="n">cancel</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">joystick_mode</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">recv_frame</span><span class="p">[</span><span class="s1">&#39;testJoystick&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;testJoystick&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">buttons</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+      <span class="n">CC</span><span class="o">.</span><span class="n">cruiseControl</span><span class="o">.</span><span class="n">cancel</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">speeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;longitudinalPlan&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">speeds</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">speeds</span><span class="p">):</span>
+      <span class="n">CC</span><span class="o">.</span><span class="n">cruiseControl</span><span class="o">.</span><span class="n">resume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">CS</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">standstill</span> <span class="ow">and</span> <span class="n">speeds</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.1</span>
+
+    <span class="n">hudControl</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">hudControl</span>
+    <span class="n">hudControl</span><span class="o">.</span><span class="n">setSpeed</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_helper</span><span class="o">.</span><span class="n">v_cruise_cluster_kph</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span><span class="p">)</span>
+    <span class="n">hudControl</span><span class="o">.</span><span class="n">speedVisible</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span>
+    <span class="n">hudControl</span><span class="o">.</span><span class="n">lanesVisible</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span>
+    <span class="n">hudControl</span><span class="o">.</span><span class="n">leadVisible</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;longitudinalPlan&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">hasLead</span>
+    <span class="n">hudControl</span><span class="o">.</span><span class="n">leadDistanceBars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">personality</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">hudControl</span><span class="o">.</span><span class="n">rightLaneVisible</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">hudControl</span><span class="o">.</span><span class="n">leftLaneVisible</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">recent_blinker</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_blinker_frame</span><span class="p">)</span> <span class="o">*</span> <span class="n">DT_CTRL</span> <span class="o">&lt;</span> <span class="mf">5.0</span>  <span class="c1"># 5s blinker cooldown</span>
+    <span class="n">ldw_allowed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_ldw_enabled</span> <span class="ow">and</span> <span class="n">CS</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&gt;</span> <span class="n">LDW_MIN_SPEED</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">recent_blinker</span> \
+                  <span class="ow">and</span> <span class="ow">not</span> <span class="n">CC</span><span class="o">.</span><span class="n">latActive</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveCalibration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">calStatus</span> <span class="o">==</span> <span class="n">log</span><span class="o">.</span><span class="n">LiveCalibrationData</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">calibrated</span>
+
+    <span class="n">model_v2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;modelV2&#39;</span><span class="p">]</span>
+    <span class="n">desire_prediction</span> <span class="o">=</span> <span class="n">model_v2</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">desirePrediction</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">desire_prediction</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ldw_allowed</span><span class="p">:</span>
+      <span class="n">right_lane_visible</span> <span class="o">=</span> <span class="n">model_v2</span><span class="o">.</span><span class="n">laneLineProbs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.5</span>
+      <span class="n">left_lane_visible</span> <span class="o">=</span> <span class="n">model_v2</span><span class="o">.</span><span class="n">laneLineProbs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.5</span>
+      <span class="n">l_lane_change_prob</span> <span class="o">=</span> <span class="n">desire_prediction</span><span class="p">[</span><span class="n">Desire</span><span class="o">.</span><span class="n">laneChangeLeft</span><span class="p">]</span>
+      <span class="n">r_lane_change_prob</span> <span class="o">=</span> <span class="n">desire_prediction</span><span class="p">[</span><span class="n">Desire</span><span class="o">.</span><span class="n">laneChangeRight</span><span class="p">]</span>
+
+      <span class="n">lane_lines</span> <span class="o">=</span> <span class="n">model_v2</span><span class="o">.</span><span class="n">laneLines</span>
+      <span class="n">l_lane_close</span> <span class="o">=</span> <span class="n">left_lane_visible</span> <span class="ow">and</span> <span class="p">(</span><span class="n">lane_lines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span><span class="p">(</span><span class="mf">1.08</span> <span class="o">+</span> <span class="n">CAMERA_OFFSET</span><span class="p">))</span>
+      <span class="n">r_lane_close</span> <span class="o">=</span> <span class="n">right_lane_visible</span> <span class="ow">and</span> <span class="p">(</span><span class="n">lane_lines</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mf">1.08</span> <span class="o">-</span> <span class="n">CAMERA_OFFSET</span><span class="p">))</span>
+
+      <span class="n">hudControl</span><span class="o">.</span><span class="n">leftLaneDepart</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">l_lane_change_prob</span> <span class="o">&gt;</span> <span class="n">LANE_DEPARTURE_THRESHOLD</span> <span class="ow">and</span> <span class="n">l_lane_close</span><span class="p">)</span>
+      <span class="n">hudControl</span><span class="o">.</span><span class="n">rightLaneDepart</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">r_lane_change_prob</span> <span class="o">&gt;</span> <span class="n">LANE_DEPARTURE_THRESHOLD</span> <span class="ow">and</span> <span class="n">r_lane_close</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">hudControl</span><span class="o">.</span><span class="n">rightLaneDepart</span> <span class="ow">or</span> <span class="n">hudControl</span><span class="o">.</span><span class="n">leftLaneDepart</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">ldw</span><span class="p">)</span>
+
+    <span class="n">clear_event_types</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span><span class="p">:</span>
+      <span class="n">clear_event_types</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+      <span class="n">clear_event_types</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">)</span>
+
+    <span class="n">alerts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create_alerts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_alert_types</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_metric</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">soft_disable_timer</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">AM</span><span class="o">.</span><span class="n">add_many</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span><span class="p">,</span> <span class="n">alerts</span><span class="p">)</span>
+    <span class="n">current_alert</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AM</span><span class="o">.</span><span class="n">process_alerts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span><span class="p">,</span> <span class="n">clear_event_types</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">current_alert</span><span class="p">:</span>
+      <span class="n">hudControl</span><span class="o">.</span><span class="n">visualAlert</span> <span class="o">=</span> <span class="n">current_alert</span><span class="o">.</span><span class="n">visual_alert</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">passive</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialized</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">controls_update</span><span class="p">(</span><span class="n">CC</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">last_actuators</span> <span class="o">=</span> <span class="n">CO</span><span class="o">.</span><span class="n">actuatorsOutput</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">steerControlType</span> <span class="o">==</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SteerControlType</span><span class="o">.</span><span class="n">angle</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">steer_limited</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">CC</span><span class="o">.</span><span class="n">actuators</span><span class="o">.</span><span class="n">steeringAngleDeg</span> <span class="o">-</span> <span class="n">CO</span><span class="o">.</span><span class="n">actuatorsOutput</span><span class="o">.</span><span class="n">steeringAngleDeg</span><span class="p">)</span> <span class="o">&gt;</span> \
+                             <span class="n">STEER_ANGLE_SATURATION_THRESHOLD</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">steer_limited</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">CC</span><span class="o">.</span><span class="n">actuators</span><span class="o">.</span><span class="n">steer</span> <span class="o">-</span> <span class="n">CO</span><span class="o">.</span><span class="n">actuatorsOutput</span><span class="o">.</span><span class="n">steer</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-2</span>
+
+    <span class="n">force_decel</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;driverMonitoringState&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">awarenessStatus</span> <span class="o">&lt;</span> <span class="mf">0.</span><span class="p">)</span> <span class="ow">or</span> \
+                  <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">State</span><span class="o">.</span><span class="n">softDisabling</span><span class="p">)</span>
+
+    <span class="c1"># Curvature &amp; Steering angle</span>
+    <span class="n">lp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">[</span><span class="s1">&#39;liveParameters&#39;</span><span class="p">]</span>
+
+    <span class="n">steer_angle_without_offset</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">CS</span><span class="o">.</span><span class="n">steeringAngleDeg</span> <span class="o">-</span> <span class="n">lp</span><span class="o">.</span><span class="n">angleOffsetDeg</span><span class="p">)</span>
+    <span class="n">curvature</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">VM</span><span class="o">.</span><span class="n">calc_curvature</span><span class="p">(</span><span class="n">steer_angle_without_offset</span><span class="p">,</span> <span class="n">CS</span><span class="o">.</span><span class="n">vEgo</span><span class="p">,</span> <span class="n">lp</span><span class="o">.</span><span class="n">roll</span><span class="p">)</span>
+
+    <span class="c1"># controlsState</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;controlsState&#39;</span><span class="p">)</span>
+    <span class="n">dat</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">canValid</span>
+    <span class="n">controlsState</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">controlsState</span>
+    <span class="k">if</span> <span class="n">current_alert</span><span class="p">:</span>
+      <span class="n">controlsState</span><span class="o">.</span><span class="n">alertText1</span> <span class="o">=</span> <span class="n">current_alert</span><span class="o">.</span><span class="n">alert_text_1</span>
+      <span class="n">controlsState</span><span class="o">.</span><span class="n">alertText2</span> <span class="o">=</span> <span class="n">current_alert</span><span class="o">.</span><span class="n">alert_text_2</span>
+      <span class="n">controlsState</span><span class="o">.</span><span class="n">alertSize</span> <span class="o">=</span> <span class="n">current_alert</span><span class="o">.</span><span class="n">alert_size</span>
+      <span class="n">controlsState</span><span class="o">.</span><span class="n">alertStatus</span> <span class="o">=</span> <span class="n">current_alert</span><span class="o">.</span><span class="n">alert_status</span>
+      <span class="n">controlsState</span><span class="o">.</span><span class="n">alertBlinkingRate</span> <span class="o">=</span> <span class="n">current_alert</span><span class="o">.</span><span class="n">alert_rate</span>
+      <span class="n">controlsState</span><span class="o">.</span><span class="n">alertType</span> <span class="o">=</span> <span class="n">current_alert</span><span class="o">.</span><span class="n">alert_type</span>
+      <span class="n">controlsState</span><span class="o">.</span><span class="n">alertSound</span> <span class="o">=</span> <span class="n">current_alert</span><span class="o">.</span><span class="n">audible_alert</span>
+
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">longitudinalPlanMonoTime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">[</span><span class="s1">&#39;longitudinalPlan&#39;</span><span class="p">]</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">lateralPlanMonoTime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">logMonoTime</span><span class="p">[</span><span class="s1">&#39;modelV2&#39;</span><span class="p">]</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">curvature</span> <span class="o">=</span> <span class="n">curvature</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">desiredCurvature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">desired_curvature</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">engageable</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">NO_ENTRY</span><span class="p">)</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">longControlState</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LoC</span><span class="o">.</span><span class="n">long_control_state</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">vPid</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LoC</span><span class="o">.</span><span class="n">v_pid</span><span class="p">)</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">vCruise</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_helper</span><span class="o">.</span><span class="n">v_cruise_kph</span><span class="p">)</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">vCruiseCluster</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_cruise_helper</span><span class="o">.</span><span class="n">v_cruise_cluster_kph</span><span class="p">)</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">upAccelCmd</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LoC</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">uiAccelCmd</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LoC</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">ufAccelCmd</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LoC</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">cumLagMs</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">rk</span><span class="o">.</span><span class="n">remaining</span> <span class="o">*</span> <span class="mf">1000.</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">startMonoTime</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">)</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">forceDecel</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">force_decel</span><span class="p">)</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">canErrorCounter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">can_rcv_cum_timeout_counter</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">experimentalMode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">experimental_mode</span>
+    <span class="n">controlsState</span><span class="o">.</span><span class="n">personality</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">personality</span>
+
+    <span class="n">lat_tuning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">which</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">joystick_mode</span><span class="p">:</span>
+      <span class="n">controlsState</span><span class="o">.</span><span class="n">lateralControlState</span><span class="o">.</span><span class="n">debugState</span> <span class="o">=</span> <span class="n">lac_log</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">steerControlType</span> <span class="o">==</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SteerControlType</span><span class="o">.</span><span class="n">angle</span><span class="p">:</span>
+      <span class="n">controlsState</span><span class="o">.</span><span class="n">lateralControlState</span><span class="o">.</span><span class="n">angleState</span> <span class="o">=</span> <span class="n">lac_log</span>
+    <span class="k">elif</span> <span class="n">lat_tuning</span> <span class="o">==</span> <span class="s1">&#39;pid&#39;</span><span class="p">:</span>
+      <span class="n">controlsState</span><span class="o">.</span><span class="n">lateralControlState</span><span class="o">.</span><span class="n">pidState</span> <span class="o">=</span> <span class="n">lac_log</span>
+    <span class="k">elif</span> <span class="n">lat_tuning</span> <span class="o">==</span> <span class="s1">&#39;torque&#39;</span><span class="p">:</span>
+      <span class="n">controlsState</span><span class="o">.</span><span class="n">lateralControlState</span><span class="o">.</span><span class="n">torqueState</span> <span class="o">=</span> <span class="n">lac_log</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;controlsState&#39;</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
+
+    <span class="c1"># onroadEvents - logged every second or on change</span>
+    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">frame</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1.</span> <span class="o">/</span> <span class="n">DT_CTRL</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">names</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">events_prev</span><span class="p">):</span>
+      <span class="n">ce_send</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;onroadEvents&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">))</span>
+      <span class="n">ce_send</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ce_send</span><span class="o">.</span><span class="n">onroadEvents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">to_msg</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;onroadEvents&#39;</span><span class="p">,</span> <span class="n">ce_send</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">events_prev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">names</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># carControl</span>
+    <span class="n">cc_send</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="s1">&#39;carControl&#39;</span><span class="p">)</span>
+    <span class="n">cc_send</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="n">CS</span><span class="o">.</span><span class="n">canValid</span>
+    <span class="n">cc_send</span><span class="o">.</span><span class="n">carControl</span> <span class="o">=</span> <span class="n">CC</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;carControl&#39;</span><span class="p">,</span> <span class="n">cc_send</span><span class="p">)</span>
+
+    <span class="c1"># copy CarControl to pass to CarInterface on the next iteration</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CC</span> <span class="o">=</span> <span class="n">CC</span></div>
+
+
+<div class="viewcode-block" id="Controls.step">
+<a class="viewcode-back" href="../../../selfdrive.controls.html#selfdrive.controls.controlsd.Controls.step">[docs]</a>
+  <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+
+    <span class="c1"># Sample data from sockets and get a carState</span>
+    <span class="n">CS</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_sample</span><span class="p">()</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="s2">&quot;Data sampled&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_events</span><span class="p">(</span><span class="n">CS</span><span class="p">)</span>
+    <span class="n">cloudlog</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="s2">&quot;Events updated&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">passive</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialized</span><span class="p">:</span>
+      <span class="c1"># Update control state</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">state_transition</span><span class="p">(</span><span class="n">CS</span><span class="p">)</span>
+
+    <span class="c1"># Compute actuators (runs PID loops and lateral MPC)</span>
+    <span class="n">CC</span><span class="p">,</span> <span class="n">lac_log</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_control</span><span class="p">(</span><span class="n">CS</span><span class="p">)</span>
+
+    <span class="c1"># Publish data</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">publish_logs</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">CC</span><span class="p">,</span> <span class="n">lac_log</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">CS_prev</span> <span class="o">=</span> <span class="n">CS</span></div>
+
+
+<div class="viewcode-block" id="Controls.read_personality_param">
+<a class="viewcode-back" href="../../../selfdrive.controls.html#selfdrive.controls.controlsd.Controls.read_personality_param">[docs]</a>
+  <span class="k">def</span> <span class="nf">read_personality_param</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;LongitudinalPersonality&#39;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">log</span><span class="o">.</span><span class="n">LongitudinalPersonality</span><span class="o">.</span><span class="n">standard</span></div>
+
+
+<div class="viewcode-block" id="Controls.params_thread">
+<a class="viewcode-back" href="../../../selfdrive.controls.html#selfdrive.controls.controlsd.Controls.params_thread">[docs]</a>
+  <span class="k">def</span> <span class="nf">params_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">evt</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">is_metric</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;IsMetric&quot;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">experimental_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;ExperimentalMode&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">personality</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_personality_param</span><span class="p">()</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">notCar</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">joystick_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_bool</span><span class="p">(</span><span class="s2">&quot;JoystickDebugMode&quot;</span><span class="p">)</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Controls.controlsd_thread">
+<a class="viewcode-back" href="../../../selfdrive.controls.html#selfdrive.controls.controlsd.Controls.controlsd_thread">[docs]</a>
+  <span class="k">def</span> <span class="nf">controlsd_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params_thread</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+      <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rk</span><span class="o">.</span><span class="n">monitor_time</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
+      <span class="n">e</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+      <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../selfdrive.controls.html#selfdrive.controls.controlsd.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+  <span class="n">config_realtime_process</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">Priority</span><span class="o">.</span><span class="n">CTRL_HIGH</span><span class="p">)</span>
+  <span class="n">controls</span> <span class="o">=</span> <span class="n">Controls</span><span class="p">()</span>
+  <span class="n">controls</span><span class="o">.</span><span class="n">controlsd_thread</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.honda.interface &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/honda/interface.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.honda.interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.honda.interface</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">panda</span> <span class="kn">import</span> <span class="n">Panda</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.numpy_fast</span> <span class="kn">import</span> <span class="n">interp</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.honda.hondacan</span> <span class="kn">import</span> <span class="n">CanBus</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.honda.values</span> <span class="kn">import</span> <span class="n">CarControllerParams</span><span class="p">,</span> <span class="n">CruiseButtons</span><span class="p">,</span> <span class="n">CruiseSettings</span><span class="p">,</span> <span class="n">HondaFlags</span><span class="p">,</span> <span class="n">CAR</span><span class="p">,</span> <span class="n">HONDA_BOSCH</span><span class="p">,</span> \
+                                                 <span class="n">HONDA_NIDEC_ALT_SCM_MESSAGES</span><span class="p">,</span> <span class="n">HONDA_BOSCH_RADARLESS</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">create_button_events</span><span class="p">,</span> <span class="n">get_safety_config</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.interfaces</span> <span class="kn">import</span> <span class="n">CarInterfaceBase</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.disable_ecu</span> <span class="kn">import</span> <span class="n">disable_ecu</span>
+
+
+<span class="n">ButtonType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">ButtonEvent</span><span class="o">.</span><span class="n">Type</span>
+<span class="n">EventName</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">EventName</span>
+<span class="n">TransmissionType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">TransmissionType</span>
+<span class="n">BUTTONS_DICT</span> <span class="o">=</span> <span class="p">{</span><span class="n">CruiseButtons</span><span class="o">.</span><span class="n">RES_ACCEL</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">accelCruise</span><span class="p">,</span> <span class="n">CruiseButtons</span><span class="o">.</span><span class="n">DECEL_SET</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">decelCruise</span><span class="p">,</span>
+                <span class="n">CruiseButtons</span><span class="o">.</span><span class="n">MAIN</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">altButton3</span><span class="p">,</span> <span class="n">CruiseButtons</span><span class="o">.</span><span class="n">CANCEL</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">cancel</span><span class="p">}</span>
+<span class="n">SETTINGS_BUTTONS_DICT</span> <span class="o">=</span> <span class="p">{</span><span class="n">CruiseSettings</span><span class="o">.</span><span class="n">DISTANCE</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">gapAdjustCruise</span><span class="p">,</span> <span class="n">CruiseSettings</span><span class="o">.</span><span class="n">LKAS</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">altButton1</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="CarInterface">
+<a class="viewcode-back" href="../../../../selfdrive.car.honda.html#selfdrive.car.honda.interface.CarInterface">[docs]</a>
+<span class="k">class</span> <span class="nc">CarInterface</span><span class="p">(</span><span class="n">CarInterfaceBase</span><span class="p">):</span>
+<div class="viewcode-block" id="CarInterface.get_pid_accel_limits">
+<a class="viewcode-back" href="../../../../selfdrive.car.honda.html#selfdrive.car.honda.interface.CarInterface.get_pid_accel_limits">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_pid_accel_limits</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">current_speed</span><span class="p">,</span> <span class="n">cruise_speed</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">HONDA_BOSCH</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">BOSCH_ACCEL_MIN</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">BOSCH_ACCEL_MAX</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># NIDECs don&#39;t allow acceleration near cruise_speed,</span>
+      <span class="c1"># so limit limits of pid to prevent windup</span>
+      <span class="n">ACCEL_MAX_VALS</span> <span class="o">=</span> <span class="p">[</span><span class="n">CarControllerParams</span><span class="o">.</span><span class="n">NIDEC_ACCEL_MAX</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span>
+      <span class="n">ACCEL_MAX_BP</span> <span class="o">=</span> <span class="p">[</span><span class="n">cruise_speed</span> <span class="o">-</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">cruise_speed</span> <span class="o">-</span> <span class="mf">.2</span><span class="p">]</span>
+      <span class="k">return</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">NIDEC_ACCEL_MIN</span><span class="p">,</span> <span class="n">interp</span><span class="p">(</span><span class="n">current_speed</span><span class="p">,</span> <span class="n">ACCEL_MAX_BP</span><span class="p">,</span> <span class="n">ACCEL_MAX_VALS</span><span class="p">)</span></div>
+
+
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">_get_params</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">,</span> <span class="n">car_fw</span><span class="p">,</span> <span class="n">experimental_long</span><span class="p">,</span> <span class="n">docs</span><span class="p">):</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">carName</span> <span class="o">=</span> <span class="s2">&quot;honda&quot;</span>
+
+    <span class="n">CAN</span> <span class="o">=</span> <span class="n">CanBus</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">HONDA_BOSCH</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_safety_config</span><span class="p">(</span><span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SafetyModel</span><span class="o">.</span><span class="n">hondaBosch</span><span class="p">)]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">radarUnavailable</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="c1"># Disable the radar and let openpilot control longitudinal</span>
+      <span class="c1"># WARNING: THIS DISABLES AEB!</span>
+      <span class="c1"># If Bosch radarless, this blocks ACC messages from the camera</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">experimentalLongitudinalAvailable</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="o">=</span> <span class="n">experimental_long</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">pcmCruise</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_safety_config</span><span class="p">(</span><span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SafetyModel</span><span class="o">.</span><span class="n">hondaNidec</span><span class="p">)]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="o">=</span> <span class="kc">True</span>
+
+      <span class="n">ret</span><span class="o">.</span><span class="n">pcmCruise</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_CRV_5G</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">enableBsm</span> <span class="o">=</span> <span class="mh">0x12f8bfa7</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="n">CAN</span><span class="o">.</span><span class="n">radar</span><span class="p">]</span>
+
+    <span class="c1"># Detect Bosch cars with new HUD msgs</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="mh">0x33DA</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">HondaFlags</span><span class="o">.</span><span class="n">BOSCH_EXT_HUD</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="c1"># Accord ICE 1.5T CVT has different gearbox message</span>
+    <span class="k">if</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_ACCORD</span> <span class="ow">and</span> <span class="mh">0x191</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="n">CAN</span><span class="o">.</span><span class="n">pt</span><span class="p">]:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">=</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">cvt</span>
+
+    <span class="c1"># Certain Hondas have an extra steering sensor at the bottom of the steering rack,</span>
+    <span class="c1"># which improves controls quality as it removes the steering column torsion from feedback.</span>
+    <span class="c1"># Tire stiffness factor fictitiously lower if it includes the steering column torsion effect.</span>
+    <span class="c1"># For modeling details, see p.198-200 in &quot;The Science of Vehicle Dynamics (2014), M. Guiggiani&quot;</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpBP</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="mf">0.00006</span>  <span class="c1"># conservative feed-forward</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">HONDA_BOSCH</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalActuatorDelayUpperBound</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1"># s</span>
+      <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">HONDA_BOSCH_RADARLESS</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">stopAccel</span> <span class="o">=</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">BOSCH_ACCEL_MIN</span>  <span class="c1"># stock uses -4.0 m/s^2 once stopped but limited by safety model</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># default longitudinal tuning for all hondas</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kpBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">35.</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kiBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">35.</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.18</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">]</span>
+
+    <span class="n">eps_modified</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">car_fw</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">fw</span><span class="o">.</span><span class="n">ecu</span> <span class="o">==</span> <span class="s2">&quot;eps&quot;</span> <span class="ow">and</span> <span class="sa">b</span><span class="s2">&quot;,&quot;</span> <span class="ow">in</span> <span class="n">fw</span><span class="o">.</span><span class="n">fwVersion</span><span class="p">:</span>
+        <span class="n">eps_modified</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_CIVIC</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">eps_modified</span><span class="p">:</span>
+        <span class="c1"># stock request input values:     0x0000, 0x00DE, 0x014D, 0x01EF, 0x0290, 0x0377, 0x0454, 0x0610, 0x06EE</span>
+        <span class="c1"># stock request output values:    0x0000, 0x0917, 0x0DC5, 0x1017, 0x119F, 0x140B, 0x1680, 0x1680, 0x1680</span>
+        <span class="c1"># modified request output values: 0x0000, 0x0917, 0x0DC5, 0x1017, 0x119F, 0x140B, 0x1680, 0x2880, 0x3180</span>
+        <span class="c1"># stock filter output values:     0x009F, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108</span>
+        <span class="c1"># modified filter output values:  0x009F, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108, 0x0400, 0x0480</span>
+        <span class="c1"># note: max request allowed is 4096, but request is capped at 3840 in firmware, so modifications result in 2x max</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2560</span><span class="p">,</span> <span class="mi">8000</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2560</span><span class="p">,</span> <span class="mi">3840</span><span class="p">]]</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.3</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">]]</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2560</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2560</span><span class="p">]]</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.33</span><span class="p">]]</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_CIVIC_BOSCH</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_CIVIC_BOSCH_DIESEL</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_CIVIC_2022</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">]]</span>  <span class="c1"># TODO: determine if there is a dead zone at the top end</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.24</span><span class="p">]]</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_ACCORD</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">]]</span>  <span class="c1"># TODO: determine if there is a dead zone at the top end</span>
+
+      <span class="k">if</span> <span class="n">eps_modified</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.3</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.09</span><span class="p">]]</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.18</span><span class="p">]]</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ACURA_ILX</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3840</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3840</span><span class="p">]]</span>  <span class="c1"># TODO: determine if there is a dead zone at the top end</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.24</span><span class="p">]]</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_CRV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_CRV_EU</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]]</span>  <span class="c1"># TODO: determine if there is a dead zone at the top end</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.24</span><span class="p">]]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeedFactor</span> <span class="o">=</span> <span class="mf">1.025</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_CRV_5G</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">eps_modified</span><span class="p">:</span>
+        <span class="c1"># stock request input values:     0x0000, 0x00DB, 0x01BB, 0x0296, 0x0377, 0x0454, 0x0532, 0x0610, 0x067F</span>
+        <span class="c1"># stock request output values:    0x0000, 0x0500, 0x0A15, 0x0E6D, 0x1100, 0x1200, 0x129A, 0x134D, 0x1400</span>
+        <span class="c1"># modified request output values: 0x0000, 0x0500, 0x0A15, 0x0E6D, 0x1100, 0x1200, 0x1ACD, 0x239A, 0x2800</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2560</span><span class="p">,</span> <span class="mi">10000</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2560</span><span class="p">,</span> <span class="mi">3840</span><span class="p">]]</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.21</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.07</span><span class="p">]]</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3840</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3840</span><span class="p">]]</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.64</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.192</span><span class="p">]]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeedFactor</span> <span class="o">=</span> <span class="mf">1.025</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_CRV_HYBRID</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">]]</span>  <span class="c1"># TODO: determine if there is a dead zone at the top end</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.18</span><span class="p">]]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeedFactor</span> <span class="o">=</span> <span class="mf">1.025</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_FIT</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">]]</span>  <span class="c1"># TODO: determine if there is a dead zone at the top end</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">]]</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_FREED</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">]]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">]]</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_HRV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_HRV_3G</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">]]</span>
+      <span class="k">if</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_HRV</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.16</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.025</span><span class="p">]]</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">wheelSpeedFactor</span> <span class="o">=</span> <span class="mf">1.025</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.24</span><span class="p">]]</span>  <span class="c1"># TODO: can probably use some tuning</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ACURA_RDX</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]]</span>  <span class="c1"># TODO: determine if there is a dead zone at the top end</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.24</span><span class="p">]]</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">ACURA_RDX_3G</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3840</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3840</span><span class="p">]]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.06</span><span class="p">]]</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_ODYSSEY</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_ODYSSEY_CHN</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.28</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.08</span><span class="p">]]</span>
+      <span class="k">if</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_ODYSSEY_CHN</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">32767</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">32767</span><span class="p">]]</span>  <span class="c1"># TODO: determine if there is a dead zone at the top end</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">]]</span>  <span class="c1"># TODO: determine if there is a dead zone at the top end</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_PILOT</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">]]</span>  <span class="c1"># TODO: determine if there is a dead zone at the top end</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.38</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.11</span><span class="p">]]</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_RIDGELINE</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">]]</span>  <span class="c1"># TODO: determine if there is a dead zone at the top end</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.38</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.11</span><span class="p">]]</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_INSIGHT</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">]]</span>  <span class="c1"># TODO: determine if there is a dead zone at the top end</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.18</span><span class="p">]]</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_E</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralParams</span><span class="o">.</span><span class="n">torqueV</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4096</span><span class="p">]]</span>  <span class="c1"># TODO: determine if there is a dead zone at the top end</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.18</span><span class="p">]]</span> <span class="c1"># TODO: can probably use some tuning</span>
+
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unsupported car </span><span class="si">{</span><span class="n">candidate</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># These cars use alternate user brake msg (0x1BE)</span>
+    <span class="c1"># TODO: Only detect feature for Accord/Accord Hybrid, not all Bosch DBCs have BRAKE_MODULE</span>
+    <span class="k">if</span> <span class="mh">0x1BE</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="n">CAN</span><span class="o">.</span><span class="n">pt</span><span class="p">]</span> <span class="ow">and</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_ACCORD</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">HondaFlags</span><span class="o">.</span><span class="n">BOSCH_ALT_BRAKE</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">HondaFlags</span><span class="o">.</span><span class="n">BOSCH_ALT_BRAKE</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HONDA_ALT_BRAKE</span>
+
+    <span class="c1"># These cars use alternate SCM messages (SCM_FEEDBACK AND SCM_BUTTON)</span>
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">HONDA_NIDEC_ALT_SCM_MESSAGES</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HONDA_NIDEC_ALT</span>
+
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="ow">and</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">HONDA_BOSCH</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HONDA_BOSCH_LONG</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">HONDA_BOSCH_RADARLESS</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_HONDA_RADARLESS</span>
+
+    <span class="c1"># min speed to enable ACC. if car can do stop and go, then set enabling speed</span>
+    <span class="c1"># to a negative value, so it won&#39;t matter. Otherwise, add 0.5 mph margin to not</span>
+    <span class="c1"># conflict with PCM acc</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">autoResumeSng</span> <span class="o">=</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">HONDA_BOSCH</span> <span class="o">|</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">HONDA_CIVIC</span><span class="p">})</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span> <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">autoResumeSng</span> <span class="k">else</span> <span class="mf">25.5</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerLimitTimer</span> <span class="o">=</span> <span class="mf">0.8</span>
+
+    <span class="k">return</span> <span class="n">ret</span>
+
+<div class="viewcode-block" id="CarInterface.init">
+<a class="viewcode-back" href="../../../../selfdrive.car.honda.html#selfdrive.car.honda.interface.CarInterface.init">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="p">(</span><span class="n">HONDA_BOSCH</span> <span class="o">-</span> <span class="n">HONDA_BOSCH_RADARLESS</span><span class="p">)</span> <span class="ow">and</span> <span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+      <span class="n">disable_ecu</span><span class="p">(</span><span class="n">logcan</span><span class="p">,</span> <span class="n">sendcan</span><span class="p">,</span> <span class="n">bus</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">addr</span><span class="o">=</span><span class="mh">0x18DAB0F1</span><span class="p">,</span> <span class="n">com_cont_req</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x28\x83\x03</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+  <span class="c1"># returns a car.CarState</span>
+  <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_cam</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_body</span><span class="p">)</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">buttonEvents</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="o">*</span><span class="n">create_button_events</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">cruise_buttons</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">prev_cruise_buttons</span><span class="p">,</span> <span class="n">BUTTONS_DICT</span><span class="p">),</span>
+      <span class="o">*</span><span class="n">create_button_events</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">cruise_setting</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">prev_cruise_setting</span><span class="p">,</span> <span class="n">SETTINGS_BUTTONS_DICT</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="c1"># events</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_common_events</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">pcm_enable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minEnableSpeed</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">belowEngageSpeed</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span><span class="p">:</span>
+      <span class="c1"># we engage when pcm is active (rising edge)</span>
+      <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">pcmEnable</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="ow">not</span> <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">actuators</span><span class="o">.</span><span class="n">accel</span> <span class="o">&gt;=</span> <span class="mf">0.</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">):</span>
+        <span class="c1"># it can happen that car cruise disables while comma system is enabled: need to</span>
+        <span class="c1"># keep braking if needed or if the speed is very low</span>
+        <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">+</span> <span class="mf">2.</span><span class="p">:</span>
+          <span class="c1"># non loud alert if cruise disables below 25mph as expected (+ a little margin)</span>
+          <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">speedTooLow</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">cruiseDisabled</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&lt;</span> <span class="mf">0.001</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">manualRestart</span><span class="p">)</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">to_msg</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

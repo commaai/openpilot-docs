@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.docs_definitions &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/docs_definitions.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.docs_definitions</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.docs_definitions</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+
+<span class="n">GOOD_TORQUE_THRESHOLD</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># m/s^2</span>
+<span class="n">MODEL_YEARS_RE</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;(?&lt;= )((\d</span><span class="si">{4}</span><span class="s2">-\d</span><span class="si">{2}</span><span class="s2">)|(\d</span><span class="si">{4}</span><span class="s2">))(,|$)&quot;</span>
+
+
+<div class="viewcode-block" id="Column">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.Column">[docs]</a>
+<span class="k">class</span> <span class="nc">Column</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+  <span class="n">MAKE</span> <span class="o">=</span> <span class="s2">&quot;Make&quot;</span>
+  <span class="n">MODEL</span> <span class="o">=</span> <span class="s2">&quot;Model&quot;</span>
+  <span class="n">PACKAGE</span> <span class="o">=</span> <span class="s2">&quot;Supported Package&quot;</span>
+  <span class="n">LONGITUDINAL</span> <span class="o">=</span> <span class="s2">&quot;ACC&quot;</span>
+  <span class="n">FSR_LONGITUDINAL</span> <span class="o">=</span> <span class="s2">&quot;No ACC accel below&quot;</span>
+  <span class="n">FSR_STEERING</span> <span class="o">=</span> <span class="s2">&quot;No ALC below&quot;</span>
+  <span class="n">STEERING_TORQUE</span> <span class="o">=</span> <span class="s2">&quot;Steering Torque&quot;</span>
+  <span class="n">AUTO_RESUME</span> <span class="o">=</span> <span class="s2">&quot;Resume from stop&quot;</span>
+  <span class="n">HARDWARE</span> <span class="o">=</span> <span class="s2">&quot;Hardware Needed&quot;</span>
+  <span class="n">VIDEO</span> <span class="o">=</span> <span class="s2">&quot;Video&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="Star">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.Star">[docs]</a>
+<span class="k">class</span> <span class="nc">Star</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+  <span class="n">FULL</span> <span class="o">=</span> <span class="s2">&quot;full&quot;</span>
+  <span class="n">HALF</span> <span class="o">=</span> <span class="s2">&quot;half&quot;</span>
+  <span class="n">EMPTY</span> <span class="o">=</span> <span class="s2">&quot;empty&quot;</span></div>
+
+
+
+<span class="c1"># A part + its comprised parts</span>
+<div class="viewcode-block" id="BasePart">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.BasePart">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">BasePart</span><span class="p">:</span>
+  <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">parts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Enum</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BasePart.all_parts">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.BasePart.all_parts">[docs]</a>
+  <span class="k">def</span> <span class="nf">all_parts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Recursively get all parts</span>
+    <span class="n">_parts</span> <span class="o">=</span> <span class="s1">&#39;parts&#39;</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">parts</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_parts</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_parts</span><span class="p">):</span>
+      <span class="n">parts</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">all_parts</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">parts</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="EnumBase">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.EnumBase">[docs]</a>
+<span class="k">class</span> <span class="nc">EnumBase</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">part_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">PartType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Mount">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.Mount">[docs]</a>
+<span class="k">class</span> <span class="nc">Mount</span><span class="p">(</span><span class="n">EnumBase</span><span class="p">):</span>
+  <span class="n">mount</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;mount&quot;</span><span class="p">)</span>
+  <span class="n">angled_mount_8_degrees</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;angled mount (8 degrees)&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Cable">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.Cable">[docs]</a>
+<span class="k">class</span> <span class="nc">Cable</span><span class="p">(</span><span class="n">EnumBase</span><span class="p">):</span>
+  <span class="n">rj45_cable_7ft</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;RJ45 cable (7 ft)&quot;</span><span class="p">)</span>
+  <span class="n">long_obdc_cable</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;long OBD-C cable&quot;</span><span class="p">)</span>
+  <span class="n">usb_a_2_a_cable</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;USB A-A cable&quot;</span><span class="p">)</span>
+  <span class="n">usbc_otg_cable</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;USB C OTG cable&quot;</span><span class="p">)</span>
+  <span class="n">usbc_coupler</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;USB-C coupler&quot;</span><span class="p">)</span>
+  <span class="n">obd_c_cable_1_5ft</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;OBD-C cable (1.5 ft)&quot;</span><span class="p">)</span>
+  <span class="n">right_angle_obd_c_cable_1_5ft</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;right angle OBD-C cable (1.5 ft)&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Accessory">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.Accessory">[docs]</a>
+<span class="k">class</span> <span class="nc">Accessory</span><span class="p">(</span><span class="n">EnumBase</span><span class="p">):</span>
+  <span class="n">harness_box</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;harness box&quot;</span><span class="p">)</span>
+  <span class="n">comma_power_v2</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;comma power v2&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="BaseCarHarness">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.BaseCarHarness">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">BaseCarHarness</span><span class="p">(</span><span class="n">BasePart</span><span class="p">):</span>
+  <span class="n">parts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Enum</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span><span class="n">Accessory</span><span class="o">.</span><span class="n">harness_box</span><span class="p">,</span> <span class="n">Accessory</span><span class="o">.</span><span class="n">comma_power_v2</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">rj45_cable_7ft</span><span class="p">])</span>
+  <span class="n">has_connector</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># without are hidden on the harness connector page</span></div>
+
+
+
+<div class="viewcode-block" id="CarHarness">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.CarHarness">[docs]</a>
+<span class="k">class</span> <span class="nc">CarHarness</span><span class="p">(</span><span class="n">EnumBase</span><span class="p">):</span>
+  <span class="n">nidec</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Honda Nidec connector&quot;</span><span class="p">)</span>
+  <span class="n">bosch_a</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Honda Bosch A connector&quot;</span><span class="p">)</span>
+  <span class="n">bosch_b</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Honda Bosch B connector&quot;</span><span class="p">)</span>
+  <span class="n">toyota_a</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Toyota A connector&quot;</span><span class="p">)</span>
+  <span class="n">toyota_b</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Toyota B connector&quot;</span><span class="p">)</span>
+  <span class="n">subaru_a</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Subaru A connector&quot;</span><span class="p">)</span>
+  <span class="n">subaru_b</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Subaru B connector&quot;</span><span class="p">)</span>
+  <span class="n">subaru_c</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Subaru C connector&quot;</span><span class="p">)</span>
+  <span class="n">subaru_d</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Subaru D connector&quot;</span><span class="p">)</span>
+  <span class="n">fca</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;FCA connector&quot;</span><span class="p">)</span>
+  <span class="n">ram</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Ram connector&quot;</span><span class="p">)</span>
+  <span class="n">vw</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;VW connector&quot;</span><span class="p">)</span>
+  <span class="n">j533</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;J533 connector&quot;</span><span class="p">,</span> <span class="n">parts</span><span class="o">=</span><span class="p">[</span><span class="n">Accessory</span><span class="o">.</span><span class="n">harness_box</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">long_obdc_cable</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">usbc_coupler</span><span class="p">])</span>
+  <span class="n">hyundai_a</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai A connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_b</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai B connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_c</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai C connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_d</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai D connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_e</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai E connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_f</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai F connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_g</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai G connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_h</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai H connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_i</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai I connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_j</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai J connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_k</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai K connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_l</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai L connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_m</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai M connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_n</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai N connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_o</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai O connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_p</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai P connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_q</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai Q connector&quot;</span><span class="p">)</span>
+  <span class="n">hyundai_r</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Hyundai R connector&quot;</span><span class="p">)</span>
+  <span class="n">custom</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Developer connector&quot;</span><span class="p">)</span>
+  <span class="n">obd_ii</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;OBD-II connector&quot;</span><span class="p">,</span> <span class="n">parts</span><span class="o">=</span><span class="p">[</span><span class="n">Cable</span><span class="o">.</span><span class="n">long_obdc_cable</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">long_obdc_cable</span><span class="p">],</span> <span class="n">has_connector</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+  <span class="n">gm</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;GM connector&quot;</span><span class="p">,</span> <span class="n">parts</span><span class="o">=</span><span class="p">[</span><span class="n">Accessory</span><span class="o">.</span><span class="n">harness_box</span><span class="p">])</span>
+  <span class="n">nissan_a</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Nissan A connector&quot;</span><span class="p">,</span> <span class="n">parts</span><span class="o">=</span><span class="p">[</span><span class="n">Accessory</span><span class="o">.</span><span class="n">harness_box</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">rj45_cable_7ft</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">long_obdc_cable</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">usbc_coupler</span><span class="p">])</span>
+  <span class="n">nissan_b</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Nissan B connector&quot;</span><span class="p">,</span> <span class="n">parts</span><span class="o">=</span><span class="p">[</span><span class="n">Accessory</span><span class="o">.</span><span class="n">harness_box</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">rj45_cable_7ft</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">long_obdc_cable</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">usbc_coupler</span><span class="p">])</span>
+  <span class="n">mazda</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Mazda connector&quot;</span><span class="p">)</span>
+  <span class="n">ford_q3</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Ford Q3 connector&quot;</span><span class="p">)</span>
+  <span class="n">ford_q4</span> <span class="o">=</span> <span class="n">BaseCarHarness</span><span class="p">(</span><span class="s2">&quot;Ford Q4 connector&quot;</span><span class="p">,</span> <span class="n">parts</span><span class="o">=</span><span class="p">[</span><span class="n">Accessory</span><span class="o">.</span><span class="n">harness_box</span><span class="p">,</span> <span class="n">Accessory</span><span class="o">.</span><span class="n">comma_power_v2</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">rj45_cable_7ft</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">long_obdc_cable</span><span class="p">,</span>
+                                                       <span class="n">Cable</span><span class="o">.</span><span class="n">usbc_coupler</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="Device">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.Device">[docs]</a>
+<span class="k">class</span> <span class="nc">Device</span><span class="p">(</span><span class="n">EnumBase</span><span class="p">):</span>
+  <span class="n">threex</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;comma 3X&quot;</span><span class="p">,</span> <span class="n">parts</span><span class="o">=</span><span class="p">[</span><span class="n">Mount</span><span class="o">.</span><span class="n">mount</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">right_angle_obd_c_cable_1_5ft</span><span class="p">])</span>
+  <span class="c1"># variant of comma 3X with angled mounts</span>
+  <span class="n">threex_angled_mount</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;comma 3X&quot;</span><span class="p">,</span> <span class="n">parts</span><span class="o">=</span><span class="p">[</span><span class="n">Mount</span><span class="o">.</span><span class="n">angled_mount_8_degrees</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">right_angle_obd_c_cable_1_5ft</span><span class="p">])</span>
+  <span class="n">red_panda</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;red panda&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Kit">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.Kit">[docs]</a>
+<span class="k">class</span> <span class="nc">Kit</span><span class="p">(</span><span class="n">EnumBase</span><span class="p">):</span>
+  <span class="n">red_panda_kit</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;CAN FD panda kit&quot;</span><span class="p">,</span> <span class="n">parts</span><span class="o">=</span><span class="p">[</span><span class="n">Device</span><span class="o">.</span><span class="n">red_panda</span><span class="p">,</span> <span class="n">Accessory</span><span class="o">.</span><span class="n">harness_box</span><span class="p">,</span>
+                                                      <span class="n">Cable</span><span class="o">.</span><span class="n">usb_a_2_a_cable</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">usbc_otg_cable</span><span class="p">,</span> <span class="n">Cable</span><span class="o">.</span><span class="n">obd_c_cable_1_5ft</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="Tool">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.Tool">[docs]</a>
+<span class="k">class</span> <span class="nc">Tool</span><span class="p">(</span><span class="n">EnumBase</span><span class="p">):</span>
+  <span class="n">socket_8mm_deep</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;Socket Wrench 8mm or 5/16</span><span class="se">\&quot;</span><span class="s2"> (deep)&quot;</span><span class="p">)</span>
+  <span class="n">pry_tool</span> <span class="o">=</span> <span class="n">BasePart</span><span class="p">(</span><span class="s2">&quot;Pry Tool&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PartType">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.PartType">[docs]</a>
+<span class="k">class</span> <span class="nc">PartType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+  <span class="n">accessory</span> <span class="o">=</span> <span class="n">Accessory</span>
+  <span class="n">cable</span> <span class="o">=</span> <span class="n">Cable</span>
+  <span class="n">connector</span> <span class="o">=</span> <span class="n">CarHarness</span>
+  <span class="n">device</span> <span class="o">=</span> <span class="n">Device</span>
+  <span class="n">kit</span> <span class="o">=</span> <span class="n">Kit</span>
+  <span class="n">mount</span> <span class="o">=</span> <span class="n">Mount</span>
+  <span class="n">tool</span> <span class="o">=</span> <span class="n">Tool</span></div>
+
+
+
+<span class="n">DEFAULT_CAR_PARTS</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">EnumBase</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">Device</span><span class="o">.</span><span class="n">threex</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="CarParts">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.CarParts">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">CarParts</span><span class="p">:</span>
+  <span class="n">parts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">EnumBase</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CarParts.common">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.CarParts.common">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">common</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">add</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">EnumBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">remove</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">EnumBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">part</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="p">(</span><span class="n">add</span> <span class="ow">or</span> <span class="p">[])</span> <span class="o">+</span> <span class="n">DEFAULT_CAR_PARTS</span> <span class="k">if</span> <span class="n">part</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">remove</span> <span class="ow">or</span> <span class="p">[])]</span>
+    <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarParts.all_parts">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.CarParts.all_parts">[docs]</a>
+  <span class="k">def</span> <span class="nf">all_parts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parts</span><span class="p">:</span>
+      <span class="n">parts</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">all_parts</span><span class="p">())</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">+</span> <span class="n">parts</span></div>
+</div>
+
+
+
+<span class="n">CarFootnote</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;CarFootnote&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;column&quot;</span><span class="p">,</span> <span class="s2">&quot;docs_only&quot;</span><span class="p">,</span> <span class="s2">&quot;shop_footnote&quot;</span><span class="p">],</span> <span class="n">defaults</span><span class="o">=</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="CommonFootnote">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.CommonFootnote">[docs]</a>
+<span class="k">class</span> <span class="nc">CommonFootnote</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+  <span class="n">EXP_LONG_AVAIL</span> <span class="o">=</span> <span class="n">CarFootnote</span><span class="p">(</span>
+    <span class="s2">&quot;openpilot Longitudinal Control (Alpha) is available behind a toggle; &quot;</span> <span class="o">+</span>
+    <span class="s2">&quot;the toggle is only available in non-release branches such as `devel` or `master-ci`.&quot;</span><span class="p">,</span>
+    <span class="n">Column</span><span class="o">.</span><span class="n">LONGITUDINAL</span><span class="p">,</span> <span class="n">docs_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">EXP_LONG_DSU</span> <span class="o">=</span> <span class="n">CarFootnote</span><span class="p">(</span>
+    <span class="s2">&quot;By default, this car will use the stock Adaptive Cruise Control (ACC) for longitudinal control. &quot;</span> <span class="o">+</span>
+    <span class="s2">&quot;If the Driver Support Unit (DSU) is disconnected, openpilot ACC will replace &quot;</span> <span class="o">+</span>
+    <span class="s2">&quot;stock ACC. &lt;b&gt;&lt;i&gt;NOTE: disconnecting the DSU disables Automatic Emergency Braking (AEB).&lt;/i&gt;&lt;/b&gt;&quot;</span><span class="p">,</span>
+    <span class="n">Column</span><span class="o">.</span><span class="n">LONGITUDINAL</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_footnotes">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.get_footnotes">[docs]</a>
+<span class="k">def</span> <span class="nf">get_footnotes</span><span class="p">(</span><span class="n">footnotes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Enum</span><span class="p">],</span> <span class="n">column</span><span class="p">:</span> <span class="n">Column</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Enum</span><span class="p">]:</span>
+  <span class="c1"># Returns applicable footnotes given current column</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">fn</span> <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">footnotes</span> <span class="k">if</span> <span class="n">fn</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">column</span> <span class="o">==</span> <span class="n">column</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># TODO: store years as a list</span>
+<div class="viewcode-block" id="get_year_list">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.get_year_list">[docs]</a>
+<span class="k">def</span> <span class="nf">get_year_list</span><span class="p">(</span><span class="n">years</span><span class="p">):</span>
+  <span class="n">years_list</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">years</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">years_list</span>
+
+  <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">years</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">):</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="n">year</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="n">years_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">year</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+      <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">year</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+      <span class="n">years_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;20</span><span class="si">{</span><span class="n">end</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Malformed year string: </span><span class="si">{</span><span class="n">years</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">years_list</span></div>
+
+
+
+<div class="viewcode-block" id="split_name">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.split_name">[docs]</a>
+<span class="k">def</span> <span class="nf">split_name</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+  <span class="n">make</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="n">years</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">MODEL_YEARS_RE</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">years</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">():]</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">[:</span><span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="k">return</span> <span class="n">make</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">years</span></div>
+
+
+
+<div class="viewcode-block" id="CarDocs">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.CarDocs">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">CarDocs</span><span class="p">:</span>
+  <span class="c1"># make + model + model years</span>
+  <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+
+  <span class="c1"># Example for Toyota Corolla MY20</span>
+  <span class="c1"># requirements: Lane Tracing Assist (LTA) and Dynamic Radar Cruise Control (DRCC)</span>
+  <span class="c1"># US Market reference: &quot;All&quot;, since all Corolla in the US come standard with LTA and DRCC</span>
+
+  <span class="c1"># the simplest description of the requirements for the US market</span>
+  <span class="n">package</span><span class="p">:</span> <span class="nb">str</span>
+
+  <span class="c1"># the minimum compatibility requirements for this model, regardless</span>
+  <span class="c1"># of market. can be a package, trim, or list of features</span>
+  <span class="n">requirements</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="n">video_link</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">footnotes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Enum</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+  <span class="n">min_steer_speed</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">min_enable_speed</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">auto_resume</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="c1"># all the parts needed for the supported car</span>
+  <span class="n">car_parts</span><span class="p">:</span> <span class="n">CarParts</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">CarParts</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">make</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">years</span> <span class="o">=</span> <span class="n">split_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">year_list</span> <span class="o">=</span> <span class="n">get_year_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">years</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CarDocs.init">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.CarDocs.init">[docs]</a>
+  <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">,</span> <span class="n">all_footnotes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Enum</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">car_name</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">carName</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">car_fingerprint</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span>
+
+    <span class="c1"># longitudinal column</span>
+    <span class="n">op_long</span> <span class="o">=</span> <span class="s2">&quot;Stock&quot;</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">experimentalLongitudinalAvailable</span> <span class="ow">or</span> <span class="n">CP</span><span class="o">.</span><span class="n">enableDsu</span><span class="p">:</span>
+      <span class="n">op_long</span> <span class="o">=</span> <span class="s2">&quot;openpilot available&quot;</span>
+      <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">enableDsu</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">footnotes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CommonFootnote</span><span class="o">.</span><span class="n">EXP_LONG_DSU</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">footnotes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CommonFootnote</span><span class="o">.</span><span class="n">EXP_LONG_AVAIL</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">CP</span><span class="o">.</span><span class="n">enableDsu</span><span class="p">:</span>
+      <span class="n">op_long</span> <span class="o">=</span> <span class="s2">&quot;openpilot&quot;</span>
+
+    <span class="c1"># min steer &amp; enable speed columns</span>
+    <span class="c1"># TODO: set all the min steer speeds in carParams and remove this</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_steer_speed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">assert</span> <span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="si">}</span><span class="s2">: Minimum steer speed set in both CarDocs and CarParams&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">min_steer_speed</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span>
+
+    <span class="c1"># TODO: set all the min enable speeds in carParams correctly and remove this</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_enable_speed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">min_enable_speed</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">minEnableSpeed</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_resume</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">auto_resume</span> <span class="o">=</span> <span class="n">CP</span><span class="o">.</span><span class="n">autoResumeSng</span>
+
+    <span class="c1"># hardware column</span>
+    <span class="n">hardware_col</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">car_parts</span><span class="o">.</span><span class="n">parts</span><span class="p">:</span>
+      <span class="n">model_years</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">years</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">years</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+      <span class="n">buy_link</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&lt;a href=&quot;https://comma.ai/shop/comma-3x.html?make=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">make</span><span class="si">}</span><span class="s1">&amp;model=</span><span class="si">{</span><span class="n">model_years</span><span class="si">}</span><span class="s1">&quot;&gt;Buy Here&lt;/a&gt;&#39;</span>
+
+      <span class="n">tools_docs</span> <span class="o">=</span> <span class="p">[</span><span class="n">part</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">car_parts</span><span class="o">.</span><span class="n">all_parts</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="n">Tool</span><span class="p">)]</span>
+      <span class="n">parts_docs</span> <span class="o">=</span> <span class="p">[</span><span class="n">part</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">car_parts</span><span class="o">.</span><span class="n">all_parts</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="n">Tool</span><span class="p">)]</span>
+
+      <span class="k">def</span> <span class="nf">display_func</span><span class="p">(</span><span class="n">parts</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;- </span><span class="si">{</span><span class="n">parts</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">part</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">part</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">parts</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">part</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="p">))])</span>
+
+      <span class="n">hardware_col</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&lt;details&gt;&lt;summary&gt;Parts&lt;/summary&gt;&lt;sub&gt;</span><span class="si">{</span><span class="n">display_func</span><span class="p">(</span><span class="n">parts_docs</span><span class="p">)</span><span class="si">}</span><span class="s1">&lt;br&gt;</span><span class="si">{</span><span class="n">buy_link</span><span class="si">}</span><span class="s1">&lt;/sub&gt;&lt;/details&gt;&#39;</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tools_docs</span><span class="p">):</span>
+        <span class="n">hardware_col</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;&lt;details&gt;&lt;summary&gt;Tools&lt;/summary&gt;&lt;sub&gt;</span><span class="si">{</span><span class="n">display_func</span><span class="p">(</span><span class="n">tools_docs</span><span class="p">)</span><span class="si">}</span><span class="s1">&lt;/sub&gt;&lt;/details&gt;&#39;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">row</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Enum</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Star</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="n">Column</span><span class="o">.</span><span class="n">MAKE</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">make</span><span class="p">,</span>
+      <span class="n">Column</span><span class="o">.</span><span class="n">MODEL</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+      <span class="n">Column</span><span class="o">.</span><span class="n">PACKAGE</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="p">,</span>
+      <span class="n">Column</span><span class="o">.</span><span class="n">LONGITUDINAL</span><span class="p">:</span> <span class="n">op_long</span><span class="p">,</span>
+      <span class="n">Column</span><span class="o">.</span><span class="n">FSR_LONGITUDINAL</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_enable_speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">CV</span><span class="o">.</span><span class="n">MS_TO_MPH</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> mph&quot;</span><span class="p">,</span>
+      <span class="n">Column</span><span class="o">.</span><span class="n">FSR_STEERING</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_steer_speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">CV</span><span class="o">.</span><span class="n">MS_TO_MPH</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> mph&quot;</span><span class="p">,</span>
+      <span class="n">Column</span><span class="o">.</span><span class="n">STEERING_TORQUE</span><span class="p">:</span> <span class="n">Star</span><span class="o">.</span><span class="n">EMPTY</span><span class="p">,</span>
+      <span class="n">Column</span><span class="o">.</span><span class="n">AUTO_RESUME</span><span class="p">:</span> <span class="n">Star</span><span class="o">.</span><span class="n">FULL</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_resume</span> <span class="k">else</span> <span class="n">Star</span><span class="o">.</span><span class="n">EMPTY</span><span class="p">,</span>
+      <span class="n">Column</span><span class="o">.</span><span class="n">HARDWARE</span><span class="p">:</span> <span class="n">hardware_col</span><span class="p">,</span>
+      <span class="n">Column</span><span class="o">.</span><span class="n">VIDEO</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">video_link</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">video_link</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>  <span class="c1"># replaced with an image and link from template in get_column</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Set steering torque star from max lateral acceleration</span>
+    <span class="k">assert</span> <span class="n">CP</span><span class="o">.</span><span class="n">maxLateralAccel</span> <span class="o">&gt;</span> <span class="mf">0.1</span>
+    <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">maxLateralAccel</span> <span class="o">&gt;=</span> <span class="n">GOOD_TORQUE_THRESHOLD</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">row</span><span class="p">[</span><span class="n">Column</span><span class="o">.</span><span class="n">STEERING_TORQUE</span><span class="p">]</span> <span class="o">=</span> <span class="n">Star</span><span class="o">.</span><span class="n">FULL</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">all_footnotes</span> <span class="o">=</span> <span class="n">all_footnotes</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">detail_sentence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_detail_sentence</span><span class="p">(</span><span class="n">CP</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="CarDocs.init_make">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.CarDocs.init_make">[docs]</a>
+  <span class="k">def</span> <span class="nf">init_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;CarDocs subclasses can add make-specific logic for harness selection, footnotes, etc.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="CarDocs.get_detail_sentence">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.CarDocs.get_detail_sentence">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_detail_sentence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CP</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">CP</span><span class="o">.</span><span class="n">notCar</span><span class="p">:</span>
+      <span class="n">sentence_builder</span> <span class="o">=</span> <span class="s2">&quot;openpilot upgrades your &lt;strong&gt;</span><span class="si">{car_model}</span><span class="s2">&lt;/strong&gt; with automated lane centering</span><span class="si">{alc}</span><span class="s2"> and adaptive cruise control</span><span class="si">{acc}</span><span class="s2">.&quot;</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_steer_speed</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_enable_speed</span><span class="p">:</span>
+        <span class="n">alc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot; &lt;strong&gt;above </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_steer_speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">CV</span><span class="o">.</span><span class="n">MS_TO_MPH</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> mph&lt;/strong&gt;,&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_steer_speed</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot; &lt;strong&gt;at all speeds&lt;/strong&gt;,&quot;</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">alc</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+      <span class="c1"># Exception for cars which do not auto-resume yet</span>
+      <span class="n">acc</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_enable_speed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">acc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot; &lt;strong&gt;while driving above </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_enable_speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">CV</span><span class="o">.</span><span class="n">MS_TO_MPH</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> mph&lt;/strong&gt;&quot;</span>
+      <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_resume</span><span class="p">:</span>
+        <span class="n">acc</span> <span class="o">=</span> <span class="s2">&quot; &lt;strong&gt;that automatically resumes from a stop&lt;/strong&gt;&quot;</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">row</span><span class="p">[</span><span class="n">Column</span><span class="o">.</span><span class="n">STEERING_TORQUE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">Star</span><span class="o">.</span><span class="n">FULL</span><span class="p">:</span>
+        <span class="n">sentence_builder</span> <span class="o">+=</span> <span class="s2">&quot; This car may not be able to take tight turns on its own.&quot;</span>
+
+      <span class="c1"># experimental mode</span>
+      <span class="n">exp_link</span> <span class="o">=</span> <span class="s2">&quot;&lt;a href=&#39;https://blog.comma.ai/090release/#experimental-mode&#39; target=&#39;_blank&#39; class=&#39;link-light-new-regular-text&#39;&gt;Experimental mode&lt;/a&gt;&quot;</span>
+      <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="ow">or</span> <span class="n">CP</span><span class="o">.</span><span class="n">experimentalLongitudinalAvailable</span><span class="p">:</span>
+        <span class="n">sentence_builder</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; Traffic light and stop sign handling is also available in </span><span class="si">{</span><span class="n">exp_link</span><span class="si">}</span><span class="s2">.&quot;</span>
+
+      <span class="k">return</span> <span class="n">sentence_builder</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">car_model</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">make</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">alc</span><span class="o">=</span><span class="n">alc</span><span class="p">,</span> <span class="n">acc</span><span class="o">=</span><span class="n">acc</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="o">==</span> <span class="s2">&quot;COMMA_BODY&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;The body is a robotics dev kit that can run openpilot. &lt;a href=&#39;https://www.commabody.com&#39;&gt;Learn more.&lt;/a&gt;&quot;</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;This notCar does not have a detail sentence: </span><span class="si">{</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarDocs.get_column">
+<a class="viewcode-back" href="../../../selfdrive.car.html#selfdrive.car.docs_definitions.CarDocs.get_column">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="n">Column</span><span class="p">,</span> <span class="n">star_icon</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">video_icon</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">footnote_tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">item</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Star</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">row</span><span class="p">[</span><span class="n">column</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">Star</span><span class="p">):</span>
+      <span class="n">item</span> <span class="o">=</span> <span class="n">star_icon</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">Column</span><span class="o">.</span><span class="n">MODEL</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">years</span><span class="p">):</span>
+      <span class="n">item</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">years</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">Column</span><span class="o">.</span><span class="n">VIDEO</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">item</span> <span class="o">=</span> <span class="n">video_icon</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="n">footnotes</span> <span class="o">=</span> <span class="n">get_footnotes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">footnotes</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">footnotes</span><span class="p">):</span>
+      <span class="n">sups</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">all_footnotes</span><span class="p">[</span><span class="n">fn</span><span class="p">]</span> <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">footnotes</span><span class="p">])</span>
+      <span class="n">item</span> <span class="o">+=</span> <span class="n">footnote_tag</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="w"> </span><span class="n">sups</span><span class="p">))</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">item</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

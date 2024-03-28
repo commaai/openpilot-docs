@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tools.lib.comma_car_segments &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/tools/lib/comma_car_segments.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tools.lib.comma_car_segments</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tools.lib.comma_car_segments</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+
+<span class="c1"># Forks with additional car support can fork the commaCarSegments repo on huggingface or host the LFS files themselves</span>
+<span class="n">COMMA_CAR_SEGMENTS_REPO</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;COMMA_CAR_SEGMENTS_REPO&quot;</span><span class="p">,</span> <span class="s2">&quot;https://huggingface.co/datasets/commaai/commaCarSegments&quot;</span><span class="p">)</span>
+<span class="n">COMMA_CAR_SEGMENTS_BRANCH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;COMMA_CAR_SEGMENTS_BRANCH&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">)</span>
+<span class="n">COMMA_CAR_SEGMENTS_LFS_INSTANCE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;COMMA_CAR_SEGMENTS_LFS_INSTANCE&quot;</span><span class="p">,</span> <span class="n">COMMA_CAR_SEGMENTS_REPO</span><span class="p">)</span>
+
+<div class="viewcode-block" id="get_comma_car_segments_database">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.comma_car_segments.get_comma_car_segments_database">[docs]</a>
+<span class="k">def</span> <span class="nf">get_comma_car_segments_database</span><span class="p">():</span>
+  <span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.fingerprints</span> <span class="kn">import</span> <span class="n">MIGRATION</span>
+
+  <span class="n">database</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">get_repo_raw_url</span><span class="p">(</span><span class="s2">&quot;database.json&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+  <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">for</span> <span class="n">platform</span> <span class="ow">in</span> <span class="n">database</span><span class="p">:</span>
+    <span class="n">ret</span><span class="p">[</span><span class="n">MIGRATION</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">platform</span><span class="p">,</span> <span class="n">platform</span><span class="p">)]</span> <span class="o">=</span> <span class="n">database</span><span class="p">[</span><span class="n">platform</span><span class="p">]</span>
+
+  <span class="k">return</span> <span class="n">ret</span></div>
+
+
+
+<span class="c1"># Helpers related to interfacing with the commaCarSegments repository, which contains a collection of public segments for users to perform validation on.</span>
+
+<div class="viewcode-block" id="parse_lfs_pointer">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.comma_car_segments.parse_lfs_pointer">[docs]</a>
+<span class="k">def</span> <span class="nf">parse_lfs_pointer</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+  <span class="n">header</span><span class="p">,</span> <span class="n">lfs_version</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+  <span class="k">assert</span> <span class="n">header</span> <span class="o">==</span> <span class="s2">&quot;version&quot;</span>
+  <span class="k">assert</span> <span class="n">lfs_version</span> <span class="o">==</span> <span class="s2">&quot;https://git-lfs.github.com/spec/v1&quot;</span>
+
+  <span class="n">header</span><span class="p">,</span> <span class="n">oid_raw</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+  <span class="k">assert</span> <span class="n">header</span> <span class="o">==</span> <span class="s2">&quot;oid&quot;</span>
+  <span class="n">header</span><span class="p">,</span> <span class="n">oid</span> <span class="o">=</span> <span class="n">oid_raw</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+  <span class="k">assert</span> <span class="n">header</span> <span class="o">==</span> <span class="s2">&quot;sha256&quot;</span>
+
+  <span class="n">header</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+  <span class="k">assert</span> <span class="n">header</span> <span class="o">==</span> <span class="s2">&quot;size&quot;</span>
+
+  <span class="k">return</span> <span class="n">oid</span><span class="p">,</span> <span class="n">size</span></div>
+
+
+<div class="viewcode-block" id="get_lfs_file_url">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.comma_car_segments.get_lfs_file_url">[docs]</a>
+<span class="k">def</span> <span class="nf">get_lfs_file_url</span><span class="p">(</span><span class="n">oid</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;operation&quot;</span><span class="p">:</span> <span class="s2">&quot;download&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;transfers&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;basic&quot;</span> <span class="p">],</span>
+    <span class="s2">&quot;objects&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;oid&quot;</span><span class="p">:</span> <span class="n">oid</span><span class="p">,</span>
+        <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;hash_algo&quot;</span><span class="p">:</span> <span class="s2">&quot;sha256&quot;</span>
+  <span class="p">}</span>
+
+  <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;application/vnd.git-lfs+json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/vnd.git-lfs+json&quot;</span>
+  <span class="p">}</span>
+
+  <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">COMMA_CAR_SEGMENTS_LFS_INSTANCE</span><span class="si">}</span><span class="s2">.git/info/lfs/objects/batch&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+  <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">ok</span>
+
+  <span class="n">obj</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;objects&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+  <span class="k">assert</span> <span class="s2">&quot;error&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">,</span> <span class="n">obj</span>
+
+  <span class="k">return</span> <span class="n">obj</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="s2">&quot;download&quot;</span><span class="p">][</span><span class="s2">&quot;href&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_repo_raw_url">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.comma_car_segments.get_repo_raw_url">[docs]</a>
+<span class="k">def</span> <span class="nf">get_repo_raw_url</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+  <span class="k">if</span> <span class="s2">&quot;huggingface&quot;</span> <span class="ow">in</span> <span class="n">COMMA_CAR_SEGMENTS_REPO</span><span class="p">:</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">COMMA_CAR_SEGMENTS_REPO</span><span class="si">}</span><span class="s2">/raw/</span><span class="si">{</span><span class="n">COMMA_CAR_SEGMENTS_BRANCH</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="get_repo_url">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.comma_car_segments.get_repo_url">[docs]</a>
+<span class="k">def</span> <span class="nf">get_repo_url</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+  <span class="c1"># Automatically switch to LFS if we are requesting a file that is stored in LFS</span>
+
+  <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">get_repo_raw_url</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+
+  <span class="k">if</span> <span class="s2">&quot;text/plain&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content-type&quot;</span><span class="p">):</span>
+    <span class="c1"># This is an LFS pointer, so download the raw data from lfs</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">get_repo_raw_url</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="n">oid</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">parse_lfs_pointer</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">get_lfs_file_url</span><span class="p">(</span><span class="n">oid</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="c1"># File has not been uploaded to LFS yet</span>
+    <span class="c1"># (either we are on a fork where the data hasn&#39;t been pushed to LFS yet, or the CI job to push hasn&#39;t finished)</span>
+    <span class="k">return</span> <span class="n">get_repo_raw_url</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_url">
+<a class="viewcode-back" href="../../../tools.lib.html#tools.lib.comma_car_segments.get_url">[docs]</a>
+<span class="k">def</span> <span class="nf">get_url</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">segment</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="s2">&quot;rlog.bz2&quot;</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">get_repo_url</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;segments/</span><span class="si">{</span><span class="n">route</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">segment</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

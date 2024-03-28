@@ -1,0 +1,555 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="class_live_stream" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>LiveStream</compoundname>
+    <basecompoundref refid="class_abstract_stream" prot="public" virt="non-virtual">AbstractStream</basecompoundref>
+    <derivedcompoundref refid="class_device_stream" prot="public" virt="non-virtual">DeviceStream</derivedcompoundref>
+    <derivedcompoundref refid="class_panda_stream" prot="public" virt="non-virtual">PandaStream</derivedcompoundref>
+    <derivedcompoundref refid="class_socket_can_stream" prot="public" virt="non-virtual">SocketCanStream</derivedcompoundref>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_live_stream_1af5f37922f9493555fa2a53792b25b450" prot="private" static="no" mutable="no">
+        <type>std::mutex</type>
+        <definition>std::mutex LiveStream::lock</definition>
+        <argsstring></argsstring>
+        <name>lock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="34" column="14" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_live_stream_1aee2db8bcab32be26849fcd413f2f6e3b" prot="private" static="no" mutable="no">
+        <type>QThread *</type>
+        <definition>QThread* LiveStream::stream_thread</definition>
+        <argsstring></argsstring>
+        <name>stream_thread</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="35" column="11" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_live_stream_1aed0c5dcedbb5251517f407ce89a64669" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; const <ref refid="struct_can_event" kindref="compound">CanEvent</ref> * &gt;</type>
+        <definition>std::vector&lt;const CanEvent *&gt; LiveStream::received_events_</definition>
+        <argsstring></argsstring>
+        <name>received_events_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="36" column="15" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_live_stream_1a4c259fe1098fb7511f8a3ebb0fd97955" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int LiveStream::timer_id</definition>
+        <argsstring></argsstring>
+        <name>timer_id</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="38" column="7" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_live_stream_1a6c78468225f6a97ef3b80c2f18773199" prot="private" static="no" mutable="no">
+        <type>QBasicTimer</type>
+        <definition>QBasicTimer LiveStream::update_timer</definition>
+        <argsstring></argsstring>
+        <name>update_timer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="39" column="15" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_live_stream_1a52df3577ad42cee7bda26645a8f334e9" prot="private" static="no" mutable="no">
+        <type>QDateTime</type>
+        <definition>QDateTime LiveStream::begin_date_time</definition>
+        <argsstring></argsstring>
+        <name>begin_date_time</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="41" column="13" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_live_stream_1a538e831fd89ad1ba418b06d8fe08fd08" prot="private" static="no" mutable="no">
+        <type>uint64_t</type>
+        <definition>uint64_t LiveStream::begin_event_ts</definition>
+        <argsstring></argsstring>
+        <name>begin_event_ts</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="42" column="12" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_live_stream_1a5e2e9027e2f7fed9b89c8898308580f3" prot="private" static="no" mutable="no">
+        <type>uint64_t</type>
+        <definition>uint64_t LiveStream::current_event_ts</definition>
+        <argsstring></argsstring>
+        <name>current_event_ts</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="43" column="12" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_live_stream_1acdc37f4a689311b3b9b6b55df3fa9a5f" prot="private" static="no" mutable="no">
+        <type>uint64_t</type>
+        <definition>uint64_t LiveStream::first_event_ts</definition>
+        <argsstring></argsstring>
+        <name>first_event_ts</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="44" column="12" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_live_stream_1af33cac6deb50fb1fe7fb63b4d6233589" prot="private" static="no" mutable="no">
+        <type>uint64_t</type>
+        <definition>uint64_t LiveStream::first_update_ts</definition>
+        <argsstring></argsstring>
+        <name>first_update_ts</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="45" column="12" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_live_stream_1a27aba35d3c05b26b38322da4782aaf2b" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool LiveStream::post_last_event</definition>
+        <argsstring></argsstring>
+        <name>post_last_event</name>
+        <initializer>= true</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="46" column="8" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_live_stream_1a7084ef72b4259d1a03bb4f1189bd08ee" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double LiveStream::speed_</definition>
+        <argsstring></argsstring>
+        <name>speed_</name>
+        <initializer>= 1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="47" column="10" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_live_stream_1a8d0b4f9f0dbea673424e656d11d9f2f3" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool LiveStream::paused_</definition>
+        <argsstring></argsstring>
+        <name>paused_</name>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="48" column="8" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_live_stream_1aac058133d4cf41bdd328afad69d39dfa" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; Logger &gt;</type>
+        <definition>std::unique_ptr&lt;Logger&gt; LiveStream::logger</definition>
+        <argsstring></argsstring>
+        <name>logger</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="51" column="19" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_live_stream_1a486b80c6ab1dfacef05c49e3b1b28c81" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>LiveStream::LiveStream</definition>
+        <argsstring>(QObject *parent)</argsstring>
+        <name>LiveStream</name>
+        <param>
+          <type>QObject *</type>
+          <declname>parent</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="14" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_live_stream_1a0ca2b98012c52ebf0b07f0dc1d301873" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
+        <definition>virtual LiveStream::~LiveStream</definition>
+        <argsstring>()</argsstring>
+        <name>~LiveStream</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="15" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="class_live_stream_1a49631ae41c50bd3112d2329b7d63cb0f" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void LiveStream::start</definition>
+        <argsstring>() override</argsstring>
+        <name>start</name>
+        <reimplements refid="class_abstract_stream_1a3a44162ada17f69d44af2122ff5be4f9">start</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="16" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_live_stream_1a8769e2441f49b6ffc31b19ead7eb18cf" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>QDateTime</type>
+        <definition>QDateTime LiveStream::beginDateTime</definition>
+        <argsstring>() const</argsstring>
+        <name>beginDateTime</name>
+        <reimplements refid="class_abstract_stream_1a361749e1b3d489b661696d2e0a57dd7d">beginDateTime</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="17" column="20" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="17" bodyend="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_live_stream_1ad106b6c0e578ab1feefed8d3abd75fd4" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>double</type>
+        <definition>double LiveStream::routeStartTime</definition>
+        <argsstring>() const override</argsstring>
+        <name>routeStartTime</name>
+        <reimplements refid="class_abstract_stream_1ae18f4caded575e7b91acd9fefe3fb6c4">routeStartTime</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="18" column="17" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="18" bodyend="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_live_stream_1a9d3113b25853bea14bcaa0d7543df8b9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>void LiveStream::setSpeed</definition>
+        <argsstring>(float speed) override</argsstring>
+        <name>setSpeed</name>
+        <reimplements refid="class_abstract_stream_1ac3905b779f55bfb37172b3b69aedada6">setSpeed</reimplements>
+        <param>
+          <type>float</type>
+          <declname>speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="19" column="8" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="19" bodyend="19"/>
+      </memberdef>
+      <memberdef kind="function" id="class_live_stream_1aa0e2e7d5886d1e97ace3a836e44cf26b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>double</type>
+        <definition>double LiveStream::getSpeed</definition>
+        <argsstring>() override</argsstring>
+        <name>getSpeed</name>
+        <reimplements refid="class_abstract_stream_1a022ebc351d047bfdacb06ad34e3025de">getSpeed</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="20" column="10" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="20" bodyend="20"/>
+      </memberdef>
+      <memberdef kind="function" id="class_live_stream_1aafc9ee91e661ccd174da7de3b1697a92" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>bool</type>
+        <definition>bool LiveStream::isPaused</definition>
+        <argsstring>() const override</argsstring>
+        <name>isPaused</name>
+        <reimplements refid="class_abstract_stream_1a6867b48dff0ddf3d94c3c3a3c6843d9c">isPaused</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="21" column="8" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="21" bodyend="21"/>
+      </memberdef>
+      <memberdef kind="function" id="class_live_stream_1a90080c4281255be117605948f7b1943d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void LiveStream::pause</definition>
+        <argsstring>(bool pause) override</argsstring>
+        <name>pause</name>
+        <reimplements refid="class_abstract_stream_1a6842e80df2842fc72f2a85f65b25c155">pause</reimplements>
+        <param>
+          <type>bool</type>
+          <declname>pause</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="22" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_live_stream_1a108a458d33f2fa22ca64ed86b0299571" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void LiveStream::seekTo</definition>
+        <argsstring>(double sec) override</argsstring>
+        <name>seekTo</name>
+        <reimplements refid="class_abstract_stream_1afc8c5bfc0ccf1b50b8c1e7a7cb0f69ad">seekTo</reimplements>
+        <param>
+          <type>double</type>
+          <declname>sec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="23" column="8"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="class_live_stream_1aeea6322a08b599bf17c2c117666177b0" prot="protected" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void LiveStream::streamThread</definition>
+        <argsstring>()=0</argsstring>
+        <name>streamThread</name>
+        <reimplementedby refid="class_device_stream_1ac2a64e7b35599221a3cacf16a51f3d5c">streamThread</reimplementedby>
+        <reimplementedby refid="class_socket_can_stream_1ac2ac9c8c501b62eef8c6b2402b71d391">streamThread</reimplementedby>
+        <reimplementedby refid="class_panda_stream_1af3254f91eb66006093465a1d5b75e2e5">streamThread</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="26" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="class_live_stream_1aa15fe7e58cfa9ff10aa81cb667dea174" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void LiveStream::handleEvent</definition>
+        <argsstring>(kj::ArrayPtr&lt; capnp::word &gt; event)</argsstring>
+        <name>handleEvent</name>
+        <param>
+          <type>kj::ArrayPtr&lt; capnp::word &gt;</type>
+          <declname>event</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="27" column="8"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="class_live_stream_1a662dc6a73a73de07f986feb70bfaf99f" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void LiveStream::startUpdateTimer</definition>
+        <argsstring>()</argsstring>
+        <name>startUpdateTimer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="30" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_live_stream_1a9a650b88839c6d1947e2505c20d5a36b" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void LiveStream::timerEvent</definition>
+        <argsstring>(QTimerEvent *event) override</argsstring>
+        <name>timerEvent</name>
+        <param>
+          <type>QTimerEvent *</type>
+          <declname>event</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="31" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_live_stream_1aa3f5416a437c6373ca4909ad68164469" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void LiveStream::updateEvents</definition>
+        <argsstring>()</argsstring>
+        <name>updateEvents</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="32" column="8"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="4">
+        <label>DeviceStream</label>
+        <link refid="class_device_stream"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>QObject</label>
+      </node>
+      <node id="5">
+        <label>PandaStream</label>
+        <link refid="class_panda_stream"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>AbstractStream</label>
+        <link refid="class_abstract_stream"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>SocketCanStream</label>
+        <link refid="class_socket_can_stream"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>LiveStream</label>
+        <link refid="class_live_stream"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>QObject</label>
+      </node>
+      <node id="2">
+        <label>AbstractStream</label>
+        <link refid="class_abstract_stream"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>LiveStream</label>
+        <link refid="class_live_stream"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/tmp/openpilot/tools/cabana/streams/livestream.h" line="10" column="39" bodyfile="/tmp/openpilot/tools/cabana/streams/livestream.h" bodystart="10" bodyend="52"/>
+    <listofallmembers>
+      <member refid="class_abstract_stream_1ac6362a12180cfa744dc9d460e089b82a" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>AbstractStream</name></member>
+      <member refid="class_abstract_stream_1abd3571b8e3ad5964589c825fad9791ee" prot="protected" virt="non-virtual"><scope>LiveStream</scope><name>all_events_</name></member>
+      <member refid="class_abstract_stream_1a85544b53c6b91dbc5e6ebd5c9fa707b2" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>allEvents</name></member>
+      <member refid="class_live_stream_1a52df3577ad42cee7bda26645a8f334e9" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>begin_date_time</name></member>
+      <member refid="class_live_stream_1a538e831fd89ad1ba418b06d8fe08fd08" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>begin_event_ts</name></member>
+      <member refid="class_live_stream_1a8769e2441f49b6ffc31b19ead7eb18cf" prot="public" virt="virtual"><scope>LiveStream</scope><name>beginDateTime</name></member>
+      <member refid="class_abstract_stream_1a8f2d0b4d51ebf21f25cfb5e2b2847bad" prot="public" virt="virtual"><scope>LiveStream</scope><name>carFingerprint</name></member>
+      <member refid="class_abstract_stream_1ad64c62780ba7d5ec071e7a25679c70b9" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>clearSuppressed</name></member>
+      <member refid="class_live_stream_1a5e2e9027e2f7fed9b89c8898308580f3" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>current_event_ts</name></member>
+      <member refid="class_abstract_stream_1a0af595fb92c11ff20629633159bc61dc" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>currentSec</name></member>
+      <member refid="class_abstract_stream_1ac51dbdc2cd17f7ff4c747d4d9f79d3c3" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>events</name></member>
+      <member refid="class_abstract_stream_1aa74ca35333975bae28385200432e12d3" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>eventsMap</name></member>
+      <member refid="class_abstract_stream_1a1730ae40c02a68535cabdfea1bf9706f" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>eventsMerged</name></member>
+      <member refid="class_live_stream_1acdc37f4a689311b3b9b6b55df3fa9a5f" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>first_event_ts</name></member>
+      <member refid="class_live_stream_1af33cac6deb50fb1fe7fb63b4d6233589" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>first_update_ts</name></member>
+      <member refid="class_live_stream_1aa0e2e7d5886d1e97ace3a836e44cf26b" prot="public" virt="virtual"><scope>LiveStream</scope><name>getSpeed</name></member>
+      <member refid="class_live_stream_1aa15fe7e58cfa9ff10aa81cb667dea174" prot="protected" virt="non-virtual"><scope>LiveStream</scope><name>handleEvent</name></member>
+      <member refid="class_live_stream_1aafc9ee91e661ccd174da7de3b1697a92" prot="public" virt="virtual"><scope>LiveStream</scope><name>isPaused</name></member>
+      <member refid="class_abstract_stream_1a2174368127347f2a12f3f8e744ec620e" prot="protected" virt="non-virtual"><scope>LiveStream</scope><name>lastest_event_ts</name></member>
+      <member refid="class_abstract_stream_1aa71b6ad25e2128d1c535ea04ab0c2a20" prot="protected" virt="non-virtual"><scope>LiveStream</scope><name>lastEventMonoTime</name></member>
+      <member refid="class_abstract_stream_1a7163a6b54351dc7f5326bd399caea806" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>lastMessage</name></member>
+      <member refid="class_abstract_stream_1ae0ea318ec4b5c1d49872645a23d33605" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>lastMessages</name></member>
+      <member refid="class_live_stream_1a486b80c6ab1dfacef05c49e3b1b28c81" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>LiveStream</name></member>
+      <member refid="class_abstract_stream_1a15b9d027fe6a7012a57b1cc52fec0091" prot="public" virt="virtual"><scope>LiveStream</scope><name>liveStreaming</name></member>
+      <member refid="class_live_stream_1af5f37922f9493555fa2a53792b25b450" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>lock</name></member>
+      <member refid="class_live_stream_1aac058133d4cf41bdd328afad69d39dfa" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>logger</name></member>
+      <member refid="class_abstract_stream_1a7df802daa16c35fe4b09c4fb77e90a63" prot="protected" virt="non-virtual"><scope>LiveStream</scope><name>mergeEvents</name></member>
+      <member refid="class_abstract_stream_1a1d5289bacb8bece5c88b9a50cabd534c" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>msgsReceived</name></member>
+      <member refid="class_abstract_stream_1ac717eb2f0910cc924419ae46c579b04b" prot="protected" virt="non-virtual"><scope>LiveStream</scope><name>newEvent</name></member>
+      <member refid="class_live_stream_1a90080c4281255be117605948f7b1943d" prot="public" virt="virtual"><scope>LiveStream</scope><name>pause</name></member>
+      <member refid="class_abstract_stream_1a0a65e0e9bd73c42020c20166aac31112" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>paused</name></member>
+      <member refid="class_live_stream_1a8d0b4f9f0dbea673424e656d11d9f2f3" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>paused_</name></member>
+      <member refid="class_live_stream_1a27aba35d3c05b26b38322da4782aaf2b" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>post_last_event</name></member>
+      <member refid="class_abstract_stream_1a79046e9d2897df88ec5efbc2379a4358" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>privateUpdateLastMsgsSignal</name></member>
+      <member refid="class_live_stream_1aed0c5dcedbb5251517f407ce89a64669" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>received_events_</name></member>
+      <member refid="class_abstract_stream_1a816bc4879b071c6c5b6a7cd68d98732c" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>resume</name></member>
+      <member refid="class_abstract_stream_1a6548cd03f719cdff918cac98cd18fc25" prot="public" virt="pure-virtual"><scope>LiveStream</scope><name>routeName</name></member>
+      <member refid="class_live_stream_1ad106b6c0e578ab1feefed8d3abd75fd4" prot="public" virt="virtual"><scope>LiveStream</scope><name>routeStartTime</name></member>
+      <member refid="class_abstract_stream_1af2e93c10db5e8329f3287ac3eba79582" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>seekedTo</name></member>
+      <member refid="class_live_stream_1a108a458d33f2fa22ca64ed86b0299571" prot="public" virt="virtual"><scope>LiveStream</scope><name>seekTo</name></member>
+      <member refid="class_live_stream_1a9d3113b25853bea14bcaa0d7543df8b9" prot="public" virt="virtual"><scope>LiveStream</scope><name>setSpeed</name></member>
+      <member refid="class_abstract_stream_1a0908e573ea79c1f9ece021c76c496586" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>sources</name></member>
+      <member refid="class_abstract_stream_1aab4505acc61c563b0245e8b7b1157a63" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>sourcesUpdated</name></member>
+      <member refid="class_live_stream_1a7084ef72b4259d1a03bb4f1189bd08ee" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>speed_</name></member>
+      <member refid="class_live_stream_1a49631ae41c50bd3112d2329b7d63cb0f" prot="public" virt="virtual"><scope>LiveStream</scope><name>start</name></member>
+      <member refid="class_live_stream_1a662dc6a73a73de07f986feb70bfaf99f" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>startUpdateTimer</name></member>
+      <member refid="class_live_stream_1aee2db8bcab32be26849fcd413f2f6e3b" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>stream_thread</name></member>
+      <member refid="class_abstract_stream_1a398dd3db93da45a6b1db1c4538c5fc8b" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>streamStarted</name></member>
+      <member refid="class_live_stream_1aeea6322a08b599bf17c2c117666177b0" prot="protected" virt="pure-virtual"><scope>LiveStream</scope><name>streamThread</name></member>
+      <member refid="class_abstract_stream_1a63fdc98822bf51a3ee1851bf25e93f5f" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>suppressDefinedSignals</name></member>
+      <member refid="class_abstract_stream_1a4aeaebb34134433f98529733726d1356" prot="public" virt="non-virtual"><scope>LiveStream</scope><name>suppressHighlighted</name></member>
+      <member refid="class_live_stream_1a4c259fe1098fb7511f8a3ebb0fd97955" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>timer_id</name></member>
+      <member refid="class_live_stream_1a9a650b88839c6d1947e2505c20d5a36b" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>timerEvent</name></member>
+      <member refid="class_abstract_stream_1ac734775a79fe703fbe157f9987787ae4" prot="public" virt="virtual"><scope>LiveStream</scope><name>totalSeconds</name></member>
+      <member refid="class_live_stream_1a6c78468225f6a97ef3b80c2f18773199" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>update_timer</name></member>
+      <member refid="class_abstract_stream_1a5d3ff960083e12abb08f66983e5c686d" prot="protected" virt="non-virtual"><scope>LiveStream</scope><name>updateEvent</name></member>
+      <member refid="class_live_stream_1aa3f5416a437c6373ca4909ad68164469" prot="private" virt="non-virtual"><scope>LiveStream</scope><name>updateEvents</name></member>
+      <member refid="class_abstract_stream_1a5ce050aae85ca6a085cd30acc0e629a9" prot="public" virt="virtual"><scope>LiveStream</scope><name>~AbstractStream</name></member>
+      <member refid="class_live_stream_1a0ca2b98012c52ebf0b07f0dc1d301873" prot="public" virt="virtual"><scope>LiveStream</scope><name>~LiveStream</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

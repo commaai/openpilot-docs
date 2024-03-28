@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>system.loggerd.tests.test_encoder &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/system/loggerd/tests/test_encoder.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">system.loggerd.tests.test_encoder</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for system.loggerd.tests.test_encoder</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">parameterized</span> <span class="kn">import</span> <span class="n">parameterized</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">trange</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.timeout</span> <span class="kn">import</span> <span class="n">Timeout</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware</span> <span class="kn">import</span> <span class="n">TICI</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.manager.process_config</span> <span class="kn">import</span> <span class="n">managed_processes</span>
+<span class="kn">from</span> <span class="nn">openpilot.tools.lib.logreader</span> <span class="kn">import</span> <span class="n">LogReader</span>
+<span class="kn">from</span> <span class="nn">openpilot.system.hardware.hw</span> <span class="kn">import</span> <span class="n">Paths</span>
+
+<span class="n">SEGMENT_LENGTH</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">FULL_SIZE</span> <span class="o">=</span> <span class="mi">2507572</span>
+<span class="n">CAMERAS</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">(</span><span class="s2">&quot;fcamera.hevc&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">FULL_SIZE</span><span class="p">,</span> <span class="s2">&quot;roadEncodeIdx&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;dcamera.hevc&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">FULL_SIZE</span><span class="p">,</span> <span class="s2">&quot;driverEncodeIdx&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;ecamera.hevc&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">FULL_SIZE</span><span class="p">,</span> <span class="s2">&quot;wideRoadEncodeIdx&quot;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s2">&quot;qcamera.ts&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">130000</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="c1"># we check frame count, so we don&#39;t have to be too strict on size</span>
+<span class="n">FILE_SIZE_TOLERANCE</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+
+<div class="viewcode-block" id="TestEncoder">
+<a class="viewcode-back" href="../../../../system.loggerd.tests.html#system.loggerd.tests.test_encoder.TestEncoder">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">tici</span> <span class="c1"># TODO: all of loggerd should work on PC</span>
+<span class="k">class</span> <span class="nc">TestEncoder</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestEncoder.setUp">
+<a class="viewcode-back" href="../../../../system.loggerd.tests.html#system.loggerd.tests.test_encoder.TestEncoder.setUp">[docs]</a>
+  <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_clear_logs</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;LOGGERD_TEST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;LOGGERD_SEGMENT_LENGTH&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">SEGMENT_LENGTH</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestEncoder.tearDown">
+<a class="viewcode-back" href="../../../../system.loggerd.tests.html#system.loggerd.tests.test_encoder.TestEncoder.tearDown">[docs]</a>
+  <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_clear_logs</span><span class="p">()</span></div>
+
+
+  <span class="k">def</span> <span class="nf">_clear_logs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">log_root</span><span class="p">()):</span>
+      <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">log_root</span><span class="p">())</span>
+
+  <span class="k">def</span> <span class="nf">_get_latest_segment_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">last_route</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">log_root</span><span class="p">())</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">log_root</span><span class="p">(),</span> <span class="n">last_route</span><span class="p">)</span>
+
+  <span class="c1"># TODO: this should run faster than real time</span>
+  <span class="nd">@parameterized</span><span class="o">.</span><span class="n">expand</span><span class="p">([(</span><span class="kc">True</span><span class="p">,</span> <span class="p">),</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="p">)])</span>
+  <span class="k">def</span> <span class="nf">test_log_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record_front</span><span class="p">):</span>
+    <span class="n">Params</span><span class="p">()</span><span class="o">.</span><span class="n">put_bool</span><span class="p">(</span><span class="s2">&quot;RecordFront&quot;</span><span class="p">,</span> <span class="n">record_front</span><span class="p">)</span>
+
+    <span class="n">managed_processes</span><span class="p">[</span><span class="s1">&#39;sensord&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">managed_processes</span><span class="p">[</span><span class="s1">&#39;loggerd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">managed_processes</span><span class="p">[</span><span class="s1">&#39;encoderd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">managed_processes</span><span class="p">[</span><span class="s1">&#39;camerad&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">num_segments</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;SEGMENTS&quot;</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">)))</span>
+
+    <span class="c1"># wait for loggerd to make the dir for first segment</span>
+    <span class="n">route_prefix_path</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">with</span> <span class="n">Timeout</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">SEGMENT_LENGTH</span><span class="o">*</span><span class="mi">3</span><span class="p">)):</span>
+      <span class="k">while</span> <span class="n">route_prefix_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+          <span class="n">route_prefix_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_latest_segment_path</span><span class="p">()</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+          <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">check_seg</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+      <span class="c1"># check each camera file size</span>
+      <span class="n">counts</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="n">first_frames</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">for</span> <span class="n">camera</span><span class="p">,</span> <span class="n">fps</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">encode_idx_name</span> <span class="ow">in</span> <span class="n">CAMERAS</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">record_front</span> <span class="ow">and</span> <span class="s2">&quot;dcamera&quot;</span> <span class="ow">in</span> <span class="n">camera</span><span class="p">:</span>
+          <span class="k">continue</span>
+
+        <span class="n">file_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">route_prefix_path</span><span class="si">}</span><span class="s2">--</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">camera</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># check file exists</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;segment #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: &#39;</span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&#39; missing&quot;</span><span class="p">)</span>
+
+        <span class="c1"># TODO: this ffprobe call is really slow</span>
+        <span class="c1"># check frame count</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=nb_read_packets -of csv=p=0 </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="n">TICI</span><span class="p">:</span>
+          <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;LD_LIBRARY_PATH=/usr/local/lib &quot;</span> <span class="o">+</span> <span class="n">cmd</span>
+
+        <span class="n">expected_frames</span> <span class="o">=</span> <span class="n">fps</span> <span class="o">*</span> <span class="n">SEGMENT_LENGTH</span>
+        <span class="n">probe</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+        <span class="n">frame_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">probe</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame_count</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">frame_count</span><span class="p">,</span> <span class="n">expected_frames</span><span class="p">,</span>
+                         <span class="sa">f</span><span class="s2">&quot;segment #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">camera</span><span class="si">}</span><span class="s2"> failed frame count check: expected </span><span class="si">{</span><span class="n">expected_frames</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">frame_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># sanity check file size</span>
+        <span class="n">file_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">file_size</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="n">FILE_SIZE_TOLERANCE</span><span class="p">),</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2"> size </span><span class="si">{</span><span class="n">file_size</span><span class="si">}</span><span class="s2"> isn&#39;t close to target size </span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check encodeIdx</span>
+        <span class="k">if</span> <span class="n">encode_idx_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+          <span class="n">rlog_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">route_prefix_path</span><span class="si">}</span><span class="s2">--</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">/rlog&quot;</span>
+          <span class="n">msgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">LogReader</span><span class="p">(</span><span class="n">rlog_path</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">which</span><span class="p">()</span> <span class="o">==</span> <span class="n">encode_idx_name</span><span class="p">]</span>
+          <span class="n">encode_msgs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">encode_idx_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">msgs</span><span class="p">]</span>
+
+          <span class="n">valid</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">valid</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">msgs</span><span class="p">]</span>
+          <span class="n">segment_idxs</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">segmentId</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">encode_msgs</span><span class="p">]</span>
+          <span class="n">encode_idxs</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">encodeId</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">encode_msgs</span><span class="p">]</span>
+          <span class="n">frame_idxs</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">frameId</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">encode_msgs</span><span class="p">]</span>
+
+          <span class="c1"># Check frame count</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">frame_count</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">segment_idxs</span><span class="p">))</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">frame_count</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">encode_idxs</span><span class="p">))</span>
+
+          <span class="c1"># Check for duplicates or skips</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">segment_idxs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">segment_idxs</span><span class="p">)),</span> <span class="nb">len</span><span class="p">(</span><span class="n">segment_idxs</span><span class="p">))</span>
+
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">valid</span><span class="p">))</span>
+
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected_frames</span> <span class="o">*</span> <span class="n">i</span><span class="p">,</span> <span class="n">encode_idxs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+          <span class="n">first_frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame_idxs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">encode_idxs</span><span class="p">)),</span> <span class="nb">len</span><span class="p">(</span><span class="n">encode_idxs</span><span class="p">))</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">first_frames</span><span class="p">)))</span>
+
+      <span class="k">if</span> <span class="n">TICI</span><span class="p">:</span>
+        <span class="n">expected_frames</span> <span class="o">=</span> <span class="n">fps</span> <span class="o">*</span> <span class="n">SEGMENT_LENGTH</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">counts</span><span class="p">),</span> <span class="n">expected_frames</span><span class="p">)</span>
+      <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">route_prefix_path</span><span class="si">}</span><span class="s2">--</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trange</span><span class="p">(</span><span class="n">num_segments</span><span class="p">):</span>
+        <span class="c1"># poll for next segment</span>
+        <span class="k">with</span> <span class="n">Timeout</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">SEGMENT_LENGTH</span><span class="o">*</span><span class="mi">10</span><span class="p">),</span> <span class="n">error_msg</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;timed out waiting for segment </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+          <span class="k">while</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">route_prefix_path</span><span class="si">}</span><span class="s2">--</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="n">Paths</span><span class="o">.</span><span class="n">log_root</span><span class="p">())</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">check_seg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+      <span class="n">managed_processes</span><span class="p">[</span><span class="s1">&#39;loggerd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+      <span class="n">managed_processes</span><span class="p">[</span><span class="s1">&#39;encoderd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+      <span class="n">managed_processes</span><span class="p">[</span><span class="s1">&#39;camerad&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+      <span class="n">managed_processes</span><span class="p">[</span><span class="s1">&#39;sensord&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

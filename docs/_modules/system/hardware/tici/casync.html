@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>system.hardware.tici.casync &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/system/hardware/tici/casync.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">system.hardware.tici.casync</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for system.hardware.tici.casync</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">lzma</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">namedtuple</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">Crypto.Hash</span> <span class="kn">import</span> <span class="n">SHA512</span>
+
+<span class="n">CA_FORMAT_INDEX</span> <span class="o">=</span> <span class="mh">0x96824d9c7b129ff9</span>
+<span class="n">CA_FORMAT_TABLE</span> <span class="o">=</span> <span class="mh">0xe75b9e112f17417d</span>
+<span class="n">CA_FORMAT_TABLE_TAIL_MARKER</span> <span class="o">=</span> <span class="mh">0xe75b9e112f17417</span>
+<span class="n">FLAGS</span> <span class="o">=</span> <span class="mh">0xb000000000000000</span>
+
+<span class="n">CA_HEADER_LEN</span> <span class="o">=</span> <span class="mi">48</span>
+<span class="n">CA_TABLE_HEADER_LEN</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">CA_TABLE_ENTRY_LEN</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">CA_TABLE_MIN_LEN</span> <span class="o">=</span> <span class="n">CA_TABLE_HEADER_LEN</span> <span class="o">+</span> <span class="n">CA_TABLE_ENTRY_LEN</span>
+
+<span class="n">CHUNK_DOWNLOAD_TIMEOUT</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">CHUNK_DOWNLOAD_RETRIES</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">CAIBX_DOWNLOAD_TIMEOUT</span> <span class="o">=</span> <span class="mi">120</span>
+
+<span class="n">Chunk</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Chunk&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;sha&#39;</span><span class="p">,</span> <span class="s1">&#39;offset&#39;</span><span class="p">,</span> <span class="s1">&#39;length&#39;</span><span class="p">])</span>
+<span class="n">ChunkDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Chunk</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="ChunkReader">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.casync.ChunkReader">[docs]</a>
+<span class="k">class</span> <span class="nc">ChunkReader</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="ChunkReader.read">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.casync.ChunkReader.read">[docs]</a>
+  <span class="nd">@abstractmethod</span>
+  <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="n">Chunk</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="o">...</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="FileChunkReader">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.casync.FileChunkReader">[docs]</a>
+<span class="k">class</span> <span class="nc">FileChunkReader</span><span class="p">(</span><span class="n">ChunkReader</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Reads chunks from a local file&quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<div class="viewcode-block" id="FileChunkReader.read">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.casync.FileChunkReader.read">[docs]</a>
+  <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="n">Chunk</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">length</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="RemoteChunkReader">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.casync.RemoteChunkReader">[docs]</a>
+<span class="k">class</span> <span class="nc">RemoteChunkReader</span><span class="p">(</span><span class="n">ChunkReader</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Reads lzma compressed chunks from a remote store&quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+
+<div class="viewcode-block" id="RemoteChunkReader.read">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.casync.RemoteChunkReader.read">[docs]</a>
+  <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="n">Chunk</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">sha_hex</span> <span class="o">=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">sha</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">sha_hex</span><span class="p">[:</span><span class="mi">4</span><span class="p">],</span> <span class="n">sha_hex</span> <span class="o">+</span> <span class="s2">&quot;.cacnk&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">contents</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">CHUNK_DOWNLOAD_RETRIES</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+          <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">CHUNK_DOWNLOAD_TIMEOUT</span><span class="p">)</span>
+          <span class="k">break</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">CHUNK_DOWNLOAD_RETRIES</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span>
+          <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">CHUNK_DOWNLOAD_TIMEOUT</span><span class="p">)</span>
+
+      <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+      <span class="n">contents</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">content</span>
+
+    <span class="n">decompressor</span> <span class="o">=</span> <span class="n">lzma</span><span class="o">.</span><span class="n">LZMADecompressor</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="n">lzma</span><span class="o">.</span><span class="n">FORMAT_AUTO</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">decompressor</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="parse_caibx">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.casync.parse_caibx">[docs]</a>
+<span class="k">def</span> <span class="nf">parse_caibx</span><span class="p">(</span><span class="n">caibx_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chunk</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Parses the chunks from a caibx file. Can handle both local and remote files.</span>
+<span class="sd">  Returns a list of chunks with hash, offset and length&quot;&quot;&quot;</span>
+  <span class="n">caibx</span><span class="p">:</span> <span class="n">io</span><span class="o">.</span><span class="n">BufferedIOBase</span>
+  <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">caibx_path</span><span class="p">):</span>
+    <span class="n">caibx</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">caibx_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">caibx_path</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">CAIBX_DOWNLOAD_TIMEOUT</span><span class="p">)</span>
+    <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="n">caibx</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+  <span class="n">caibx</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">SEEK_END</span><span class="p">)</span>
+  <span class="n">caibx_len</span> <span class="o">=</span> <span class="n">caibx</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+  <span class="n">caibx</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">SEEK_SET</span><span class="p">)</span>
+
+  <span class="c1"># Parse header</span>
+  <span class="n">length</span><span class="p">,</span> <span class="n">magic</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">min_size</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">max_size</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;&lt;QQQQQQ&quot;</span><span class="p">,</span> <span class="n">caibx</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">CA_HEADER_LEN</span><span class="p">))</span>
+  <span class="k">assert</span> <span class="n">flags</span> <span class="o">==</span> <span class="n">flags</span>
+  <span class="k">assert</span> <span class="n">length</span> <span class="o">==</span> <span class="n">CA_HEADER_LEN</span>
+  <span class="k">assert</span> <span class="n">magic</span> <span class="o">==</span> <span class="n">CA_FORMAT_INDEX</span>
+
+  <span class="c1"># Parse table header</span>
+  <span class="n">length</span><span class="p">,</span> <span class="n">magic</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;&lt;QQ&quot;</span><span class="p">,</span> <span class="n">caibx</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">CA_TABLE_HEADER_LEN</span><span class="p">))</span>
+  <span class="k">assert</span> <span class="n">magic</span> <span class="o">==</span> <span class="n">CA_FORMAT_TABLE</span>
+
+  <span class="c1"># Parse chunks</span>
+  <span class="n">num_chunks</span> <span class="o">=</span> <span class="p">(</span><span class="n">caibx_len</span> <span class="o">-</span> <span class="n">CA_HEADER_LEN</span> <span class="o">-</span> <span class="n">CA_TABLE_MIN_LEN</span><span class="p">)</span> <span class="o">//</span> <span class="n">CA_TABLE_ENTRY_LEN</span>
+  <span class="n">chunks</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">):</span>
+    <span class="n">new_offset</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;&lt;Q&quot;</span><span class="p">,</span> <span class="n">caibx</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">sha</span> <span class="o">=</span> <span class="n">caibx</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="n">new_offset</span> <span class="o">-</span> <span class="n">offset</span>
+
+    <span class="k">assert</span> <span class="n">length</span> <span class="o">&lt;=</span> <span class="n">max_size</span>
+
+    <span class="c1"># Last chunk can be smaller</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_chunks</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">assert</span> <span class="n">length</span> <span class="o">&gt;=</span> <span class="n">min_size</span>
+
+    <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Chunk</span><span class="p">(</span><span class="n">sha</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">))</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="n">new_offset</span>
+
+  <span class="n">caibx</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">chunks</span></div>
+
+
+
+<div class="viewcode-block" id="build_chunk_dict">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.casync.build_chunk_dict">[docs]</a>
+<span class="k">def</span> <span class="nf">build_chunk_dict</span><span class="p">(</span><span class="n">chunks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chunk</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ChunkDict</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Turn a list of chunks into a dict for faster lookups based on hash.</span>
+<span class="sd">  Keep first chunk since it&#39;s more likely to be already downloaded.&quot;&quot;&quot;</span>
+  <span class="n">r</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">sha</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+      <span class="n">r</span><span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">sha</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
+  <span class="k">return</span> <span class="n">r</span></div>
+
+
+
+<div class="viewcode-block" id="extract">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.casync.extract">[docs]</a>
+<span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chunk</span><span class="p">],</span>
+            <span class="n">sources</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ChunkReader</span><span class="p">,</span> <span class="n">ChunkDict</span><span class="p">]],</span>
+            <span class="n">out_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">progress</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+  <span class="n">stats</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+  <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;rb+&#39;</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_path</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;wb&#39;</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">cur_chunk</span> <span class="ow">in</span> <span class="n">target</span><span class="p">:</span>
+
+      <span class="c1"># Find source for desired chunk</span>
+      <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">chunk_reader</span><span class="p">,</span> <span class="n">store_chunks</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cur_chunk</span><span class="o">.</span><span class="n">sha</span> <span class="ow">in</span> <span class="n">store_chunks</span><span class="p">:</span>
+          <span class="n">bts</span> <span class="o">=</span> <span class="n">chunk_reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">store_chunks</span><span class="p">[</span><span class="n">cur_chunk</span><span class="o">.</span><span class="n">sha</span><span class="p">])</span>
+
+          <span class="c1"># Check length</span>
+          <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bts</span><span class="p">)</span> <span class="o">!=</span> <span class="n">cur_chunk</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+          <span class="c1"># Check hash</span>
+          <span class="k">if</span> <span class="n">SHA512</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">bts</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="s2">&quot;256&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span> <span class="o">!=</span> <span class="n">cur_chunk</span><span class="o">.</span><span class="n">sha</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+          <span class="c1"># Write to output</span>
+          <span class="n">out</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">cur_chunk</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+          <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">bts</span><span class="p">)</span>
+
+          <span class="n">stats</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">+=</span> <span class="n">cur_chunk</span><span class="o">.</span><span class="n">length</span>
+
+          <span class="k">if</span> <span class="n">progress</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">progress</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+          <span class="k">break</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Desired chunk not found in provided stores&quot;</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">stats</span></div>
+
+
+
+<div class="viewcode-block" id="print_stats">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.casync.print_stats">[docs]</a>
+<span class="k">def</span> <span class="nf">print_stats</span><span class="p">(</span><span class="n">stats</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
+  <span class="n">total_bytes</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total size: </span><span class="si">{</span><span class="n">total_bytes</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1024</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">total</span> <span class="ow">in</span> <span class="n">stats</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">total</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1024</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB (</span><span class="si">{</span><span class="n">total</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">total_bytes</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="extract_simple">
+<a class="viewcode-back" href="../../../../system.hardware.tici.html#system.hardware.tici.casync.extract_simple">[docs]</a>
+<span class="k">def</span> <span class="nf">extract_simple</span><span class="p">(</span><span class="n">caibx_path</span><span class="p">,</span> <span class="n">out_path</span><span class="p">,</span> <span class="n">store_path</span><span class="p">):</span>
+  <span class="c1"># (name, callback, chunks)</span>
+  <span class="n">target</span> <span class="o">=</span> <span class="n">parse_caibx</span><span class="p">(</span><span class="n">caibx_path</span><span class="p">)</span>
+  <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># (store_path, RemoteChunkReader(store_path), build_chunk_dict(target)),</span>
+    <span class="p">(</span><span class="n">store_path</span><span class="p">,</span> <span class="n">FileChunkReader</span><span class="p">(</span><span class="n">store_path</span><span class="p">),</span> <span class="n">build_chunk_dict</span><span class="p">(</span><span class="n">target</span><span class="p">)),</span>
+  <span class="p">]</span>
+
+  <span class="k">return</span> <span class="n">extract</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">sources</span><span class="p">,</span> <span class="n">out_path</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">caibx</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">out</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+  <span class="n">store</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+  <span class="n">stats</span> <span class="o">=</span> <span class="n">extract_simple</span><span class="p">(</span><span class="n">caibx</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span>
+  <span class="n">print_stats</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.car.gm.interface &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/car/gm/interface.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../car.html">selfdrive.car</a></li>
+      <li class="breadcrumb-item active">selfdrive.car.gm.interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.car.gm.interface</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">cereal</span> <span class="kn">import</span> <span class="n">car</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">fabs</span><span class="p">,</span> <span class="n">exp</span>
+<span class="kn">from</span> <span class="nn">panda</span> <span class="kn">import</span> <span class="n">Panda</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.common.basedir</span> <span class="kn">import</span> <span class="n">BASEDIR</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span> <span class="k">as</span> <span class="n">CV</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car</span> <span class="kn">import</span> <span class="n">create_button_events</span><span class="p">,</span> <span class="n">get_safety_config</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.gm.radar_interface</span> <span class="kn">import</span> <span class="n">RADAR_HEADER_MSG</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.gm.values</span> <span class="kn">import</span> <span class="n">CAR</span><span class="p">,</span> <span class="n">CruiseButtons</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="p">,</span> <span class="n">EV_CAR</span><span class="p">,</span> <span class="n">CAMERA_ACC_CAR</span><span class="p">,</span> <span class="n">CanBus</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.car.interfaces</span> <span class="kn">import</span> <span class="n">CarInterfaceBase</span><span class="p">,</span> <span class="n">TorqueFromLateralAccelCallbackType</span><span class="p">,</span> <span class="n">FRICTION_THRESHOLD</span><span class="p">,</span> <span class="n">LatControlInputs</span><span class="p">,</span> <span class="n">NanoFFModel</span>
+<span class="kn">from</span> <span class="nn">openpilot.selfdrive.controls.lib.drive_helpers</span> <span class="kn">import</span> <span class="n">get_friction</span>
+
+<span class="n">ButtonType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">ButtonEvent</span><span class="o">.</span><span class="n">Type</span>
+<span class="n">EventName</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarEvent</span><span class="o">.</span><span class="n">EventName</span>
+<span class="n">GearShifter</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarState</span><span class="o">.</span><span class="n">GearShifter</span>
+<span class="n">TransmissionType</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">TransmissionType</span>
+<span class="n">NetworkLocation</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">NetworkLocation</span>
+<span class="n">BUTTONS_DICT</span> <span class="o">=</span> <span class="p">{</span><span class="n">CruiseButtons</span><span class="o">.</span><span class="n">RES_ACCEL</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">accelCruise</span><span class="p">,</span> <span class="n">CruiseButtons</span><span class="o">.</span><span class="n">DECEL_SET</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">decelCruise</span><span class="p">,</span>
+                <span class="n">CruiseButtons</span><span class="o">.</span><span class="n">MAIN</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">altButton3</span><span class="p">,</span> <span class="n">CruiseButtons</span><span class="o">.</span><span class="n">CANCEL</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">cancel</span><span class="p">}</span>
+
+
+<span class="n">NON_LINEAR_TORQUE_PARAMS</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">CHEVROLET_BOLT_EUV</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.6531724862969748</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1919764879840985</span><span class="p">,</span> <span class="mf">0.009054123646805178</span><span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">GMC_ACADIA</span><span class="p">:</span> <span class="p">[</span><span class="mf">4.78003305</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.3122</span><span class="p">,</span> <span class="mf">0.05591772</span><span class="p">],</span>
+  <span class="n">CAR</span><span class="o">.</span><span class="n">CHEVROLET_SILVERADO</span><span class="p">:</span> <span class="p">[</span><span class="mf">3.29974374</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.25571356</span><span class="p">,</span> <span class="mf">0.0465122</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">NEURAL_PARAMS_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASEDIR</span><span class="p">,</span> <span class="s1">&#39;selfdrive/car/torque_data/neural_ff_weights.json&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="CarInterface">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.interface.CarInterface">[docs]</a>
+<span class="k">class</span> <span class="nc">CarInterface</span><span class="p">(</span><span class="n">CarInterfaceBase</span><span class="p">):</span>
+<div class="viewcode-block" id="CarInterface.get_pid_accel_limits">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.interface.CarInterface.get_pid_accel_limits">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_pid_accel_limits</span><span class="p">(</span><span class="n">CP</span><span class="p">,</span> <span class="n">current_speed</span><span class="p">,</span> <span class="n">cruise_speed</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">ACCEL_MIN</span><span class="p">,</span> <span class="n">CarControllerParams</span><span class="o">.</span><span class="n">ACCEL_MAX</span></div>
+
+
+  <span class="c1"># Determined by iteratively plotting and minimizing error for f(angle, speed) = steer.</span>
+<div class="viewcode-block" id="CarInterface.get_steer_feedforward_volt">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.interface.CarInterface.get_steer_feedforward_volt">[docs]</a>
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_steer_feedforward_volt</span><span class="p">(</span><span class="n">desired_angle</span><span class="p">,</span> <span class="n">v_ego</span><span class="p">):</span>
+    <span class="n">desired_angle</span> <span class="o">*=</span> <span class="mf">0.02904609</span>
+    <span class="n">sigmoid</span> <span class="o">=</span> <span class="n">desired_angle</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">fabs</span><span class="p">(</span><span class="n">desired_angle</span><span class="p">))</span>
+    <span class="k">return</span> <span class="mf">0.10006696</span> <span class="o">*</span> <span class="n">sigmoid</span> <span class="o">*</span> <span class="p">(</span><span class="n">v_ego</span> <span class="o">+</span> <span class="mf">3.12485927</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CarInterface.get_steer_feedforward_function">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.interface.CarInterface.get_steer_feedforward_function">[docs]</a>
+  <span class="k">def</span> <span class="nf">get_steer_feedforward_function</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHEVROLET_VOLT</span><span class="p">:</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_steer_feedforward_volt</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">get_steer_feedforward_default</span></div>
+
+
+<div class="viewcode-block" id="CarInterface.torque_from_lateral_accel_siglin">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.interface.CarInterface.torque_from_lateral_accel_siglin">[docs]</a>
+  <span class="k">def</span> <span class="nf">torque_from_lateral_accel_siglin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latcontrol_inputs</span><span class="p">:</span> <span class="n">LatControlInputs</span><span class="p">,</span> <span class="n">torque_params</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">LateralTorqueTuning</span><span class="p">,</span> <span class="n">lateral_accel_error</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                                       <span class="n">lateral_accel_deadzone</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">friction_compensation</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">gravity_adjusted</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">friction</span> <span class="o">=</span> <span class="n">get_friction</span><span class="p">(</span><span class="n">lateral_accel_error</span><span class="p">,</span> <span class="n">lateral_accel_deadzone</span><span class="p">,</span> <span class="n">FRICTION_THRESHOLD</span><span class="p">,</span> <span class="n">torque_params</span><span class="p">,</span> <span class="n">friction_compensation</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">sig</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+      <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">val</span><span class="p">))</span> <span class="o">-</span> <span class="mf">0.5</span>
+
+    <span class="c1"># The &quot;lat_accel vs torque&quot; relationship is assumed to be the sum of &quot;sigmoid + linear&quot; curves</span>
+    <span class="c1"># An important thing to consider is that the slope at 0 should be &gt; 0 (ideally &gt;1)</span>
+    <span class="c1"># This has big effect on the stability about 0 (noise when going straight)</span>
+    <span class="c1"># ToDo: To generalize to other GMs, explore tanh function as the nonlinear</span>
+    <span class="n">non_linear_torque_params</span> <span class="o">=</span> <span class="n">NON_LINEAR_TORQUE_PARAMS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">non_linear_torque_params</span><span class="p">,</span> <span class="s2">&quot;The params are not defined&quot;</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">non_linear_torque_params</span>
+    <span class="n">steer_torque</span> <span class="o">=</span> <span class="p">(</span><span class="n">sig</span><span class="p">(</span><span class="n">latcontrol_inputs</span><span class="o">.</span><span class="n">lateral_acceleration</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">latcontrol_inputs</span><span class="o">.</span><span class="n">lateral_acceleration</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">steer_torque</span><span class="p">)</span> <span class="o">+</span> <span class="n">friction</span></div>
+
+
+<div class="viewcode-block" id="CarInterface.torque_from_lateral_accel_neural">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.interface.CarInterface.torque_from_lateral_accel_neural">[docs]</a>
+  <span class="k">def</span> <span class="nf">torque_from_lateral_accel_neural</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latcontrol_inputs</span><span class="p">:</span> <span class="n">LatControlInputs</span><span class="p">,</span> <span class="n">torque_params</span><span class="p">:</span> <span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">LateralTorqueTuning</span><span class="p">,</span> <span class="n">lateral_accel_error</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                                       <span class="n">lateral_accel_deadzone</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">friction_compensation</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">gravity_adjusted</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">friction</span> <span class="o">=</span> <span class="n">get_friction</span><span class="p">(</span><span class="n">lateral_accel_error</span><span class="p">,</span> <span class="n">lateral_accel_deadzone</span><span class="p">,</span> <span class="n">FRICTION_THRESHOLD</span><span class="p">,</span> <span class="n">torque_params</span><span class="p">,</span> <span class="n">friction_compensation</span><span class="p">)</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">latcontrol_inputs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">gravity_adjusted</span><span class="p">:</span>
+      <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neural_ff_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">inputs</span><span class="p">))</span> <span class="o">+</span> <span class="n">friction</span></div>
+
+
+<div class="viewcode-block" id="CarInterface.torque_from_lateral_accel">
+<a class="viewcode-back" href="../../../../selfdrive.car.gm.html#selfdrive.car.gm.interface.CarInterface.torque_from_lateral_accel">[docs]</a>
+  <span class="k">def</span> <span class="nf">torque_from_lateral_accel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TorqueFromLateralAccelCallbackType</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHEVROLET_BOLT_EUV</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">neural_ff_model</span> <span class="o">=</span> <span class="n">NanoFFModel</span><span class="p">(</span><span class="n">NEURAL_PARAMS_PATH</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span><span class="p">)</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">torque_from_lateral_accel_neural</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">carFingerprint</span> <span class="ow">in</span> <span class="n">NON_LINEAR_TORQUE_PARAMS</span><span class="p">:</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">torque_from_lateral_accel_siglin</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">torque_from_lateral_accel_linear</span></div>
+
+
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">_get_params</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">fingerprint</span><span class="p">,</span> <span class="n">car_fw</span><span class="p">,</span> <span class="n">experimental_long</span><span class="p">,</span> <span class="n">docs</span><span class="p">):</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">carName</span> <span class="o">=</span> <span class="s2">&quot;gm&quot;</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_safety_config</span><span class="p">(</span><span class="n">car</span><span class="o">.</span><span class="n">CarParams</span><span class="o">.</span><span class="n">SafetyModel</span><span class="o">.</span><span class="n">gm</span><span class="p">)]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">autoResumeSng</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">enableBsm</span> <span class="o">=</span> <span class="mh">0x142</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="n">CanBus</span><span class="o">.</span><span class="n">POWERTRAIN</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">EV_CAR</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">=</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">direct</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">transmissionType</span> <span class="o">=</span> <span class="n">TransmissionType</span><span class="o">.</span><span class="n">automatic</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">deadzoneBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">deadzoneV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.15</span><span class="p">]</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kpBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">35.</span><span class="p">]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kiBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">CAMERA_ACC_CAR</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">experimentalLongitudinalAvailable</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">=</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">radarUnavailable</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># no radar</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">pcmCruise</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_GM_HW_CAM</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">KPH_TO_MS</span>
+
+      <span class="c1"># Tuning for experimental long</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.72</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">stoppingDecelRate</span> <span class="o">=</span> <span class="mf">2.0</span>  <span class="c1"># reach brake quickly after enabling</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">vEgoStopping</span> <span class="o">=</span> <span class="mf">0.25</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">vEgoStarting</span> <span class="o">=</span> <span class="mf">0.25</span>
+
+      <span class="k">if</span> <span class="n">experimental_long</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">pcmCruise</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">safetyConfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">safetyParam</span> <span class="o">|=</span> <span class="n">Panda</span><span class="o">.</span><span class="n">FLAG_GM_HW_CAM_LONG</span>
+
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># ASCM, OBD-II harness</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">=</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">gateway</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">radarUnavailable</span> <span class="o">=</span> <span class="n">RADAR_HEADER_MSG</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fingerprint</span><span class="p">[</span><span class="n">CanBus</span><span class="o">.</span><span class="n">OBSTACLE</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">docs</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">pcmCruise</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># stock non-adaptive cruise control is kept off</span>
+      <span class="c1"># supports stop and go, but initial engage must (conservatively) be above 18mph</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">=</span> <span class="mi">18</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">minSteerSpeed</span> <span class="o">=</span> <span class="mi">7</span> <span class="o">*</span> <span class="n">CV</span><span class="o">.</span><span class="n">MPH_TO_MS</span>
+
+      <span class="c1"># Tuning</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.4</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalTuning</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.36</span><span class="p">]</span>
+
+    <span class="c1"># These cars have been put into dashcam only due to both a lack of users and test coverage.</span>
+    <span class="c1"># These cars likely still work fine. Once a user confirms each car works and a test route is</span>
+    <span class="c1"># added to selfdrive/car/tests/routes.py, we can remove it from this list.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">dashcamOnly</span> <span class="o">=</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">{</span><span class="n">CAR</span><span class="o">.</span><span class="n">CADILLAC_ATS</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">HOLDEN_ASTRA</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHEVROLET_MALIBU</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">BUICK_REGAL</span><span class="p">}</span> <span class="ow">or</span> \
+                      <span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">gateway</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">radarUnavailable</span><span class="p">)</span>
+
+    <span class="c1"># Start with a baseline tuning for all GM vehicles. Override tuning as needed in each model section below.</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpBP</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.00</span><span class="p">]]</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="mf">0.00004</span>   <span class="c1"># full torque for 20 deg at 80mph means 0.00007818594</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># Default delay, not measured yet</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">steerLimitTimer</span> <span class="o">=</span> <span class="mf">0.4</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">radarTimeStep</span> <span class="o">=</span> <span class="mf">0.0667</span>  <span class="c1"># GM radar runs at 15Hz instead of standard 20Hz</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">longitudinalActuatorDelayUpperBound</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># large delay to initially start braking</span>
+
+    <span class="k">if</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHEVROLET_VOLT</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">40.</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.17</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiBP</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="mf">1.</span>  <span class="c1"># get_steer_feedforward_volt()</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.2</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">GMC_ACADIA</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>  <span class="c1"># engage speed is decided by pcm</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.2</span>
+      <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">BUICK_LACROSSE</span><span class="p">:</span>
+      <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CADILLAC_ESCALADE</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>  <span class="c1"># engage speed is decided by pcm</span>
+      <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CAR</span><span class="o">.</span><span class="n">CADILLAC_ESCALADE_ESV</span><span class="p">,</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CADILLAC_ESCALADE_ESV_2019</span><span class="p">):</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>  <span class="c1"># engage speed is decided by pcm</span>
+
+      <span class="k">if</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CADILLAC_ESCALADE_ESV</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiBP</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpBP</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">41.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">41.0</span><span class="p">]]</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kpV</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kiV</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.13</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]]</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="o">.</span><span class="n">pid</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="mf">0.000045</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.2</span>
+        <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHEVROLET_BOLT_EUV</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.2</span>
+      <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHEVROLET_SILVERADO</span><span class="p">:</span>
+      <span class="c1"># On the Bolt, the ECM and camera independently check that you are either above 5 kph or at a stop</span>
+      <span class="c1"># with foot on brake to allow engagement, but this platform only has that check in the camera.</span>
+      <span class="c1"># TODO: check if this is split by EV/ICE with more platforms in the future</span>
+      <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">openpilotLongitudinalControl</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>
+      <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHEVROLET_EQUINOX</span><span class="p">:</span>
+      <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">candidate</span> <span class="o">==</span> <span class="n">CAR</span><span class="o">.</span><span class="n">CHEVROLET_TRAILBLAZER</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">steerActuatorDelay</span> <span class="o">=</span> <span class="mf">0.2</span>
+      <span class="n">CarInterfaceBase</span><span class="o">.</span><span class="n">configure_torque_tune</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">lateralTuning</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ret</span>
+
+  <span class="c1"># returns a car.CarState</span>
+  <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_cam</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp_loopback</span><span class="p">)</span>
+
+    <span class="c1"># Don&#39;t add event if transitioning from INIT, unless it&#39;s to an actual button</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">cruise_buttons</span> <span class="o">!=</span> <span class="n">CruiseButtons</span><span class="o">.</span><span class="n">UNPRESS</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">prev_cruise_buttons</span> <span class="o">!=</span> <span class="n">CruiseButtons</span><span class="o">.</span><span class="n">INIT</span><span class="p">:</span>
+      <span class="n">ret</span><span class="o">.</span><span class="n">buttonEvents</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="o">*</span><span class="n">create_button_events</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">cruise_buttons</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">prev_cruise_buttons</span><span class="p">,</span> <span class="n">BUTTONS_DICT</span><span class="p">,</span>
+                              <span class="n">unpressed_btn</span><span class="o">=</span><span class="n">CruiseButtons</span><span class="o">.</span><span class="n">UNPRESS</span><span class="p">),</span>
+        <span class="o">*</span><span class="n">create_button_events</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">distance_button</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">prev_distance_button</span><span class="p">,</span>
+                              <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">gapAdjustCruise</span><span class="p">})</span>
+      <span class="p">]</span>
+
+    <span class="c1"># The ECM allows enabling on falling edge of set, but only rising edge of resume</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_common_events</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">extra_gears</span><span class="o">=</span><span class="p">[</span><span class="n">GearShifter</span><span class="o">.</span><span class="n">sport</span><span class="p">,</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">low</span><span class="p">,</span>
+                                                         <span class="n">GearShifter</span><span class="o">.</span><span class="n">eco</span><span class="p">,</span> <span class="n">GearShifter</span><span class="o">.</span><span class="n">manumatic</span><span class="p">],</span>
+                                       <span class="n">pcm_enable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span><span class="p">,</span> <span class="n">enable_buttons</span><span class="o">=</span><span class="p">(</span><span class="n">ButtonType</span><span class="o">.</span><span class="n">decelCruise</span><span class="p">,))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">pcmCruise</span><span class="p">:</span>
+      <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">ButtonType</span><span class="o">.</span><span class="n">accelCruise</span> <span class="ow">and</span> <span class="n">b</span><span class="o">.</span><span class="n">pressed</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">ret</span><span class="o">.</span><span class="n">buttonEvents</span><span class="p">):</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">buttonEnable</span><span class="p">)</span>
+
+    <span class="c1"># Enabling at a standstill with brake is allowed</span>
+    <span class="c1"># TODO: verify 17 Volt can enable for the first time at a stop and allow for all GMs</span>
+    <span class="n">below_min_enable_speed</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minEnableSpeed</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">moving_backward</span>
+    <span class="k">if</span> <span class="n">below_min_enable_speed</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">standstill</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">brake</span> <span class="o">&gt;=</span> <span class="mi">20</span> <span class="ow">and</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">networkLocation</span> <span class="o">==</span> <span class="n">NetworkLocation</span><span class="o">.</span><span class="n">fwdCamera</span><span class="p">):</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">belowEngageSpeed</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">cruiseState</span><span class="o">.</span><span class="n">standstill</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">resumeRequired</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">vEgo</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CP</span><span class="o">.</span><span class="n">minSteerSpeed</span><span class="p">:</span>
+      <span class="n">events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EventName</span><span class="o">.</span><span class="n">belowSteerSpeed</span><span class="p">)</span>
+
+    <span class="n">ret</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">to_msg</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

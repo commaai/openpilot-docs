@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>opendbc.can.tests.test_packer_parser &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/opendbc/can/tests/test_packer_parser.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">opendbc.can.tests.test_packer_parser</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for opendbc.can.tests.test_packer_parser</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">import</span> <span class="nn">cereal.messaging</span> <span class="k">as</span> <span class="nn">messaging</span>
+<span class="kn">from</span> <span class="nn">opendbc.can.parser</span> <span class="kn">import</span> <span class="n">CANParser</span>
+<span class="kn">from</span> <span class="nn">opendbc.can.packer</span> <span class="kn">import</span> <span class="n">CANPacker</span>
+<span class="kn">from</span> <span class="nn">opendbc.can.tests</span> <span class="kn">import</span> <span class="n">TEST_DBC</span>
+
+<span class="n">MAX_BAD_COUNTER</span> <span class="o">=</span> <span class="mi">5</span>
+
+
+<span class="c1"># Python implementation so we don&#39;t have to depend on boardd</span>
+<div class="viewcode-block" id="can_list_to_can_capnp">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.can_list_to_can_capnp">[docs]</a>
+<span class="k">def</span> <span class="nf">can_list_to_can_capnp</span><span class="p">(</span><span class="n">can_msgs</span><span class="p">,</span> <span class="n">msgtype</span><span class="o">=</span><span class="s1">&#39;can&#39;</span><span class="p">,</span> <span class="n">logMonoTime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="n">dat</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span><span class="n">msgtype</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">can_msgs</span><span class="p">))</span>
+
+  <span class="k">if</span> <span class="n">logMonoTime</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">dat</span><span class="o">.</span><span class="n">logMonoTime</span> <span class="o">=</span> <span class="n">logMonoTime</span>
+
+  <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">can_msg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">can_msgs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s1">&#39;sendcan&#39;</span><span class="p">:</span>
+      <span class="n">cc</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">sendcan</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">cc</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">can</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="n">cc</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">can_msg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">cc</span><span class="o">.</span><span class="n">busTime</span> <span class="o">=</span> <span class="n">can_msg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">cc</span><span class="o">.</span><span class="n">dat</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">can_msg</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">cc</span><span class="o">.</span><span class="n">src</span> <span class="o">=</span> <span class="n">can_msg</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+  <span class="k">return</span> <span class="n">dat</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="TestCanParserPacker">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker">[docs]</a>
+<span class="k">class</span> <span class="nc">TestCanParserPacker</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestCanParserPacker.test_packer">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_packer">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_packer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">packer</span> <span class="o">=</span> <span class="n">CANPacker</span><span class="p">(</span><span class="n">TEST_DBC</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;COUNTER&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">}</span>
+        <span class="n">addr</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">bus</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="mi">245</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">bus</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">i</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestCanParserPacker.test_packer_counter">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_packer_counter">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_packer_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">msgs</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">]</span>
+    <span class="n">packer</span> <span class="o">=</span> <span class="n">CANPacker</span><span class="p">(</span><span class="n">TEST_DBC</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">TEST_DBC</span><span class="p">,</span> <span class="n">msgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># packer should increment the counter</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{})</span>
+      <span class="n">dat</span> <span class="o">=</span> <span class="n">can_list_to_can_capnp</span><span class="p">([</span><span class="n">msg</span><span class="p">,</span> <span class="p">])</span>
+      <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">([</span><span class="n">dat</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">][</span><span class="s2">&quot;COUNTER&quot;</span><span class="p">],</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">256</span><span class="p">)</span>
+
+    <span class="c1"># setting COUNTER should override</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+      <span class="n">cnt</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s2">&quot;COUNTER&quot;</span><span class="p">:</span> <span class="n">cnt</span><span class="p">,</span>
+      <span class="p">})</span>
+      <span class="n">dat</span> <span class="o">=</span> <span class="n">can_list_to_can_capnp</span><span class="p">([</span><span class="n">msg</span><span class="p">,</span> <span class="p">])</span>
+      <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">([</span><span class="n">dat</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">][</span><span class="s2">&quot;COUNTER&quot;</span><span class="p">],</span> <span class="n">cnt</span><span class="p">)</span>
+
+    <span class="c1"># then, should resume counting from the override value</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">][</span><span class="s2">&quot;COUNTER&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{})</span>
+      <span class="n">dat</span> <span class="o">=</span> <span class="n">can_list_to_can_capnp</span><span class="p">([</span><span class="n">msg</span><span class="p">,</span> <span class="p">])</span>
+      <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">([</span><span class="n">dat</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">][</span><span class="s2">&quot;COUNTER&quot;</span><span class="p">],</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestCanParserPacker.test_parser_can_valid">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_parser_can_valid">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_parser_can_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">msgs</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">]</span>
+    <span class="n">packer</span> <span class="o">=</span> <span class="n">CANPacker</span><span class="p">(</span><span class="n">TEST_DBC</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">TEST_DBC</span><span class="p">,</span> <span class="n">msgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># shouldn&#39;t be valid initially</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">can_valid</span><span class="p">)</span>
+
+    <span class="c1"># not valid until the message is seen</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+      <span class="n">dat</span> <span class="o">=</span> <span class="n">can_list_to_can_capnp</span><span class="p">([])</span>
+      <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">([</span><span class="n">dat</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">can_valid</span><span class="p">)</span>
+
+    <span class="c1"># valid once seen</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+      <span class="n">t</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="n">i</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">)</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{})</span>
+      <span class="n">dat</span> <span class="o">=</span> <span class="n">can_list_to_can_capnp</span><span class="p">([</span><span class="n">msg</span><span class="p">,</span> <span class="p">],</span> <span class="n">logMonoTime</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+      <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">([</span><span class="n">dat</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">can_valid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestCanParserPacker.test_parser_counter_can_valid">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_parser_counter_can_valid">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_parser_counter_can_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tests number of allowed bad counters + ensures CAN stays invalid</span>
+<span class="sd">    while receiving invalid messages + that we can recover</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">msgs</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">(</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="n">packer</span> <span class="o">=</span> <span class="n">CANPacker</span><span class="p">(</span><span class="s2">&quot;honda_civic_touring_2016_can_generated&quot;</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">CANParser</span><span class="p">(</span><span class="s2">&quot;honda_civic_touring_2016_can_generated&quot;</span><span class="p">,</span> <span class="n">msgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;COUNTER&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+    <span class="n">bts</span> <span class="o">=</span> <span class="n">can_list_to_can_capnp</span><span class="p">([</span><span class="n">msg</span><span class="p">])</span>
+
+    <span class="c1"># bad static counter, invalid once it&#39;s seen MAX_BAD_COUNTER messages</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mh">0x1000</span><span class="p">):</span>
+      <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">([</span><span class="n">bts</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">((</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">MAX_BAD_COUNTER</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">can_valid</span><span class="p">)</span>
+
+    <span class="c1"># one to recover</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;COUNTER&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+    <span class="n">bts</span> <span class="o">=</span> <span class="n">can_list_to_can_capnp</span><span class="p">([</span><span class="n">msg</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">([</span><span class="n">bts</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">can_valid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestCanParserPacker.test_parser_no_partial_update">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_parser_no_partial_update">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_parser_no_partial_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ensure that the CANParser doesn&#39;t partially update messages with invalid signals (COUNTER/CHECKSUM).</span>
+<span class="sd">    Previously, the signal update loop would only break once it got to one of these invalid signals,</span>
+<span class="sd">    after already updating most/all of the signals.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">msgs</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">(</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="n">packer</span> <span class="o">=</span> <span class="n">CANPacker</span><span class="p">(</span><span class="s2">&quot;honda_civic_touring_2016_can_generated&quot;</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">CANParser</span><span class="p">(</span><span class="s2">&quot;honda_civic_touring_2016_can_generated&quot;</span><span class="p">,</span> <span class="n">msgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">rx_steering_msg</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bad_checksum</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">bad_checksum</span><span class="p">:</span>
+        <span class="c1"># add 1 to checksum</span>
+        <span class="n">msg</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">msg</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xF0</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">msg</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x0F</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+      <span class="n">bts</span> <span class="o">=</span> <span class="n">can_list_to_can_capnp</span><span class="p">([</span><span class="n">msg</span><span class="p">])</span>
+      <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">([</span><span class="n">bts</span><span class="p">])</span>
+
+    <span class="n">rx_steering_msg</span><span class="p">({</span><span class="s2">&quot;STEER_TORQUE&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">},</span> <span class="n">bad_checksum</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">][</span><span class="s2">&quot;STEER_TORQUE&quot;</span><span class="p">],</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl_all</span><span class="p">[</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">][</span><span class="s2">&quot;STEER_TORQUE&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+      <span class="n">rx_steering_msg</span><span class="p">({</span><span class="s2">&quot;STEER_TORQUE&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">},</span> <span class="n">bad_checksum</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">][</span><span class="s2">&quot;STEER_TORQUE&quot;</span><span class="p">],</span> <span class="mi">100</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl_all</span><span class="p">[</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">][</span><span class="s2">&quot;STEER_TORQUE&quot;</span><span class="p">],</span> <span class="p">[])</span>
+
+    <span class="c1"># Even if CANParser doesn&#39;t update instantaneous vl, make sure it didn&#39;t add invalid values to vl_all</span>
+    <span class="n">rx_steering_msg</span><span class="p">({</span><span class="s2">&quot;STEER_TORQUE&quot;</span><span class="p">:</span> <span class="mi">300</span><span class="p">},</span> <span class="n">bad_checksum</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">][</span><span class="s2">&quot;STEER_TORQUE&quot;</span><span class="p">],</span> <span class="mi">300</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl_all</span><span class="p">[</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">][</span><span class="s2">&quot;STEER_TORQUE&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">300</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="TestCanParserPacker.test_packer_parser">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_packer_parser">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_packer_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">msgs</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">(</span><span class="s2">&quot;Brake_Status&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="n">packer</span> <span class="o">=</span> <span class="n">CANPacker</span><span class="p">(</span><span class="n">TEST_DBC</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">TEST_DBC</span><span class="p">,</span> <span class="n">msgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">steer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">256</span><span class="p">,</span> <span class="mi">255</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">active</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;STEER_TORQUE&quot;</span><span class="p">:</span> <span class="n">steer</span><span class="p">,</span>
+            <span class="s2">&quot;STEER_TORQUE_REQUEST&quot;</span><span class="p">:</span> <span class="n">active</span><span class="p">,</span>
+          <span class="p">},</span>
+          <span class="s2">&quot;Brake_Status&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;Signal1&quot;</span><span class="p">:</span> <span class="mf">61042322657536.0</span><span class="p">,</span>
+          <span class="p">},</span>
+          <span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;SIGNED&quot;</span><span class="p">:</span> <span class="n">steer</span><span class="p">,</span>
+            <span class="s2">&quot;64_BIT_LE&quot;</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+            <span class="s2">&quot;64_BIT_BE&quot;</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+          <span class="p">},</span>
+        <span class="p">}</span>
+
+        <span class="n">msgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="n">bts</span> <span class="o">=</span> <span class="n">can_list_to_can_capnp</span><span class="p">(</span><span class="n">msgs</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">([</span><span class="n">bts</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+          <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">key</span><span class="p">],</span> <span class="n">val</span><span class="p">)</span>
+
+        <span class="c1"># also check address</span>
+        <span class="k">for</span> <span class="n">sig</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;STEER_TORQUE&quot;</span><span class="p">,</span> <span class="s2">&quot;STEER_TORQUE_REQUEST&quot;</span><span class="p">,</span> <span class="s2">&quot;COUNTER&quot;</span><span class="p">,</span> <span class="s2">&quot;CHECKSUM&quot;</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">][</span><span class="n">sig</span><span class="p">],</span> <span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="mi">228</span><span class="p">][</span><span class="n">sig</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="TestCanParserPacker.test_scale_offset">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_scale_offset">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_scale_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test that both scale and offset are correctly preserved&quot;&quot;&quot;</span>
+    <span class="n">dbc_file</span> <span class="o">=</span> <span class="s2">&quot;honda_civic_touring_2016_can_generated&quot;</span>
+    <span class="n">msgs</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)]</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">dbc_file</span><span class="p">,</span> <span class="n">msgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">packer</span> <span class="o">=</span> <span class="n">CANPacker</span><span class="p">(</span><span class="n">dbc_file</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">brake</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+      <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;USER_BRAKE&quot;</span><span class="p">:</span> <span class="n">brake</span><span class="p">}</span>
+      <span class="n">msgs</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+      <span class="n">bts</span> <span class="o">=</span> <span class="n">can_list_to_can_capnp</span><span class="p">([</span><span class="n">msgs</span><span class="p">])</span>
+
+      <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">([</span><span class="n">bts</span><span class="p">])</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">][</span><span class="s2">&quot;USER_BRAKE&quot;</span><span class="p">],</span> <span class="n">brake</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestCanParserPacker.test_subaru">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_subaru">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_subaru</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Subaru is little endian</span>
+
+    <span class="n">dbc_file</span> <span class="o">=</span> <span class="s2">&quot;subaru_global_2017_generated&quot;</span>
+
+    <span class="n">msgs</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;ES_LKAS&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)]</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">dbc_file</span><span class="p">,</span> <span class="n">msgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">packer</span> <span class="o">=</span> <span class="n">CANPacker</span><span class="p">(</span><span class="n">dbc_file</span><span class="p">)</span>
+
+    <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">steer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">256</span><span class="p">,</span> <span class="mi">255</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">active</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]:</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="s2">&quot;LKAS_Output&quot;</span><span class="p">:</span> <span class="n">steer</span><span class="p">,</span>
+          <span class="s2">&quot;LKAS_Request&quot;</span><span class="p">:</span> <span class="n">active</span><span class="p">,</span>
+          <span class="s2">&quot;SET_1&quot;</span><span class="p">:</span> <span class="mi">1</span>
+        <span class="p">}</span>
+
+        <span class="n">msgs</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;ES_LKAS&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="n">bts</span> <span class="o">=</span> <span class="n">can_list_to_can_capnp</span><span class="p">([</span><span class="n">msgs</span><span class="p">])</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">([</span><span class="n">bts</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ES_LKAS&quot;</span><span class="p">][</span><span class="s2">&quot;LKAS_Output&quot;</span><span class="p">],</span> <span class="n">steer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ES_LKAS&quot;</span><span class="p">][</span><span class="s2">&quot;LKAS_Request&quot;</span><span class="p">],</span> <span class="n">active</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ES_LKAS&quot;</span><span class="p">][</span><span class="s2">&quot;SET_1&quot;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ES_LKAS&quot;</span><span class="p">][</span><span class="s2">&quot;COUNTER&quot;</span><span class="p">],</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="TestCanParserPacker.test_bus_timeout">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_bus_timeout">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_bus_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test CAN bus timeout detection&quot;&quot;&quot;</span>
+    <span class="n">dbc_file</span> <span class="o">=</span> <span class="s2">&quot;honda_civic_touring_2016_can_generated&quot;</span>
+
+    <span class="n">freq</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">msgs</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;STEER_MOTOR_TORQUE&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">/</span><span class="mi">2</span><span class="p">)]</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">dbc_file</span><span class="p">,</span> <span class="n">msgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">packer</span> <span class="o">=</span> <span class="n">CANPacker</span><span class="p">(</span><span class="n">dbc_file</span><span class="p">)</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">send_msg</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+      <span class="k">nonlocal</span> <span class="n">i</span>
+      <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="n">t</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span> <span class="o">/</span> <span class="n">freq</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="n">blank</span><span class="p">:</span>
+        <span class="n">msgs</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">msgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{}),</span> <span class="p">]</span>
+
+      <span class="n">can</span> <span class="o">=</span> <span class="n">can_list_to_can_capnp</span><span class="p">(</span><span class="n">msgs</span><span class="p">,</span> <span class="n">logMonoTime</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+      <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">([</span><span class="n">can</span><span class="p">,</span> <span class="p">])</span>
+
+    <span class="c1"># all good, no timeout</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+      <span class="n">send_msg</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">bus_timeout</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">))</span>
+
+    <span class="c1"># timeout after 10 blank msgs</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
+      <span class="n">send_msg</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">bus_timeout</span><span class="p">)</span>
+
+    <span class="c1"># no timeout immediately after seen again</span>
+    <span class="n">send_msg</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">bus_timeout</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestCanParserPacker.test_updated">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_updated">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test updated value dict&quot;&quot;&quot;</span>
+    <span class="n">dbc_file</span> <span class="o">=</span> <span class="s2">&quot;honda_civic_touring_2016_can_generated&quot;</span>
+    <span class="n">msgs</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)]</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">dbc_file</span><span class="p">,</span> <span class="n">msgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">packer</span> <span class="o">=</span> <span class="n">CANPacker</span><span class="p">(</span><span class="n">dbc_file</span><span class="p">)</span>
+
+    <span class="c1"># Make sure nothing is updated</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl_all</span><span class="p">[</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">][</span><span class="s2">&quot;USER_BRAKE&quot;</span><span class="p">]),</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+      <span class="c1"># Ensure CANParser holds the values of any duplicate messages over multiple frames</span>
+      <span class="n">user_brake_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">))]</span>
+      <span class="n">half_idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">user_brake_vals</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+      <span class="n">can_msgs</span> <span class="o">=</span> <span class="p">[[],</span> <span class="p">[]]</span>
+      <span class="k">for</span> <span class="n">frame</span><span class="p">,</span> <span class="n">brake_vals</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">((</span><span class="n">user_brake_vals</span><span class="p">[:</span><span class="n">half_idx</span><span class="p">],</span> <span class="n">user_brake_vals</span><span class="p">[</span><span class="n">half_idx</span><span class="p">:])):</span>
+        <span class="k">for</span> <span class="n">user_brake</span> <span class="ow">in</span> <span class="n">brake_vals</span><span class="p">:</span>
+          <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;USER_BRAKE&quot;</span><span class="p">:</span> <span class="n">user_brake</span><span class="p">}</span>
+          <span class="n">can_msgs</span><span class="p">[</span><span class="n">frame</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">))</span>
+          <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+      <span class="n">can_strings</span> <span class="o">=</span> <span class="p">[</span><span class="n">can_list_to_can_capnp</span><span class="p">(</span><span class="n">msgs</span><span class="p">)</span> <span class="k">for</span> <span class="n">msgs</span> <span class="ow">in</span> <span class="n">can_msgs</span><span class="p">]</span>
+      <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">(</span><span class="n">can_strings</span><span class="p">)</span>
+      <span class="n">vl_all</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">vl_all</span><span class="p">[</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">][</span><span class="s2">&quot;USER_BRAKE&quot;</span><span class="p">]</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">vl_all</span><span class="p">,</span> <span class="n">user_brake_vals</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">user_brake_vals</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">vl_all</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">][</span><span class="s2">&quot;USER_BRAKE&quot;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="TestCanParserPacker.test_timestamp_nanos">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_timestamp_nanos">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_timestamp_nanos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test message timestamp dict&quot;&quot;&quot;</span>
+    <span class="n">dbc_file</span> <span class="o">=</span> <span class="s2">&quot;honda_civic_touring_2016_can_generated&quot;</span>
+
+    <span class="n">msgs</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">(</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+      <span class="p">(</span><span class="s2">&quot;POWERTRAIN_DATA&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">CANParser</span><span class="p">(</span><span class="n">dbc_file</span><span class="p">,</span> <span class="n">msgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">packer</span> <span class="o">=</span> <span class="n">CANPacker</span><span class="p">(</span><span class="n">dbc_file</span><span class="p">)</span>
+
+    <span class="c1"># Check the default timestamp is zero</span>
+    <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">,</span> <span class="s2">&quot;POWERTRAIN_DATA&quot;</span><span class="p">):</span>
+      <span class="n">ts_nanos</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">ts_nanos</span><span class="p">[</span><span class="n">msg</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ts_nanos</span><span class="p">),</span> <span class="p">{</span><span class="mi">0</span><span class="p">})</span>
+
+    <span class="c1"># Check:</span>
+    <span class="c1"># - timestamp is only updated for correct messages</span>
+    <span class="c1"># - timestamp is correct for multiple runs</span>
+    <span class="c1"># - timestamp is from the latest message if updating multiple strings</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+      <span class="n">can_strings</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="n">log_mono_time</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">log_mono_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="n">i</span> <span class="o">*</span> <span class="mf">1e+9</span><span class="p">)</span>
+        <span class="n">can_msg</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">make_can_msg</span><span class="p">(</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">can_strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">can_list_to_can_capnp</span><span class="p">([</span><span class="n">can_msg</span><span class="p">],</span> <span class="n">logMonoTime</span><span class="o">=</span><span class="n">log_mono_time</span><span class="p">))</span>
+      <span class="n">parser</span><span class="o">.</span><span class="n">update_strings</span><span class="p">(</span><span class="n">can_strings</span><span class="p">)</span>
+
+      <span class="n">ts_nanos</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">ts_nanos</span><span class="p">[</span><span class="s2">&quot;VSA_STATUS&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ts_nanos</span><span class="p">),</span> <span class="p">{</span><span class="n">log_mono_time</span><span class="p">})</span>
+      <span class="n">ts_nanos</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">ts_nanos</span><span class="p">[</span><span class="s2">&quot;POWERTRAIN_DATA&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ts_nanos</span><span class="p">),</span> <span class="p">{</span><span class="mi">0</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="TestCanParserPacker.test_nonexistent_messages">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_nonexistent_messages">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_nonexistent_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Ensure we don&#39;t allow messages not in the DBC</span>
+    <span class="n">existing_messages</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;STEERING_CONTROL&quot;</span><span class="p">,</span> <span class="mi">228</span><span class="p">,</span> <span class="s2">&quot;CAN_FD_MESSAGE&quot;</span><span class="p">,</span> <span class="mi">245</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">existing_messages</span><span class="p">:</span>
+      <span class="n">CANParser</span><span class="p">(</span><span class="n">TEST_DBC</span><span class="p">,</span> <span class="p">[(</span><span class="n">msg</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+        <span class="n">new_msg</span> <span class="o">=</span> <span class="n">msg</span> <span class="o">+</span> <span class="s2">&quot;1&quot;</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">msg</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">CANParser</span><span class="p">(</span><span class="n">TEST_DBC</span><span class="p">,</span> <span class="p">[(</span><span class="n">new_msg</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span></div>
+
+
+<div class="viewcode-block" id="TestCanParserPacker.test_track_all_signals">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_track_all_signals">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_track_all_signals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">CANParser</span><span class="p">(</span><span class="s2">&quot;toyota_nodsu_pt_generated&quot;</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;ACC_CONTROL&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">vl</span><span class="p">[</span><span class="s2">&quot;ACC_CONTROL&quot;</span><span class="p">],</span> <span class="p">{</span>
+      <span class="s2">&quot;ACCEL_CMD&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;ALLOW_LONG_PRESS&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;ACC_MALFUNCTION&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;RADAR_DIRTY&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;DISTANCE&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;MINI_CAR&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;ACC_TYPE&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;CANCEL_REQ&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;ACC_CUT_IN&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;LEAD_VEHICLE_STOPPED&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;PERMIT_BRAKING&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;RELEASE_STANDSTILL&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;ITS_CONNECT_LEAD&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;ACCEL_CMD_ALT&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;CHECKSUM&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="TestCanParserPacker.test_disallow_duplicate_messages">
+<a class="viewcode-back" href="../../../../opendbc.can.tests.html#opendbc.can.tests.test_packer_parser.TestCanParserPacker.test_disallow_duplicate_messages">[docs]</a>
+  <span class="k">def</span> <span class="nf">test_disallow_duplicate_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">CANParser</span><span class="p">(</span><span class="s2">&quot;toyota_nodsu_pt_generated&quot;</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;ACC_CONTROL&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)])</span>
+
+    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+      <span class="n">CANParser</span><span class="p">(</span><span class="s2">&quot;toyota_nodsu_pt_generated&quot;</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;ACC_CONTROL&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;ACC_CONTROL&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)])</span>
+
+    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+      <span class="n">CANParser</span><span class="p">(</span><span class="s2">&quot;toyota_nodsu_pt_generated&quot;</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;ACC_CONTROL&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;ACC_CONTROL&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)])</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

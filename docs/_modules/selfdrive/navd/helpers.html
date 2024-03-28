@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>selfdrive.navd.helpers &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/_modules/selfdrive/navd/helpers.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            openpilot docs
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">openpilot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">selfdrive.navd.helpers</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for selfdrive.navd.helpers</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">cast</span>
+
+<span class="kn">from</span> <span class="nn">openpilot.common.conversions</span> <span class="kn">import</span> <span class="n">Conversions</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.numpy_fast</span> <span class="kn">import</span> <span class="n">clip</span>
+<span class="kn">from</span> <span class="nn">openpilot.common.params</span> <span class="kn">import</span> <span class="n">Params</span>
+
+<span class="n">DIRECTIONS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;straight&#39;</span><span class="p">)</span>
+<span class="n">MODIFIABLE_DIRECTIONS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span>
+
+<span class="n">EARTH_MEAN_RADIUS</span> <span class="o">=</span> <span class="mf">6371007.2</span>
+<span class="n">SPEED_CONVERSIONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;km/h&#39;</span><span class="p">:</span> <span class="n">Conversions</span><span class="o">.</span><span class="n">KPH_TO_MS</span><span class="p">,</span>
+    <span class="s1">&#39;mph&#39;</span><span class="p">:</span> <span class="n">Conversions</span><span class="o">.</span><span class="n">MPH_TO_MS</span><span class="p">,</span>
+  <span class="p">}</span>
+
+
+<div class="viewcode-block" id="Coordinate">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.helpers.Coordinate">[docs]</a>
+<span class="k">class</span> <span class="nc">Coordinate</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">longitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">=</span> <span class="n">latitude</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">=</span> <span class="n">longitude</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="Coordinate.from_mapbox_tuple">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.helpers.Coordinate.from_mapbox_tuple">[docs]</a>
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">from_mapbox_tuple</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Coordinate</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="Coordinate.as_dict">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.helpers.Coordinate.as_dict">[docs]</a>
+  <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span><span class="p">}</span></div>
+
+
+  <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Coordinate(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">longitude</span><span class="si">}</span><span class="s1">)&#39;</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+
+  <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Coordinate</span><span class="p">):</span>
+      <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Coordinate</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Coordinate</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">Coordinate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Coordinate</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Coordinate</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">Coordinate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Coordinate</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">Coordinate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">*</span> <span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Coordinate.dot">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.helpers.Coordinate.dot">[docs]</a>
+  <span class="k">def</span> <span class="nf">dot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Coordinate</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">latitude</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">longitude</span></div>
+
+
+<div class="viewcode-block" id="Coordinate.distance_to">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.helpers.Coordinate.distance_to">[docs]</a>
+  <span class="k">def</span> <span class="nf">distance_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Coordinate</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="c1"># Haversine formula</span>
+    <span class="n">dlat</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">latitude</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span>
+    <span class="n">dlon</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">longitude</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span>
+
+    <span class="n">haversine_dlat</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">dlat</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+    <span class="n">haversine_dlat</span> <span class="o">*=</span> <span class="n">haversine_dlat</span>
+    <span class="n">haversine_dlon</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">dlon</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+    <span class="n">haversine_dlon</span> <span class="o">*=</span> <span class="n">haversine_dlon</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">haversine_dlat</span> \
+             <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="p">))</span> \
+             <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">latitude</span><span class="p">))</span> \
+             <span class="o">*</span> <span class="n">haversine_dlon</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">asin</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">EARTH_MEAN_RADIUS</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="minimum_distance">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.helpers.minimum_distance">[docs]</a>
+<span class="k">def</span> <span class="nf">minimum_distance</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Coordinate</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Coordinate</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">Coordinate</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+  <span class="n">ap</span> <span class="o">=</span> <span class="n">p</span> <span class="o">-</span> <span class="n">a</span>
+  <span class="n">ab</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ab</span><span class="p">)</span> <span class="o">/</span> <span class="n">ab</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ab</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+  <span class="n">projection</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">ab</span> <span class="o">*</span> <span class="n">t</span>
+  <span class="k">return</span> <span class="n">projection</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="distance_along_geometry">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.helpers.distance_along_geometry">[docs]</a>
+<span class="k">def</span> <span class="nf">distance_along_geometry</span><span class="p">(</span><span class="n">geometry</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Coordinate</span><span class="p">],</span> <span class="n">pos</span><span class="p">:</span> <span class="n">Coordinate</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">geometry</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">geometry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+
+  <span class="c1"># 1. Find segment that is closest to current position</span>
+  <span class="c1"># 2. Total distance is sum of distance to start of closest segment</span>
+  <span class="c1">#    + all previous segments</span>
+  <span class="n">total_distance</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="n">total_distance_closest</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="n">closest_distance</span> <span class="o">=</span> <span class="mf">1e9</span>
+
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">geometry</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">minimum_distance</span><span class="p">(</span><span class="n">geometry</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">geometry</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">pos</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="n">closest_distance</span><span class="p">:</span>
+      <span class="n">closest_distance</span> <span class="o">=</span> <span class="n">d</span>
+      <span class="n">total_distance_closest</span> <span class="o">=</span> <span class="n">total_distance</span> <span class="o">+</span> <span class="n">geometry</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+
+    <span class="n">total_distance</span> <span class="o">+=</span> <span class="n">geometry</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="n">geometry</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+
+  <span class="k">return</span> <span class="n">total_distance_closest</span></div>
+
+
+
+<div class="viewcode-block" id="coordinate_from_param">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.helpers.coordinate_from_param">[docs]</a>
+<span class="k">def</span> <span class="nf">coordinate_from_param</span><span class="p">(</span><span class="n">param</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Params</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Coordinate</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+
+  <span class="n">json_str</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">json_str</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+  <span class="n">pos</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_str</span><span class="p">)</span>
+  <span class="k">if</span> <span class="s1">&#39;latitude&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pos</span> <span class="ow">or</span> <span class="s1">&#39;longitude&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pos</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+  <span class="k">return</span> <span class="n">Coordinate</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span> <span class="n">pos</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="string_to_direction">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.helpers.string_to_direction">[docs]</a>
+<span class="k">def</span> <span class="nf">string_to_direction</span><span class="p">(</span><span class="n">direction</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">DIRECTIONS</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">direction</span><span class="p">:</span>
+      <span class="k">if</span> <span class="s1">&#39;slight&#39;</span> <span class="ow">in</span> <span class="n">direction</span> <span class="ow">and</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">MODIFIABLE_DIRECTIONS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;slight&#39;</span> <span class="o">+</span> <span class="n">d</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+      <span class="k">return</span> <span class="n">d</span>
+  <span class="k">return</span> <span class="s1">&#39;none&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="maxspeed_to_ms">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.helpers.maxspeed_to_ms">[docs]</a>
+<span class="k">def</span> <span class="nf">maxspeed_to_ms</span><span class="p">(</span><span class="n">maxspeed</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+  <span class="n">unit</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">maxspeed</span><span class="p">[</span><span class="s1">&#39;unit&#39;</span><span class="p">])</span>
+  <span class="n">speed</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">maxspeed</span><span class="p">[</span><span class="s1">&#39;speed&#39;</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">SPEED_CONVERSIONS</span><span class="p">[</span><span class="n">unit</span><span class="p">]</span> <span class="o">*</span> <span class="n">speed</span></div>
+
+
+
+<div class="viewcode-block" id="field_valid">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.helpers.field_valid">[docs]</a>
+<span class="k">def</span> <span class="nf">field_valid</span><span class="p">(</span><span class="n">dat</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">dat</span> <span class="ow">and</span> <span class="n">dat</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="parse_banner_instructions">
+<a class="viewcode-back" href="../../../selfdrive.navd.html#selfdrive.navd.helpers.parse_banner_instructions">[docs]</a>
+<span class="k">def</span> <span class="nf">parse_banner_instructions</span><span class="p">(</span><span class="n">banners</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">distance_to_maneuver</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">banners</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+  <span class="n">instruction</span> <span class="o">=</span> <span class="p">{}</span>
+
+  <span class="c1"># A segment can contain multiple banners, find one that we need to show now</span>
+  <span class="n">current_banner</span> <span class="o">=</span> <span class="n">banners</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="k">for</span> <span class="n">banner</span> <span class="ow">in</span> <span class="n">banners</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">distance_to_maneuver</span> <span class="o">&lt;</span> <span class="n">banner</span><span class="p">[</span><span class="s1">&#39;distanceAlongGeometry&#39;</span><span class="p">]:</span>
+      <span class="n">current_banner</span> <span class="o">=</span> <span class="n">banner</span>
+
+  <span class="c1"># Only show banner when close enough to maneuver</span>
+  <span class="n">instruction</span><span class="p">[</span><span class="s1">&#39;showFull&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance_to_maneuver</span> <span class="o">&lt;</span> <span class="n">current_banner</span><span class="p">[</span><span class="s1">&#39;distanceAlongGeometry&#39;</span><span class="p">]</span>
+
+  <span class="c1"># Primary</span>
+  <span class="n">p</span> <span class="o">=</span> <span class="n">current_banner</span><span class="p">[</span><span class="s1">&#39;primary&#39;</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">field_valid</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">):</span>
+    <span class="n">instruction</span><span class="p">[</span><span class="s1">&#39;maneuverPrimaryText&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">field_valid</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">):</span>
+    <span class="n">instruction</span><span class="p">[</span><span class="s1">&#39;maneuverType&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">field_valid</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;modifier&#39;</span><span class="p">):</span>
+    <span class="n">instruction</span><span class="p">[</span><span class="s1">&#39;maneuverModifier&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;modifier&#39;</span><span class="p">]</span>
+
+  <span class="c1"># Secondary</span>
+  <span class="k">if</span> <span class="n">field_valid</span><span class="p">(</span><span class="n">current_banner</span><span class="p">,</span> <span class="s1">&#39;secondary&#39;</span><span class="p">):</span>
+    <span class="n">instruction</span><span class="p">[</span><span class="s1">&#39;maneuverSecondaryText&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_banner</span><span class="p">[</span><span class="s1">&#39;secondary&#39;</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
+
+  <span class="c1"># Lane lines</span>
+  <span class="k">if</span> <span class="n">field_valid</span><span class="p">(</span><span class="n">current_banner</span><span class="p">,</span> <span class="s1">&#39;sub&#39;</span><span class="p">):</span>
+    <span class="n">lanes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">current_banner</span><span class="p">[</span><span class="s1">&#39;sub&#39;</span><span class="p">][</span><span class="s1">&#39;components&#39;</span><span class="p">]:</span>
+      <span class="k">if</span> <span class="n">component</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;lane&#39;</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+      <span class="n">lane</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="n">component</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;directions&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">string_to_direction</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">component</span><span class="p">[</span><span class="s1">&#39;directions&#39;</span><span class="p">]],</span>
+      <span class="p">}</span>
+
+      <span class="k">if</span> <span class="n">field_valid</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s1">&#39;active_direction&#39;</span><span class="p">):</span>
+        <span class="n">lane</span><span class="p">[</span><span class="s1">&#39;activeDirection&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">string_to_direction</span><span class="p">(</span><span class="n">component</span><span class="p">[</span><span class="s1">&#39;active_direction&#39;</span><span class="p">])</span>
+
+      <span class="n">lanes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lane</span><span class="p">)</span>
+    <span class="n">instruction</span><span class="p">[</span><span class="s1">&#39;lanes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lanes</span>
+
+  <span class="k">return</span> <span class="n">instruction</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

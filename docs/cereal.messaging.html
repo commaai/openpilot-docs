@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cereal.messaging package &mdash; openpilot docs 0.9.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.comma.ai/cereal.messaging.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f2328ca0"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cereal.messaging.tests package" href="cereal.messaging.tests.html" />
+    <link rel="prev" title="cereal package" href="cereal.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #000000" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            openpilot docs
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.9.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CARS.html">Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CARS.html#id1">291 Supported Cars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CARS.html#don-t-see-your-car-here">Don’t see your car here?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="INTEGRATION.html">Integration with Stock Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LIMITATIONS.html">Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SAFETY.html">Safety</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">openpilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#cereal">cereal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#opendbc">opendbc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#panda">panda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#rednose">rednose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#tools">tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">openpilot</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cereal.html">cereal package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="cereal.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">cereal.messaging package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.visionipc.html">cereal.visionipc package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.html#cereal-libcereal-shared-module">cereal.libcereal_shared module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.html#module-cereal.services">cereal.services module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.html#module-cereal">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="common.html">common package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conftest.html">conftest module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opendbc.html">opendbc package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openpilot.html">openpilot package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="panda.html">panda package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selfdrive.html">selfdrive package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="system.html">system package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">tools package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C/C++ API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="c_docs.html">openpilot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #000000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">openpilot docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">openpilot</a></li>
+          <li class="breadcrumb-item"><a href="cereal.html">cereal package</a></li>
+      <li class="breadcrumb-item active">cereal.messaging package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cereal.messaging.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cereal-messaging-package">
+<h1>cereal.messaging package<a class="headerlink" href="#cereal-messaging-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cereal.messaging.tests.html">cereal.messaging.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cereal.messaging.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cereal.messaging.tests.html#module-cereal.messaging.tests.test_fake">cereal.messaging.tests.test_fake module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestEvents"><code class="docutils literal notranslate"><span class="pre">TestEvents</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestEvents.test_mutation"><code class="docutils literal notranslate"><span class="pre">TestEvents.test_mutation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestEvents.test_wait"><code class="docutils literal notranslate"><span class="pre">TestEvents.test_wait()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestEvents.test_wait_multiprocess"><code class="docutils literal notranslate"><span class="pre">TestEvents.test_wait_multiprocess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestEvents.test_wait_zero_timeout"><code class="docutils literal notranslate"><span class="pre">TestEvents.test_wait_zero_timeout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets.prefix"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets.prefix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets.setUp"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets.tearDown"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets.tearDown()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_0"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_0</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_0.prefix"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_0.prefix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_0.setUp"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_0.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_0.tearDown"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_0.tearDown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_0.test_event_handle_init"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_0.test_event_handle_init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_0.test_managed_socket_state"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_0.test_managed_socket_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_0.test_non_managed_socket_state"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_0.test_non_managed_socket_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_0.test_sockets_enable_disable"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_0.test_sockets_enable_disable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_0.test_synced_pub_sub"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_0.test_synced_pub_sub()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_1_test"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_1_test</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_1_test.prefix"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_1_test.prefix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_1_test.setUp"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_1_test.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_1_test.tearDown"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_1_test.tearDown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_1_test.test_event_handle_init"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_1_test.test_event_handle_init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_1_test.test_managed_socket_state"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_1_test.test_managed_socket_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_1_test.test_non_managed_socket_state"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_1_test.test_non_managed_socket_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_1_test.test_sockets_enable_disable"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_1_test.test_sockets_enable_disable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_fake.TestFakeSockets_1_test.test_synced_pub_sub"><code class="docutils literal notranslate"><span class="pre">TestFakeSockets_1_test.test_synced_pub_sub()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cereal.messaging.tests.html#module-cereal.messaging.tests.test_messaging">cereal.messaging.tests.test_messaging module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging"><code class="docutils literal notranslate"><span class="pre">TestMessaging</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.setUp"><code class="docutils literal notranslate"><span class="pre">TestMessaging.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_drain_sock"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_drain_sock</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_drain_sock_0"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_drain_sock_0()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_drain_sock_1"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_drain_sock_1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_00_roadCameraState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_00_roadCameraState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_01_gpsNMEA"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_01_gpsNMEA()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_02_can"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_02_can()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_03_deviceState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_03_deviceState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_04_controlsState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_04_controlsState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_05_radarState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_05_radarState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_06_roadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_06_roadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_07_liveTracks"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_07_liveTracks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_08_sendcan"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_08_sendcan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_09_logMessage"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_09_logMessage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_10_liveCalibration"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_10_liveCalibration()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_11_androidLog"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_11_androidLog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_12_gpsLocation"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_12_gpsLocation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_13_carState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_13_carState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_14_carControl"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_14_carControl()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_15_longitudinalPlan"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_15_longitudinalPlan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_16_qcomGnss"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_16_qcomGnss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_17_procLog"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_17_procLog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_18_ubloxGnss"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_18_ubloxGnss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_19_clocks"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_19_clocks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_20_ubloxRaw"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_20_ubloxRaw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_21_gpsLocationExternal"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_21_gpsLocationExternal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_22_testJoystick"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_22_testJoystick()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_23_liveParameters"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_23_liveParameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_24_cameraOdometry"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_24_cameraOdometry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_25_thumbnail"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_25_thumbnail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_26_onroadEvents"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_26_onroadEvents()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_27_carParams"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_27_carParams()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_28_driverCameraState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_28_driverCameraState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_29_driverMonitoringState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_29_driverMonitoringState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_30_liveLocationKalman"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_30_liveLocationKalman()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_31_wideRoadCameraState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_31_wideRoadCameraState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_32_modelV2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_32_modelV2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_33_driverEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_33_driverEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_34_wideRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_34_wideRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_35_managerState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_35_managerState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_36_uploaderState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_36_uploaderState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_37_peripheralState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_37_peripheralState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_38_pandaStates"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_38_pandaStates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_39_navInstruction"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_39_navInstruction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_40_navRoute"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_40_navRoute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_41_navThumbnail"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_41_navThumbnail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_42_errorLogMessage"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_42_errorLogMessage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_43_roadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_43_roadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_44_driverEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_44_driverEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_45_wideRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_45_wideRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_46_qRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_46_qRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_47_qRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_47_qRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_48_gnssMeasurements"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_48_gnssMeasurements()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_49_driverStateV2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_49_driverStateV2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_50_userFlag"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_50_userFlag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_51_liveTorqueParameters"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_51_liveTorqueParameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_52_magnetometer"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_52_magnetometer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_53_lightSensor"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_53_lightSensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_54_temperatureSensor"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_54_temperatureSensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_55_accelerometer"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_55_accelerometer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_56_gyroscope"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_56_gyroscope()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_57_gyroscope2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_57_gyroscope2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_58_accelerometer2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_58_accelerometer2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_59_uiDebug"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_59_uiDebug()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_60_microphone"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_60_microphone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_61_navModel"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_61_navModel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_62_mapRenderState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_62_mapRenderState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_63_uiPlan"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_63_uiPlan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_64_livestreamRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_64_livestreamRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_65_livestreamWideRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_65_livestreamWideRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_66_livestreamDriverEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_66_livestreamDriverEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_67_livestreamRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_67_livestreamRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_68_livestreamWideRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_68_livestreamWideRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_69_livestreamDriverEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_69_livestreamDriverEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_70_temperatureSensor2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_70_temperatureSensor2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_71_customReservedRawData0"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_71_customReservedRawData0()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_72_customReservedRawData1"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_72_customReservedRawData1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_73_customReservedRawData2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_73_customReservedRawData2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_new_message_74_carOutput"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_new_message_74_carOutput()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_00_roadCameraState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_00_roadCameraState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_01_gpsNMEA"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_01_gpsNMEA()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_02_can"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_02_can()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_03_deviceState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_03_deviceState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_04_controlsState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_04_controlsState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_05_radarState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_05_radarState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_06_roadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_06_roadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_07_liveTracks"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_07_liveTracks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_08_sendcan"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_08_sendcan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_09_logMessage"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_09_logMessage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_10_liveCalibration"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_10_liveCalibration()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_11_androidLog"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_11_androidLog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_12_gpsLocation"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_12_gpsLocation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_13_carState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_13_carState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_14_carControl"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_14_carControl()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_15_longitudinalPlan"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_15_longitudinalPlan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_16_qcomGnss"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_16_qcomGnss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_17_procLog"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_17_procLog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_18_ubloxGnss"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_18_ubloxGnss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_19_clocks"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_19_clocks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_20_ubloxRaw"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_20_ubloxRaw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_21_gpsLocationExternal"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_21_gpsLocationExternal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_22_testJoystick"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_22_testJoystick()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_23_liveParameters"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_23_liveParameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_24_cameraOdometry"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_24_cameraOdometry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_25_thumbnail"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_25_thumbnail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_26_onroadEvents"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_26_onroadEvents()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_27_carParams"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_27_carParams()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_28_driverCameraState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_28_driverCameraState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_29_driverMonitoringState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_29_driverMonitoringState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_30_liveLocationKalman"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_30_liveLocationKalman()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_31_wideRoadCameraState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_31_wideRoadCameraState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_32_modelV2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_32_modelV2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_33_driverEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_33_driverEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_34_wideRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_34_wideRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_35_managerState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_35_managerState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_36_uploaderState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_36_uploaderState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_37_peripheralState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_37_peripheralState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_38_pandaStates"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_38_pandaStates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_39_navInstruction"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_39_navInstruction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_40_navRoute"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_40_navRoute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_41_navThumbnail"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_41_navThumbnail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_42_errorLogMessage"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_42_errorLogMessage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_43_roadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_43_roadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_44_driverEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_44_driverEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_45_wideRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_45_wideRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_46_qRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_46_qRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_47_qRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_47_qRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_48_gnssMeasurements"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_48_gnssMeasurements()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_49_driverStateV2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_49_driverStateV2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_50_userFlag"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_50_userFlag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_51_liveTorqueParameters"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_51_liveTorqueParameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_52_magnetometer"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_52_magnetometer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_53_lightSensor"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_53_lightSensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_54_temperatureSensor"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_54_temperatureSensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_55_accelerometer"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_55_accelerometer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_56_gyroscope"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_56_gyroscope()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_57_gyroscope2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_57_gyroscope2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_58_accelerometer2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_58_accelerometer2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_59_uiDebug"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_59_uiDebug()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_60_microphone"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_60_microphone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_61_navModel"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_61_navModel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_62_mapRenderState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_62_mapRenderState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_63_uiPlan"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_63_uiPlan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_64_livestreamRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_64_livestreamRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_65_livestreamWideRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_65_livestreamWideRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_66_livestreamDriverEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_66_livestreamDriverEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_67_livestreamRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_67_livestreamRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_68_livestreamWideRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_68_livestreamWideRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_69_livestreamDriverEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_69_livestreamDriverEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_70_temperatureSensor2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_70_temperatureSensor2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_71_customReservedRawData0"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_71_customReservedRawData0()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_72_customReservedRawData1"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_72_customReservedRawData1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_73_customReservedRawData2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_73_customReservedRawData2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_pub_sock_74_carOutput"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_pub_sock_74_carOutput()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_recv_one"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_recv_one()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_recv_one_or_none"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_recv_one_or_none()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_recv_one_retry"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_recv_one_retry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_recv_sock"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_recv_sock()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_00_roadCameraState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_00_roadCameraState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_01_gpsNMEA"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_01_gpsNMEA()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_02_can"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_02_can()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_03_deviceState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_03_deviceState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_04_controlsState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_04_controlsState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_05_radarState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_05_radarState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_06_roadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_06_roadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_07_liveTracks"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_07_liveTracks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_08_sendcan"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_08_sendcan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_09_logMessage"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_09_logMessage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_10_liveCalibration"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_10_liveCalibration()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_11_androidLog"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_11_androidLog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_12_gpsLocation"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_12_gpsLocation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_13_carState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_13_carState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_14_carControl"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_14_carControl()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_15_longitudinalPlan"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_15_longitudinalPlan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_16_qcomGnss"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_16_qcomGnss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_17_procLog"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_17_procLog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_18_ubloxGnss"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_18_ubloxGnss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_19_clocks"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_19_clocks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_20_ubloxRaw"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_20_ubloxRaw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_21_gpsLocationExternal"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_21_gpsLocationExternal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_22_testJoystick"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_22_testJoystick()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_23_liveParameters"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_23_liveParameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_24_cameraOdometry"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_24_cameraOdometry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_25_thumbnail"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_25_thumbnail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_26_onroadEvents"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_26_onroadEvents()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_27_carParams"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_27_carParams()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_28_driverCameraState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_28_driverCameraState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_29_driverMonitoringState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_29_driverMonitoringState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_30_liveLocationKalman"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_30_liveLocationKalman()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_31_wideRoadCameraState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_31_wideRoadCameraState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_32_modelV2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_32_modelV2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_33_driverEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_33_driverEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_34_wideRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_34_wideRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_35_managerState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_35_managerState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_36_uploaderState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_36_uploaderState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_37_peripheralState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_37_peripheralState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_38_pandaStates"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_38_pandaStates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_39_navInstruction"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_39_navInstruction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_40_navRoute"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_40_navRoute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_41_navThumbnail"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_41_navThumbnail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_42_errorLogMessage"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_42_errorLogMessage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_43_roadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_43_roadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_44_driverEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_44_driverEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_45_wideRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_45_wideRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_46_qRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_46_qRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_47_qRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_47_qRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_48_gnssMeasurements"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_48_gnssMeasurements()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_49_driverStateV2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_49_driverStateV2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_50_userFlag"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_50_userFlag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_51_liveTorqueParameters"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_51_liveTorqueParameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_52_magnetometer"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_52_magnetometer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_53_lightSensor"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_53_lightSensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_54_temperatureSensor"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_54_temperatureSensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_55_accelerometer"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_55_accelerometer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_56_gyroscope"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_56_gyroscope()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_57_gyroscope2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_57_gyroscope2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_58_accelerometer2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_58_accelerometer2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_59_uiDebug"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_59_uiDebug()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_60_microphone"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_60_microphone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_61_navModel"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_61_navModel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_62_mapRenderState"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_62_mapRenderState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_63_uiPlan"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_63_uiPlan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_64_livestreamRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_64_livestreamRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_65_livestreamWideRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_65_livestreamWideRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_66_livestreamDriverEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_66_livestreamDriverEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_67_livestreamRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_67_livestreamRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_68_livestreamWideRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_68_livestreamWideRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_69_livestreamDriverEncodeData"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_69_livestreamDriverEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_70_temperatureSensor2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_70_temperatureSensor2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_71_customReservedRawData0"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_71_customReservedRawData0()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_72_customReservedRawData1"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_72_customReservedRawData1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_73_customReservedRawData2"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_73_customReservedRawData2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestMessaging.test_sub_sock_74_carOutput"><code class="docutils literal notranslate"><span class="pre">TestMessaging.test_sub_sock_74_carOutput()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestPubSubSockets"><code class="docutils literal notranslate"><span class="pre">TestPubSubSockets</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestPubSubSockets.setUp"><code class="docutils literal notranslate"><span class="pre">TestPubSubSockets.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestPubSubSockets.test_conflate"><code class="docutils literal notranslate"><span class="pre">TestPubSubSockets.test_conflate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestPubSubSockets.test_pub_sub"><code class="docutils literal notranslate"><span class="pre">TestPubSubSockets.test_pub_sub()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.TestPubSubSockets.test_receive_timeout"><code class="docutils literal notranslate"><span class="pre">TestPubSubSockets.test_receive_timeout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.assert_carstate"><code class="docutils literal notranslate"><span class="pre">assert_carstate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.delayed_send"><code class="docutils literal notranslate"><span class="pre">delayed_send()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.random_bytes"><code class="docutils literal notranslate"><span class="pre">random_bytes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.random_carstate"><code class="docutils literal notranslate"><span class="pre">random_carstate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.random_sock"><code class="docutils literal notranslate"><span class="pre">random_sock()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.random_socks"><code class="docutils literal notranslate"><span class="pre">random_socks()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.zmq_expected_failure"><code class="docutils literal notranslate"><span class="pre">zmq_expected_failure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_messaging.zmq_sleep"><code class="docutils literal notranslate"><span class="pre">zmq_sleep()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cereal.messaging.tests.html#module-cereal.messaging.tests.test_poller">cereal.messaging.tests.test_poller module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_poller.TestPoller"><code class="docutils literal notranslate"><span class="pre">TestPoller</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_poller.TestPoller.test_conflate"><code class="docutils literal notranslate"><span class="pre">TestPoller.test_conflate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_poller.TestPoller.test_multiple_messages"><code class="docutils literal notranslate"><span class="pre">TestPoller.test_multiple_messages()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_poller.TestPoller.test_multiple_publishers_exception"><code class="docutils literal notranslate"><span class="pre">TestPoller.test_multiple_publishers_exception()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_poller.TestPoller.test_poll_and_create_many_subscribers"><code class="docutils literal notranslate"><span class="pre">TestPoller.test_poll_and_create_many_subscribers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_poller.TestPoller.test_poll_once"><code class="docutils literal notranslate"><span class="pre">TestPoller.test_poll_once()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_poller.poller"><code class="docutils literal notranslate"><span class="pre">poller()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cereal.messaging.tests.html#module-cereal.messaging.tests.test_pub_sub_master">cereal.messaging.tests.test_pub_sub_master module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestPubMaster"><code class="docutils literal notranslate"><span class="pre">TestPubMaster</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestPubMaster.setUp"><code class="docutils literal notranslate"><span class="pre">TestPubMaster.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestPubMaster.test_init"><code class="docutils literal notranslate"><span class="pre">TestPubMaster.test_init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestPubMaster.test_send"><code class="docutils literal notranslate"><span class="pre">TestPubMaster.test_send()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster"><code class="docutils literal notranslate"><span class="pre">TestSubMaster</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.setUp"><code class="docutils literal notranslate"><span class="pre">TestSubMaster.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_alive"><code class="docutils literal notranslate"><span class="pre">TestSubMaster.test_alive()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_avg_frequency_checks"><code class="docutils literal notranslate"><span class="pre">TestSubMaster.test_avg_frequency_checks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_conflate"><code class="docutils literal notranslate"><span class="pre">TestSubMaster.test_conflate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_getitem"><code class="docutils literal notranslate"><span class="pre">TestSubMaster.test_getitem()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_ignore_alive"><code class="docutils literal notranslate"><span class="pre">TestSubMaster.test_ignore_alive()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_init"><code class="docutils literal notranslate"><span class="pre">TestSubMaster.test_init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_init_state"><code class="docutils literal notranslate"><span class="pre">TestSubMaster.test_init_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_update"><code class="docutils literal notranslate"><span class="pre">TestSubMaster.test_update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_update_timeout"><code class="docutils literal notranslate"><span class="pre">TestSubMaster.test_update_timeout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_pub_sub_master.TestSubMaster.test_valid"><code class="docutils literal notranslate"><span class="pre">TestSubMaster.test_valid()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cereal.messaging.tests.html#module-cereal.messaging.tests.test_services">cereal.messaging.tests.test_services module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices"><code class="docutils literal notranslate"><span class="pre">TestServices</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_generated_header"><code class="docutils literal notranslate"><span class="pre">TestServices.test_generated_header()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_no_duplicate_port"><code class="docutils literal notranslate"><span class="pre">TestServices.test_no_duplicate_port()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_00_gyroscope"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_00_gyroscope()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_01_gyroscope2"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_01_gyroscope2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_02_accelerometer"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_02_accelerometer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_03_accelerometer2"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_03_accelerometer2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_04_magnetometer"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_04_magnetometer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_05_lightSensor"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_05_lightSensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_06_temperatureSensor"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_06_temperatureSensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_07_temperatureSensor2"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_07_temperatureSensor2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_08_gpsNMEA"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_08_gpsNMEA()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_09_deviceState"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_09_deviceState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_10_can"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_10_can()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_11_controlsState"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_11_controlsState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_12_pandaStates"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_12_pandaStates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_13_peripheralState"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_13_peripheralState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_14_radarState"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_14_radarState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_15_roadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_15_roadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_16_liveTracks"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_16_liveTracks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_17_sendcan"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_17_sendcan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_18_logMessage"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_18_logMessage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_19_errorLogMessage"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_19_errorLogMessage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_20_liveCalibration"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_20_liveCalibration()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_21_liveTorqueParameters"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_21_liveTorqueParameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_22_androidLog"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_22_androidLog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_23_carState"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_23_carState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_24_carControl"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_24_carControl()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_25_carOutput"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_25_carOutput()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_26_longitudinalPlan"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_26_longitudinalPlan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_27_procLog"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_27_procLog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_28_gpsLocationExternal"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_28_gpsLocationExternal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_29_gpsLocation"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_29_gpsLocation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_30_ubloxGnss"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_30_ubloxGnss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_31_qcomGnss"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_31_qcomGnss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_32_gnssMeasurements"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_32_gnssMeasurements()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_33_clocks"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_33_clocks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_34_ubloxRaw"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_34_ubloxRaw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_35_liveLocationKalman"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_35_liveLocationKalman()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_36_liveParameters"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_36_liveParameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_37_cameraOdometry"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_37_cameraOdometry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_38_thumbnail"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_38_thumbnail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_39_onroadEvents"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_39_onroadEvents()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_40_carParams"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_40_carParams()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_41_roadCameraState"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_41_roadCameraState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_42_driverCameraState"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_42_driverCameraState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_43_driverEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_43_driverEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_44_driverStateV2"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_44_driverStateV2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_45_driverMonitoringState"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_45_driverMonitoringState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_46_wideRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_46_wideRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_47_wideRoadCameraState"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_47_wideRoadCameraState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_48_modelV2"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_48_modelV2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_49_managerState"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_49_managerState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_50_uploaderState"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_50_uploaderState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_51_navInstruction"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_51_navInstruction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_52_navRoute"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_52_navRoute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_53_navThumbnail"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_53_navThumbnail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_54_navModel"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_54_navModel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_55_mapRenderState"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_55_mapRenderState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_56_uiPlan"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_56_uiPlan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_57_qRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_57_qRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_58_userFlag"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_58_userFlag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_59_microphone"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_59_microphone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_60_uiDebug"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_60_uiDebug()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_61_testJoystick"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_61_testJoystick()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_62_roadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_62_roadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_63_driverEncodeData"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_63_driverEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_64_wideRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_64_wideRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_65_qRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_65_qRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_66_livestreamWideRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_66_livestreamWideRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_67_livestreamRoadEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_67_livestreamRoadEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_68_livestreamDriverEncodeIdx"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_68_livestreamDriverEncodeIdx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_69_livestreamWideRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_69_livestreamWideRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_70_livestreamRoadEncodeData"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_70_livestreamRoadEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_71_livestreamDriverEncodeData"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_71_livestreamDriverEncodeData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_72_customReservedRawData0"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_72_customReservedRawData0()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_73_customReservedRawData1"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_73_customReservedRawData1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cereal.messaging.tests.html#cereal.messaging.tests.test_services.TestServices.test_services_74_customReservedRawData2"><code class="docutils literal notranslate"><span class="pre">TestServices.test_services_74_customReservedRawData2()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cereal.messaging.tests.html#module-cereal.messaging.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="cereal-messaging-demo-module">
+<h2>cereal.messaging.demo module<a class="headerlink" href="#cereal-messaging-demo-module" title="Link to this heading"></a></h2>
+</section>
+<section id="module-cereal.messaging.messaging_pyx">
+<span id="cereal-messaging-messaging-pyx-module"></span><h2>cereal.messaging.messaging_pyx module<a class="headerlink" href="#module-cereal.messaging.messaging_pyx" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.Context">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cereal.messaging.messaging_pyx.</span></span><span class="sig-name descname"><span class="pre">Context</span></span><a class="headerlink" href="#cereal.messaging.messaging_pyx.Context" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.Context.term">
+<span class="sig-name descname"><span class="pre">term</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.Context.term" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.Event">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cereal.messaging.messaging_pyx.</span></span><span class="sig-name descname"><span class="pre">Event</span></span><a class="headerlink" href="#cereal.messaging.messaging_pyx.Event" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.Event.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.Event.clear" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.Event.fd">
+<span class="sig-name descname"><span class="pre">fd</span></span><a class="headerlink" href="#cereal.messaging.messaging_pyx.Event.fd" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.Event.peek">
+<span class="sig-name descname"><span class="pre">peek</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.Event.peek" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.Event.ptr">
+<span class="sig-name descname"><span class="pre">ptr</span></span><a class="headerlink" href="#cereal.messaging.messaging_pyx.Event.ptr" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.Event.set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.Event.set" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.Event.wait">
+<span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.Event.wait" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.MessagingError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cereal.messaging.messaging_pyx.</span></span><span class="sig-name descname"><span class="pre">MessagingError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.MessagingError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.MultiplePublishersError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cereal.messaging.messaging_pyx.</span></span><span class="sig-name descname"><span class="pre">MultiplePublishersError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.MultiplePublishersError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cereal.messaging.messaging_pyx.MessagingError" title="cereal.messaging.messaging_pyx.MessagingError"><code class="xref py py-class docutils literal notranslate"><span class="pre">MessagingError</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.Poller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cereal.messaging.messaging_pyx.</span></span><span class="sig-name descname"><span class="pre">Poller</span></span><a class="headerlink" href="#cereal.messaging.messaging_pyx.Poller" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.Poller.poll">
+<span class="sig-name descname"><span class="pre">poll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.Poller.poll" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.Poller.registerSocket">
+<span class="sig-name descname"><span class="pre">registerSocket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">socket</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.Poller.registerSocket" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.PubSocket">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cereal.messaging.messaging_pyx.</span></span><span class="sig-name descname"><span class="pre">PubSocket</span></span><a class="headerlink" href="#cereal.messaging.messaging_pyx.PubSocket" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.PubSocket.all_readers_updated">
+<span class="sig-name descname"><span class="pre">all_readers_updated</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.PubSocket.all_readers_updated" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.PubSocket.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.PubSocket.connect" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.PubSocket.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.PubSocket.send" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.SocketEventHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cereal.messaging.messaging_pyx.</span></span><span class="sig-name descname"><span class="pre">SocketEventHandle</span></span><a class="headerlink" href="#cereal.messaging.messaging_pyx.SocketEventHandle" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.SocketEventHandle.enabled">
+<span class="sig-name descname"><span class="pre">enabled</span></span><a class="headerlink" href="#cereal.messaging.messaging_pyx.SocketEventHandle.enabled" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.SocketEventHandle.recv_called_event">
+<span class="sig-name descname"><span class="pre">recv_called_event</span></span><a class="headerlink" href="#cereal.messaging.messaging_pyx.SocketEventHandle.recv_called_event" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.SocketEventHandle.recv_ready_event">
+<span class="sig-name descname"><span class="pre">recv_ready_event</span></span><a class="headerlink" href="#cereal.messaging.messaging_pyx.SocketEventHandle.recv_ready_event" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.SubSocket">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cereal.messaging.messaging_pyx.</span></span><span class="sig-name descname"><span class="pre">SubSocket</span></span><a class="headerlink" href="#cereal.messaging.messaging_pyx.SubSocket" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.SubSocket.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">b'127.0.0.1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conflate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.SubSocket.connect" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.SubSocket.receive">
+<span class="sig-name descname"><span class="pre">receive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">non_blocking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.SubSocket.receive" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.SubSocket.setTimeout">
+<span class="sig-name descname"><span class="pre">setTimeout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.SubSocket.setTimeout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.delete_fake_prefix">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.messaging_pyx.</span></span><span class="sig-name descname"><span class="pre">delete_fake_prefix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.delete_fake_prefix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.get_fake_prefix">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.messaging_pyx.</span></span><span class="sig-name descname"><span class="pre">get_fake_prefix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.get_fake_prefix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.set_fake_prefix">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.messaging_pyx.</span></span><span class="sig-name descname"><span class="pre">set_fake_prefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.set_fake_prefix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.toggle_fake_events">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.messaging_pyx.</span></span><span class="sig-name descname"><span class="pre">toggle_fake_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enabled</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.toggle_fake_events" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.messaging_pyx.wait_for_one_event">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.messaging_pyx.</span></span><span class="sig-name descname"><span class="pre">wait_for_one_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cereal.messaging.messaging_pyx.wait_for_one_event" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="cereal-messaging-stress-module">
+<h2>cereal.messaging.stress module<a class="headerlink" href="#cereal-messaging-stress-module" title="Link to this heading"></a></h2>
+</section>
+<section id="module-cereal.messaging">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cereal.messaging" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cereal.messaging.PubMaster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cereal.messaging.</span></span><span class="sig-name descname"><span class="pre">PubMaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">services</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cereal/messaging.html#PubMaster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.PubMaster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.PubMaster.all_readers_updated">
+<span class="sig-name descname"><span class="pre">all_readers_updated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#PubMaster.all_readers_updated"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.PubMaster.all_readers_updated" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.PubMaster.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_DynamicStructBuilder</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#PubMaster.send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.PubMaster.send" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.PubMaster.wait_for_readers_to_update">
+<span class="sig-name descname"><span class="pre">wait_for_readers_to_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#PubMaster.wait_for_readers_to_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.PubMaster.wait_for_readers_to_update" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cereal.messaging.SubMaster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cereal.messaging.</span></span><span class="sig-name descname"><span class="pre">SubMaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">services</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_alive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_avg_freq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_valid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'127.0.0.1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cereal/messaging.html#SubMaster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.SubMaster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.SubMaster.all_alive">
+<span class="sig-name descname"><span class="pre">all_alive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#SubMaster.all_alive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.SubMaster.all_alive" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.SubMaster.all_checks">
+<span class="sig-name descname"><span class="pre">all_checks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#SubMaster.all_checks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.SubMaster.all_checks" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.SubMaster.all_freq_ok">
+<span class="sig-name descname"><span class="pre">all_freq_ok</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#SubMaster.all_freq_ok"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.SubMaster.all_freq_ok" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.SubMaster.all_valid">
+<span class="sig-name descname"><span class="pre">all_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#SubMaster.all_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.SubMaster.all_valid" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.SubMaster.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#SubMaster.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.SubMaster.update" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cereal.messaging.SubMaster.update_msgs">
+<span class="sig-name descname"><span class="pre">update_msgs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cur_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msgs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">_DynamicStructReader</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#SubMaster.update_msgs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.SubMaster.update_msgs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.drain_sock">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.</span></span><span class="sig-name descname"><span class="pre">drain_sock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sock</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cereal.messaging.messaging_pyx.SubSocket" title="cereal.messaging.messaging_pyx.SubSocket"><span class="pre">SubSocket</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_one</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">_DynamicStructReader</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#drain_sock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.drain_sock" title="Link to this definition"></a></dt>
+<dd><p>Receive all message currently available on the queue</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.drain_sock_raw">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.</span></span><span class="sig-name descname"><span class="pre">drain_sock_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sock</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cereal.messaging.messaging_pyx.SubSocket" title="cereal.messaging.messaging_pyx.SubSocket"><span class="pre">SubSocket</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_one</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#drain_sock_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.drain_sock_raw" title="Link to this definition"></a></dt>
+<dd><p>Receive all message currently available on the queue</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.fake_event_handle">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.</span></span><span class="sig-name descname"><span class="pre">fake_event_handle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cereal.messaging.messaging_pyx.SocketEventHandle" title="cereal.messaging.messaging_pyx.SocketEventHandle"><span class="pre">SocketEventHandle</span></a></span></span><a class="reference internal" href="_modules/cereal/messaging.html#fake_event_handle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.fake_event_handle" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.log_from_bytes">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.</span></span><span class="sig-name descname"><span class="pre">log_from_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_DynamicStructReader</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#log_from_bytes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.log_from_bytes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.new_message">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.</span></span><span class="sig-name descname"><span class="pre">new_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_DynamicStructBuilder</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#new_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.new_message" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.pub_sock">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.</span></span><span class="sig-name descname"><span class="pre">pub_sock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cereal.messaging.messaging_pyx.PubSocket" title="cereal.messaging.messaging_pyx.PubSocket"><span class="pre">PubSocket</span></a></span></span><a class="reference internal" href="_modules/cereal/messaging.html#pub_sock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.pub_sock" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.recv_one">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.</span></span><span class="sig-name descname"><span class="pre">recv_one</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sock</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cereal.messaging.messaging_pyx.SubSocket" title="cereal.messaging.messaging_pyx.SubSocket"><span class="pre">SubSocket</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_DynamicStructReader</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#recv_one"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.recv_one" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.recv_one_or_none">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.</span></span><span class="sig-name descname"><span class="pre">recv_one_or_none</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sock</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cereal.messaging.messaging_pyx.SubSocket" title="cereal.messaging.messaging_pyx.SubSocket"><span class="pre">SubSocket</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_DynamicStructReader</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#recv_one_or_none"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.recv_one_or_none" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.recv_one_retry">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.</span></span><span class="sig-name descname"><span class="pre">recv_one_retry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sock</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cereal.messaging.messaging_pyx.SubSocket" title="cereal.messaging.messaging_pyx.SubSocket"><span class="pre">SubSocket</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_DynamicStructReader</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#recv_one_retry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.recv_one_retry" title="Link to this definition"></a></dt>
+<dd><p>Keep receiving until we get a message</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.recv_sock">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.</span></span><span class="sig-name descname"><span class="pre">recv_sock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sock</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cereal.messaging.messaging_pyx.SubSocket" title="cereal.messaging.messaging_pyx.SubSocket"><span class="pre">SubSocket</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_DynamicStructReader</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/cereal/messaging.html#recv_sock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.recv_sock" title="Link to this definition"></a></dt>
+<dd><p>Same as drain sock, but only returns latest message. Consider using conflate instead.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cereal.messaging.sub_sock">
+<span class="sig-prename descclassname"><span class="pre">cereal.messaging.</span></span><span class="sig-name descname"><span class="pre">sub_sock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poller</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cereal.messaging.messaging_pyx.Poller" title="cereal.messaging.messaging_pyx.Poller"><span class="pre">Poller</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'127.0.0.1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conflate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cereal.messaging.messaging_pyx.SubSocket" title="cereal.messaging.messaging_pyx.SubSocket"><span class="pre">SubSocket</span></a></span></span><a class="reference internal" href="_modules/cereal/messaging.html#sub_sock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cereal.messaging.sub_sock" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cereal.html" class="btn btn-neutral float-left" title="cereal package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cereal.messaging.tests.html" class="btn btn-neutral float-right" title="cereal.messaging.tests package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, comma.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

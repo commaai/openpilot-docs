@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="visionipc__client_8h" kind="file" language="C++">
+    <compoundname>visionipc_client.h</compoundname>
+    <includes local="no">set</includes>
+    <includes local="no">string</includes>
+    <includes local="yes">cereal/messaging/messaging.h</includes>
+    <includes refid="visionbuf_8h" local="yes">cereal/visionipc/visionbuf.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>/tmp/openpilot/cereal/visionipc/visionipc_client.h</label>
+        <link refid="visionipc__client_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>string</label>
+      </node>
+      <node id="7">
+        <label>CL/cl.h</label>
+      </node>
+      <node id="4">
+        <label>cereal/messaging/messaging.h</label>
+      </node>
+      <node id="6">
+        <label>cereal/visionipc/visionipc.h</label>
+      </node>
+      <node id="5">
+        <label>cereal/visionipc/visionbuf.h</label>
+        <link refid="visionbuf_8h_source"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>set</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="class_vision_ipc_client" prot="public">VisionIpcClient</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;set&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;string&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;cereal/messaging/messaging.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;cereal/visionipc/visionbuf.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9" refid="class_vision_ipc_client" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="class_vision_ipc_client" kindref="compound">VisionIpcClient</ref><sp/>{</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/>std::string<sp/>name;</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/>Context<sp/>*<sp/>msg_ctx;</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/>SubSocket<sp/>*<sp/>sock;</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/>Poller<sp/>*<sp/>poller;</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/>cl_device_id<sp/>device_id<sp/>=<sp/></highlight><highlight class="keyword">nullptr</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/>cl_context<sp/>ctx<sp/>=<sp/></highlight><highlight class="keyword">nullptr</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>connected<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/>VisionStreamType<sp/>type;</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>num_buffers<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><ref refid="class_vision_buf" kindref="compound">VisionBuf</ref><sp/>buffers[VISIONIPC_MAX_FDS];</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><ref refid="class_vision_ipc_client" kindref="compound">VisionIpcClient</ref>(std::string<sp/>name,<sp/>VisionStreamType<sp/>type,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>conflate,<sp/>cl_device_id<sp/>device_id=</highlight><highlight class="keyword">nullptr</highlight><highlight class="normal">,<sp/>cl_context<sp/>ctx=</highlight><highlight class="keyword">nullptr</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/>~<ref refid="class_vision_ipc_client" kindref="compound">VisionIpcClient</ref>();</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><ref refid="class_vision_buf" kindref="compound">VisionBuf</ref><sp/>*<sp/>recv(VisionIpcBufExtra<sp/>*<sp/>extra=</highlight><highlight class="keyword">nullptr</highlight><highlight class="normal">,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>timeout_ms=100);</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>connect(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>blocking=</highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>is_connected()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>connected;<sp/>}</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/>std::set&lt;VisionStreamType&gt;<sp/>getAvailableStreams(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>&amp;name,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>blocking<sp/>=<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="30"><highlight class="normal">};</highlight></codeline>
+    </programlisting>
+    <location file="/tmp/openpilot/cereal/visionipc/visionipc_client.h"/>
+  </compounddef>
+</doxygen>
